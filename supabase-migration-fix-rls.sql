@@ -19,7 +19,7 @@ ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
 
 -- Hàm dùng để lấy an toàn ID gia đình của user hiện tại (tránh infinite recursion)
 CREATE OR REPLACE FUNCTION get_my_family_id()
-RETURNS uuid AS $$
+RETURNS text AS $$
   SELECT family_account_id FROM public.profiles WHERE id = auth.uid();
 $$ LANGUAGE sql SECURITY DEFINER STABLE;
 
