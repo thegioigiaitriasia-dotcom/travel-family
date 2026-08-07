@@ -385,7 +385,110 @@ Hãy trả về JSON duy nhất với cấu trúc:
     }
   });
 
-  // POST /api/sepay-webhook
+  // POST /api/join-family
+  // Luồng đúng: thành viên nhập Tên + Mã mời + Mật khẩu mới → tạo tài khoản phụ trong gia đình
+  app.post('/api/join-family', async (req, res) => {
+    try {
+      const { displayName, inviteCode, password } = req.body;
+      if (!displayName || !inviteCode || !password) {
+        return res.status(400).json({ success: false, message: 'Vui lòng điền đầy đủ Tên, Mã mời và Mật khẩu.' });
+      }
+      if (password.length < 6) {
+        return res.status(400).json({ success: false, message: 'Mật khẩu phải có ít nhất 6 ký tự.' });
+      }
+
+      const code = String(inviteCode).trim().toUpperCase();
+      const username = String(displayName).trim().toLowerCase().replace(/\s+/g, '.');
+
+      // 1. Tìm gia đình theo invite_code
+      const { data: familyData, error: familyError } = await supabaseAdmin
+        .from('family_accounts')
+        .select('id, family_name, invite_code, owner_id')
+        .eq('invite_code', code)
+        .maybeSingle();
+
+      if (familyError || !familyData) {
+        console.warn('[JoinFamily] Invalid invite code:', code, familyError?.message);
+        return res.status(404).json({ success: false, message: 'Mã lời mời không hợp lệ hoặc đã hết hạn. Vui lòng kiểm tra lại với Trưởng nhóm.' });
+      }
+
+      // 2. Tạo pseudo-email: username@invitecode.giadinhvivu.com
+      const pseudoEmail = `${username}@${code.toLowerCase()}.giadinhvivu.com`;
+
+      // Kiểm tra đã tồn tại chưa (tìm trong profiles)
+      const { data: existingProfile } = await supabaseAdmin
+        .from('profiles')
+        .select('id')
+        .eq('email', pseudoEmail)
+        .maybeSingle();
+
+      if (existingProfile) {
+        return res.status(409).json({ success: false, message: `Tên đăng nhập "${displayName}" đã được dùng trong gia đình này. Vui lòng chọn tên khác.` });
+      }
+
+      // 3. Tạo Supabase Auth user với admin API
+      const { data: authData, error: authError } = await supabaseAdmin.auth.admin.createUser({
+        email: pseudoEmail,
+        password,
+        email_confirm: true,
+        user_metadata: {
+          full_name: String(displayName).trim(),
+          family_id: familyData.id,
+          family_name: familyData.family_name,
+          invite_code: code,
+        }
+      });
+
+      if (authError) {
+        console.error('[JoinFamily] Auth create error:', authError.message);
+        return res.status(400).json({ success: false, message: `Không thể tạo tài khoản: ${authError.message}` });
+      }
+
+      const newUserId = authData.user?.id;
+      if (!newUserId) {
+        return res.status(500).json({ success: false, message: 'Lỗi hệ thống khi tạo tài khoản.' });
+      }
+
+      // 4. Gán vào gia đình trong bảng profiles (upsert để trigger không tạo profile trùng)
+      const { error: profileError } = await supabaseAdmin.from('profiles').upsert({
+        id: newUserId,
+        email: pseudoEmail,
+        family_account_id: familyData.id,
+        full_name: String(displayName).trim(),
+        role: 'Thành viên',
+        is_admin: false,
+        status: 'active',
+        updated_at: new Date().toISOString(),
+      });
+
+      if (profileError) {
+        console.warn('[JoinFamily] Profile upsert warning:', profileError.message);
+      }
+
+      // 5. Tăng members_count
+      await supabaseAdmin
+        .from('family_accounts')
+        .update({ members_count: supabaseAdmin.rpc('increment', {}) as any })
+        .eq('id', familyData.id)
+        .catch(() => {});
+
+      console.log(`[JoinFamily] ✅ "${displayName}" joined family "${familyData.family_name}" (${familyData.id})`);
+
+      return res.json({
+        success: true,
+        pseudoEmail,
+        familyName: familyData.family_name,
+        familyId: familyData.id,
+        userId: newUserId,
+        message: `Tài khoản "${displayName}" đã gia nhập gia đình "${familyData.family_name}" thành công!`
+      });
+
+    } catch (err: any) {
+      console.error('[JoinFamily Exception]', err);
+      return res.status(500).json({ success: false, message: err.message });
+    }
+  });
+
   // Webhook listener for SePay payments
   app.post('/api/sepay-webhook', async (req, res) => {
     try {

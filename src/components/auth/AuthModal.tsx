@@ -120,12 +120,24 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 
   // Invite code state
   const [inviteCodeInput, setInviteCodeInput] = useState('');
-  const [inviteEmail, setInviteEmail] = useState('');
+  const [inviteDisplayName, setInviteDisplayName] = useState('');
   const [invitePassword, setInvitePassword] = useState('');
   const [inviteError, setInviteError] = useState('');
+  const [inviteSuccess, setInviteSuccess] = useState('');
 
   // Submit loading state
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Khi tab invite mở, tự điền mã mời từ URL param (qua sessionStorage)
+  React.useEffect(() => {
+    if (activeTab === 'invite' && !inviteCodeInput) {
+      const pending = sessionStorage.getItem('pendingInviteCode');
+      if (pending) {
+        setInviteCodeInput(pending);
+        sessionStorage.removeItem('pendingInviteCode');
+      }
+    }
+  }, [activeTab]);
 
   if (!isOpen) return null;
 
@@ -301,23 +313,15 @@ export const AuthModal: React.FC<AuthModalProps> = ({
   const handleInviteSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setInviteError('');
+    setInviteSuccess('');
 
     const code = inviteCodeInput.trim().toUpperCase();
-    const email = inviteEmail.trim().toLowerCase();
+    const displayName = inviteDisplayName.trim();
     const pwd = invitePassword;
 
-    if (!code) {
-      setInviteError('Vui lòng nhập mã lời mời.');
-      return;
-    }
-    if (!email || !email.includes('@')) {
-      setInviteError('Vui lòng nhập email đăng nhập của bạn.');
-      return;
-    }
-    if (!pwd) {
-      setInviteError('Vui lòng nhập mật khẩu.');
-      return;
-    }
+    if (!code) { setInviteError('Vui lòng nhập mã lời mời.'); return; }
+    if (!displayName) { setInviteError('Vui lòng nhập tên hiển thị của bạn.'); return; }
+    if (!pwd || pwd.length < 6) { setInviteError('Mật khẩu phải có ít nhất 6 ký tự.'); return; }
 
     if (!isSupabaseConfigured()) {
       setInviteError('Dịch vụ xác thực chưa được cấu hình.');
@@ -327,43 +331,45 @@ export const AuthModal: React.FC<AuthModalProps> = ({
     setIsSubmitting(true);
 
     try {
-      // 1. Xác thực invite code trong Supabase
-      const { data: familyData, error: familyError } = await supabase
-        .from('family_accounts')
-        .select('*')
-        .eq('invite_code', code)
-        .maybeSingle();
-
-      if (familyError || !familyData) {
-        setInviteError('Mã lời mời không hợp lệ hoặc đã hết hạn. Vui lòng kiểm tra lại với người trưởng nhóm.');
-        setIsSubmitting(false);
-        return;
-      }
-
-      // 2. Đăng nhập user
-      const { data: loginData, error: loginError } = await supabase.auth.signInWithPassword({ email, password: pwd });
-      if (loginError || !loginData.user) {
-        setInviteError('Email hoặc mật khẩu không đúng. Vui lòng kiểm tra lại.');
-        setIsSubmitting(false);
-        return;
-      }
-
-      // 3. Liên kết user vào family account
       const appUrl = typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000';
-      await fetch(`${appUrl}/api/update-profile`, {
+
+      // Bước 1: Gọi API /api/join-family để TẠO tài khoản phụ trong gia đình
+      const joinRes = await fetch(`${appUrl}/api/join-family`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userId: loginData.user.id, updates: { family_account_id: familyData.id, updated_at: new Date().toISOString() } })
+        body: JSON.stringify({ displayName, inviteCode: code, password: pwd }),
+      });
+      const joinData = await joinRes.json();
+
+      if (!joinData.success) {
+        setInviteError(joinData.message || 'Không thể gia nhập gia đình. Vui lòng thử lại.');
+        setIsSubmitting(false);
+        return;
+      }
+
+      // Bước 2: Tự đăng nhập bằng pseudo-email được API trả về
+      const pseudoEmail = joinData.pseudoEmail;
+      const { data: loginData, error: loginError } = await supabase.auth.signInWithPassword({
+        email: pseudoEmail,
+        password: pwd,
       });
 
+      if (loginError || !loginData?.user) {
+        setInviteError('Tài khoản đã được tạo nhưng không thể đăng nhập tự động. Hãy dùng tab Đăng nhập với tên: ' + displayName);
+        setIsSubmitting(false);
+        return;
+      }
+
+      // Bước 3: Lấy profile đã được gán gia đình và build session
       const [profileRes, subRes] = await Promise.all([
-        fetch(`${appUrl}/api/get-profile?userId=${loginData.user.id}`).then(res => res.json()),
+        fetch(`${appUrl}/api/get-profile?userId=${loginData.user.id}`).then(r => r.json()),
         supabase.from('subscriptions').select('*').eq('user_id', loginData.user.id).maybeSingle(),
       ]);
 
       const session = await buildSessionFromSupabase(loginData.user, profileRes.profile || profileRes.data, subRes.data);
       onLoginSuccess(session);
       onClose();
+
     } catch (err: any) {
       setInviteError(`Lỗi hệ thống: ${err.message || String(err)}`);
     } finally {
@@ -641,8 +647,12 @@ export const AuthModal: React.FC<AuthModalProps> = ({
           {/* ── INVITE CODE ───────────────────────────────────────────── */}
           {activeTab === 'invite' && (
             <form onSubmit={handleInviteSubmit} className="space-y-4">
-              <div className="bg-blue-50 border border-blue-200 rounded-2xl p-3 text-xs text-blue-900 leading-relaxed">
-                Nhập mã lời mời từ Trưởng nhóm gia đình và email/mật khẩu của bạn để tham gia vào chuyến đi chung.
+              {/* Hướng dẫn */}
+              <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-3 space-y-1">
+                <p className="text-xs font-bold text-emerald-900">📨 Tham gia nhóm gia đình bằng Mã mời</p>
+                <p className="text-[11px] text-emerald-800 leading-relaxed">
+                  Nhận mã mời từ Trưởng nhóm → Điền Tên + Mã mời + Tạo mật khẩu → Gia nhập ngay!
+                </p>
               </div>
 
               {inviteError && (
@@ -651,9 +661,18 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                   <span>{inviteError}</span>
                 </div>
               )}
+              {inviteSuccess && (
+                <div className="flex items-start gap-2 text-xs text-emerald-800 font-medium bg-emerald-50 border border-emerald-200 p-3 rounded-xl">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500 mt-0.5 flex-shrink-0" />
+                  <span>{inviteSuccess}</span>
+                </div>
+              )}
 
+              {/* Mã lời mời */}
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">Mã lời mời</label>
+                <label className="block text-xs font-bold text-slate-700 mb-1">
+                  Mã lời mời <span className="text-rose-500">*</span>
+                </label>
                 <div className="relative">
                   <Key className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
                   <input
@@ -661,34 +680,46 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                     value={inviteCodeInput}
                     onChange={(e) => setInviteCodeInput(e.target.value.toUpperCase())}
                     placeholder="VD: VIVU-ABC123"
-                    className="w-full pl-9 pr-4 py-2.5 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#183B35] focus:border-transparent focus:outline-none font-mono uppercase"
+                    className="w-full pl-9 pr-4 py-2.5 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#183B35] focus:border-transparent focus:outline-none font-mono uppercase tracking-wider"
                     required
                   />
                 </div>
+                <p className="text-[10px] text-slate-400 mt-1">Lấy mã này từ Trưởng nhóm gia đình</p>
               </div>
 
+              {/* Tên hiển thị */}
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">Email của bạn</label>
-                <input
-                  type="email"
-                  value={inviteEmail}
-                  onChange={(e) => setInviteEmail(e.target.value)}
-                  placeholder="ten@gmail.com"
-                  className="w-full px-3 py-2.5 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#183B35] focus:border-transparent focus:outline-none"
-                  required
-                />
+                <label className="block text-xs font-bold text-slate-700 mb-1">
+                  Tên của bạn trong gia đình <span className="text-rose-500">*</span>
+                </label>
+                <div className="relative">
+                  <User className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
+                  <input
+                    type="text"
+                    value={inviteDisplayName}
+                    onChange={(e) => setInviteDisplayName(e.target.value)}
+                    placeholder="VD: Con gái Lan, Ba Phúc..."
+                    className="w-full pl-9 pr-4 py-2.5 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#183B35] focus:border-transparent focus:outline-none"
+                    required
+                  />
+                </div>
+                <p className="text-[10px] text-slate-400 mt-1">Tên này sẽ hiển thị trong nhóm gia đình</p>
               </div>
 
+              {/* Mật khẩu */}
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">Mật khẩu</label>
+                <label className="block text-xs font-bold text-slate-700 mb-1">
+                  Tạo mật khẩu <span className="text-rose-500">*</span>
+                </label>
                 <input
                   type="password"
                   value={invitePassword}
                   onChange={(e) => setInvitePassword(e.target.value)}
-                  placeholder="Mật khẩu tài khoản của bạn..."
+                  placeholder="Ít nhất 6 ký tự..."
                   className="w-full px-3 py-2.5 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#183B35] focus:border-transparent focus:outline-none"
                   required
                 />
+                <p className="text-[10px] text-slate-400 mt-1">Mật khẩu để đăng nhập lần sau</p>
               </div>
 
               <button
@@ -699,10 +730,14 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                 {isSubmitting ? (
                   <span className="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full" />
                 ) : (
-                  <ArrowRight className="w-4 h-4" />
+                  <Users className="w-4 h-4" />
                 )}
-                <span>{isSubmitting ? 'Đang xác thực...' : 'Tham gia nhóm gia đình'}</span>
+                <span>{isSubmitting ? 'Đang gia nhập gia đình...' : '🏠 Gia nhập nhóm gia đình'}</span>
               </button>
+
+              <p className="text-center text-[11px] text-slate-400">
+                Lần sau đăng nhập: chọn tab <strong>Đăng nhập</strong> → nhập tên + mã gia đình + mật khẩu
+              </p>
             </form>
           )}
         </div>

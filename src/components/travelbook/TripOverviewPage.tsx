@@ -343,6 +343,8 @@ export const TripOverviewPage: React.FC<TripOverviewPageProps> = ({
         isOpen={isInviteOpen}
         onClose={() => setIsInviteOpen(false)}
         tripTitle={trip.title}
+        inviteCode={trip.inviteCode}
+        familyName={trip.familyName}
       />
 
       <DeleteTripDialog

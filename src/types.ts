@@ -785,6 +785,10 @@ export interface TravelBook {
   bookingDocuments?: BookingDocument[];
   days: TravelBookDay[];
   importantNotes?: string[];
+  /** Mã mời gia đình - từ family_accounts.invite_code */
+  inviteCode?: string;
+  /** Tên gia đình */
+  familyName?: string;
 }
 
 

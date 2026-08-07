@@ -151,6 +151,21 @@ export default function App() {
   const [isPaywallOpen, setIsPaywallOpen] = useState(false);
   const [demoRestrictionAction, setDemoRestrictionAction] = useState('Thao tác này');
 
+  // Xử lý URL param ?invite=VIVU-XXXX → tự mở tab Mã mời
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const inviteParam = params.get('invite');
+    if (inviteParam && !session.isLoggedIn) {
+      // Lưu mã vào sessionStorage để AuthModal đọc
+      sessionStorage.setItem('pendingInviteCode', inviteParam.toUpperCase());
+      setAuthModalTab('invite');
+      setIsAuthModalOpen(true);
+      // Xóa param khỏi URL để không bị lặp
+      const cleanUrl = window.location.origin + window.location.pathname;
+      window.history.replaceState({}, '', cleanUrl);
+    }
+  }, []);
+
   // Trips data state
   const [userTrips, setUserTrips] = useState<TripSummary[]>([]);
   const [demoTrips, setDemoTrips] = useState<TripSummary[]>([]);
@@ -293,6 +308,8 @@ export default function App() {
           prepItems: activeTrip.fullData.prepItems || [],
           accommodations: activeTrip.fullData.accommodations || [],
           bookingDocuments: activeTrip.fullData.bookingDocuments || [],
+          inviteCode: session.familyAccount?.inviteCode,
+          familyName: session.familyAccount?.familyName,
         };
       }
 
@@ -314,6 +331,8 @@ export default function App() {
         prepItems: [],
         accommodations: [],
         bookingDocuments: [],
+        inviteCode: session.familyAccount?.inviteCode,
+        familyName: session.familyAccount?.familyName,
       };
     }
 
