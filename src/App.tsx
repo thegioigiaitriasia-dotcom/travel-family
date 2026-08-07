@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { ModuleType, TripSummary, UserAuthSession, FamilyAccount, FamilyMember } from './types';
-import { ModuleType, TripSummary, UserAuthSession, FamilyAccount, FamilyMember } from './types';
 import { Navigation } from './components/Navigation';
 import { MobileBottomNavigation } from './components/MobileBottomNavigation';
 import { MyTripsModule } from './components/MyTripsModule';
@@ -355,26 +354,22 @@ export default function App() {
     destinations: t.destinations || [],
     prepItems: [],
     accommodations: [],
-    days: mockTripDays.map((d) => ({
-      id: `day-${d.dayNumber}`,
+    days: (t.fullData?.days || []).map((d: any) => ({
+      id: d.id || `day-${d.dayNumber}`,
       dayNumber: d.dayNumber,
-      dateStr: d.dateStr,
-      title: d.title,
-      theme: d.title,
-      activities: d.activities.map((act) => ({
-        id: act.id,
-        type: (act.category === 'Ăn uống' ? 'food' : act.category === 'Tham quan' ? 'sightseeing' : 'experience') as TravelActivityType,
-        startTime: act.time.split(' - ')[0] || '08:00',
-        endTime: act.time.split(' - ')[1] || '09:00',
-        title: act.title,
+      dateStr: d.dateStr || d.date || '',
+      title: d.title || `Ngày ${d.dayNumber}`,
+      theme: d.theme || d.title || '',
+      activities: (d.activities || []).map((act: any) => ({
+        id: act.id || `act-${Math.random()}`,
+        type: act.type || 'experience',
+        startTime: act.startTime || '08:00',
+        endTime: act.endTime || '09:00',
+        title: act.title || '',
         status: 'upcoming' as const,
-        place: {
-          name: act.locationName || act.title,
-          address: act.address || '',
-          category: act.category,
-        },
+        place: act.place,
         estimatedCost: act.estimatedCost,
-        note: act.notes,
+        note: act.note,
       })),
     })),
   }));
@@ -401,7 +396,7 @@ export default function App() {
       currentUser: null,
       familyAccount: null,
     });
-    setSelectedTripId(demoTripSummaries[0].id);
+    setSelectedTripId(demoTrips[0]?.id || 'trip-demo-1');
   };
 
   const handleLogout = () => {
@@ -590,7 +585,14 @@ export default function App() {
           )}
 
           {currentModule === 'travel-book' && (
-            <TravelBookModule trip={currentTravelBook} />
+            <TravelBookModule
+              trip={currentTravelBook}
+              onNavigateHome={() => setCurrentModule('my-trips')}
+              onNavigateToPlanner={() => setCurrentModule('ai-planner')}
+              onNavigateToPlaces={() => setCurrentModule('my-places')}
+              onNavigateToDiary={() => setCurrentModule('travel-diary')}
+              onUpdateTrip={handleUpdateTravelBook}
+            />
           )}
 
           {currentModule === 'my-places' && (

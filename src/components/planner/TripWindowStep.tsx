@@ -9,7 +9,7 @@ const TimeSelect24h: React.FC<{ value: string; onChange: (v: string) => void; cl
     value={value || '07:00'}
     onChange={(e) => {
       let v = e.target.value.replace(/[^0-9:]/g, '');
-      if (v.length === 2 && !v.includes(':') && e.nativeEvent.inputType !== 'deleteContentBackward') {
+      if (v.length === 2 && !v.includes(':') && (e.nativeEvent as any).inputType !== 'deleteContentBackward') {
         v += ':';
       }
       onChange(v.slice(0, 5));

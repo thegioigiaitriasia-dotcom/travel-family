@@ -81,6 +81,8 @@ export interface TripSummary {
   budgetMin?: number;
   budgetMax?: number;
   countdownDays?: number;
+  /** Dữ liệu đầy đủ từ AI/Supabase, dùng để render TravelBook */
+  fullData?: any;
 }
 
 export interface Activity {

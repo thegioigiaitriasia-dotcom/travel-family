@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { Bell, User, ChevronDown, LogOut, Settings, HelpCircle } from 'lucide-react';
 import { GiaDinhViVuLogo } from './common/GiaDinhViVuLogo';
-import { useAuth } from '../context/AuthContext';
+import { UserAuthSession } from '../types';
 
 interface AppHeaderProps {
   onNavigateHome: () => void;
   onNavigateToPlanner: () => void;
   onNavigateToPlaces: () => void;
   onNavigateToDiary: () => void;
+  session?: UserAuthSession;
 }
 
 export const AppHeader: React.FC<AppHeaderProps> = ({
@@ -15,10 +16,10 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
   onNavigateToPlanner,
   onNavigateToPlaces,
   onNavigateToDiary,
+  session,
 }) => {
   const [showNotifications, setShowNotifications] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
-  const { session } = useAuth();
   
   const user = session?.currentUser;
 

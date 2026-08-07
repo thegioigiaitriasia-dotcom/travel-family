@@ -87,7 +87,7 @@ export const Navigation: React.FC<NavigationProps> = React.memo(({
         } else if (act.type === 'sightseeing' || act.title.toLowerCase().includes('tham quan')) {
           icon = Camera;
           iconColor = 'text-[#28584E] bg-[#E9F0ED]';
-        } else if (act.type === 'hotel' || act.title.toLowerCase().includes('check-in')) {
+        } else if (act.type === 'accommodation' || act.title.toLowerCase().includes('check-in')) {
           icon = Building2;
           iconColor = 'text-[#183B35] bg-[#E9F0ED]';
         }

@@ -66,7 +66,7 @@ export const TripOverviewPage: React.FC<TripOverviewPageProps> = ({
   const [error, setError] = useState<boolean>(false);
 
   if (!trip) {
-    return <TripOverviewError onRetry={() => {}} />;
+    return <TripOverviewError onRetry={() => {}} onGoHome={onNavigateHome} />;
   }
 
   // Dialogs / Modals State

@@ -57,7 +57,7 @@ export const TravelDiariesPage: React.FC<TravelDiariesPageProps> = ({
             introduction: d.introduction,
             entries: d.data?.entries || [],
             reflections: d.data?.reflections,
-          }));
+          })) as TravelDiary[];
           setDiaries(mapped);
           if (mapped.length > 0) {
             setDiaries(mapped);
