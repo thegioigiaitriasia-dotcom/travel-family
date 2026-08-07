@@ -1,8 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
 
-const env = (import.meta as any).env || {};
-export const SUPABASE_URL = env.VITE_SUPABASE_URL || '';
-export const SUPABASE_ANON_KEY = env.VITE_SUPABASE_ANON_KEY || '';
+export const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || '';
+export const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
 
 // Provide dummy values if not configured to prevent instant crash on boot
 export const supabase = createClient(

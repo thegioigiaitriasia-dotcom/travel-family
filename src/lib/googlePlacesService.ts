@@ -26,13 +26,7 @@ export interface PlaceQueryResult {
 
 // Get Google Places API Key from environment
 export const getGooglePlacesApiKey = (): string => {
-  const env = (import.meta as any).env || {};
-  return (
-    env.VITE_GOOGLE_MAPS_API_KEY ||
-    env.VITE_GOOGLE_PLACES_API_KEY ||
-    (typeof process !== 'undefined' ? process.env.VITE_GOOGLE_MAPS_API_KEY : '') ||
-    ''
-  );
+  return import.meta.env.VITE_GOOGLE_MAPS_API_KEY || import.meta.env.VITE_GOOGLE_PLACES_API_KEY || '';
 };
 
 export const hasGooglePlacesApiKey = (): boolean => {
