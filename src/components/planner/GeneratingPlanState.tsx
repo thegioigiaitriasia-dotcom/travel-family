@@ -22,9 +22,11 @@ export const GeneratingPlanState: React.FC<GeneratingPlanStateProps> = ({
 }) => {
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [generationSource, setGenerationSource] = useState<string>('');
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   useEffect(() => {
     let isCancelled = false;
+    let timer: any = null;
 
     // Call real backend Gemini API /api/generate-plan
     const fetchAiPlan = async () => {
@@ -45,15 +47,27 @@ export const GeneratingPlanState: React.FC<GeneratingPlanStateProps> = ({
                 : 'Được tối ưu bởi thuật toán thông minh'
             );
           }
+        } else {
+          if (!isCancelled) {
+             setErrorMsg(data.error || 'Đã xảy ra lỗi không xác định từ AI.');
+             clearInterval(timer);
+          }
         }
-      } catch (err) {
-        console.warn('API generate plan failed, fallback handled gracefully', err);
+      } catch (err: any) {
+        if (!isCancelled) {
+           setErrorMsg(err.message || 'Mất kết nối máy chủ AI.');
+           clearInterval(timer);
+        }
       }
     };
 
     fetchAiPlan();
 
-    const timer = setInterval(() => {
+    timer = setInterval(() => {
+      if (errorMsg) {
+         clearInterval(timer);
+         return;
+      }
       setCurrentStepIndex((prev) => {
         if (prev < progressSteps.length - 1) {
           return prev + 1;
@@ -107,9 +121,9 @@ export const GeneratingPlanState: React.FC<GeneratingPlanStateProps> = ({
 
     return () => {
       isCancelled = true;
-      clearInterval(timer);
+      if (timer) clearInterval(timer);
     };
-  }, [formData, onComplete]);
+  }, [formData, onComplete, errorMsg]);
 
   return (
     <div className="bg-white rounded-[24px] p-8 border border-slate-200 shadow-2xl max-w-md mx-auto my-8 text-center space-y-6">
@@ -121,14 +135,23 @@ export const GeneratingPlanState: React.FC<GeneratingPlanStateProps> = ({
         </div>
       </div>
 
-      <div className="space-y-1">
-        <h3 className="text-xl font-extrabold text-slate-900 tracking-tight">
-          Đang xây dựng chuyến đi...
-        </h3>
-        <p className="text-xs text-slate-500">
-          AI đang tự động ghép nối dữ liệu từng bước cho gia đình bạn.
-        </p>
-      </div>
+      {errorMsg ? (
+        <div className="space-y-1">
+          <h3 className="text-xl font-extrabold text-red-600 tracking-tight">
+            Tạo lịch trình thất bại
+          </h3>
+          <p className="text-xs text-slate-500">{errorMsg}</p>
+        </div>
+      ) : (
+        <div className="space-y-1">
+          <h3 className="text-xl font-extrabold text-slate-900 tracking-tight">
+            Đang xây dựng chuyến đi...
+          </h3>
+          <p className="text-xs text-slate-500">
+            AI đang tự động ghép nối dữ liệu từng bước cho gia đình bạn.
+          </p>
+        </div>
+      )}
 
       {/* Progress Animated Steps */}
       <div className="space-y-3 bg-slate-50 p-5 rounded-[20px] border border-slate-200 text-left">
@@ -165,9 +188,18 @@ export const GeneratingPlanState: React.FC<GeneratingPlanStateProps> = ({
         })}
       </div>
 
-      <div className="bg-[#DC2626]/10 text-[#DC2626] text-xs p-3.5 rounded-2xl border border-[#DC2626]/20 font-bold">
-        💡 Lịch trình cá nhân hóa đang được tính toán theo độ tuổi gia đình bạn.
-      </div>
+      {errorMsg ? (
+         <button 
+           onClick={() => window.location.reload()}
+           className="mt-4 px-6 py-2 bg-red-600 text-white rounded-xl font-bold hover:bg-red-700 transition"
+         >
+            Thử lại
+         </button>
+      ) : (
+        <div className="bg-[#DC2626]/10 text-[#DC2626] text-xs p-3.5 rounded-2xl border border-[#DC2626]/20 font-bold">
+          💡 Lịch trình cá nhân hóa đang được tính toán theo độ tuổi gia đình bạn.
+        </div>
+      )}
     </div>
   );
 };

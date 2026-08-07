@@ -254,7 +254,7 @@ app.post('/api/generate-plan', async (req, res) => {
   try {
     const tripInput = req.body;
     const apiKey = process.env.GEMINI_API_KEY;
-    if (!apiKey) return res.json({ success: true, source: 'fallback', plan: { title: 'Lich trinh mac dinh', totalDays: 1, summary: '', days: [] } });
+    if (!apiKey) return res.status(500).json({ success: false, error: 'GEMINI_API_KEY chưa được cấu hình' });
     const startTime24h = tripInput.tripWindow?.startTime || '07:00';
     const endTime24h = tripInput.tripWindow?.endTime || '20:00';
     const ai = new GoogleGenAI({ apiKey, httpOptions: { headers: { 'User-Agent': 'aistudio-build' } } });

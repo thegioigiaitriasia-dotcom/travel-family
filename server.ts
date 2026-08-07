@@ -262,12 +262,10 @@ async function enrichPlanWithRealPlaces(plan: any, supabaseAdminClient: any, goo
       const apiKey = process.env.GEMINI_API_KEY;
 
       if (!apiKey) {
-        console.log('[Gemini API] GEMINI_API_KEY environment variable is not set. Using smart fallback generator.');
-        return res.json({
-          success: true,
-          source: 'smart_generator_fallback',
-          message: 'Lịch trình đã được khởi tạo tối ưu với thuật toán thông minh.',
-          plan: generateFallbackItinerary(tripInput),
+        console.error('[Gemini API] GEMINI_API_KEY environment variable is not set.');
+        return res.status(500).json({
+          success: false,
+          error: 'GEMINI_API_KEY chưa được cấu hình trên server. Vui lòng thêm vào file .env',
         });
       }
 
@@ -403,12 +401,9 @@ Hãy trả về JSON duy nhất với cấu trúc:
       });
     } catch (err: any) {
       console.error('[Gemini API Error]', err);
-      // Return smart fallback if Gemini call fails
-      return res.json({
-        success: true,
-        source: 'smart_generator_fallback',
-        message: 'Lịch trình được khởi tạo thành công với dữ liệu điểm đến chuẩn.',
-        plan: generateFallbackItinerary(req.body),
+      return res.status(500).json({
+        success: false,
+        error: err.message || 'Lỗi khi kết nối với Gemini AI. Vui lòng thử lại.',
       });
     }
   });
@@ -725,112 +720,5 @@ Hãy trả về JSON duy nhất với cấu trúc:
 export default app;
 
 // Smart fallback itinerary generator function
-function generateFallbackItinerary(input: any) {
-  const stops = input.routeStops || [];
-  const stayStops = stops.filter((s: any) => s.type === 'stay' || s.type === 'destination');
-  const primaryDest = stayStops[0]?.name || 'Đà Nẵng & Hội An';
-  const secondDest = stayStops[1]?.name || 'Cam Ranh';
-
-  return {
-    title: `Hành Trình Gia Đình Vi Vu: ${stops.map((s: any) => s.name).join(' → ') || 'Đa Điểm Đến'}`,
-    totalDays: 4,
-    summary: `Kế hoạch 4 ngày 3 đêm kết hợp di chuyển thông minh giữa ${primaryDest} và ${secondDest}. Lịch trình được thiết kế nhịp độ cân bằng, thời gian ăn uống nghỉ ngơi phù hợp cho cả trẻ em và người lớn.`,
-    familyAdvice: [
-      'Nên mang theo đồ ăn nhẹ và nước ấm cho các bé trên các chặng xe di chuyển đường dài.',
-      'Lưu giữ thông tin liên hệ khách sạn & chuẩn bị kem chống nắng, xịt côn trùng cho gia đình.',
-      'Sử dụng các khoảng thời gian nghỉ trưa từ 12:30 - 14:30 để bé hồi phục sức khỏe trước khi đi chơi chiều.',
-    ],
-    days: [
-      {
-        dayNumber: 1,
-        date: input.tripWindow?.startDate || '2026-08-08',
-        cityName: stops[1]?.name || primaryDest,
-        theme: 'Khởi hành & Nhận phòng khách sạn, Khám phá văn hóa',
-        activities: [
-          {
-            time: '07:00',
-            title: 'Khởi hành chuyến đi',
-            category: 'Transport',
-            description: `Di chuyển từ ${stops[0]?.name || 'TP.HCM'} bằng ${input.journeyLegs?.[0]?.transportMode || 'máy bay'} đi ${stops[1]?.name || primaryDest}.`,
-            locationName: stops[0]?.name || 'Sân bay Tân Sơn Nhất',
-            estimatedCost: 'Đã thanh toán',
-            familyTip: 'Đến sân bay/ga trước 90 phút để làm thủ tục thong thả.',
-          },
-          {
-            time: '11:30',
-            title: 'Thưởng thức bữa trưa đặc sản địa phương',
-            category: 'Restaurant',
-            description: 'Bữa trưa đậm đà hương vị địa phương tại quán ăn gia đình thoáng mát.',
-            locationName: `Trung tâm ${stops[1]?.name || primaryDest}`,
-            estimatedCost: '350.000đ / người',
-            familyTip: 'Ưu tiên các món ăn dễ tiêu cho bé sau chuyến di chuyển.',
-          },
-          {
-            time: '14:00',
-            title: 'Nhận phòng Khách sạn & Nghỉ ngơi',
-            category: 'Hotel',
-            description: 'Làm thủ tục check-in khách sạn, cất hành lý và cho bé chợp mắt dưỡng sức.',
-            locationName: input.accommodations?.[0]?.name || 'Khách sạn trung tâm',
-            estimatedCost: 'Đã đặt chỗ',
-            familyTip: 'Nhờ lễ tân chuẩn bị thêm gối và nước ấm cho bé.',
-          },
-          {
-            time: '16:00',
-            title: 'Tham quan & Check-in sống ảo',
-            category: 'Attraction',
-            description: 'Dạo quanh các khu danh thắng nổi tiếng, chụp ảnh kỉ niệm gia đình.',
-            locationName: `Khu du lịch nổi tiếng ${stops[1]?.name || primaryDest}`,
-            estimatedCost: '150.000đ / người',
-            familyTip: 'Thời tiết chiều mát mẻ rất thích hợp cho người lớn tuổi và trẻ nhỏ.',
-          },
-          {
-            time: '18:30',
-            title: 'Bữa tối ấm cúng & Phố đêm',
-            category: 'Restaurant',
-            description: 'Thưởng thức hải sản tươi sống và không gian nhộn nhịp về đêm.',
-            locationName: `Phố ẩm thực ${stops[1]?.name || primaryDest}`,
-            estimatedCost: '400.000đ / người',
-            familyTip: 'Chọn quán ăn sạch sẽ, bãi đỗ xe rộng rãi.',
-          },
-        ],
-      },
-      {
-        dayNumber: 2,
-        date: '2026-08-09',
-        cityName: stops[2]?.name || secondDest,
-        theme: 'Di chuyển chặng giữa & Trải nghiệm nghỉ dưỡng biển',
-        activities: [
-          {
-            time: '08:00',
-            title: 'Ăn sáng & Cà phê thư thái',
-            category: 'Restaurant',
-            description: 'Bữa sáng đong đầy năng lượng và thưởng thức ly cà phê đậm đà.',
-            locationName: 'Quán cà phê sân vườn',
-            estimatedCost: '100.000đ / người',
-            familyTip: 'Không gian xanh mát giúp bé vui chơi an toàn.',
-          },
-          {
-            time: '12:00',
-            title: 'Di chuyển chặng thứ hai',
-            category: 'Transport',
-            description: `Di chuyển chặng ${stops[1]?.name || primaryDest} → ${stops[2]?.name || secondDest} bằng ${input.journeyLegs?.[1]?.transportMode || 'xe limousine'}.`,
-            locationName: `Chặng ${stops[1]?.name || primaryDest} - ${stops[2]?.name || secondDest}`,
-            estimatedCost: '250.000đ / người',
-            familyTip: 'Dừng nghỉ giữa chặng 15 phút nếu thành viên bị say xe.',
-          },
-          {
-            time: '17:30',
-            title: 'Tắm biển & Dạo bãi Dài',
-            category: 'Attraction',
-            description: 'Cả nhà hòa mình vào làn nước biển trong xanh và cát trắng mịn.',
-            locationName: `Bãi biển ${stops[2]?.name || secondDest}`,
-            estimatedCost: 'Miễn phí',
-            familyTip: 'Mặc áo phao cho các bé khi xuống biển.',
-          },
-        ],
-      },
-    ],
-  };
-}
 
 startServer();
