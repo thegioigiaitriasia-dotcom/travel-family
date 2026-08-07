@@ -408,10 +408,19 @@ export default function App() {
   };
 
   const handleUpdateAccount = (updatedAccount: FamilyAccount) => {
-    setSession((prev) => ({
-      ...prev,
-      familyAccount: updatedAccount,
-    }));
+    setSession((prev) => {
+      // Nếu avatar của currentUser trong members thay đổi, cập nhật luôn currentUser
+      const updatedCurrentUser = updatedAccount.members.find(
+        (m) => m.id === prev.currentUser?.id
+      );
+      return {
+        ...prev,
+        familyAccount: updatedAccount,
+        currentUser: updatedCurrentUser
+          ? { ...prev.currentUser, ...updatedCurrentUser }
+          : prev.currentUser,
+      };
+    });
   };
 
   const handleTriggerDemoRestriction = (actionName: string) => {
