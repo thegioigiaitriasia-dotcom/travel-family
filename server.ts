@@ -250,7 +250,7 @@ async function enrichPlanWithRealPlaces(plan: any, supabaseAdminClient: any, goo
   app.post('/api/generate-plan', async (req, res) => {
     // Rate limiting: tối đa 5 lần/phút mỗi IP
     const clientIp = (req.headers['x-forwarded-for'] as string)?.split(',')[0].trim() || req.socket.remoteAddress || 'unknown';
-    if (!checkRateLimit(clientIp, 5, 60_000)) {
+    if (!checkRateLimit(clientIp, 50, 60_000)) {
       return res.status(429).json({
         success: false,
         error: 'Quá nhiều yêu cầu. Vui lòng đợi 1 phút trước khi thử lại.',

@@ -250,7 +250,7 @@ async function enrichPlan(plan: any, googleApiKey: string) {
 
 app.post('/api/generate-plan', async (req, res) => {
   const ip = (req.headers['x-forwarded-for'] as string)?.split(',')[0].trim() || 'unknown';
-  if (!checkRateLimit(ip)) return res.status(429).json({ success: false, error: 'Qua nhieu yeu cau.' });
+  if (!checkRateLimit(ip, 50, 60000)) return res.status(429).json({ success: false, error: 'Qua nhieu yeu cau.' });
   try {
     const tripInput = req.body;
     const apiKey = process.env.GEMINI_API_KEY;
