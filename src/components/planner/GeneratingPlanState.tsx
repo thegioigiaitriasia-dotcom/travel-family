@@ -74,42 +74,6 @@ export const GeneratingPlanState: React.FC<GeneratingPlanStateProps> = ({
         } else {
           clearInterval(timer);
 
-          // Accumulate generated real POIs into database for reuse
-          accumulateTripPOIs('system-ai-planner', [
-            {
-              name: 'Sun World Bà Nà Hills & Cầu Vàng',
-              category: 'Attraction',
-              address: 'Xã Hòa Ninh, Huyện Hòa Vang, TP. Đà Nẵng',
-              rating: 4.9,
-              imageUrl:
-                'https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?w=800&auto=format&fit=crop&q=80',
-              description:
-                'Khu du lịch sinh thái & giải trí đẳng cấp với Cầu Vàng nổi tiếng thế giới, Làng Pháp cổ kính và tuyến cáp treo đạt nhiều kỷ lục.',
-              priceLevel: 'High',
-              tags: [
-                'Địa điểm nổi tiếng',
-                'Cầu Vàng',
-                'Trẻ em thích',
-                'Nhiều góc chụp đẹp',
-              ],
-            },
-            {
-              name: 'Nhà hàng Ẩm thực Trần - Đặc sản Đà Nẵng',
-              category: 'Restaurant',
-              address: '4 Lê Hồng Phong, Q. Hải Châu, TP. Đà Nẵng',
-              rating: 4.8,
-              imageUrl:
-                'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=800&auto=format&fit=crop&q=80',
-              description:
-                'Nổi tiếng với món Bánh tráng thịt heo 2 đầu da cuộn rau sống đậm đà mắm nêm truyền thống. Không gian rộng thoáng, lịch sự cho gia đình.',
-              priceLevel: 'Medium',
-              tags: [
-                'Đặc sản Đà Nẵng',
-                'Bánh tráng thịt heo',
-                'Bãi đậu xe rộng',
-              ],
-            },
-          ]);
 
           setTimeout(() => {
             if (!isCancelled) onComplete();

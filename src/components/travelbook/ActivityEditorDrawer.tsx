@@ -56,11 +56,10 @@ const availableTags = ['Gia đình', 'Trẻ em', 'Checkin', 'Ẩm thực', 'Bi�
 const transportMethods = ['Máy bay', 'Grab', 'Taxi', 'Xe máy', 'Xe khách', 'Đi bộ'];
 
 const locationSuggestions = [
-  { name: 'Sun World Bà Nà Hills', address: 'Hòa Vang, TP. Đà Nẵng', distance: '12.5 km' },
-  { name: 'Bãi biển Mỹ Khê', address: 'Võ Nguyên Giáp, Sơn Trà, TP. Đà Nẵng', distance: '2.5 km' },
-  { name: 'Phố cổ Hội An', address: 'Trần Phú, TP. Hội An', distance: '28.0 km' },
-  { name: 'Bán đảo Sơn Trà & Chùa Linh Ứng', address: 'Sơn Trà, TP. Đà Nẵng', distance: '8.1 km' },
-  { name: 'Mì Quảng Bà Mua', address: '19 Trần Bình Trọng, TP. Đà Nẵng', distance: '1.8 km' },
+  { name: 'Công viên Trung tâm', address: 'Khu vực trung tâm thành phố', distance: '1.5 km' },
+  { name: 'Khu mua sắm địa phương', address: 'Chợ truyền thống', distance: '3.0 km' },
+  { name: 'Nhà hàng đặc sản', address: 'Khu phố ẩm thực', distance: '0.8 km' },
+  { name: 'Bảo tàng & Khu di tích', address: 'Điểm tham quan lịch sử', distance: '4.2 km' },
 ];
 
 const aiReplaceReasons = ['Quá xa', 'Không phù hợp trẻ em', 'Trời mưa', 'Muốn rẻ hơn', 'Muốn đẹp hơn'];
@@ -68,28 +67,20 @@ const aiReplaceReasons = ['Quá xa', 'Không phù hợp trẻ em', 'Trời mưa'
 const mockAIOptions = [
   {
     id: 'ai-1',
-    title: 'Dạo chơi Chợ Đêm Sơn Trà',
-    placeName: 'Chợ Đêm Sơn Trà Đà Nẵng',
-    distance: '1.2 km (5 phút di chuyển)',
-    highlights: 'Không gian mát mẻ, nhiều góc check-in gia đình và đặc sản phong phú.',
+    title: 'Gợi ý Điểm tham quan lân cận',
+    placeName: 'Đang cập nhật từ hệ thống AI',
+    distance: 'Cách đây vài phút di chuyển',
+    highlights: 'Không gian mở, tiện lợi di chuyển, phù hợp gia đình thay thế cho địa điểm cũ.',
     cost: 150000,
   },
   {
     id: 'ai-2',
-    title: 'Khu du lịch Sinh thái Kotam',
-    placeName: 'KDL Sinh thái Kotam',
-    distance: '3.5 km (10 phút di chuyển)',
-    highlights: 'Không gian xanh mát, món ăn dân dã, an toàn cho trẻ nhỏ.',
+    title: 'Gợi ý Nhà hàng / Quán ăn gần đó',
+    placeName: 'Đang cập nhật từ hệ thống AI',
+    distance: 'Khoảng cách gần',
+    highlights: 'Không gian sạch sẽ, món ăn an toàn, phù hợp cho trẻ nhỏ.',
     cost: 250000,
-  },
-  {
-    id: 'ai-3',
-    title: 'Quán Cà phê BMT Ngã Sáu',
-    placeName: 'Cà phê Ngã Sáu trung tâm',
-    distance: '0.8 km (3 phút di chuyển)',
-    highlights: 'Ngắm ngã sáu trung tâm thành phố, thức uống phong phú.',
-    cost: 120000,
-  },
+  }
 ];
 
 export const ActivityEditorDrawer: React.FC<ActivityEditorDrawerProps> = ({

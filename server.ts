@@ -296,33 +296,26 @@ QUY TẮC QUAN TRỌNG VỀ THỜI GIAN:
 6. Các hoạt động phải nối tiếp nhau liên tục, không có khoảng trống thời gian vô lý.
 
 YÊU CẦU ĐẦU RA JSON TỰ ĐỘNG:
-Hãy trả về JSON duy nhất với cấu trúc sau (không kèm markdown format ngoài):
-{
-  "title": "Tên hấp dẫn cho chuyến đi gia đình",
-  "totalDays": 3,
-  "summary": "Tóm tắt ngắn gọn 2-3 câu về hành trình",
-  "familyAdvice": ["Gợi ý 1", "Gợi ý 2", "Gợi ý 3"],
-  "days": [
-    {
-      "dayNumber": 1,
-      "date": "YYYY-MM-DD",
-      "cityName": "Tên thành phố/điểm dừng",
-      "theme": "Chủ đề ngày",
-      "activities": [
-        {
-          "startTime": "08:30",
-          "endTime": "10:00",
-          "title": "Tên hoạt động/địa điểm",
-          "category": "Attraction", 
-          "description": "Mô tả chi tiết và lưu ý gia đình",
-          "locationName": "Tên địa danh cụ thể",
-          "estimatedCost": "Chi phí ước tính VND (ví dụ: 200.000đ)",
-          "familyTip": "Lưu ý riêng cho gia đình"
-        }
-      ]
-    }
-  ]
-}`;
+Bạn PHẢI trả về một JSON Object chứa dữ liệu THỰC TẾ với các trường sau (không dùng markdown):
+- "title": (String) Tên của chuyến đi (Vd: "Khám phá Đà Nẵng 3 ngày 2 đêm")
+- "totalDays": (Number) Tổng số ngày của lịch trình
+- "summary": (String) Tóm tắt hành trình 2-3 câu
+- "familyAdvice": (Array of String) Các lời khuyên chuẩn bị cho gia đình
+- "days": (Array of Object) Danh sách các ngày, mỗi ngày gồm:
+  - "dayNumber": (Number) Số thứ tự ngày
+  - "date": (String) Ngày tháng dạng YYYY-MM-DD
+  - "cityName": (String) Tên thành phố thực tế
+  - "theme": (String) Chủ đề của ngày
+  - "activities": (Array of Object) Danh sách hoạt động, mỗi hoạt động gồm:
+    - "startTime": (String) Giờ bắt đầu (HH:MM)
+    - "endTime": (String) Giờ kết thúc (HH:MM)
+    - "title": (String) Tên hoạt động (Vd: "Tắm biển Mỹ Khê", "Ăn tối")
+    - "category": (String) Bắt buộc là 1 trong: "Attraction", "Restaurant", "Transport", "Hotel", "Rest"
+    - "description": (String) Mô tả chi tiết hoạt động
+    - "locationName": (String) Tên địa điểm thực tế trên Google Maps
+    - "estimatedCost": (String) Ước tính chi phí VND
+    - "familyTip": (String) Mẹo nhỏ cho gia đình tại điểm này
+`;
 
       const response = await fetch('https://api.deepseek.com/chat/completions', {
         method: 'POST',

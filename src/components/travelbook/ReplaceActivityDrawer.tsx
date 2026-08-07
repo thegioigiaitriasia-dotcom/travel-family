@@ -22,27 +22,19 @@ const reasons = [
 const mockAIOptions = [
   {
     id: 'ai-opt-1',
-    title: 'Dạo chơi Chợ Đêm Sơn Trà',
-    placeName: 'Chợ Đêm Sơn Trà Đà Nẵng',
-    distance: 'Cách 1.2 km (5 phút di chuyển)',
-    reason: 'Không gian mát mẻ, che chắn tốt, phù hợp gia đình dạo phố & thưởng thức đặc sản.',
+    title: 'Gợi ý Điểm tham quan lân cận',
+    placeName: 'Đang cập nhật từ hệ thống AI',
+    distance: 'Cách đây vài phút di chuyển',
+    reason: 'Gợi ý thay thế tối ưu dựa trên sở thích gia đình và vị trí hiện tại.',
     cost: 150000,
   },
   {
     id: 'ai-opt-2',
-    title: 'Khu du lịch Sinh thái Kotam',
-    placeName: 'KDL Sinh thái Kotam',
-    distance: 'Cách 3.5 km (10 phút di chuyển)',
-    reason: 'Cảnh quan thiên nhiên thoáng đãng, nhiều trò chơi nhẹ nhàng cho bé.',
-    cost: 280000,
-  },
-  {
-    id: 'ai-opt-3',
-    title: 'Trung Nguyên Legend Coffee Village',
-    placeName: 'Làng Cà phê Trung Nguyên',
-    distance: 'Cách 2.0 km (7 phút di chuyển)',
-    reason: 'Không gian rộng rãi, có suối nhân tạo và bánh ngọt cho trẻ nhỏ.',
-    cost: 200000,
+    title: 'Gợi ý Nhà hàng / Quán ăn gần đó',
+    placeName: 'Đang cập nhật từ hệ thống AI',
+    distance: 'Khoảng cách gần',
+    reason: 'Đảm bảo tiêu chí sạch sẽ, phù hợp cho trẻ em.',
+    cost: 250000,
   },
 ];
 
