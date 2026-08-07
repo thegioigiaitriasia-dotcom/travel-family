@@ -38,7 +38,7 @@ interface NavigationProps {
   travelBook?: TravelBook;
 }
 
-export const Navigation: React.FC<NavigationProps> = ({
+export const Navigation: React.FC<NavigationProps> = React.memo(({
   currentModule,
   onSelectModule,
   session,
@@ -468,6 +468,6 @@ export const Navigation: React.FC<NavigationProps> = ({
       </div>
     </header>
   );
-};
+});
 
 

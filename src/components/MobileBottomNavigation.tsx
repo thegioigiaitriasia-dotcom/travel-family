@@ -7,95 +7,85 @@ interface MobileBottomNavigationProps {
   onSelectModule: (module: ModuleType) => void;
 }
 
-export const MobileBottomNavigation: React.FC<MobileBottomNavigationProps> = ({
+export const MobileBottomNavigation: React.FC<MobileBottomNavigationProps> = React.memo(({
   currentModule,
   onSelectModule,
 }) => {
   return (
-    <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-[#E2E3DE] z-50 py-1 shadow-lg pb-safe">
-      <div className="max-w-md mx-auto flex items-center justify-around px-1">
+    <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-[#E2E3DE] z-50 py-2 shadow-[0_-4px_20px_-10px_rgba(0,0,0,0.1)] pb-safe">
+      <div className="max-w-md mx-auto flex items-center justify-around px-2 relative">
         {/* Module 1: Chuyến đi */}
         <button
           type="button"
           onClick={() => onSelectModule('my-trips')}
-          className={`flex flex-col items-center justify-center min-h-[44px] min-w-[44px] px-1 py-1 cursor-pointer transition-colors ${
+          className={`flex items-center justify-center min-h-[44px] min-w-[44px] rounded-full transition-all duration-300 ${
             currentModule === 'my-trips'
-              ? 'text-[#183B35] font-bold'
-              : 'text-[#606864] hover:text-[#1D211F]'
+              ? 'text-[#183B35] bg-[#E9F0ED]'
+              : 'text-[#8D9490] hover:text-[#1D211F] hover:bg-slate-50'
           }`}
+          aria-label="Chuyến đi"
         >
-          <Compass className="w-5 h-5" strokeWidth={1.75} />
-          <span className="text-[10px] leading-tight mt-0.5">Chuyến đi</span>
+          <Compass className="w-6 h-6" strokeWidth={currentModule === 'my-trips' ? 2.5 : 1.75} />
         </button>
 
-        {/* Module 3: Lịch trình */}
-        <button
-          type="button"
-          onClick={() => onSelectModule('travel-book')}
-          className={`flex flex-col items-center justify-center min-h-[44px] min-w-[44px] px-1 py-1 cursor-pointer transition-colors ${
-            currentModule === 'travel-book'
-              ? 'text-[#183B35] font-bold'
-              : 'text-[#606864] hover:text-[#1D211F]'
-          }`}
-        >
-          <BookOpen className="w-5 h-5" strokeWidth={1.75} />
-          <span className="text-[10px] leading-tight mt-0.5">Lịch trình</span>
-        </button>
-
-        {/* Center Floating AI Button */}
+        {/* Module 2: Tạo kế hoạch bằng AI */}
         <button
           type="button"
           onClick={() => onSelectModule('ai-planner')}
-          className="w-11 h-11 rounded-full bg-[#183B35] text-white flex flex-col items-center justify-center shadow-md shadow-[#183B35]/30 hover:bg-[#28584E] transition-all cursor-pointer -mt-4 border-2 border-white shrink-0"
-          aria-label="Tạo lịch trình AI mới"
-          title="Tạo lịch trình AI"
+          className={`flex items-center justify-center min-h-[44px] min-w-[44px] rounded-full transition-all duration-300 ${
+            currentModule === 'ai-planner'
+              ? 'text-[#183B35] bg-[#E9F0ED]'
+              : 'text-[#8D9490] hover:text-[#1D211F] hover:bg-slate-50'
+          }`}
+          aria-label="Tạo kế hoạch AI"
         >
-          <Sparkles className="w-5 h-5 text-amber-200" strokeWidth={2} />
+          <Sparkles className="w-6 h-6" strokeWidth={currentModule === 'ai-planner' ? 2.5 : 1.75} />
+        </button>
+
+        {/* Center Floating Lịch Trình Button */}
+        <button
+          type="button"
+          onClick={() => onSelectModule('travel-book')}
+          className={`w-[52px] h-[52px] rounded-full flex flex-col items-center justify-center transition-all duration-300 cursor-pointer -mt-6 border-4 border-white shrink-0 shadow-lg ${
+            currentModule === 'travel-book'
+              ? 'bg-[#183B35] text-white shadow-[#183B35]/40 scale-105'
+              : 'bg-[#2E8B57] text-white shadow-[#2E8B57]/30 hover:bg-[#183B35]'
+          }`}
+          aria-label="Lịch trình"
+          title="Lịch trình"
+        >
+          <BookOpen className="w-[22px] h-[22px]" strokeWidth={2.5} />
         </button>
 
         {/* Module 4: Địa điểm */}
         <button
           type="button"
           onClick={() => onSelectModule('my-places')}
-          className={`flex flex-col items-center justify-center min-h-[44px] min-w-[44px] px-1 py-1 cursor-pointer transition-colors ${
+          className={`flex items-center justify-center min-h-[44px] min-w-[44px] rounded-full transition-all duration-300 ${
             currentModule === 'my-places'
-              ? 'text-[#183B35] font-bold'
-              : 'text-[#606864] hover:text-[#1D211F]'
+              ? 'text-[#183B35] bg-[#E9F0ED]'
+              : 'text-[#8D9490] hover:text-[#1D211F] hover:bg-slate-50'
           }`}
+          aria-label="Địa điểm"
         >
-          <MapPin className="w-5 h-5" strokeWidth={1.75} />
-          <span className="text-[10px] leading-tight mt-0.5">Địa điểm</span>
+          <MapPin className="w-6 h-6" strokeWidth={currentModule === 'my-places' ? 2.5 : 1.75} />
         </button>
 
         {/* Module 5: Nhật ký */}
         <button
           type="button"
           onClick={() => onSelectModule('travel-diary')}
-          className={`flex flex-col items-center justify-center min-h-[44px] min-w-[44px] px-1 py-1 cursor-pointer transition-colors ${
+          className={`flex items-center justify-center min-h-[44px] min-w-[44px] rounded-full transition-all duration-300 ${
             currentModule === 'travel-diary'
-              ? 'text-[#183B35] font-bold'
-              : 'text-[#606864] hover:text-[#1D211F]'
+              ? 'text-[#183B35] bg-[#E9F0ED]'
+              : 'text-[#8D9490] hover:text-[#1D211F] hover:bg-slate-50'
           }`}
+          aria-label="Nhật ký"
         >
-          <Bookmark className="w-5 h-5" strokeWidth={1.75} />
-          <span className="text-[10px] leading-tight mt-0.5">Nhật ký</span>
-        </button>
-
-        {/* Account / Family */}
-        <button
-          type="button"
-          onClick={() => onSelectModule('account')}
-          className={`flex flex-col items-center justify-center min-h-[44px] min-w-[44px] px-1 py-1 cursor-pointer transition-colors ${
-            currentModule === 'account'
-              ? 'text-[#183B35] font-bold'
-              : 'text-[#606864] hover:text-[#1D211F]'
-          }`}
-        >
-          <User className="w-5 h-5" strokeWidth={1.75} />
-          <span className="text-[10px] leading-tight mt-0.5">Gia đình</span>
+          <Bookmark className="w-6 h-6" strokeWidth={currentModule === 'travel-diary' ? 2.5 : 1.75} />
         </button>
       </div>
     </div>
   );
-};
+});
 
