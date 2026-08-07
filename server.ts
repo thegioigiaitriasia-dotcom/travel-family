@@ -210,12 +210,15 @@ async function enrichPlanWithRealPlaces(plan: any, supabaseAdminClient: any, goo
         },
       });
 
+      const startTime24h = tripInput.tripWindow?.startTime || '07:00';
+      const endTime24h = tripInput.tripWindow?.endTime || '20:00';
+
       const prompt = `
 Bạn là Chuyên gia Lập Lịch Trình Du Lịch Gia Đình Việt Nam cao cấp (AI Family Travel Planner).
 Hãy tạo một Kế hoạch chuyến đi du lịch gia đình đa chặng / đa điểm đến dựa trên thông tin chi tiết được cung cấp:
 
 THÔNG TIN CHUYẾN ĐI:
-- Khung thời gian: Từ ${tripInput.tripWindow?.startDate || 'ngay'} (${tripInput.tripWindow?.startTime || '07:00'}) đến ${tripInput.tripWindow?.endDate || 'ngay'} (${tripInput.tripWindow?.endTime || '18:00'})
+- Khung thời gian: Từ ${tripInput.tripWindow?.startDate || 'ngày xuất phát'} (Giờ khởi hành: ${startTime24h}) đến ${tripInput.tripWindow?.endDate || 'ngày về'} (Giờ kết thúc: ${endTime24h})
 - Các điểm dừng trong lộ trình: ${JSON.stringify(tripInput.routeStops || [])}
 - Phương tiện di chuyển các chặng: ${JSON.stringify(tripInput.journeyLegs || [])}
 - Nơi lưu trú từng điểm: ${JSON.stringify(tripInput.accommodations || [])}
@@ -225,6 +228,14 @@ THÔNG TIN CHUYẾN ĐI:
 - Điều tránh: ${JSON.stringify(tripInput.avoidPreferences || [])}
 - Sở thích ăn uống: ${JSON.stringify(tripInput.foodPreferences || [])}
 - Ngân sách toàn chuyến: Tổng ${tripInput.budget?.total?.toLocaleString('vi-VN') || '20.000.000'} VND (Đã trả trước: ${JSON.stringify(tripInput.budget?.alreadyPaid || {})})
+
+QUY TẮC QUAN TRỌNG VỀ THỜI GIAN:
+1. Tất cả các trường "startTime" và "endTime" PHẢI ở định dạng 24 giờ (HH:MM), ví dụ "08:30", "13:00", "19:45".
+2. Ngày 1: Hoạt động đầu tiên PHẢI bắt đầu đúng vào giờ khởi hành "${startTime24h}".
+3. Ngày cuối: Hoạt động cuối cùng PHẢI kết thúc trước hoặc đúng giờ kết thúc "${endTime24h}".
+4. Các ngày còn lại: Thường bắt đầu lúc 07:00 và kết thúc lúc 21:00-22:00 (sau bữa tối).
+5. Mỗi hoạt động phải có CẢ startTime VÀ endTime hợp lý (ví dụ: tham quan 1.5-2 tiếng, ăn uống 1 tiếng, di chuyển phù hợp với khoảng cách).
+6. Các hoạt động phải nối tiếp nhau liên tục, không có khoảng trống thời gian vô lý.
 
 YÊU CẦU ĐẦU RA JSON TỰ ĐỘNG:
 Hãy trả về JSON duy nhất với cấu trúc:
@@ -241,7 +252,8 @@ Hãy trả về JSON duy nhất với cấu trúc:
       "theme": "Chủ đề ngày 1",
       "activities": [
         {
-          "time": "08:00",
+          "startTime": "08:30",
+          "endTime": "10:00",
           "title": "Tên hoạt động/địa điểm",
           "category": "Attraction" | "Restaurant" | "Transport" | "Hotel" | "Rest",
           "description": "Mô tả chi tiết và lưu ý gia đình",
@@ -256,11 +268,11 @@ Hãy trả về JSON duy nhất với cấu trúc:
 `;
 
       const response = await ai.models.generateContent({
-        model: 'gemini-2.0-flash', // ✅ Model chính xác (gemini-3.6-flash không tồn tại)
+        model: 'gemini-2.0-flash',
         contents: prompt,
         config: {
           systemInstruction:
-            'Bạn là AI lập kế hoạch du lịch chuyên nghiệp dành cho gia đình Việt Nam. Hãy trả về kết quả đúng cấu trúc JSON, bằng tiếng Việt chuẩn, tinh tế và chu đáo.',
+            'Bạn là AI lập kế hoạch du lịch chuyên nghiệp dành cho gia đình Việt Nam. Hãy trả về kết quả đúng cấu trúc JSON, bằng tiếng Việt chuẩn, tinh tế và chu đáo. Mọi trường thời gian phải ở định dạng 24 giờ HH:MM.',
           responseMimeType: 'application/json',
           responseSchema: {
             type: Type.OBJECT,
@@ -286,7 +298,8 @@ Hãy trả về JSON duy nhất với cấu trúc:
                       items: {
                         type: Type.OBJECT,
                         properties: {
-                          time: { type: Type.STRING },
+                          startTime: { type: Type.STRING },
+                          endTime: { type: Type.STRING },
                           title: { type: Type.STRING },
                           category: { type: Type.STRING },
                           description: { type: Type.STRING },
@@ -294,7 +307,7 @@ Hãy trả về JSON duy nhất với cấu trúc:
                           estimatedCost: { type: Type.STRING },
                           familyTip: { type: Type.STRING },
                         },
-                        required: ['time', 'title', 'category', 'description'],
+                        required: ['startTime', 'endTime', 'title', 'category', 'description'],
                       },
                     },
                   },

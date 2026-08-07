@@ -463,8 +463,8 @@ export default function App() {
               return {
                 id: `act-${dIdx}-${aIdx}-${Date.now()}`,
                 type,
-                startTime: act.time || '08:00',
-                endTime: act.endTime || (act.time ? `${parseInt(act.time.split(':')[0]) + 2}:00` : '10:00'),
+                startTime: act.startTime || act.time || '08:00',
+                endTime: act.endTime || (act.startTime ? `${parseInt(act.startTime.split(':')[0]) + 2}:00` : act.time ? `${parseInt(act.time.split(':')[0]) + 2}:00` : '10:00'),
                 title: act.title || act.locationName || 'Hoạt động',
                 description: act.description || '',
                 status: 'upcoming',
