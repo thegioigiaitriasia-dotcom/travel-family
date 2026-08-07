@@ -124,6 +124,60 @@ async function enrichPlanWithRealPlaces(plan: any, supabaseAdminClient: any, goo
 }
 
   // ==========================================================================
+  // Phase 2.5: Profile & Family Account APIs (bypass RLS dùng supabaseAdmin)
+  // ==========================================================================
+
+  // GET /api/get-profile?userId=xxx
+  app.get('/api/get-profile', async (req, res) => {
+    try {
+      const { userId } = req.query;
+      if (!userId) return res.status(400).json({ success: false, message: 'Missing userId' });
+      const { data, error } = await supabaseAdmin.from('profiles').select('*').eq('id', userId as string).maybeSingle();
+      if (error) return res.status(400).json({ success: false, message: error.message });
+      return res.json({ success: true, profile: data });
+    } catch (err: any) { return res.status(500).json({ success: false, message: err.message }); }
+  });
+
+  // GET /api/get-profiles (admin only - all profiles)
+  app.get('/api/get-profiles', async (req, res) => {
+    try {
+      const { data, error } = await supabaseAdmin.from('profiles').select('*').order('created_at', { ascending: false });
+      if (error) return res.status(400).json({ success: false, message: error.message });
+      return res.json({ success: true, profiles: data });
+    } catch (err: any) { return res.status(500).json({ success: false, message: err.message }); }
+  });
+
+  // GET /api/get-family-members?familyId=xxx
+  // Bypass RLS — lấy toàn bộ thành viên gia đình bằng admin key
+  app.get('/api/get-family-members', async (req, res) => {
+    try {
+      const { familyId } = req.query;
+      if (!familyId) return res.status(400).json({ success: false, message: 'Missing familyId' });
+      const [membersRes, familyRes] = await Promise.all([
+        supabaseAdmin.from('profiles').select('*').eq('family_account_id', familyId as string),
+        supabaseAdmin.from('family_accounts').select('*').eq('id', familyId as string).maybeSingle(),
+      ]);
+      if (membersRes.error) return res.status(400).json({ success: false, message: membersRes.error.message });
+      return res.json({
+        success: true,
+        members: membersRes.data || [],
+        family: familyRes.data || null,
+      });
+    } catch (err: any) { return res.status(500).json({ success: false, message: err.message }); }
+  });
+
+  // POST /api/update-profile
+  app.post('/api/update-profile', async (req, res) => {
+    try {
+      const { userId, updates } = req.body;
+      if (!userId || !updates) return res.status(400).json({ success: false, message: 'Missing userId or updates' });
+      const { error } = await supabaseAdmin.from('profiles').update(updates).eq('id', userId);
+      if (error) return res.status(400).json({ success: false, message: error.message });
+      return res.json({ success: true });
+    } catch (err: any) { return res.status(500).json({ success: false, message: err.message }); }
+  });
+
+  // ==========================================================================
   // Phase 3: Google Places API Proxy
   // POST /api/places/search
   // GET /api/places/photo

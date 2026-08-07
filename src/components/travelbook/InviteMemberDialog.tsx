@@ -24,7 +24,7 @@ export const InviteMemberDialog: React.FC<InviteMemberDialogProps> = ({
   if (!isOpen) return null;
 
   const code = inviteCode || 'VIVU-XXXX';
-  const appBaseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://travel-family-nu.vercel.app';
+  const appBaseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://giadinhvivu.com';
   // Link dẫn thẳng tới tab "Mã mời" trong app
   const inviteLink = `${appBaseUrl}/?invite=${encodeURIComponent(code)}`;
 

@@ -18,7 +18,8 @@ export const ShareTripDialog: React.FC<ShareTripDialogProps> = ({
 
   if (!isOpen) return null;
 
-  const shareUrl = `https://travelbook.ai/trips/bmt-camranh-2026?permission=${permission}`;
+  const appBaseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://giadinhvivu.com';
+  const shareUrl = `${appBaseUrl}/?trip=${tripTitle ? encodeURIComponent(tripTitle) : 'shared'}&permission=${permission}`;
 
   const handleCopy = () => {
     navigator.clipboard.writeText(shareUrl);

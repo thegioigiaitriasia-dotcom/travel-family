@@ -56,7 +56,8 @@ export const AccountPage: React.FC<AccountPageProps> = ({
   const [editFamilyName, setEditFamilyName] = useState(familyAccount.familyName);
   const [editOwnerName, setEditOwnerName] = useState(currentUser.name);
 
-  const inviteLink = `https://giadinhvivu.com/join?code=${familyAccount.inviteCode}`;
+  const appBaseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://giadinhvivu.com';
+  const inviteLink = `${appBaseUrl}/?invite=${encodeURIComponent(familyAccount.inviteCode)}`;
 
   const handleCopyLink = () => {
     navigator.clipboard.writeText(inviteLink);

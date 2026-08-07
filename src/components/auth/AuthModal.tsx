@@ -46,28 +46,33 @@ async function buildSessionFromSupabase(
     members: [member],
   };
 
-  // Tải toàn bộ members
+  // Tải toàn bộ members — dùng API backend để bypass RLS
   if (profile?.family_account_id) {
-    const { data: membersRes } = await supabase.from('profiles').select('*').eq('family_account_id', profile.family_account_id);
-    const { data: famRes } = await supabase.from('family_accounts').select('*').eq('id', profile.family_account_id).maybeSingle();
-    
-    if (famRes) {
-      familyAccount.familyName = famRes.family_name || familyAccount.familyName;
-      familyAccount.inviteCode = famRes.invite_code || familyAccount.inviteCode;
-    }
-    
-    if (membersRes && membersRes.length > 0) {
-      familyAccount.members = membersRes.map((m: any) => ({
-        id: m.id,
-        name: m.full_name || m.email?.split('@')[0] || 'Thành viên',
-        username: m.email?.split('@')[0] || '', // pseudo username
-        role: m.role || 'Thành viên',
-        avatar: m.avatar_url || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=120&auto=format&fit=crop&q=80',
-        email: m.email,
-        joinedDate: new Date(m.created_at || Date.now()).toLocaleDateString('vi-VN'),
-        isAdmin: m.is_admin === true,
-        status: m.status || 'active',
-      }));
+    const appUrl = typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000';
+    try {
+      const famMembersRes = await fetch(`${appUrl}/api/get-family-members?familyId=${encodeURIComponent(profile.family_account_id)}`).then(r => r.json());
+      
+      if (famMembersRes.success && famMembersRes.family) {
+        familyAccount.familyName = famMembersRes.family.family_name || familyAccount.familyName;
+        familyAccount.inviteCode = famMembersRes.family.invite_code || familyAccount.inviteCode;
+        familyAccount.avatar = famMembersRes.family.avatar || familyAccount.avatar;
+      }
+
+      if (famMembersRes.success && famMembersRes.members && famMembersRes.members.length > 0) {
+        familyAccount.members = famMembersRes.members.map((m: any) => ({
+          id: m.id,
+          name: m.full_name || m.email?.split('@')[0] || 'Thành viên',
+          username: m.email?.split('@')[0] || '',
+          role: m.role || 'Thành viên',
+          avatar: m.avatar_url || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=120&auto=format&fit=crop&q=80',
+          email: m.email,
+          joinedDate: new Date(m.created_at || Date.now()).toLocaleDateString('vi-VN'),
+          isAdmin: m.is_admin === true,
+          status: m.status || 'active',
+        }));
+      }
+    } catch {
+      // Fallback: giữ thành viên mặc định (chỉ chính mình)
     }
   }
 

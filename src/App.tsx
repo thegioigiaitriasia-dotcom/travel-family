@@ -84,25 +84,21 @@ export default function App() {
         members: [member],
       };
 
-      // Tải family_accounts và toàn bộ profiles (thành viên)
+      // Tải family_accounts và toàn bộ profiles (thành viên) — dùng API backend để bypass RLS
       if (profile?.family_account_id) {
-        const [famRes, membersRes] = await Promise.all([
-          supabase.from('family_accounts').select('*').eq('id', profile.family_account_id).maybeSingle(),
-          supabase.from('profiles').select('*').eq('family_account_id', profile.family_account_id)
-        ]);
+        const famMembersRes = await fetch(`${appUrl}/api/get-family-members?familyId=${encodeURIComponent(profile.family_account_id)}`).then(r => r.json());
 
-        if (famRes.data) {
-          familyAccount.familyName = famRes.data.family_name || familyAccount.familyName;
-          familyAccount.inviteCode = famRes.data.invite_code || familyAccount.inviteCode;
-          familyAccount.avatar = famRes.data.avatar || familyAccount.avatar;
-          // owner is already set conceptually, could be refined
+        if (famMembersRes.success && famMembersRes.family) {
+          familyAccount.familyName = famMembersRes.family.family_name || familyAccount.familyName;
+          familyAccount.inviteCode = famMembersRes.family.invite_code || familyAccount.inviteCode;
+          familyAccount.avatar = famMembersRes.family.avatar || familyAccount.avatar;
         }
 
-        if (membersRes.data && membersRes.data.length > 0) {
-          familyAccount.members = membersRes.data.map((m: any) => ({
+        if (famMembersRes.success && famMembersRes.members && famMembersRes.members.length > 0) {
+          familyAccount.members = famMembersRes.members.map((m: any) => ({
             id: m.id,
             name: m.full_name || m.email?.split('@')[0] || 'Thành viên',
-            username: m.email?.split('@')[0] || '', // pseudo username
+            username: m.email?.split('@')[0] || '',
             role: m.role || 'Thành viên',
             avatar: m.avatar_url || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=120&auto=format&fit=crop&q=80',
             email: m.email,
