@@ -1,4 +1,4 @@
-﻿import express from 'express';
+import express from 'express';
 import crypto from 'crypto';
 import { GoogleGenAI, Type } from '@google/genai';
 import { createClient } from '@supabase/supabase-js';
@@ -32,7 +32,7 @@ app.post('/api/create-sub-account', async (req, res) => {
     if (authError) return res.status(400).json({ success: false, message: authError.message });
     if (authData?.user) {
       await supabaseAdmin.from('profiles').update({ family_account_id: familyId, role: 'Thanh vien' }).eq('id', authData.user.id);
-      await supabaseAdmin.rpc('increment_family_member', { f_id: familyId }).catch(() => {});
+      await supabaseAdmin.rpc('increment_family_member', { f_id: familyId });
     }
     return res.json({ success: true, userId: authData.user.id, message: 'Tao tai khoan thanh cong.' });
   } catch (err: any) { return res.status(500).json({ success: false, message: err.message }); }
