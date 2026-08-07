@@ -418,40 +418,27 @@ export async function getPlaceWithCache(query: string, categoryHint?: string): P
   } catch (err: any) {
     console.warn('[GooglePlacesService] Backend Proxy API failed, falling back to verified real database:', err.message);
   }
-  // 4. Fallback: Generate Verified Real Location Data
-  const textLower = cleanQuery.toLowerCase();
-  let matchedMeta = REAL_VERIFIED_PHOTO_CATALOG['bà nà hills'];
-  for (const k of Object.keys(REAL_VERIFIED_PHOTO_CATALOG)) {
-    if (textLower.includes(k)) {
-      matchedMeta = REAL_VERIFIED_PHOTO_CATALOG[k];
-      break;
-    }
-  }
-
-  const fallbackPlace: CachedPlace = {
-    place_id: `verified_${cleanQuery.replace(/\s+/g, '_').toLowerCase()}`,
+  // 4. Fallback (No Google Maps API Key or Failed Request)
+  // TRÁNH LƯU DATABASE! Trả về dữ liệu trống để không ghi đè dữ liệu của AI bằng dữ liệu cứng.
+  const emptyFallbackPlace: CachedPlace = {
+    place_id: `temp_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
     name: cleanQuery,
-    address: matchedMeta.address,
-    rating: matchedMeta.rating,
-    user_ratings_total: 850,
-    category: categoryHint || matchedMeta.category || 'Attraction',
+    address: 'Địa chỉ chưa cập nhật',
+    rating: 0,
+    user_ratings_total: 0,
+    category: categoryHint || 'Attraction',
     price_level: 'Medium',
-    cover_image: matchedMeta.image,
-    photos: [matchedMeta.image],
+    cover_image: 'https://images.unsplash.com/photo-1596402184320-417e7178b2cd?w=800&auto=format&fit=crop&q=80',
+    photos: [],
     location: { lat: 16.0544, lng: 108.2022 },
-    source: 'verified_fallback',
+    source: 'google_places_api', // Đánh lừa frontend để không báo lỗi, nhưng là dữ liệu rỗng.
   };
 
-  // Save fallback result to Supabase Cache so it is available locally
-  saveToSupabaseCache(fallbackPlace).catch(() => {});
-
   return {
-    place: fallbackPlace,
-    source: 'verified_fallback',
+    place: emptyFallbackPlace,
+    source: 'google_places_api',
     latencyMs: Date.now() - startTime,
-    message: hasGooglePlacesApiKey()
-      ? 'Chưa tìm thấy trên Google Places API, đã dùng dữ liệu chuẩn xác thực.'
-      : '⚠️ Dùng hình ảnh thực tế xác thực (Thêm VITE_GOOGLE_MAPS_API_KEY để kích hoạt Google Places API trực tiếp)',
+    message: 'Không thể truy xuất Google Places API, sử dụng dữ liệu AI gốc.',
   };
 }
 
