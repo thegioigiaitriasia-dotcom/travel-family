@@ -411,9 +411,62 @@ export default function App() {
     }
 
     let aiPlanData = null;
+    let normalizedDays = [];
+    let prepItems = [];
     try {
       const saved = localStorage.getItem('generated_ai_plan');
-      if (saved) aiPlanData = JSON.parse(saved);
+      if (saved) {
+        aiPlanData = JSON.parse(saved);
+        
+        // Normalize AI data to TravelBook schema
+        if (aiPlanData.days && Array.isArray(aiPlanData.days)) {
+          normalizedDays = aiPlanData.days.map((day: any, dIdx: number) => ({
+            id: `day-${dIdx + 1}`,
+            dayNumber: day.dayNumber || dIdx + 1,
+            dateStr: day.date || new Date(Date.now() + dIdx * 86400000).toLocaleDateString('vi-VN'),
+            title: day.theme || `Ngày ${dIdx + 1}`,
+            destinationName: day.cityName || destination,
+            activities: (day.activities || []).map((act: any, aIdx: number) => {
+              // Map AI category to TravelActivityType
+              let type = 'sightseeing';
+              const cat = (act.category || '').toLowerCase();
+              if (cat.includes('restaur') || cat.includes('food') || cat.includes('ăn')) type = 'dining';
+              else if (cat.includes('trans') || cat.includes('di chuyển')) type = 'transport';
+              else if (cat.includes('hotel') || cat.includes('lưu trú')) type = 'accommodation';
+              else if (cat.includes('rest') || cat.includes('nghỉ')) type = 'rest';
+              
+              let estimatedCost = 0;
+              if (act.estimatedCost) {
+                const numericCost = String(act.estimatedCost).replace(/[^0-9]/g, '');
+                if (numericCost) estimatedCost = parseInt(numericCost);
+              }
+
+              return {
+                id: `act-${dIdx}-${aIdx}-${Date.now()}`,
+                type,
+                startTime: act.time || '08:00',
+                endTime: act.endTime || (act.time ? `${parseInt(act.time.split(':')[0]) + 2}:00` : '10:00'),
+                title: act.title || act.locationName || 'Hoạt động',
+                description: act.description || '',
+                status: 'upcoming',
+                place: { name: act.locationName || act.title || '' },
+                familyTips: act.familyTip ? [act.familyTip] : [],
+                estimatedCost
+              };
+            })
+          }));
+        }
+
+        // Generate some prep items from family advices
+        if (aiPlanData.familyAdvice && Array.isArray(aiPlanData.familyAdvice)) {
+          prepItems = aiPlanData.familyAdvice.map((advice: string, idx: number) => ({
+            id: `prep-${idx}`,
+            category: 'health',
+            name: advice,
+            status: 'pending'
+          }));
+        }
+      }
     } catch {}
 
     const newTripId = `trip-${Date.now()}`;
@@ -435,7 +488,11 @@ export default function App() {
       accommodationCount: 1,
       budgetMin: aiPlanData?.budgetEstimatedMin || 8000000,
       budgetMax: aiPlanData?.budgetEstimatedMax || 12000000,
-      fullData: aiPlanData || {},
+      fullData: aiPlanData ? {
+        ...aiPlanData,
+        days: normalizedDays,
+        prepItems: prepItems
+      } : {},
     };
 
     const updated = [newTrip, ...userTrips];
