@@ -9,6 +9,7 @@ interface TravelBookModuleProps {
   onNavigateToPlanner?: () => void;
   onNavigateToPlaces?: () => void;
   onNavigateToDiary?: () => void;
+  onUpdateTrip?: (updatedFields: Partial<TravelBook>) => void;
 }
 
 export const TravelBookModule: React.FC<TravelBookModuleProps> = ({
@@ -17,6 +18,7 @@ export const TravelBookModule: React.FC<TravelBookModuleProps> = ({
   onNavigateToPlanner,
   onNavigateToPlaces,
   onNavigateToDiary,
+  onUpdateTrip,
 }) => {
   return (
     <TripOverviewPage
@@ -25,6 +27,7 @@ export const TravelBookModule: React.FC<TravelBookModuleProps> = ({
       onNavigateToPlanner={onNavigateToPlanner}
       onNavigateToPlaces={onNavigateToPlaces}
       onNavigateToDiary={onNavigateToDiary}
+      onUpdateTrip={onUpdateTrip}
     />
   );
 };

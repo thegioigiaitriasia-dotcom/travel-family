@@ -34,6 +34,7 @@ interface TripOverviewPageProps {
   onNavigateToPlanner?: () => void;
   onNavigateToPlaces?: () => void;
   onNavigateToDiary?: () => void;
+  onUpdateTrip?: (updatedFields: Partial<TravelBook>) => void;
 }
 
 export const TripOverviewPage: React.FC<TripOverviewPageProps> = ({
@@ -42,8 +43,20 @@ export const TripOverviewPage: React.FC<TripOverviewPageProps> = ({
   onNavigateToPlanner = () => {},
   onNavigateToPlaces = () => {},
   onNavigateToDiary = () => {},
+  onUpdateTrip,
 }) => {
   const [trip, setTrip] = useState<TravelBook | undefined>(initialTrip);
+
+  const handleSetTrip = (updater: React.SetStateAction<TravelBook | undefined>) => {
+    setTrip((prev) => {
+      const next = typeof updater === 'function' ? (updater as any)(prev) : updater;
+      if (next && onUpdateTrip) {
+        // Send the entire updated state to parent
+        onUpdateTrip(next);
+      }
+      return next;
+    });
+  };
 
   React.useEffect(() => {
     setTrip(initialTrip);
@@ -79,12 +92,13 @@ export const TripOverviewPage: React.FC<TripOverviewPageProps> = ({
 
   // Update Trip Callback
   const handleUpdateTrip = (updatedFields: Partial<TravelBook>) => {
-    setTrip((prev) => ({ ...prev, ...updatedFields }));
+    handleSetTrip((prev) => prev ? { ...prev, ...updatedFields } : prev);
   };
 
   // Add Activity to specified Day from Recommended Section
   const handleAddActivityToDay = (dayNum: number, activityData: Partial<TravelActivity>) => {
-    setTrip((prev) => {
+    handleSetTrip((prev) => {
+      if (!prev) return prev;
       const updatedDays = prev.days.map((d) => {
         if (d.dayNumber === dayNum) {
           const fullActivity: TravelActivity = {
@@ -110,9 +124,9 @@ export const TripOverviewPage: React.FC<TripOverviewPageProps> = ({
     });
   };
 
-  // Accommodation Save Handler
   const handleSaveAccommodation = (acc: AccommodationItem) => {
-    setTrip((prev) => {
+    handleSetTrip((prev) => {
+      if (!prev) return prev;
       const existing = prev.accommodations.find((a) => a.name === acc.name || a.period === acc.period);
       if (existing) {
         return {
@@ -144,7 +158,6 @@ export const TripOverviewPage: React.FC<TripOverviewPageProps> = ({
     });
   };
 
-  // Preparation Item Click Handler
   const handlePrepRowClick = (item: PreparationRowItem) => {
     if (item.routeKey === 'share') {
       setIsShareOpen(true);
@@ -163,13 +176,11 @@ export const TripOverviewPage: React.FC<TripOverviewPageProps> = ({
     }
   };
 
-  // Delete Trip Confirm
   const handleConfirmDelete = () => {
     setIsDeleteOpen(false);
     onNavigateHome();
   };
 
-  // Active Day object if tab is a day number
   const activeDay = typeof selectedTab === 'number'
     ? trip.days.find((d) => d.dayNumber === selectedTab) || trip.days[0]
     : null;
@@ -186,9 +197,7 @@ export const TripOverviewPage: React.FC<TripOverviewPageProps> = ({
   return (
     <div className="min-h-screen bg-slate-50/50 text-slate-900 font-sans flex flex-col justify-between pb-20 sm:pb-12">
       <div>
-        {/* Main Container max-width 1280px */}
         <main className="max-w-[1280px] mx-auto px-4 sm:px-8 py-6 space-y-6">
-          {/* 3. Hero Section */}
           <TripHero
             trip={trip}
             onOpenShare={() => setIsShareOpen(true)}
@@ -203,7 +212,6 @@ export const TripOverviewPage: React.FC<TripOverviewPageProps> = ({
             onOpenBookingVault={handleOpenBookingVault}
           />
 
-          {/* 4. Day Navigation Bar */}
           <div className="sticky top-[72px] z-30 bg-slate-50/95 backdrop-blur-md pt-2 pb-1">
             <TripDayNavigation
               days={trip.days}
@@ -212,13 +220,9 @@ export const TripOverviewPage: React.FC<TripOverviewPageProps> = ({
             />
           </div>
 
-          {/* 5. Main Tab Content */}
           {selectedTab === 'overview' ? (
-            /* 2 Column Layout: Main Column + Right Sidebar */
             <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_340px] gap-6">
-              {/* Left Main Column */}
               <div className="space-y-6 min-w-0">
-                {/* 5a. Trip Summary Stats Grid */}
                 <TripStatGrid
                   durationText={`${trip.durationDays} ngày ${trip.durationNights} đêm`}
                   destinationCount={trip.destinations.length}
@@ -237,12 +241,10 @@ export const TripOverviewPage: React.FC<TripOverviewPageProps> = ({
                   }}
                 />
 
-                {/* 5b. Tuyến hành trình Route Card */}
                 <div id="route-section">
                   <TripRouteCard onOpenMap={() => setIsMapOpen(true)} />
                 </div>
 
-                {/* 5c. Lưu trú Accommodations Section */}
                 <div id="accommodation-section">
                   <AccommodationSection
                     onAddAccommodation={() => {
@@ -259,27 +261,22 @@ export const TripOverviewPage: React.FC<TripOverviewPageProps> = ({
                   />
                 </div>
 
-                {/* 5d. Địa điểm tham quan, Tour & Vui chơi gợi ý */}
                 <RecommendedAttractionsSection
                   daysCount={trip.days.length}
                   onAddActivityToDay={handleAddActivityToDay}
                 />
 
-                {/* 5e. Món nên thử Recommended Foods */}
                 <RecommendedFoodSection
                   onViewAllFoods={() => onNavigateToPlaces()}
                 />
               </div>
 
-              {/* Right Sidebar (Sticky on Desktop) */}
               <div className="space-y-6 lg:sticky lg:top-[96px] lg:self-start">
-                {/* Preparation Status */}
                 <PreparationStatusCard
                   onSelectRow={handlePrepRowClick}
                   onOpenChecklistModal={() => setSelectedTab('checklist')}
                 />
 
-                {/* Budget Summary */}
                 <BudgetSummaryCard
                   userBudget={15000000}
                   estimatedMin={trip.budgetEstimatedMin}
@@ -287,12 +284,10 @@ export const TripOverviewPage: React.FC<TripOverviewPageProps> = ({
                   onViewBudgetDetail={() => setSelectedTab(1)}
                 />
 
-                {/* Trip Members */}
                 <TripMembersCard
                   onInviteMember={() => setIsInviteOpen(true)}
                 />
 
-                {/* Important Notes */}
                 <ImportantNotesCard
                   notes={trip.importantNotes}
                 />
@@ -301,7 +296,6 @@ export const TripOverviewPage: React.FC<TripOverviewPageProps> = ({
           ) : selectedTab === 'checklist' ? (
             <PreparationChecklistTab tripTitle={trip.title} />
           ) : (
-            /* Day View Tab when Day 1, Day 2, etc selected */
             activeDay && (
               <TripDayPage
                 trip={trip}
@@ -310,12 +304,15 @@ export const TripOverviewPage: React.FC<TripOverviewPageProps> = ({
                 onOpenShare={() => setIsShareOpen(true)}
                 onOpenBookingVault={handleOpenBookingVault}
                 onUpdateTripDay={(updatedDay) => {
-                  setTrip((prev) => ({
-                    ...prev,
-                    days: prev.days.map((d) =>
-                      d.dayNumber === updatedDay.dayNumber ? updatedDay : d
-                    ),
-                  }));
+                  handleSetTrip((prev) => {
+                    if (!prev) return prev;
+                    return {
+                      ...prev,
+                      days: prev.days.map((d) =>
+                        d.dayNumber === updatedDay.dayNumber ? updatedDay : d
+                      ),
+                    };
+                  });
                 }}
               />
             )
@@ -323,7 +320,6 @@ export const TripOverviewPage: React.FC<TripOverviewPageProps> = ({
         </main>
       </div>
 
-      {/* 6. Fixed Mobile Bottom Action Bar */}
       <MobileTripActions
         isOngoing={trip.status === 'ongoing'}
         onViewDay={() => setSelectedTab(1)}
@@ -337,7 +333,6 @@ export const TripOverviewPage: React.FC<TripOverviewPageProps> = ({
         }}
       />
 
-      {/* 7. Dialogs & Modals */}
       <ShareTripDialog
         isOpen={isShareOpen}
         onClose={() => setIsShareOpen(false)}
@@ -396,22 +391,28 @@ export const TripOverviewPage: React.FC<TripOverviewPageProps> = ({
         isOpen={!!editingActivity}
         onClose={() => setEditingActivity(null)}
         onSave={(updated) => {
-          setTrip((prev) => ({
-            ...prev,
-            days: prev.days.map((day) => ({
-              ...day,
-              activities: day.activities.map((act) => (act.id === updated.id ? updated : act)),
-            })),
-          }));
+          handleSetTrip((prev) => {
+            if (!prev) return prev;
+            return {
+              ...prev,
+              days: prev.days.map((day) => ({
+                ...day,
+                activities: day.activities.map((act) => (act.id === updated.id ? updated : act)),
+              })),
+            };
+          });
         }}
         onDelete={(actId) => {
-          setTrip((prev) => ({
-            ...prev,
-            days: prev.days.map((day) => ({
-              ...day,
-              activities: day.activities.filter((act) => act.id !== actId),
-            })),
-          }));
+          handleSetTrip((prev) => {
+            if (!prev) return prev;
+            return {
+              ...prev,
+              days: prev.days.map((day) => ({
+                ...day,
+                activities: day.activities.filter((act) => act.id !== actId),
+              })),
+            };
+          });
         }}
       />
 
@@ -420,7 +421,7 @@ export const TripOverviewPage: React.FC<TripOverviewPageProps> = ({
         isOpen={!!replacingActivity}
         onClose={() => setReplacingActivity(null)}
         onConfirmReplace={(actId, newTitle, newPlace) => {
-          setTrip((prev) => ({
+          handleSetTrip((prev) => ({
             ...prev,
             days: prev.days.map((day) => ({
               ...day,

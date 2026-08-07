@@ -232,7 +232,7 @@ export default function App() {
           status: trip.status,
           destinations: trip.destinations,
           budget: { min: trip.budgetMin, max: trip.budgetMax },
-          data: { memberCount: trip.memberCount, placeCount: trip.placeCount, foodCount: trip.foodCount, accommodationCount: trip.accommodationCount },
+          data: { ...trip.fullData, memberCount: trip.memberCount, placeCount: trip.placeCount, foodCount: trip.foodCount, accommodationCount: trip.accommodationCount },
           updated_at: new Date().toISOString(),
         });
       }
@@ -410,13 +410,19 @@ export default function App() {
       return;
     }
 
+    let aiPlanData = null;
+    try {
+      const saved = localStorage.getItem('generated_ai_plan');
+      if (saved) aiPlanData = JSON.parse(saved);
+    } catch {}
+
     const newTripId = `trip-${Date.now()}`;
     const newTrip: TripSummary = {
       id: newTripId,
-      title: destination,
-      coverImage: destination.toLowerCase().includes('đà lạt')
+      title: aiPlanData?.title || destination,
+      coverImage: aiPlanData?.coverImage || (destination.toLowerCase().includes('đà lạt')
         ? 'https://images.unsplash.com/photo-1506461883276-594a12b11cf3?w=800&auto=format&fit=crop&q=80'
-        : 'https://images.unsplash.com/photo-1596402184320-417e7178b2cd?w=800&auto=format&fit=crop&q=80',
+        : 'https://images.unsplash.com/photo-1596402184320-417e7178b2cd?w=800&auto=format&fit=crop&q=80'),
       startDate: new Date().toLocaleDateString('vi-VN'),
       endDate: new Date(Date.now() + days * 86400000).toLocaleDateString('vi-VN'),
       durationDays: days,
@@ -424,17 +430,40 @@ export default function App() {
       memberCount: session.familyAccount?.members.length || 4,
       status: 'planning',
       destinations: [destination],
-      placeCount: 8,
+      placeCount: aiPlanData?.days?.reduce((acc: number, d: any) => acc + (d.activities?.length || 0), 0) || 8,
       foodCount: 12,
       accommodationCount: 1,
-      budgetMin: 8000000,
-      budgetMax: 12000000,
+      budgetMin: aiPlanData?.budgetEstimatedMin || 8000000,
+      budgetMax: aiPlanData?.budgetEstimatedMax || 12000000,
+      fullData: aiPlanData || {},
     };
 
     const updated = [newTrip, ...userTrips];
     handleSaveUserTrips(updated);
     setSelectedTripId(newTripId);
     setCurrentModule('travel-book');
+    localStorage.removeItem('generated_ai_plan');
+  };
+
+  const handleUpdateTravelBook = (updatedFields: Partial<TravelBook>) => {
+    if (!selectedTripId || session.isDemoMode) return;
+    
+    const tripIndex = userTrips.findIndex(t => t.id === selectedTripId);
+    if (tripIndex === -1) return;
+    
+    const current = userTrips[tripIndex];
+    const newFullData = { ...(current.fullData || {}), ...updatedFields };
+    
+    const updatedTrip: TripSummary = {
+      ...current,
+      title: updatedFields.title || current.title,
+      coverImage: updatedFields.coverImage || current.coverImage,
+      fullData: newFullData
+    };
+    
+    const newTrips = [...userTrips];
+    newTrips[tripIndex] = updatedTrip;
+    handleSaveUserTrips(newTrips);
   };
 
   return (
