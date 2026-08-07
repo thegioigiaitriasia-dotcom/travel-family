@@ -177,7 +177,7 @@ export const AccountPage: React.FC<AccountPageProps> = ({
         });
         
         if (currentUser.role === 'Trưởng nhóm') {
-          updateFamilySettings(familyAccount.id, { avatar_url: publicUrl });
+          updateFamilySettings(familyAccount.id, { avatar: publicUrl });
         }
       } else {
         alert('Có lỗi xảy ra khi tải ảnh lên. Vui lòng thử lại sau.');

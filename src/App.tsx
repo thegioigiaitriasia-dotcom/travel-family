@@ -94,6 +94,7 @@ export default function App() {
         if (famRes.data) {
           familyAccount.familyName = famRes.data.family_name || familyAccount.familyName;
           familyAccount.inviteCode = famRes.data.invite_code || familyAccount.inviteCode;
+          familyAccount.avatar = famRes.data.avatar || familyAccount.avatar;
           // owner is already set conceptually, could be refined
         }
 

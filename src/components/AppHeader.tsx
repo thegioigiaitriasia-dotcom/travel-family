@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Bell, User, ChevronDown, LogOut, Settings, HelpCircle } from 'lucide-react';
 import { GiaDinhViVuLogo } from './common/GiaDinhViVuLogo';
+import { useAuth } from '../context/AuthContext';
 
 interface AppHeaderProps {
   onNavigateHome: () => void;
@@ -17,6 +18,9 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
 }) => {
   const [showNotifications, setShowNotifications] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
+  const { session } = useAuth();
+  
+  const user = session?.currentUser;
 
   return (
     <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200">
@@ -114,12 +118,12 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
             >
               <div className="w-9 h-9 rounded-full overflow-hidden border-2 border-emerald-500 shadow-sm">
                 <img
-                  src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=120&auto=format&fit=crop&q=80"
-                  alt="Phúc - Gia đình"
+                  src={user?.avatar || "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=120&auto=format&fit=crop&q=80"}
+                  alt={user?.name || "Thành viên"}
                   className="w-full h-full object-cover"
                 />
               </div>
-              <span className="hidden sm:block text-sm font-bold text-slate-800">Phúc</span>
+              <span className="hidden sm:block text-sm font-bold text-slate-800">{user?.name || "Tài khoản"}</span>
               <ChevronDown className="hidden sm:block w-4 h-4 text-slate-500" />
             </button>
 
@@ -127,8 +131,8 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
             {showUserMenu && (
               <div className="absolute right-0 mt-2 w-60 bg-white rounded-2xl shadow-xl border border-slate-200 p-2 z-50 text-sm">
                 <div className="px-3 py-2.5 border-b border-slate-100">
-                  <p className="font-bold text-slate-900">Phúc (Trưởng nhóm)</p>
-                  <p className="text-xs text-slate-500 mt-0.5">Gia đình 4 thành viên</p>
+                  <p className="font-bold text-slate-900">{user?.name || "Tài khoản"} ({user?.role || "Thành viên"})</p>
+                  <p className="text-xs text-slate-500 mt-0.5">{session?.familyAccount?.familyName || "Gia đình"}</p>
                 </div>
                 <div className="py-1">
                   <button className="w-full text-left px-3 py-2 rounded-xl hover:bg-slate-50 flex items-center gap-2 text-slate-700 font-medium">
