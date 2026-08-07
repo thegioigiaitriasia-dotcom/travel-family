@@ -42,8 +42,8 @@ export const GeneratingPlanState: React.FC<GeneratingPlanStateProps> = ({
           localStorage.setItem('generated_ai_plan', JSON.stringify(data.plan));
           if (data.source) {
             setGenerationSource(
-              data.source === 'gemini_2_0_flash' || data.source === 'gemini' || !data.source?.includes('fallback')
-                ? 'Được tạo trực tiếp bởi Gemini 2.0 Flash AI'
+              data.source === 'deepseek_chat' || !data.source?.includes('fallback')
+                ? 'Được tạo trực tiếp bởi Trí tuệ Nhân tạo DeepSeek'
                 : 'Được tối ưu bởi thuật toán thông minh'
             );
           }

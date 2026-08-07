@@ -253,18 +253,21 @@ app.post('/api/generate-plan', async (req, res) => {
   if (!checkRateLimit(ip, 50, 60000)) return res.status(429).json({ success: false, error: 'Qua nhieu yeu cau.' });
   try {
     const tripInput = req.body;
-    const apiKey = process.env.GEMINI_API_KEY;
-    if (!apiKey) return res.status(500).json({ success: false, error: 'GEMINI_API_KEY chưa được cấu hình' });
+    const apiKey = process.env.DEEPSEEK_API_KEY || process.env.GEMINI_API_KEY;
+    if (!apiKey) return res.status(500).json({ success: false, error: 'DEEPSEEK_API_KEY chưa được cấu hình' });
     const startTime24h = tripInput.tripWindow?.startTime || '07:00';
     const endTime24h = tripInput.tripWindow?.endTime || '20:00';
-    const ai = new GoogleGenAI({ apiKey, httpOptions: { headers: { 'User-Agent': 'aistudio-build' } } });
     const prompt = 'Lap lich trinh du lich gia dinh. Tu ' + (tripInput.tripWindow?.startDate || '') + ' (' + startTime24h + ') den ' + (tripInput.tripWindow?.endDate || '') + ' (' + endTime24h + '). Diem dung: ' + JSON.stringify(tripInput.routeStops || []) + '. Thanh vien: ' + JSON.stringify(tripInput.travelers || {}) + '. YEU CAU: startTime/endTime HH:MM 24h. Ngay 1 bat dau ' + startTime24h + '. Ngay cuoi ket thuc ' + endTime24h + '.';
-    const schema = { type: Type.OBJECT, properties: { title: { type: Type.STRING }, totalDays: { type: Type.NUMBER }, summary: { type: Type.STRING }, familyAdvice: { type: Type.ARRAY, items: { type: Type.STRING } }, days: { type: Type.ARRAY, items: { type: Type.OBJECT, properties: { dayNumber: { type: Type.NUMBER }, date: { type: Type.STRING }, cityName: { type: Type.STRING }, theme: { type: Type.STRING }, activities: { type: Type.ARRAY, items: { type: Type.OBJECT, properties: { startTime: { type: Type.STRING }, endTime: { type: Type.STRING }, title: { type: Type.STRING }, category: { type: Type.STRING }, description: { type: Type.STRING }, locationName: { type: Type.STRING }, estimatedCost: { type: Type.STRING }, familyTip: { type: Type.STRING } }, required: ['startTime', 'endTime', 'title', 'category', 'description'] } } }, required: ['dayNumber', 'cityName', 'theme', 'activities'] } } }, required: ['title', 'totalDays', 'summary', 'days'] };
-    const response = await ai.models.generateContent({ model: 'gemini-2.0-flash', contents: prompt, config: { systemInstruction: 'JSON tieng Viet, thoi gian 24h HH:MM', responseMimeType: 'application/json', responseSchema: schema } });
-    const plan = JSON.parse(response.text || '{}');
+    const sysPrompt = 'Bạn là chuyên gia thiết kế lịch trình. Luôn xuất kết quả dạng JSON nguyên bản hợp lệ, không dùng markdown. Trả về JSON với các key: title, totalDays, summary, familyAdvice, days (dayNumber, date, cityName, theme, activities (startTime, endTime, title, category, description, locationName, estimatedCost, familyTip)).';
+    const response = await fetch('https://api.deepseek.com/chat/completions', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${apiKey}` }, body: JSON.stringify({ model: 'deepseek-chat', response_format: { type: 'json_object' }, messages: [{ role: 'system', content: sysPrompt }, { role: 'user', content: prompt }] }) });
+    if (!response.ok) { const err = await response.json(); throw new Error(err.error?.message || 'Lỗi DeepSeek API'); }
+    const resData = await response.json();
+    let jsonText = resData.choices[0].message.content;
+    if (jsonText.startsWith('```')) { const match = jsonText.match(/```(json)?([\s\S]*?)```/); if (match) jsonText = match[2].trim(); }
+    const plan = JSON.parse(jsonText);
     const gKey = process.env.VITE_GOOGLE_MAPS_API_KEY || process.env.GOOGLE_MAPS_API_KEY || '';
     const enriched = await enrichPlan(plan, gKey);
-    return res.json({ success: true, source: 'gemini', plan: enriched });
+    return res.json({ success: true, source: 'deepseek_chat', plan: enriched });
   } catch (err: any) { return res.status(500).json({ success: false, error: err.message }); }
 });
 

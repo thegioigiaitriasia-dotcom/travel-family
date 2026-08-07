@@ -259,30 +259,20 @@ async function enrichPlanWithRealPlaces(plan: any, supabaseAdminClient: any, goo
 
     try {
       const tripInput = req.body;
-      const apiKey = process.env.GEMINI_API_KEY;
+      const apiKey = process.env.DEEPSEEK_API_KEY || process.env.GEMINI_API_KEY;
 
       if (!apiKey) {
-        console.error('[Gemini API] GEMINI_API_KEY environment variable is not set.');
+        console.error('[DeepSeek API] API KEY environment variable is not set.');
         return res.status(500).json({
           success: false,
-          error: 'GEMINI_API_KEY chưa được cấu hình trên server. Vui lòng thêm vào file .env',
+          error: 'DEEPSEEK_API_KEY chưa được cấu hình trên server. Vui lòng thêm vào file .env',
         });
       }
-
-      const ai = new GoogleGenAI({
-        apiKey,
-        httpOptions: {
-          headers: {
-            'User-Agent': 'aistudio-build',
-          },
-        },
-      });
 
       const startTime24h = tripInput.tripWindow?.startTime || '07:00';
       const endTime24h = tripInput.tripWindow?.endTime || '20:00';
 
-      const prompt = `
-Bạn là Chuyên gia Lập Lịch Trình Du Lịch Gia Đình Việt Nam cao cấp (AI Family Travel Planner).
+      const prompt = `Bạn là Chuyên gia Lập Lịch Trình Du Lịch Gia Đình Việt Nam cao cấp (AI Family Travel Planner).
 Hãy tạo một Kế hoạch chuyến đi du lịch gia đình đa chặng / đa điểm đến dựa trên thông tin chi tiết được cung cấp:
 
 THÔNG TIN CHUYẾN ĐI:
@@ -306,89 +296,64 @@ QUY TẮC QUAN TRỌNG VỀ THỜI GIAN:
 6. Các hoạt động phải nối tiếp nhau liên tục, không có khoảng trống thời gian vô lý.
 
 YÊU CẦU ĐẦU RA JSON TỰ ĐỘNG:
-Hãy trả về JSON duy nhất với cấu trúc:
+Hãy trả về JSON duy nhất với cấu trúc sau (không kèm markdown format ngoài):
 {
   "title": "Tên hấp dẫn cho chuyến đi gia đình",
-  "totalDays": số_ngày,
+  "totalDays": 3,
   "summary": "Tóm tắt ngắn gọn 2-3 câu về hành trình",
-  "familyAdvice": ["Gợi ý 1 cho sức khỏe/sự thoải mái của bé & người lớn", "Gợi ý 2", "Gợi ý 3"],
+  "familyAdvice": ["Gợi ý 1", "Gợi ý 2", "Gợi ý 3"],
   "days": [
     {
       "dayNumber": 1,
       "date": "YYYY-MM-DD",
       "cityName": "Tên thành phố/điểm dừng",
-      "theme": "Chủ đề ngày 1",
+      "theme": "Chủ đề ngày",
       "activities": [
         {
           "startTime": "08:30",
           "endTime": "10:00",
           "title": "Tên hoạt động/địa điểm",
-          "category": "Attraction" | "Restaurant" | "Transport" | "Hotel" | "Rest",
+          "category": "Attraction", 
           "description": "Mô tả chi tiết và lưu ý gia đình",
           "locationName": "Tên địa danh cụ thể",
           "estimatedCost": "Chi phí ước tính VND (ví dụ: 200.000đ)",
-          "familyTip": "Lưu ý riêng cho gia đình (ví dụ: bãi đỗ xe, chép xe đẩy, che nắng)"
+          "familyTip": "Lưu ý riêng cho gia đình"
         }
       ]
     }
   ]
-}
-`;
+}`;
 
-      const response = await ai.models.generateContent({
-        model: 'gemini-2.0-flash',
-        contents: prompt,
-        config: {
-          systemInstruction:
-            'Bạn là AI lập kế hoạch du lịch chuyên nghiệp dành cho gia đình Việt Nam. Hãy trả về kết quả đúng cấu trúc JSON, bằng tiếng Việt chuẩn, tinh tế và chu đáo. Mọi trường thời gian phải ở định dạng 24 giờ HH:MM.',
-          responseMimeType: 'application/json',
-          responseSchema: {
-            type: Type.OBJECT,
-            properties: {
-              title: { type: Type.STRING },
-              totalDays: { type: Type.NUMBER },
-              summary: { type: Type.STRING },
-              familyAdvice: {
-                type: Type.ARRAY,
-                items: { type: Type.STRING },
-              },
-              days: {
-                type: Type.ARRAY,
-                items: {
-                  type: Type.OBJECT,
-                  properties: {
-                    dayNumber: { type: Type.NUMBER },
-                    date: { type: Type.STRING },
-                    cityName: { type: Type.STRING },
-                    theme: { type: Type.STRING },
-                    activities: {
-                      type: Type.ARRAY,
-                      items: {
-                        type: Type.OBJECT,
-                        properties: {
-                          startTime: { type: Type.STRING },
-                          endTime: { type: Type.STRING },
-                          title: { type: Type.STRING },
-                          category: { type: Type.STRING },
-                          description: { type: Type.STRING },
-                          locationName: { type: Type.STRING },
-                          estimatedCost: { type: Type.STRING },
-                          familyTip: { type: Type.STRING },
-                        },
-                        required: ['startTime', 'endTime', 'title', 'category', 'description'],
-                      },
-                    },
-                  },
-                  required: ['dayNumber', 'cityName', 'theme', 'activities'],
-                },
-              },
-            },
-            required: ['title', 'totalDays', 'summary', 'days'],
-          },
+      const response = await fetch('https://api.deepseek.com/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${apiKey}`
         },
+        body: JSON.stringify({
+          model: 'deepseek-chat',
+          response_format: { type: 'json_object' },
+          messages: [
+            { role: 'system', content: 'Bạn là chuyên gia thiết kế lịch trình. Luôn xuất kết quả dạng JSON nguyên bản hợp lệ, không dùng code block markdown.' },
+            { role: 'user', content: prompt }
+          ]
+        })
       });
 
-      const jsonText = response.text || '';
+      if (!response.ok) {
+         const errorData = await response.json();
+         console.error('DeepSeek Error:', errorData);
+         throw new Error(errorData.error?.message || 'Lỗi khi gọi DeepSeek API');
+      }
+
+      const resData = await response.json();
+      let jsonText = resData.choices[0].message.content;
+      // Trích xuất JSON nếu API vẫn trả về dạng code block
+      if (jsonText.startsWith('```')) {
+         const match = jsonText.match(/```(json)?([\s\S]*?)```/);
+         if (match) jsonText = match[2].trim();
+      }
+      
       const parsedPlan = JSON.parse(jsonText);
       const googleApiKey = process.env.VITE_GOOGLE_MAPS_API_KEY || process.env.GOOGLE_MAPS_API_KEY || '';
       
