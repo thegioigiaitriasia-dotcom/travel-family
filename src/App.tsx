@@ -244,13 +244,31 @@ export default function App() {
 
   // Active travel book depending on current session & active trips
   const currentTravelBook: TravelBook = useMemo(() => {
-    if (session.isDemoMode) {
-      return demoTravelBook;
+    // Generate an empty/fallback TravelBook if there are no trips yet
+    const fallbackTravelBook: TravelBook = {
+      id: 'empty',
+      title: 'Chuyến đi chưa có tên',
+      coverImage: 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&q=80',
+      startDate: new Date().toISOString().split('T')[0],
+      endDate: new Date(Date.now() + 86400000).toISOString().split('T')[0],
+      status: 'planning',
+      durationDays: 1,
+      durationNights: 0,
+      budgetEstimatedMin: 0,
+      budgetEstimatedMax: 0,
+      members: [],
+      destinations: [],
+      days: []
+    };
+
+    if (session.isDemoMode && currentTrips.length === 0) {
+      return fallbackTravelBook;
     }
+    
     const username = session.currentUser?.username?.toLowerCase() || '';
     if (username === 'admin@giadinhvivu.com' || username === 'admin' || username === 'giadinhvivu') {
-      return officialUserTravelBook;
-    }
+      return fallbackTravelBook;
+    } 
 
     if (currentTrips.length > 0) {
       const activeTrip: any = currentTrips.find((t) => t.id === selectedTripId) || currentTrips[0];
