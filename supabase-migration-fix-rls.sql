@@ -41,6 +41,10 @@ DROP POLICY IF EXISTS "Owner can update family" ON public.family_accounts;
 DROP POLICY IF EXISTS "family_select_all" ON public.family_accounts;
 DROP POLICY IF EXISTS "family_insert_own" ON public.family_accounts;
 DROP POLICY IF EXISTS "family_update_own" ON public.family_accounts;
+DROP POLICY IF EXISTS "family_select_authenticated" ON public.family_accounts;
+DROP POLICY IF EXISTS "family_insert_owner" ON public.family_accounts;
+DROP POLICY IF EXISTS "family_update_owner" ON public.family_accounts;
+
 
 -- Mọi người đã đăng nhập đều có thể đọc family accounts (cần để join family)
 CREATE POLICY "family_select_authenticated"
