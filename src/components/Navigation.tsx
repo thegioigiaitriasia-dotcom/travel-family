@@ -381,17 +381,6 @@ export const Navigation: React.FC<NavigationProps> = React.memo(({
                         <Shield className="w-4 h-4 text-[#183B35]" />
                         <span>Trung tâm Quản trị Admin</span>
                       </button>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setShowUserMenu(false);
-                          onSwitchToDemo();
-                        }}
-                        className="w-full text-left px-3 py-2 rounded-xl hover:bg-[#F7F5F0] flex items-center gap-2 text-[#A46F3D] font-medium cursor-pointer"
-                      >
-                        <Sparkles className="w-4 h-4 text-[#A46F3D]" />
-                        <span>Chuyển sang Chế độ Demo</span>
-                      </button>
                     </div>
                     <div className="border-t border-[#E2E3DE] pt-1">
                       <button
