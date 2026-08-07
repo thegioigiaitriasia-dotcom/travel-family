@@ -101,6 +101,9 @@ CREATE POLICY "subscriptions_select_own"
 ALTER TABLE public.trips ENABLE ROW LEVEL SECURITY;
 DROP POLICY IF EXISTS "Users can view own trips" ON public.trips;
 DROP POLICY IF EXISTS "trips_select_own_or_public" ON public.trips;
+DROP POLICY IF EXISTS "trips_insert_own" ON public.trips;
+DROP POLICY IF EXISTS "trips_update_own" ON public.trips;
+DROP POLICY IF EXISTS "trips_delete_own" ON public.trips;
 
 CREATE POLICY "trips_select_own_or_public"
   ON public.trips FOR SELECT
