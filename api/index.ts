@@ -155,6 +155,38 @@ app.get('/api/get-profiles', async (req, res) => {
   } catch (err: any) { return res.status(500).json({ success: false, message: err.message }); }
 });
 
+app.get('/api/get-family-members', async (req, res) => {
+  try {
+    const authHeader = req.headers.authorization;
+    if (!authHeader) return res.status(401).json({ success: false, message: 'Missing authorization header' });
+    const token = authHeader.replace('Bearer ', '');
+    const { data: { user }, error: authError } = await supabaseAdmin.auth.getUser(token);
+    if (authError || !user) return res.status(401).json({ success: false, message: 'Invalid token' });
+
+    const { data: profile, error: profileError } = await supabaseAdmin
+      .from('profiles')
+      .select('family_account_id')
+      .eq('id', user.id)
+      .single();
+    
+    if (profileError) return res.status(400).json({ success: false, message: profileError.message });
+    if (!profile?.family_account_id) return res.json({ success: true, members: [], familyInfo: null });
+
+    const familyId = profile.family_account_id;
+
+    const [membersRes, familyRes] = await Promise.all([
+      supabaseAdmin.from('profiles').select('*').eq('family_account_id', familyId),
+      supabaseAdmin.from('family_accounts').select('*').eq('id', familyId).maybeSingle(),
+    ]);
+    if (membersRes.error) return res.status(400).json({ success: false, message: membersRes.error.message });
+    return res.json({
+      success: true,
+      members: membersRes.data || [],
+      familyInfo: familyRes.data || null
+    });
+  } catch (err: any) { return res.status(500).json({ success: false, message: err.message }); }
+});
+
 app.post('/api/places/search', async (req, res) => {
   try {
     const { query } = req.body;

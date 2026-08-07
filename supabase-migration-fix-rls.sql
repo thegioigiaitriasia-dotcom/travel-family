@@ -17,10 +17,20 @@ DROP POLICY IF EXISTS "profiles_insert_own" ON public.profiles;
 -- 2. Tạo lại policies đúng cho profiles (đơn giản, không vòng lặp)
 ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
 
--- Chỉ đọc được profile của chính mình (server bypass bằng service_role)
-CREATE POLICY "profiles_select_own"
+-- Hàm dùng để lấy an toàn ID gia đình của user hiện tại (tránh infinite recursion)
+CREATE OR REPLACE FUNCTION get_my_family_id()
+RETURNS uuid AS $$
+  SELECT family_account_id FROM public.profiles WHERE id = auth.uid();
+$$ LANGUAGE sql SECURITY DEFINER STABLE;
+
+-- Chỉ đọc được profile của chính mình HOẶC của thành viên trong cùng gia đình
+CREATE POLICY "profiles_select_family"
   ON public.profiles FOR SELECT
-  USING (auth.uid() = id);
+  USING (
+    id = auth.uid() 
+    OR 
+    (family_account_id IS NOT NULL AND family_account_id = get_my_family_id())
+  );
 
 -- Chỉ cập nhật profile của chính mình
 CREATE POLICY "profiles_update_own"

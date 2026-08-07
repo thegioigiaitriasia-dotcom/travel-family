@@ -86,12 +86,14 @@ export default function App() {
 
       // Tải family_accounts và toàn bộ profiles (thành viên) — dùng API backend để bypass RLS
       if (profile?.family_account_id) {
-        const famMembersRes = await fetch(`${appUrl}/api/get-family-members?familyId=${encodeURIComponent(profile.family_account_id)}`).then(r => r.json());
+        const famMembersRes = await fetch(`${appUrl}/api/get-family-members`, {
+          headers: { 'Authorization': `Bearer ${sbSession.access_token}` }
+        }).then(r => r.json());
 
-        if (famMembersRes.success && famMembersRes.family) {
-          familyAccount.familyName = famMembersRes.family.family_name || familyAccount.familyName;
-          familyAccount.inviteCode = famMembersRes.family.invite_code || familyAccount.inviteCode;
-          familyAccount.avatar = famMembersRes.family.avatar || familyAccount.avatar;
+        if (famMembersRes.success && famMembersRes.familyInfo) {
+          familyAccount.familyName = famMembersRes.familyInfo.family_name || familyAccount.familyName;
+          familyAccount.inviteCode = famMembersRes.familyInfo.invite_code || familyAccount.inviteCode;
+          familyAccount.avatar = famMembersRes.familyInfo.avatar || familyAccount.avatar;
         }
 
         if (famMembersRes.success && famMembersRes.members && famMembersRes.members.length > 0) {

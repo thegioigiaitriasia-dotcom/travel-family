@@ -147,21 +147,37 @@ async function enrichPlanWithRealPlaces(plan: any, supabaseAdminClient: any, goo
     } catch (err: any) { return res.status(500).json({ success: false, message: err.message }); }
   });
 
-  // GET /api/get-family-members?familyId=xxx
-  // Bypass RLS — lấy toàn bộ thành viên gia đình bằng admin key
+  // GET /api/get-family-members
+  // Bypass RLS — lấy toàn bộ thành viên gia đình (đã fix lỗi IDOR)
   app.get('/api/get-family-members', async (req, res) => {
     try {
-      const { familyId } = req.query;
-      if (!familyId) return res.status(400).json({ success: false, message: 'Missing familyId' });
+      const authHeader = req.headers.authorization;
+      if (!authHeader) return res.status(401).json({ success: false, message: 'Missing authorization header' });
+      const token = authHeader.replace('Bearer ', '');
+      const { data: { user }, error: authError } = await supabaseAdmin.auth.getUser(token);
+      if (authError || !user) return res.status(401).json({ success: false, message: 'Invalid token' });
+
+      // Lấy family_account_id của user
+      const { data: profile, error: profileError } = await supabaseAdmin
+        .from('profiles')
+        .select('family_account_id')
+        .eq('id', user.id)
+        .single();
+      
+      if (profileError) return res.status(400).json({ success: false, message: profileError.message });
+      if (!profile?.family_account_id) return res.json({ success: true, members: [], familyInfo: null });
+
+      const familyId = profile.family_account_id;
+
       const [membersRes, familyRes] = await Promise.all([
-        supabaseAdmin.from('profiles').select('*').eq('family_account_id', familyId as string),
-        supabaseAdmin.from('family_accounts').select('*').eq('id', familyId as string).maybeSingle(),
+        supabaseAdmin.from('profiles').select('*').eq('family_account_id', familyId),
+        supabaseAdmin.from('family_accounts').select('*').eq('id', familyId).maybeSingle(),
       ]);
       if (membersRes.error) return res.status(400).json({ success: false, message: membersRes.error.message });
       return res.json({
         success: true,
         members: membersRes.data || [],
-        family: familyRes.data || null,
+        familyInfo: familyRes.data || null
       });
     } catch (err: any) { return res.status(500).json({ success: false, message: err.message }); }
   });
