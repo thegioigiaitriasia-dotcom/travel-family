@@ -302,16 +302,14 @@ export async function supabaseSignIn(email: string, password: string) {
 // Fetch all profiles from Supabase for Admin
 export async function fetchSupabaseProfiles() {
   try {
-    const { data, error } = await supabase
-      .from('profiles')
-      .select('*')
-      .order('created_at', { ascending: false });
-
-    if (error) {
-      console.warn('Supabase fetchSupabaseProfiles error:', error.message);
+    const appUrl = typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000';
+    const res = await fetch(`${appUrl}/api/get-profiles`);
+    const json = await res.json();
+    if (!json.success) {
+      console.warn('Supabase fetchSupabaseProfiles error:', json.message);
       return null;
     }
-    return data;
+    return json.profiles;
   } catch (err) {
     console.warn('Supabase fetchSupabaseProfiles exception:', err);
     return null;

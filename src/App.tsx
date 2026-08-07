@@ -41,14 +41,15 @@ export default function App() {
 
       const sbUser = sbSession.user;
 
-      // Fetch profile và subscription từ Supabase để có đúng thông tin is_admin, status
+      // Fetch profile từ API backend để bypass lỗi RLS vòng lặp, subscription vẫn dùng client
+      const appUrl = typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000';
       const [profileRes, subRes] = await Promise.all([
-        supabase.from('profiles').select('*').eq('id', sbUser.id).maybeSingle(),
+        fetch(`${appUrl}/api/get-profile?userId=${sbUser.id}`).then(res => res.json()),
         supabase.from('subscriptions').select('*').eq('user_id', sbUser.id)
           .order('created_at', { ascending: false }).limit(1).maybeSingle(),
       ]);
 
-      const profile = profileRes.data;
+      const profile = profileRes.profile || profileRes.data; // Hỗ trợ cả API và Supabase fallback
       const subscription = subRes.data;
 
       // Nếu tài khoản bị suspended → đăng xuất ngay

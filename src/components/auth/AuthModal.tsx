@@ -357,11 +357,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({
       });
 
       const [profileRes, subRes] = await Promise.all([
-        supabase.from('profiles').select('*').eq('id', loginData.user.id).maybeSingle(),
+        fetch(`${appUrl}/api/get-profile?userId=${loginData.user.id}`).then(res => res.json()),
         supabase.from('subscriptions').select('*').eq('user_id', loginData.user.id).maybeSingle(),
       ]);
 
-      const session = await buildSessionFromSupabase(loginData.user, profileRes.data, subRes.data);
+      const session = await buildSessionFromSupabase(loginData.user, profileRes.profile || profileRes.data, subRes.data);
       onLoginSuccess(session);
       onClose();
     } catch (err: any) {

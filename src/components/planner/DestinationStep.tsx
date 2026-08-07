@@ -8,9 +8,34 @@ const HOURS_24 = Array.from({ length: 48 }, (_, i) => {
   return `${h}:${m}`;
 });
 const TimeSelect24h: React.FC<{ value: string; onChange: (v: string) => void; className?: string }> = ({ value, onChange, className }) => (
-  <select value={value || '07:00'} onChange={(e) => onChange(e.target.value)} className={className}>
-    {HOURS_24.map((t) => <option key={t} value={t}>{t}</option>)}
-  </select>
+  <input
+    type="text"
+    placeholder="HH:MM"
+    value={value || '07:00'}
+    onChange={(e) => {
+      let v = e.target.value.replace(/[^0-9:]/g, '');
+      if (v.length === 2 && !v.includes(':') && (e.nativeEvent as any).inputType !== 'deleteContentBackward') {
+        v += ':';
+      }
+      onChange(v.slice(0, 5));
+    }}
+    onBlur={(e) => {
+      let v = e.target.value;
+      if (!v) return;
+      if (/^\d{1,2}$/.test(v)) v = v.padStart(2, '0') + ':00';
+      else if (/^\d{1,2}:\d{1,2}$/.test(v)) {
+        const [h, m] = v.split(':');
+        v = `${h.padStart(2, '0')}:${m.padStart(2, '0')}`;
+      }
+      let [h, m] = v.split(':').map(Number);
+      if (isNaN(h)) h = 7; if (isNaN(m)) m = 0;
+      h = Math.min(23, Math.max(0, h));
+      m = Math.min(59, Math.max(0, m));
+      onChange(`${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`);
+    }}
+    className={className}
+    maxLength={5}
+  />
 );
 
 interface DestinationStepProps {

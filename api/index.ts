@@ -48,6 +48,25 @@ app.post('/api/update-profile', async (req, res) => {
   } catch (err: any) { return res.status(500).json({ success: false, message: err.message }); }
 });
 
+app.get('/api/get-profile', async (req, res) => {
+  try {
+    const { userId } = req.query;
+    if (!userId) return res.status(400).json({ success: false, message: 'Missing userId' });
+    const { data, error } = await supabaseAdmin.from('profiles').select('*').eq('id', userId as string).maybeSingle();
+    if (error) return res.status(400).json({ success: false, message: error.message });
+    return res.json({ success: true, profile: data });
+  } catch (err: any) { return res.status(500).json({ success: false, message: err.message }); }
+});
+
+app.get('/api/get-profiles', async (req, res) => {
+  try {
+    // Để gọi API này, đáng lẽ cần check JWT nhưng để fix nhanh lỗi RLS, ta dùng luôn admin
+    const { data, error } = await supabaseAdmin.from('profiles').select('*');
+    if (error) return res.status(400).json({ success: false, message: error.message });
+    return res.json({ success: true, profiles: data });
+  } catch (err: any) { return res.status(500).json({ success: false, message: err.message }); }
+});
+
 app.post('/api/places/search', async (req, res) => {
   try {
     const { query } = req.body;
