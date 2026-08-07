@@ -175,6 +175,10 @@ export const AccountPage: React.FC<AccountPageProps> = ({
           avatar: publicUrl, // Cập nhật cho cả gia đình nếu là trưởng nhóm
           members: familyAccount.members.map(m => m.id === currentUser.id ? updatedUser : m)
         });
+        
+        if (currentUser.role === 'Trưởng nhóm') {
+          updateFamilySettings(familyAccount.id, { avatar_url: publicUrl });
+        }
       } else {
         alert('Có lỗi xảy ra khi tải ảnh lên. Vui lòng thử lại sau.');
       }
