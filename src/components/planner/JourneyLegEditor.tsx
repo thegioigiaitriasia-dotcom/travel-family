@@ -20,6 +20,17 @@ import {
   TransportMode,
 } from '../../types';
 
+const HOURS_24 = Array.from({ length: 48 }, (_, i) => {
+  const h = Math.floor(i / 2).toString().padStart(2, '0');
+  const m = i % 2 === 0 ? '00' : '30';
+  return `${h}:${m}`;
+});
+const TimeSelect24h: React.FC<{ value: string; onChange: (v: string) => void; className?: string }> = ({ value, onChange, className }) => (
+  <select value={value || '07:00'} onChange={(e) => onChange(e.target.value)} className={className}>
+    {HOURS_24.map((t) => <option key={t} value={t}>{t}</option>)}
+  </select>
+);
+
 interface JourneyLegEditorProps {
   data: MultiCityTripPlannerInput;
   onUpdate: (updated: Partial<MultiCityTripPlannerInput>) => void;
@@ -250,28 +261,11 @@ export const JourneyLegEditor: React.FC<JourneyLegEditorProps> = ({
                   <label className="block text-xs font-bold text-slate-700 mb-1">
                     {isConfirmed ? 'Giờ xuất phát chính xác' : 'Khung giờ mong muốn'}
                   </label>
-                  {isConfirmed ? (
-                    <input
-                      type="time"
-                      value={leg.departure.time || '07:00'}
-                      onChange={(e) =>
-                        handleUpdateLeg(leg.id, {
-                          departure: { ...leg.departure, time: e.target.value },
-                        })
-                      }
-                      className="w-full px-3 py-2 rounded-xl border border-slate-300 bg-white text-slate-900 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#2E8B57]"
-                    />
-                  ) : (
-                    <input
-                      type="text"
-                      value={leg.preferredWindow || 'Từ 12:00 đến 13:30'}
-                      onChange={(e) =>
-                        handleUpdateLeg(leg.id, { preferredWindow: e.target.value })
-                      }
-                      placeholder="Ví dụ: Rời đi từ 12:00–13:30"
-                      className="w-full px-3 py-2 rounded-xl border border-slate-300 bg-white text-slate-900 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#2E8B57]"
-                    />
-                  )}
+                  <TimeSelect24h
+                    value={leg.departure.time || '07:00'}
+                    onChange={(v) => handleUpdateLeg(leg.id, { departure: { ...leg.departure, time: v } })}
+                    className="w-full px-3 py-2 rounded-xl border border-slate-300 bg-white text-slate-900 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#2E8B57]"
+                  />
                 </div>
               </div>
 
@@ -318,14 +312,9 @@ export const JourneyLegEditor: React.FC<JourneyLegEditorProps> = ({
                       <label className="block text-[11px] font-bold text-slate-600 mb-1">
                         Giờ đến dự kiến
                       </label>
-                      <input
-                        type="time"
-                        value={leg.arrival.time || '08:20'}
-                        onChange={(e) =>
-                          handleUpdateLeg(leg.id, {
-                            arrival: { ...leg.arrival, time: e.target.value },
-                          })
-                        }
+                      <TimeSelect24h
+                        value={leg.arrival.time || '08:30'}
+                        onChange={(v) => handleUpdateLeg(leg.id, { arrival: { ...leg.arrival, time: v } })}
                         className="w-full px-3 py-1.5 rounded-lg border border-slate-300 text-xs font-bold"
                       />
                     </div>

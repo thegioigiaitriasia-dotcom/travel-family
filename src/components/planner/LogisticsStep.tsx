@@ -2,6 +2,17 @@ import React from 'react';
 import { DollarSign, BedDouble, Plane, ArrowRight, Check } from 'lucide-react';
 import { TripPlannerInput } from '../../types';
 
+const HOURS_24 = Array.from({ length: 48 }, (_, i) => {
+  const h = Math.floor(i / 2).toString().padStart(2, '0');
+  const m = i % 2 === 0 ? '00' : '30';
+  return `${h}:${m}`;
+});
+const TimeSelect24h: React.FC<{ value: string; onChange: (v: string) => void; className?: string }> = ({ value, onChange, className }) => (
+  <select value={value} onChange={(e) => onChange(e.target.value)} className={className}>
+    {HOURS_24.map((t) => <option key={t} value={t}>{t}</option>)}
+  </select>
+);
+
 interface LogisticsStepProps {
   data: TripPlannerInput;
   onUpdate: (updated: Partial<TripPlannerInput>) => void;
@@ -139,10 +150,9 @@ export const LogisticsStep: React.FC<LogisticsStepProps> = ({
             <label className="text-[11px] font-bold text-slate-700 block mb-1">
               🔑 Giờ Check-in nhận phòng (dự kiến):
             </label>
-            <input
-              type="time"
+            <TimeSelect24h
               value={data.hotelCheckInTime || '14:00'}
-              onChange={(e) => onUpdate({ hotelCheckInTime: e.target.value })}
+              onChange={(v) => onUpdate({ hotelCheckInTime: v })}
               className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-white text-xs font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#DC2626]"
             />
             <span className="text-[10px] text-slate-400 mt-0.5 block">Tiêu chuẩn thường là 14:00</span>
@@ -151,10 +161,9 @@ export const LogisticsStep: React.FC<LogisticsStepProps> = ({
             <label className="text-[11px] font-bold text-slate-700 block mb-1">
               🗝 Giờ Check-out trả phòng (dự kiến):
             </label>
-            <input
-              type="time"
+            <TimeSelect24h
               value={data.hotelCheckOutTime || '12:00'}
-              onChange={(e) => onUpdate({ hotelCheckOutTime: e.target.value })}
+              onChange={(v) => onUpdate({ hotelCheckOutTime: v })}
               className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-white text-xs font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#DC2626]"
             />
             <span className="text-[10px] text-slate-400 mt-0.5 block">Tiêu chuẩn thường là 12:00</span>
@@ -199,10 +208,9 @@ export const LogisticsStep: React.FC<LogisticsStepProps> = ({
             <label className="text-[11px] font-bold text-slate-700 block mb-1">
               🛫 Giờ khởi hành chặng VỀ (bay/xe):
             </label>
-            <input
-              type="time"
+            <TimeSelect24h
               value={data.returnDepartureTime || '15:30'}
-              onChange={(e) => onUpdate({ returnDepartureTime: e.target.value })}
+              onChange={(v) => onUpdate({ returnDepartureTime: v })}
               className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-white text-xs font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#DC2626]"
             />
             <span className="text-[10px] text-slate-400 mt-0.5 block">Ví dụ: 15:30 chiều ngày cuối</span>
@@ -211,10 +219,9 @@ export const LogisticsStep: React.FC<LogisticsStepProps> = ({
             <label className="text-[11px] font-bold text-slate-700 block mb-1">
               🏠 Giờ dự kiến về tới nhà:
             </label>
-            <input
-              type="time"
+            <TimeSelect24h
               value={data.returnArrivalTime || '19:30'}
-              onChange={(e) => onUpdate({ returnArrivalTime: e.target.value })}
+              onChange={(v) => onUpdate({ returnArrivalTime: v })}
               className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-white text-xs font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#DC2626]"
             />
             <span className="text-[10px] text-slate-400 mt-0.5 block">Ví dụ: 19:30 tối</span>

@@ -1,6 +1,25 @@
 import React from 'react';
-import { Calendar, Clock, Ticket, AlertCircle, Sparkles, CheckCircle2 } from 'lucide-react';
+import { Calendar, Clock, Ticket, AlertCircle, CheckCircle2 } from 'lucide-react';
 import { MultiCityTripPlannerInput } from '../../types';
+
+// Tạo danh sách giờ 24h (00:00 - 23:30, mỗi 30 phút)
+const HOURS_24 = Array.from({ length: 48 }, (_, i) => {
+  const h = Math.floor(i / 2).toString().padStart(2, '0');
+  const m = i % 2 === 0 ? '00' : '30';
+  return `${h}:${m}`;
+});
+
+const TimeSelect24h: React.FC<{ value: string; onChange: (v: string) => void; className?: string }> = ({ value, onChange, className }) => (
+  <select
+    value={value || '07:00'}
+    onChange={(e) => onChange(e.target.value)}
+    className={className}
+  >
+    {HOURS_24.map((t) => (
+      <option key={t} value={t}>{t}</option>
+    ))}
+  </select>
+);
 
 interface TripWindowStepProps {
   data: MultiCityTripPlannerInput;
@@ -115,26 +134,11 @@ export const TripWindowStep: React.FC<TripWindowStepProps> = ({
                 : 'Khung giờ mong muốn rời đi'}
             </label>
 
-            {windowData.startTimeStatus === 'confirmed' ? (
-              <input
-                type="time"
-                value={windowData.startTime || '07:00'}
-                onChange={(e) => handleUpdateWindow({ startTime: e.target.value })}
-                className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-900 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#2E8B57]"
-              />
-            ) : (
-              <select
-                value={windowData.startTime || 'Buổi sáng'}
-                onChange={(e) => handleUpdateWindow({ startTime: e.target.value })}
-                className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-900 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#2E8B57]"
-              >
-                <option value="Buổi sáng">Buổi sáng (06:00 – 11:30)</option>
-                <option value="Buổi trưa">Buổi trưa (11:30 – 13:30)</option>
-                <option value="Buổi chiều">Buổi chiều (13:30 – 18:00)</option>
-                <option value="Buổi tối">Buổi tối (18:00 – 22:00)</option>
-                <option value="Chưa quyết định">Chưa quyết định</option>
-              </select>
-            )}
+            <TimeSelect24h
+              value={windowData.startTime || '07:00'}
+              onChange={(v) => handleUpdateWindow({ startTime: v })}
+              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-900 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#2E8B57]"
+            />
           </div>
         </div>
 
@@ -206,25 +210,11 @@ export const TripWindowStep: React.FC<TripWindowStepProps> = ({
                 : 'Khung giờ dự kiến kết thúc'}
             </label>
 
-            {windowData.endTimeStatus === 'confirmed' ? (
-              <input
-                type="time"
-                value={windowData.endTime || '18:00'}
-                onChange={(e) => handleUpdateWindow({ endTime: e.target.value })}
-                className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-900 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#2E8B57]"
-              />
-            ) : (
-              <select
-                value={windowData.endTime || 'Buổi chiều'}
-                onChange={(e) => handleUpdateWindow({ endTime: e.target.value })}
-                className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-900 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#2E8B57]"
-              >
-                <option value="Buổi trưa">Buổi trưa (trước 13:30)</option>
-                <option value="Buổi chiều">Buổi chiều (13:30 – 18:00)</option>
-                <option value="Buổi tối">Buổi tối (18:00 – 22:00)</option>
-                <option value="Chưa quyết định">Chưa quyết định</option>
-              </select>
-            )}
+            <TimeSelect24h
+              value={windowData.endTime || '18:00'}
+              onChange={(v) => handleUpdateWindow({ endTime: v })}
+              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-900 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#2E8B57]"
+            />
           </div>
         </div>
       </div>

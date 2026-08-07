@@ -2,6 +2,17 @@ import React, { useState } from 'react';
 import { MapPin, Calendar, Plus, X, ArrowRight, AlertCircle, Compass, Route } from 'lucide-react';
 import { TripPlannerInput } from '../../types';
 
+const HOURS_24 = Array.from({ length: 48 }, (_, i) => {
+  const h = Math.floor(i / 2).toString().padStart(2, '0');
+  const m = i % 2 === 0 ? '00' : '30';
+  return `${h}:${m}`;
+});
+const TimeSelect24h: React.FC<{ value: string; onChange: (v: string) => void; className?: string }> = ({ value, onChange, className }) => (
+  <select value={value || '07:00'} onChange={(e) => onChange(e.target.value)} className={className}>
+    {HOURS_24.map((t) => <option key={t} value={t}>{t}</option>)}
+  </select>
+);
+
 interface DestinationStepProps {
   data: TripPlannerInput;
   onUpdate: (updated: Partial<TripPlannerInput>) => void;
@@ -255,10 +266,9 @@ export const DestinationStep: React.FC<DestinationStepProps> = ({
               <label className="text-[11px] font-bold text-slate-700 mb-1 block">
                 ⏱ Giờ bay / xe khởi hành chặng đi:
               </label>
-              <input
-                type="time"
+              <TimeSelect24h
                 value={data.departureTime || '06:30'}
-                onChange={(e) => onUpdate({ departureTime: e.target.value })}
+                onChange={(v) => onUpdate({ departureTime: v })}
                 className="w-full px-3 py-2.5 rounded-xl border border-slate-200 bg-white text-xs font-semibold text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#DC2626]"
               />
               <span className="text-[10px] text-slate-400 mt-0.5 block">Ví dụ: 06:30 sáng</span>
@@ -267,10 +277,9 @@ export const DestinationStep: React.FC<DestinationStepProps> = ({
               <label className="text-[11px] font-bold text-slate-700 mb-1 block">
                 🛬 Giờ dự kiến đến điểm đến:
               </label>
-              <input
-                type="time"
+              <TimeSelect24h
                 value={data.estimatedArrivalTime || '10:30'}
-                onChange={(e) => onUpdate({ estimatedArrivalTime: e.target.value })}
+                onChange={(v) => onUpdate({ estimatedArrivalTime: v })}
                 className="w-full px-3 py-2.5 rounded-xl border border-slate-200 bg-white text-xs font-semibold text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#DC2626]"
               />
               <span className="text-[10px] text-slate-400 mt-0.5 block">Ví dụ: 10:30 sáng</span>
