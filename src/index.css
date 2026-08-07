@@ -1,0 +1,222 @@
+@import "tailwindcss";
+@import "leaflet/dist/leaflet.css";
+
+@theme {
+  --color-forest-900: #183B35;
+  --color-forest-700: #28584E;
+  --color-forest-100: #E9F0ED;
+
+  --color-sand-50: #F7F5F0;
+  --color-sand-100: #EFEAE1;
+
+  --color-bronze-600: #A46F3D;
+  --color-bronze-100: #F3E9DD;
+
+  --color-ink-900: #1D211F;
+  --color-ink-600: #606864;
+  --color-ink-400: #8D9490;
+
+  --color-line: #E2E3DE;
+  --color-surface: #FFFFFF;
+
+  --font-sans: 'Be Vietnam Pro', system-ui, -apple-system, sans-serif;
+}
+
+@layer base {
+  :root {
+    --forest-900: #183B35;
+    --forest-700: #28584E;
+    --forest-100: #E9F0ED;
+
+    --sand-50: #F7F5F0;
+    --sand-100: #EFEAE1;
+
+    --bronze-600: #A46F3D;
+    --bronze-100: #F3E9DD;
+
+    --ink-900: #1D211F;
+    --ink-600: #606864;
+    --ink-400: #8D9490;
+
+    --line: #E2E3DE;
+    --surface: #FFFFFF;
+
+    --font-sans: 'Be Vietnam Pro', system-ui, -apple-system, sans-serif;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--sand-50);
+    color: var(--ink-900);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 15px;
+    line-height: 24px;
+    font-weight: 400;
+  }
+
+  h1, h2, h3, h4, h5, h6, .font-title {
+    font-family: var(--font-sans);
+    color: var(--ink-900);
+  }
+}
+
+/* Typography Scale According to Quiet Luxury Specs */
+.title-hero {
+  font-family: var(--font-sans);
+  font-size: 36px;
+  line-height: 44px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--ink-900);
+}
+
+.title-page {
+  font-family: var(--font-sans);
+  font-size: 30px;
+  line-height: 38px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--ink-900);
+}
+
+.title-section {
+  font-family: var(--font-sans);
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 600;
+  color: var(--ink-900);
+}
+
+.title-card {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  color: var(--ink-900);
+}
+
+.body-main {
+  font-size: 15px;
+  line-height: 24px;
+  font-weight: 400;
+  color: var(--ink-900);
+}
+
+.text-metadata {
+  font-size: 13px;
+  line-height: 20px;
+  font-weight: 400;
+  color: var(--ink-600);
+}
+
+.text-label {
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: 600;
+  color: var(--ink-900);
+}
+
+/* Quiet Luxury Button System */
+.btn-primary {
+  background-color: var(--forest-900);
+  color: var(--surface);
+  height: 42px;
+  padding: 0 18px;
+  border-radius: 12px;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 140ms ease;
+}
+.btn-primary:hover {
+  background-color: var(--forest-700);
+}
+
+.btn-secondary {
+  background-color: var(--surface);
+  color: var(--ink-900);
+  border: 1px solid var(--line);
+  height: 42px;
+  padding: 0 18px;
+  border-radius: 12px;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 140ms ease;
+}
+.btn-secondary:hover {
+  background-color: var(--sand-50);
+  border-color: var(--forest-700);
+}
+
+.btn-danger {
+  background-color: #DC2626;
+  color: var(--surface);
+  height: 42px;
+  padding: 0 18px;
+  border-radius: 12px;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: none;
+  cursor: pointer;
+  transition: all 140ms ease;
+}
+.btn-danger:hover {
+  background-color: #B91C1C;
+}
+
+/* Card System */
+.card-clean {
+  background-color: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: none;
+  transition: border-color 120ms ease, box-shadow 120ms ease;
+}
+.card-clean:hover {
+  border-color: var(--forest-100);
+  box-shadow: 0 4px 12px rgba(24, 37, 33, 0.03);
+}
+
+/* Status Pill System */
+.pill-status {
+  border-radius: 999px;
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: 500;
+  padding: 4px 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.pill-primary {
+  background-color: var(--forest-900);
+  color: var(--surface);
+  border: 1px solid var(--forest-900);
+}
+.pill-neutral {
+  background-color: var(--surface);
+  color: var(--ink-600);
+  border: 1px solid var(--line);
+}
+
+
+

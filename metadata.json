@@ -1,0 +1,8 @@
+{
+  "name": "Lập Kế Hoạch Du Lịch Gia Đình",
+  "description": "Ứng dụng tạo và lập kế hoạch chuyến đi du lịch dành cho gia đình",
+  "requestFramePermissions": [
+    "microphone"
+  ],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
