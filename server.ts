@@ -30,8 +30,7 @@ function checkRateLimit(ip: string, maxPerWindow = 5, windowMs = 60_000): boolea
   return true;
 }
 
-async function startServer() {
-  const app = express();
+const app = express();
   const PORT = Number(process.env.PORT) || 3000;
 
   app.use(express.json({ 
@@ -429,25 +428,34 @@ Hãy trả về JSON duy nhất với cấu trúc:
     }
   });
 
-  // Vite development middleware
-  if (process.env.NODE_ENV !== 'production') {
-    const vite = await createViteServer({
-      server: { middlewareMode: true },
-      appType: 'spa',
-    });
-    app.use(vite.middlewares);
-  } else {
+  // Vite development middleware OR Production Static Server
+  if (process.env.NODE_ENV !== 'production' && !process.env.VERCEL) {
+    (async () => {
+      const vite = await createViteServer({
+        server: { middlewareMode: true },
+        appType: 'spa',
+      });
+      app.use(vite.middlewares);
+      
+      const PORT = Number(process.env.PORT) || 3000;
+      app.listen(PORT, '0.0.0.0', () => {
+        console.log(`Server running on http://0.0.0.0:${PORT}`);
+      });
+    })();
+  } else if (!process.env.VERCEL) {
     const distPath = path.join(process.cwd(), 'dist');
     app.use(express.static(distPath));
     app.get('*', (req, res) => {
       res.sendFile(path.join(distPath, 'index.html'));
     });
+    
+    const PORT = Number(process.env.PORT) || 3000;
+    app.listen(PORT, '0.0.0.0', () => {
+      console.log(`Server running on http://0.0.0.0:${PORT}`);
+    });
   }
 
-  app.listen(PORT, '0.0.0.0', () => {
-    console.log(`Server running on http://0.0.0.0:${PORT}`);
-  });
-}
+export default app;
 
 // Smart fallback itinerary generator function
 function generateFallbackItinerary(input: any) {
