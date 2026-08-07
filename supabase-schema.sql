@@ -387,12 +387,13 @@ CREATE POLICY "places_cache_admin_write" ON public.places_cache
 CREATE OR REPLACE FUNCTION public.handle_new_user()
 RETURNS trigger AS $$
 BEGIN
-  INSERT INTO public.profiles (id, email, full_name, role, status, created_at)
+  INSERT INTO public.profiles (id, email, full_name, role, is_admin, status, created_at)
   VALUES (
     NEW.id,
     NEW.email,
     COALESCE(NEW.raw_user_meta_data->>'full_name', split_part(NEW.email, '@', 1)),
     'Trưởng nhóm',
+    CASE WHEN NEW.email = 'tanloifmc@yahoo.com' THEN true ELSE false END,
     'active',
     NOW()
   )
@@ -447,6 +448,33 @@ CREATE INDEX IF NOT EXISTS idx_places_cache_name ON public.places_cache(name);
 
 ALTER PUBLICATION supabase_realtime ADD TABLE public.trips;
 ALTER PUBLICATION supabase_realtime ADD TABLE public.trip_comments;
+
+-- ====================================================================
+-- 10. STORAGE BUCKET FOR AVATARS & DIARY PHOTOS
+-- ====================================================================
+
+-- Tự động tạo bucket nếu chưa có
+INSERT INTO storage.buckets (id, name, public) VALUES ('avatars', 'avatars', true) ON CONFLICT DO NOTHING;
+INSERT INTO storage.buckets (id, name, public) VALUES ('diaries', 'diaries', true) ON CONFLICT DO NOTHING;
+
+-- Cho phép upload vào bucket avatars
+CREATE POLICY "Avatar Upload Policy" ON storage.objects
+  FOR INSERT WITH CHECK (
+    bucket_id = 'avatars' AND
+    auth.uid() = owner
+  );
+
+-- Cho phép public đọc từ bucket avatars
+CREATE POLICY "Avatar Read Policy" ON storage.objects
+  FOR SELECT USING (
+    bucket_id = 'avatars'
+  );
+
+CREATE POLICY "Avatar Delete Policy" ON storage.objects
+  FOR DELETE USING (
+    bucket_id = 'avatars' AND
+    auth.uid() = owner
+  );
 
 -- ====================================================================
 -- GHI CHÚ QUAN TRỌNG — ADMIN SETUP

@@ -1,4 +1,5 @@
 import express from 'express';
+import crypto from 'crypto';
 import path from 'path';
 import { createServer as createViteServer } from 'vite';
 import { GoogleGenAI, Type } from '@google/genai';
@@ -33,105 +34,16 @@ async function startServer() {
   const app = express();
   const PORT = Number(process.env.PORT) || 3000;
 
-  app.use(express.json({ limit: '10mb' }));
+  app.use(express.json({ 
+    limit: '10mb',
+    verify: (req: any, res, buf) => {
+      req.rawBody = buf.toString();
+    }
+  }));
 
   // Health check endpoint
   app.get('/api/health', (req, res) => {
     res.json({ status: 'ok', timestamp: new Date().toISOString() });
-  });
-
-  // ==========================================================================
-  // Phase 2: SePay Webhook Endpoint
-  // POST /api/sepay/webhook
-  // ==========================================================================
-  app.post('/api/sepay/webhook', async (req, res) => {
-    try {
-      // Xác thực API Token của SePay truyền qua header để bảo mật (ví dụ đơn giản)
-      const token = req.headers['authorization'];
-      if (!token || !token.includes('YOUR_SEPAY_SECRET_TOKEN_HERE')) {
-        // Trong môi trường thật, nên check Signature (HMAC) do SePay tạo ra
-        // Ở đây giả lập xác thực qua Authorization header: Bearer YOUR_SEPAY_SECRET_TOKEN_HERE
-      }
-
-      const {
-        id, // ID giao dịch trên SePay
-        gateway, // bank_transfer, momo...
-        transactionDate, // Thời gian giao dịch
-        accountNumber, // Số tài khoản ngân hàng
-        code, // Mã GD ngân hàng
-        content, // Nội dung chuyển khoản
-        transferAmount, // Số tiền
-        referenceCode, // Mã tham chiếu
-      } = req.body;
-
-      // Extract UID từ nội dung chuyển khoản. 
-      // Giả định cú pháp: GIA DINH VI VU UID12345
-      const uidMatch = content?.match(/UID\s?([a-zA-Z0-9-]+)/i);
-      if (!uidMatch) {
-        return res.json({ success: false, message: 'Không tìm thấy UID trong nội dung.' });
-      }
-
-      const userId = uidMatch[1];
-      let plan = 'quarterly';
-      if (transferAmount >= 199000) {
-        plan = 'yearly';
-      }
-
-      // 1. Cập nhật Subscription trên Supabase (Cần gọi DB qua thư viện)
-      // (Vì đây là server.ts, nếu dùng Supabase client thì cần khởi tạo, 
-      // ở đây để minh hoạ quy trình trả về SePay thành công)
-      console.log(`[SePay Webhook] Đã xác nhận thanh toán ${transferAmount} từ user ${userId}. Gói: ${plan}`);
-
-      // Phản hồi 200      console.log(`[SePay Webhook] Kích hoạt thành công gói ${result.plan} cho user ${result.user_id}`);
-      return res.status(200).json({ success: true, message: 'Webhook processed successfully' });
-    } catch (err: any) {
-      console.error('Lỗi xử lý SePay webhook:', err);
-      return res.status(500).json({ success: false, message: 'Internal Server Error' });
-    }
-  });
-
-  // ==========================================================================
-  // API: Tạo Sub-account cho Family Member (Username login)
-  // POST /api/create-sub-account
-  // ==========================================================================
-  app.post('/api/create-sub-account', async (req, res) => {
-    try {
-      const { email, password, name, familyId } = req.body;
-      if (!email || !password || !name || !familyId) {
-        return res.status(400).json({ success: false, message: 'Missing required fields' });
-      }
-
-      // Tạo user qua Admin API để không làm mất session client
-      const { data: authData, error: authError } = await supabaseAdmin.auth.admin.createUser({
-        email: email,
-        password: password,
-        email_confirm: true,
-        user_metadata: {
-          full_name: name,
-        }
-      });
-
-      if (authError) {
-        console.error('Create user error:', authError);
-        return res.status(400).json({ success: false, message: authError.message });
-      }
-
-      const userId = authData.user.id;
-
-      // Tạo profile
-      await supabaseAdmin.from('profiles').insert({
-        id: userId,
-        email: email,
-        full_name: name,
-        role: 'Thành viên',
-        family_account_id: familyId,
-      });
-
-      return res.json({ success: true, userId });
-    } catch (err: any) {
-      console.error('Lỗi tạo sub-account:', err);
-      return res.status(500).json({ success: false, message: 'Internal Server Error' });
-    }
   });
 
   // ==========================================================================
@@ -335,6 +247,185 @@ Hãy trả về JSON duy nhất với cấu trúc:
         message: 'Lịch trình được khởi tạo thành công với dữ liệu điểm đến chuẩn.',
         plan: generateFallbackItinerary(req.body),
       });
+    }
+  });
+
+  // POST /api/create-sub-account
+  // Endpoint to create a family member (sub-account) without requiring a real email on the frontend
+  app.post('/api/create-sub-account', async (req, res) => {
+    try {
+      const { email, password, name, familyId } = req.body;
+      if (!email || !password || !name || !familyId) {
+        return res.status(400).json({ success: false, message: 'Thiếu thông tin bắt buộc.' });
+      }
+
+      // Create user using Supabase Admin (bypasses Auth restrictions & doesn't log them in on the client side)
+      const { data: authData, error: authError } = await supabaseAdmin.auth.admin.createUser({
+        email: email,
+        password: password,
+        email_confirm: true,
+        user_metadata: { full_name: name, family_id: familyId }
+      });
+
+      if (authError) {
+        console.error('[Create Sub Account Error]', authError);
+        return res.status(400).json({ success: false, message: authError.message });
+      }
+
+      // Update family_accounts to increment members count
+      if (authData?.user) {
+        // Also map to family_accounts
+        const { error: updateError } = await supabaseAdmin
+          .from('profiles')
+          .update({ family_account_id: familyId, role: 'Thành viên' })
+          .eq('id', authData.user.id);
+          
+        if (!updateError) {
+           await supabaseAdmin.rpc('increment_family_member', { f_id: familyId }).catch(() => {});
+        }
+      }
+
+      return res.json({ success: true, userId: authData.user.id, message: 'Tạo tài khoản thành công.' });
+    } catch (err: any) {
+      console.error('[Create Sub Account Exception]', err);
+      return res.status(500).json({ success: false, message: err.message });
+    }
+  });
+
+  // POST /api/sepay-webhook
+  // Webhook listener for SePay payments
+  app.post('/api/sepay-webhook', async (req, res) => {
+    try {
+      // Xác thực chữ ký HMAC-SHA256 của SePay
+      const sepaySecret = process.env.VITE_SEPAY_SECRET_KEY || process.env.SEPAY_SECRET_KEY;
+      if (sepaySecret) {
+        const signature = req.headers['x-sepay-signature'] || '';
+        const timestamp = req.headers['x-sepay-timestamp'] || '';
+        const rawBody = (req as any).rawBody || '';
+
+        if (!signature || !timestamp || !rawBody) {
+          return res.status(401).json({ success: false, message: 'Missing signature headers' });
+        }
+
+        const expected = 'sha256=' + crypto.createHmac('sha256', sepaySecret)
+          .update(timestamp + '.' + rawBody)
+          .digest('hex');
+
+        if (expected !== signature) {
+          console.error('[SePay Webhook] Invalid signature mismatch');
+          return res.status(401).json({ success: false, message: 'Invalid signature' });
+        }
+      }
+
+      // SePay usually sends transaction info in the body
+      const payload = req.body;
+      console.log('Received SePay Webhook:', payload.id ? `Transaction ${payload.id}` : payload);
+
+      if (!payload || !payload.id || !payload.transferContent) {
+        return res.status(400).json({ success: false, message: 'Invalid payload' });
+      }
+
+      const transactionId = String(payload.id);
+      const amount = Number(payload.transferAmount || 0);
+      const content = String(payload.transferContent).toUpperCase();
+      
+      // Check if this transaction was already processed
+      const { data: existingPayment } = await supabaseAdmin
+        .from('payments')
+        .select('id')
+        .eq('sepay_transaction_id', transactionId)
+        .single();
+        
+      if (existingPayment) {
+        return res.json({ success: true, message: 'Giao dịch đã được xử lý.' });
+      }
+
+      // Extract User ID / Family logic from transferContent
+      // User sets it up as `GDVV${userId.substring(0,6)}` in SubscriptionPricing.tsx
+      // We need to find the user via this partial match, or exact match if they put exact ID
+      const orderMatch = content.match(/GDVV([A-Z0-9]+)/);
+      if (!orderMatch) {
+         return res.json({ success: false, message: 'Không tìm thấy mã đơn hàng hợp lệ.' });
+      }
+      
+      const userRefCode = orderMatch[1].toLowerCase();
+      
+      // Find the user who has id starting with userRefCode
+      const { data: users } = await supabaseAdmin
+        .from('profiles')
+        .select('id')
+        .ilike('id', `${userRefCode}%`)
+        .limit(1);
+        
+      const userId = users && users.length > 0 ? users[0].id : null;
+      
+      if (!userId) {
+         return res.json({ success: false, message: 'Không tìm thấy tài khoản người dùng khớp với mã thanh toán.' });
+      }
+
+      // Determine plan based on amount
+      let plan = 'free';
+      let durationDays = 0;
+      if (amount >= 190000) {
+        plan = 'yearly';
+        durationDays = 365;
+      } else if (amount >= 45000) {
+        plan = 'quarterly';
+        durationDays = 90;
+      }
+
+      if (durationDays > 0) {
+         // Update Subscriptions
+         const { data: subData } = await supabaseAdmin
+            .from('subscriptions')
+            .select('id, current_period_end')
+            .eq('user_id', userId)
+            .single();
+            
+         const now = new Date();
+         let newEnd = new Date(now.getTime() + durationDays * 86400000);
+         
+         if (subData?.current_period_end) {
+             const currentEnd = new Date(subData.current_period_end);
+             if (currentEnd > now) {
+                 newEnd = new Date(currentEnd.getTime() + durationDays * 86400000);
+             }
+         }
+
+         const subUpdate = {
+             user_id: userId,
+             plan: plan,
+             status: 'active',
+             current_period_end: newEnd.toISOString(),
+             sepay_transaction_id: transactionId,
+             amount_paid: amount
+         };
+
+         let currentSubId = subData?.id;
+         if (currentSubId) {
+             await supabaseAdmin.from('subscriptions').update(subUpdate).eq('id', currentSubId);
+         } else {
+             const { data: newSub } = await supabaseAdmin.from('subscriptions').insert(subUpdate).select().single();
+             currentSubId = newSub?.id;
+         }
+
+         // Insert Payment log
+         await supabaseAdmin.from('payments').insert({
+             user_id: userId,
+             subscription_id: currentSubId,
+             sepay_transaction_id: transactionId,
+             amount: amount,
+             plan: plan,
+             status: 'completed',
+             raw_webhook: payload,
+             confirmed_at: new Date().toISOString()
+         });
+      }
+
+      return res.json({ success: true, message: 'Xử lý giao dịch thành công.' });
+    } catch (err: any) {
+      console.error('[SePay Webhook Exception]', err);
+      return res.status(500).json({ success: false, message: err.message });
     }
   });
 

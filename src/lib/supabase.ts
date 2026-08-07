@@ -4,15 +4,20 @@ const env = (import.meta as any).env || {};
 export const SUPABASE_URL = env.VITE_SUPABASE_URL || '';
 export const SUPABASE_ANON_KEY = env.VITE_SUPABASE_ANON_KEY || '';
 
-export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-  auth: {
-    persistSession: true,
-    autoRefreshToken: true,
-  },
-});
+// Provide dummy values if not configured to prevent instant crash on boot
+export const supabase = createClient(
+  SUPABASE_URL || 'https://dummy.supabase.co', 
+  SUPABASE_ANON_KEY || 'dummy_key', 
+  {
+    auth: {
+      persistSession: true,
+      autoRefreshToken: true,
+    },
+  }
+);
 
 export const isSupabaseConfigured = () => {
-  return Boolean(SUPABASE_URL && SUPABASE_ANON_KEY);
+  return Boolean(SUPABASE_URL && SUPABASE_ANON_KEY && SUPABASE_URL !== 'https://dummy.supabase.co');
 };
 
 // Test live connection to Supabase instance
@@ -474,6 +479,47 @@ export async function accumulateTripPOIs(userId: string, places: Array<{
   }
 }
 
+export async function updateFamilySettings(familyId: string, updates: any) {
+  try {
+    const { data, error } = await supabase.from('family_accounts').update(updates).eq('id', familyId).select().single();
+    if (error) throw error;
+    return data;
+  } catch (err: any) {
+    console.warn('Supabase updateFamilySettings error:', err.message);
+    return null;
+  }
+}
 
+// ====================================================================
+// STORAGE: AVATARS
+// ====================================================================
 
+export async function uploadAvatar(userId: string, file: File): Promise<string | null> {
+  try {
+    const fileExt = file.name.split('.').pop();
+    const fileName = `${userId}-${Math.random()}.${fileExt}`;
+    const filePath = `${fileName}`;
 
+    const { error: uploadError } = await supabase.storage
+      .from('avatars')
+      .upload(filePath, file, { upsert: true });
+
+    if (uploadError) {
+      console.error('Lỗi upload avatar:', uploadError);
+      return null;
+    }
+
+    const { data } = supabase.storage.from('avatars').getPublicUrl(filePath);
+    
+    if (data?.publicUrl) {
+      // Cập nhật URL vào profile
+      await supabase.from('profiles').update({ avatar_url: data.publicUrl }).eq('id', userId);
+      return data.publicUrl;
+    }
+    
+    return null;
+  } catch (err) {
+    console.error('Exception upload avatar:', err);
+    return null;
+  }
+}

@@ -267,9 +267,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = () => {
           isAdmin: p.role === 'Super Admin' || p.role === 'Quản trị viên',
         }));
 
-        // Merge with initial admin user if not already present
-        const hasAdmin = mappedUsers.some((u: any) => u.email === 'admin@giadinhvivu.com');
-        setUsers(hasAdmin ? mappedUsers : [INITIAL_USERS[0], ...mappedUsers]);
+        // Set users directly from Supabase
+        setUsers(mappedUsers);
+      } else {
+        setUsers([]);
       }
 
       if (tripsData && tripsData.length > 0) {

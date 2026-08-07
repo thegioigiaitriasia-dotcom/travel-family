@@ -22,7 +22,7 @@ import {
 } from 'lucide-react';
 import { FamilyAccount, FamilyMember } from '../../types';
 import { SupabaseDatabaseModal } from './SupabaseDatabaseModal';
-import { SUPABASE_URL } from '../../lib/supabase';
+import { SUPABASE_URL, uploadAvatar, updateFamilySettings } from '../../lib/supabase';
 import { SubscriptionPricing } from './SubscriptionPricing';
 
 interface AccountPageProps {
@@ -43,8 +43,8 @@ export const AccountPage: React.FC<AccountPageProps> = ({
   const [showAddMemberModal, setShowAddMemberModal] = useState(false);
   const [showEditProfileModal, setShowEditProfileModal] = useState(false);
   const [showSupabaseModal, setShowSupabaseModal] = useState(false);
-
-
+  const [isUploading, setIsUploading] = useState(false);
+  const fileInputRef = React.useRef<HTMLInputElement>(null);
   // Form state for adding member
   const [newMemberName, setNewMemberName] = useState('');
   const [newMemberRelation, setNewMemberRelation] = useState('Thành viên');
@@ -148,11 +148,42 @@ export const AccountPage: React.FC<AccountPageProps> = ({
 
   const handleSaveProfile = (e: React.FormEvent) => {
     e.preventDefault();
+    const newName = editFamilyName.trim() || familyAccount.familyName;
+    
+    // Attempt DB sync
+    updateFamilySettings(familyAccount.id, { family_name: newName });
+    
     onUpdateAccount({
       ...familyAccount,
-      familyName: editFamilyName.trim() || familyAccount.familyName,
+      familyName: newName,
     });
     setShowEditProfileModal(false);
+  };
+
+  const handleAvatarUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setIsUploading(true);
+    try {
+      const publicUrl = await uploadAvatar(currentUser.id, file);
+      if (publicUrl) {
+        // Cập nhật lại UI sau khi upload thành công
+        const updatedUser = { ...currentUser, avatar: publicUrl };
+        onUpdateAccount({
+          ...familyAccount,
+          avatar: publicUrl, // Cập nhật cho cả gia đình nếu là trưởng nhóm
+          members: familyAccount.members.map(m => m.id === currentUser.id ? updatedUser : m)
+        });
+      } else {
+        alert('Có lỗi xảy ra khi tải ảnh lên. Vui lòng thử lại sau.');
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Lỗi ngoại lệ khi tải ảnh.');
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   return (
@@ -163,11 +194,24 @@ export const AccountPage: React.FC<AccountPageProps> = ({
 
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative z-10">
           <div className="flex items-center gap-5">
-            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden border-2 border-red-500 shadow-lg shrink-0 bg-slate-800">
+            <div 
+              className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden border-2 border-red-500 shadow-lg shrink-0 bg-slate-800 relative group cursor-pointer"
+              onClick={() => fileInputRef.current?.click()}
+            >
               <img
                 src={familyAccount.avatar || currentUser.avatar}
                 alt={familyAccount.familyName}
-                className="w-full h-full object-cover"
+                className={`w-full h-full object-cover transition-opacity ${isUploading ? 'opacity-50' : 'group-hover:opacity-80'}`}
+              />
+              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/40">
+                <Edit2 className="w-5 h-5 text-white" />
+              </div>
+              <input 
+                type="file" 
+                ref={fileInputRef} 
+                onChange={handleAvatarUpload} 
+                accept="image/*" 
+                className="hidden" 
               />
             </div>
             <div className="space-y-1">

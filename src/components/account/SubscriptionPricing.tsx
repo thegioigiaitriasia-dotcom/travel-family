@@ -16,9 +16,9 @@ export const SubscriptionPricing: React.FC<SubscriptionPricingProps> = ({
   const [selectedPlan, setSelectedPlan] = useState<SubscriptionPlan>('yearly');
   const [showQR, setShowQR] = useState(false);
 
-  // Hardcoded values for SePay / VietQR as per plan
-  const SEPAY_BANK = 'MB'; // Update this to actual bank bin/name
-  const SEPAY_ACCOUNT = '0123456789'; // Update this to actual bank account
+  // Values for SePay / VietQR as per plan
+  const SEPAY_BANK = import.meta.env.VITE_SEPAY_BANK || 'MB';
+  const SEPAY_ACCOUNT = import.meta.env.VITE_SEPAY_ACCOUNT || '0123456789';
 
   const plans = [
     {
