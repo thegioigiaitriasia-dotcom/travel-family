@@ -45,6 +45,84 @@ const app = express();
     res.json({ status: 'ok', timestamp: new Date().toISOString() });
   });
 
+// Auto-fetch Google Places helper
+async function enrichPlanWithRealPlaces(plan: any, supabaseAdminClient: any, googleApiKey: string) {
+  if (!plan || !plan.days) return plan;
+
+  for (const day of plan.days) {
+    if (!day.activities) continue;
+
+    for (const activity of day.activities) {
+      const type = (activity.category || '').toLowerCase();
+      // Bỏ qua các hoạt động di chuyển hoặc nghỉ ngơi chung chung
+      if (type === 'transport' || type === 'di chuyển' || !activity.locationName || activity.locationName.length < 3) {
+        continue;
+      }
+
+      const placeName = activity.locationName;
+      let realImageUrl = null;
+
+      try {
+        // 1. Tìm trong poi_database trước
+        const { data: dbMatches } = await supabaseAdminClient
+          .from('poi_database')
+          .select('image_url')
+          .ilike('name', `%${placeName}%`)
+          .limit(1);
+
+        if (dbMatches && dbMatches.length > 0 && dbMatches[0].image_url) {
+          realImageUrl = dbMatches[0].image_url;
+        } else if (googleApiKey) {
+          // 2. Nếu chưa có, gọi Google Places API
+          const url = 'https://places.googleapis.com/v1/places:searchText';
+          const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-Goog-Api-Key': googleApiKey,
+              'X-Goog-FieldMask': 'places.displayName,places.photos,places.formattedAddress,places.types',
+            },
+            body: JSON.stringify({
+              textQuery: `${placeName} ${day.cityName || ''}`,
+              languageCode: 'vi',
+            }),
+          });
+          const gData = await response.json();
+
+          if (gData.places && gData.places.length > 0) {
+            const place = gData.places[0];
+            if (place.photos && place.photos.length > 0) {
+              const photoName = place.photos[0].name;
+              realImageUrl = `https://places.googleapis.com/v1/${photoName}/media?maxHeightPx=800&key=${googleApiKey}`;
+
+              // 3. Tích lũy (Insert) vào poi_database để dùng lại
+              await supabaseAdminClient.from('poi_database').upsert({
+                name: placeName,
+                category: activity.category || 'Attraction',
+                address: place.formattedAddress || day.cityName || '',
+                city: day.cityName || '',
+                image_url: realImageUrl,
+                description: activity.description || '',
+                source: 'ai_auto_fetch'
+              }, { onConflict: 'name,city' });
+            }
+          }
+        }
+      } catch (err) {
+        console.warn(`[Auto Fetch Image] Failed for ${placeName}`, err);
+      }
+
+      // Gắn hình ảnh vào activity
+      if (realImageUrl) {
+        activity.imageUrl = realImageUrl;
+        if (!activity.place) activity.place = { name: placeName };
+        activity.place.imageUrl = realImageUrl;
+      }
+    }
+  }
+  return plan;
+}
+
   // ==========================================================================
   // Phase 3: Google Places API Proxy
   // POST /api/places/search
@@ -231,11 +309,14 @@ Hãy trả về JSON duy nhất với cấu trúc:
 
       const jsonText = response.text || '';
       const parsedPlan = JSON.parse(jsonText);
+      const googleApiKey = process.env.VITE_GOOGLE_MAPS_API_KEY || process.env.GOOGLE_MAPS_API_KEY || '';
+      
+      const enrichedPlan = await enrichPlanWithRealPlaces(parsedPlan, supabaseAdmin, googleApiKey);
 
       return res.json({
         success: true,
         source: 'gemini_3_6_flash',
-        plan: parsedPlan,
+        plan: enrichedPlan,
       });
     } catch (err: any) {
       console.error('[Gemini API Error]', err);

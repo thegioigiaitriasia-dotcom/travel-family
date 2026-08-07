@@ -222,6 +222,17 @@ export const ActivityCard: React.FC<ActivityCardProps> = ({
         )}
       </div>
 
+      {/* Real Photo if available */}
+      {(activity.imageUrl || activity.place?.imageUrl) && (
+        <div className="pt-2">
+          <img
+            src={activity.imageUrl || activity.place?.imageUrl}
+            alt={activity.title}
+            className="w-full h-32 sm:h-40 object-cover rounded-2xl border border-slate-200 shadow-sm"
+          />
+        </div>
+      )}
+
       {/* Place & Location Info */}
       {activity.place && (
         <div className="bg-slate-50 p-3 rounded-2xl border border-slate-200 space-y-1.5 text-xs">
