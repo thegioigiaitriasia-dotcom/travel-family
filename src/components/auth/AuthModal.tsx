@@ -275,17 +275,17 @@ export const AuthModal: React.FC<AuthModalProps> = ({
       }
 
       // Đăng ký thành công — kiểm tra xem có cần xác nhận email không
-      if (result.user && !result.user.email_confirmed_at) {
+      if (result.user && !result.session) {
         setRegSuccess('🎉 Tài khoản đã được tạo! Vui lòng kiểm tra hộp thư để xác nhận email trước khi đăng nhập.');
         // Reset form
         setRegFamilyName(''); setRegOwnerName(''); setRegEmail(''); setRegPassword(''); setRegConfirmPassword('');
-      } else if (result.user) {
-        // Email confirmed immediately (email confirmation disabled in Supabase settings)
+      } else if (result.user && result.session) {
+        // Email confirmed immediately or email confirmation disabled (Supabase returns session)
         const [profileRes, subRes] = await Promise.all([
           supabase.from('profiles').select('*').eq('id', result.user.id).maybeSingle(),
           supabase.from('subscriptions').select('*').eq('user_id', result.user.id).maybeSingle(),
         ]);
-        const session = buildSessionFromSupabase(result.user as any, profileRes.data, subRes.data);
+        const session = await buildSessionFromSupabase(result.user as any, profileRes.data, subRes.data);
         onLoginSuccess(session);
         onClose();
       }

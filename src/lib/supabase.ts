@@ -262,9 +262,9 @@ export async function supabaseSignUp(email: string, password: string, fullName: 
       await supabase.from('family_accounts').upsert(familyData);
     }
 
-    return { success: true, error: null, user };
+    return { success: true, error: null, user, session: authData.session };
   } catch (err: any) {
-    return { success: false, error: err.message || String(err), user: null };
+    return { success: false, error: err.message || String(err), user: null, session: null };
   }
 }
 
