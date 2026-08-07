@@ -17,8 +17,8 @@ export const SubscriptionPricing: React.FC<SubscriptionPricingProps> = ({
   const [showQR, setShowQR] = useState(false);
 
   // Values for SePay / VietQR as per plan
-  const SEPAY_BANK = import.meta.env.VITE_SEPAY_BANK || 'MB';
-  const SEPAY_ACCOUNT = import.meta.env.VITE_SEPAY_ACCOUNT || '0123456789';
+  const SEPAY_BANK = import.meta.env.VITE_SEPAY_BANK || 'TPB';
+  const SEPAY_ACCOUNT = import.meta.env.VITE_SEPAY_ACCOUNT || '00003554020';
 
   const plans = [
     {
