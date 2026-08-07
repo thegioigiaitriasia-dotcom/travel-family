@@ -321,19 +321,18 @@ export async function fetchSupabaseProfiles() {
 // Update profile role or status for Admin
 export async function updateSupabaseProfileStatus(userId: string, updates: { role?: string; status?: string; full_name?: string }) {
   try {
-    const { data, error } = await supabase
-      .from('profiles')
-      .update({
-        ...updates,
-        updated_at: new Date().toISOString(),
-      })
-      .eq('id', userId);
-
-    if (error) {
-      console.warn('Supabase updateSupabaseProfileStatus error:', error.message);
-      return false;
-    }
-    return true;
+      const appUrl = typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000';
+      const res = await fetch(`${appUrl}/api/update-profile`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId, updates: { ...updates, updated_at: new Date().toISOString() } })
+      });
+      const json = await res.json();
+      if (!json.success) {
+        console.warn('Supabase updateSupabaseProfileStatus error:', json.message);
+        return false;
+      }
+      return true;
   } catch (err) {
     console.warn('Supabase updateSupabaseProfileStatus exception:', err);
     return false;
@@ -511,8 +510,13 @@ export async function uploadAvatar(userId: string, file: File): Promise<string |
     const { data } = supabase.storage.from('avatars').getPublicUrl(filePath);
     
     if (data?.publicUrl) {
-      // Cập nhật URL vào profile
-      await supabase.from('profiles').update({ avatar_url: data.publicUrl }).eq('id', userId);
+      // Cập nhật URL vào profile qua API backend để bypass RLS
+      const appUrl = typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000';
+      await fetch(`${appUrl}/api/update-profile`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId, updates: { avatar_url: data.publicUrl } })
+      });
       return data.publicUrl;
     }
     

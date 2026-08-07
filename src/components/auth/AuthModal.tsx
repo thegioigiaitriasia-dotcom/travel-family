@@ -349,10 +349,12 @@ export const AuthModal: React.FC<AuthModalProps> = ({
       }
 
       // 3. Liên kết user vào family account
-      await supabase
-        .from('profiles')
-        .update({ family_account_id: familyData.id, updated_at: new Date().toISOString() })
-        .eq('id', loginData.user.id);
+      const appUrl = typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000';
+      await fetch(`${appUrl}/api/update-profile`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId: loginData.user.id, updates: { family_account_id: familyData.id, updated_at: new Date().toISOString() } })
+      });
 
       const [profileRes, subRes] = await Promise.all([
         supabase.from('profiles').select('*').eq('id', loginData.user.id).maybeSingle(),

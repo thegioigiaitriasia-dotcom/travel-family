@@ -38,6 +38,16 @@ app.post('/api/create-sub-account', async (req, res) => {
   } catch (err: any) { return res.status(500).json({ success: false, message: err.message }); }
 });
 
+app.post('/api/update-profile', async (req, res) => {
+  try {
+    const { userId, updates } = req.body;
+    if (!userId || !updates) return res.status(400).json({ success: false, message: 'Missing userId or updates' });
+    const { error } = await supabaseAdmin.from('profiles').update(updates).eq('id', userId);
+    if (error) return res.status(400).json({ success: false, message: error.message });
+    return res.json({ success: true });
+  } catch (err: any) { return res.status(500).json({ success: false, message: err.message }); }
+});
+
 app.post('/api/places/search', async (req, res) => {
   try {
     const { query } = req.body;
