@@ -202,94 +202,9 @@ function normalizeSupabaseCacheRow(row: any): CachedPlace {
   };
 }
 
-// 5. Fetch Live from Google Places API (New Places API v1 searchText)
+// 5. Fetch Live from Google Places API (ĐÃ GỠ BỎ ĐỂ TIẾT KIỆM NGÂN SÁCH - CHUYỂN QUA CROWDSOURCING)
 export async function fetchLiveGooglePlacesAPI(query: string): Promise<CachedPlace | null> {
-  const apiKey = getGooglePlacesApiKey();
-  if (!apiKey) {
-    throw new Error('Chưa cấu hình Google Places API Key (VITE_GOOGLE_MAPS_API_KEY)');
-  }
-
-  try {
-    // Call our backend proxy
-    const url = '/api/places/search';
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        query,
-      }),
-    });
-
-    if (!response.ok) {
-      const errText = await response.text();
-      console.warn('[GooglePlacesAPI] API call returned error:', response.status, errText);
-      throw new Error(`Google Places API Error ${response.status}: ${errText}`);
-    }
-
-    const data = await response.json();
-    if (!data.places || data.places.length === 0) {
-      return null;
-    }
-
-    const rawPlace = data.places[0];
-    const placeId = rawPlace.id || `gplace_${Date.now()}`;
-    const name = rawPlace.displayName?.text || query;
-    const address = rawPlace.formattedAddress || 'Việt Nam';
-    const rating = rawPlace.rating ? Number(rawPlace.rating) : 4.8;
-    const user_ratings_total = rawPlace.userRatingCount || 100;
-    const phone = rawPlace.nationalPhoneNumber || '';
-    const website = rawPlace.websiteUri || '';
-    const location = rawPlace.location
-      ? { lat: rawPlace.location.latitude, lng: rawPlace.location.longitude }
-      : { lat: 16.0544, lng: 108.2022 };
-
-    // Format Google Places Photos
-    let photos: string[] = [];
-    if (rawPlace.photos && rawPlace.photos.length > 0) {
-      photos = rawPlace.photos.map((photo: any) => {
-        // Since we are proxying, we still need the backend to return the URL or we construct it with a proxy endpoint too.
-        // But for simplicity, we return the photo reference and construct it if we have the key, otherwise use unsplash.
-        // The backend uses Place API v1 or old API? In server.ts I used the old API textsearch: https://maps.googleapis.com/maps/api/place/textsearch/json...
-        // Ah, the old API returns `photos: [{ photo_reference: '...' }]`. Let's handle both v1 and old API formats.
-        if (photo.name) {
-            // v1 API format
-            return `/api/places/photo?name=${encodeURIComponent(photo.name)}`; 
-        } else if (photo.photo_reference) {
-            // old API format
-            return `/api/places/photo?photo_reference=${encodeURIComponent(photo.photo_reference)}`;
-        }
-        return '';
-      }).filter(Boolean);
-    }
-
-    const coverImage = photos[0] || getVerifiedRealImageFallback(name, query);
-    if (photos.length === 0) {
-      photos = [coverImage];
-    }
-
-    const cachedPlace: CachedPlace = {
-      place_id: placeId,
-      name,
-      address,
-      rating,
-      user_ratings_total,
-      category: mapGoogleTypeToCategory(rawPlace.primaryType || query),
-      price_level: mapGooglePriceLevel(rawPlace.priceLevel),
-      cover_image: coverImage,
-      photos,
-      location,
-      formatted_phone: phone,
-      website,
-      source: 'google_places_api',
-    };
-
-    return cachedPlace;
-  } catch (err: any) {
-    console.warn('[GooglePlacesAPI] Error fetching live places:', err.message);
-    throw err;
-  }
+  return null;
 }
 
 // Helper: Real high-resolution place photos catalog for fallback verification
@@ -401,24 +316,9 @@ export async function getPlaceWithCache(query: string, categoryHint?: string): P
       message: '💾 Lấy từ bộ nhớ đệm trình duyệt',
     };
   }
-  // 3. Query Backend Proxy API
-  try {
-    const livePlace = await fetchLiveGooglePlacesAPI(cleanQuery);
-    if (livePlace) {
-      // Save to Supabase Cache immediately for future zero-cost lookup!
-      await saveToSupabaseCache(livePlace);
+  // 3. (Gỡ bỏ) Không truy vấn Google API nữa
+  // Đã vô hiệu hoá Google API
 
-      return {
-        place: livePlace,
-        source: 'google_places_api',
-        latencyMs: Date.now() - startTime,
-        message: '🌐 Truy vấn qua Backend Proxy Google Places API & Đã lưu vào Supabase Cache!',
-      };
-    }
-  } catch (err: any) {
-    console.warn('[GooglePlacesService] Backend Proxy API failed, falling back to verified real database:', err.message);
-  }
-  // 4. Fallback (No Google Maps API Key or Failed Request)
   // TRÁNH LƯU DATABASE! Trả về dữ liệu trống để không ghi đè dữ liệu của AI bằng dữ liệu cứng.
   const emptyFallbackPlace: CachedPlace = {
     place_id: `temp_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,

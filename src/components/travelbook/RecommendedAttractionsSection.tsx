@@ -40,65 +40,7 @@ export interface AttractionItem {
   suggestedEndTime?: string;
 }
 
-export const defaultAttractions: AttractionItem[] = [
-  {
-    id: 'attr-1',
-    name: 'Sun World Bà Nà Hills & Cầu Vàng',
-    category: 'sightseeing',
-    categoryLabel: 'Tham quan',
-    destination: 'Đà Nẵng',
-    badge: 'Must Visit · Check-in HOT',
-    rating: 4.9,
-    reviewCount: 2450,
-    durationText: 'Nửa ngày – 1 ngày',
-    pricePerPerson: 900000,
-    priceText: '900.000đ / người',
-    imageUrl: 'https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?w=600&auto=format&fit=crop&q=80',
-    description: 'Tuyến cáp treo đạt nhiều kỷ lục thế giới dẫn lên đỉnh núi Chúa, check-in Cầu Vàng biểu tượng và dạo bước Làng Pháp mộng mơ.',
-    familyTips: 'Phù hợp cả trẻ em và người lớn tuổi. Nên mang theo áo khoác nhẹ.',
-    suitabilityTags: ['Gia đình', 'Chụp ảnh đẹp', 'Không khí mát mẻ'],
-    suggestedStartTime: '08:00',
-    suggestedEndTime: '15:30',
-  },
-  {
-    id: 'attr-2',
-    name: 'Phố cổ Hội An & Thả hoa đăng Sông Hoài',
-    category: 'sightseeing',
-    categoryLabel: 'Tham quan',
-    destination: 'Hội An',
-    badge: 'Di sản thế giới UNESCO',
-    rating: 4.9,
-    reviewCount: 3100,
-    durationText: 'Buổi chiều & Tối',
-    pricePerPerson: 120000,
-    priceText: '120.000đ / vé tham quan',
-    imageUrl: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=600&auto=format&fit=crop&q=80',
-    description: 'Phố cổ lung linh hàng ngàn đèn lồng thắp sáng buổi tối, đi thuyền nhỏ trên sông Hoài thả hoa đăng cầu may mắn.',
-    familyTips: 'Phố cấm xe máy buổi chiều rất an toàn cho các bé tung tăng dạo bộ.',
-    suitabilityTags: ['Văn hóa', 'Cổ kính', 'Trải nghiệm tối'],
-    suggestedStartTime: '16:00',
-    suggestedEndTime: '21:00',
-  },
-  {
-    id: 'attr-3',
-    name: 'Bán đảo Sơn Trà & Chùa Linh Ứng',
-    category: 'sightseeing',
-    categoryLabel: 'Tham quan',
-    destination: 'Đà Nẵng',
-    badge: 'Tâm linh & Thiên nhiên',
-    rating: 4.8,
-    reviewCount: 1520,
-    durationText: '2 giờ',
-    pricePerPerson: 0,
-    priceText: 'Miễn phí vé',
-    imageUrl: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&auto=format&fit=crop&q=80',
-    description: 'Chiêm ngưỡng tượng Quan Thế Âm cao 67m hướng ra biển Đông, ngắm trọn vẹn vịnh biển Đà Nẵng từ trên cao.',
-    familyTips: 'Nên ghé buổi sáng sớm hoặc tầm 16:30 để tránh nắng gắt.',
-    suitabilityTags: ['Miễn phí', 'Người lớn tuổi', 'Cảnh quan biển'],
-    suggestedStartTime: '08:30',
-    suggestedEndTime: '10:30',
-  },
-];
+export const defaultAttractions: AttractionItem[] = [];
 
 interface RecommendedAttractionsSectionProps {
   attractions?: AttractionItem[];
@@ -161,6 +103,8 @@ export const RecommendedAttractionsSection: React.FC<RecommendedAttractionsSecti
 
     setSelectedAttraction(null);
   };
+
+  if (!attractions || attractions.length === 0) return null;
 
   return (
     <div className="bg-white rounded-[24px] p-6 border border-[#E3E6E2] shadow-xs space-y-6">

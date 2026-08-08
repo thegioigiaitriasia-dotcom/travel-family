@@ -1,10 +1,11 @@
-import React from 'react';
-import { TravelBook } from '../types';
+﻿import React from 'react';
+import { TravelBook, UserAuthSession } from '../types';
 import { TripOverviewPage } from './travelbook/TripOverviewPage';
 
 interface TravelBookModuleProps {
   trip?: TravelBook;
   initialTrip?: TravelBook;
+  session?: UserAuthSession;
   onNavigateHome?: () => void;
   onNavigateToPlanner?: () => void;
   onNavigateToPlaces?: () => void;
@@ -14,6 +15,7 @@ interface TravelBookModuleProps {
 
 export const TravelBookModule: React.FC<TravelBookModuleProps> = ({
   trip,
+  session,
   onNavigateHome,
   onNavigateToPlanner,
   onNavigateToPlaces,
@@ -23,6 +25,7 @@ export const TravelBookModule: React.FC<TravelBookModuleProps> = ({
   return (
     <TripOverviewPage
       trip={trip!}
+      session={session}
       onNavigateHome={onNavigateHome}
       onNavigateToPlanner={onNavigateToPlanner}
       onNavigateToPlaces={onNavigateToPlaces}

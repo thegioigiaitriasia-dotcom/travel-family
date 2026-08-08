@@ -20,169 +20,42 @@ interface AIPlannerModuleProps {
   onShowPaywall: () => void;
 }
 
+const today = new Date();
+const todayStr = today.toISOString().split('T')[0];
+const threeDaysLater = new Date(today.getTime() + 3 * 86400000).toISOString().split('T')[0];
+
 const defaultMultiCityInput: MultiCityTripPlannerInput = {
   tripWindow: {
-    startDate: '2026-08-08',
+    startDate: todayStr,
     startTime: '07:00',
     startTimeStatus: 'confirmed',
-    endDate: '2026-08-11',
+    endDate: threeDaysLater,
     endTime: '18:00',
     endTimeStatus: 'confirmed',
   },
-  routeStops: [
-    {
-      id: 'stop-origin',
-      order: 1,
-      type: 'origin',
-      name: 'TP. Hồ Chí Minh',
-      departureDate: '2026-08-08',
-      departureTime: '07:00',
-    },
-    {
-      id: 'stop-1',
-      order: 2,
-      type: 'stay',
-      name: 'Buôn Ma Thuột',
-      arrivalDate: '2026-08-08',
-      arrivalTime: '08:20',
-      departureDate: '2026-08-09',
-      departureTime: '12:30',
-      nights: 1,
-      purposes: ['Khám phá văn hóa', 'Ẩm thực Tây Nguyên'],
-    },
-    {
-      id: 'stop-2',
-      order: 3,
-      type: 'stay',
-      name: 'Cam Ranh',
-      arrivalDate: '2026-08-09',
-      arrivalTime: '18:00',
-      departureDate: '2026-08-11',
-      departureTime: '15:30',
-      nights: 2,
-      purposes: ['Tắm biển', 'Nghỉ dưỡng resort'],
-    },
-    {
-      id: 'stop-destination',
-      order: 4,
-      type: 'destination',
-      name: 'TP. Hồ Chí Minh',
-      arrivalDate: '2026-08-11',
-      arrivalTime: '16:40',
-    },
-  ],
-  journeyLegs: [
-    {
-      id: 'leg-1',
-      fromStopId: 'stop-origin',
-      toStopId: 'stop-1',
-      transportMode: 'flight',
-      bookingStatus: 'confirmed',
-      departure: {
-        date: '2026-08-08',
-        time: '07:00',
-        timeStatus: 'confirmed',
-        stationOrTerminal: 'Sân bay Tân Sơn Nhất (SGN)',
-      },
-      arrival: {
-        date: '2026-08-08',
-        time: '08:20',
-        timeStatus: 'confirmed',
-        stationOrTerminal: 'Sân bay Buôn Ma Thuột (BMV)',
-      },
-      providerName: 'VN1412',
-      bufferMinutes: 90,
-    },
-    {
-      id: 'leg-2',
-      fromStopId: 'stop-1',
-      toStopId: 'stop-2',
-      transportMode: 'limousine',
-      bookingStatus: 'not_booked',
-      departure: {
-        date: '2026-08-09',
-        time: '12:30',
-        timeStatus: 'preferred',
-      },
-      arrival: {
-        date: '2026-08-09',
-        time: '18:00',
-        timeStatus: 'estimated',
-      },
-      preferredWindow: 'Chuyến từ 12:00–13:30',
-      maxTravelHours: 6,
-      bufferMinutes: 20,
-    },
-    {
-      id: 'leg-3',
-      fromStopId: 'stop-2',
-      toStopId: 'stop-destination',
-      transportMode: 'flight',
-      bookingStatus: 'confirmed',
-      departure: {
-        date: '2026-08-11',
-        time: '15:30',
-        timeStatus: 'confirmed',
-        stationOrTerminal: 'Sân bay Cam Ranh (CXR)',
-      },
-      arrival: {
-        date: '2026-08-11',
-        time: '16:40',
-        timeStatus: 'confirmed',
-        stationOrTerminal: 'Sân bay Tân Sơn Nhất (SGN)',
-      },
-      providerName: 'VJ602',
-      bufferMinutes: 90,
-    },
-  ],
-  accommodations: [
-    {
-      stopId: 'stop-1',
-      status: 'booked',
-      name: 'Mường Thanh Luxury Buôn Ma Thuột',
-      address: 'Trung tâm Buôn Ma Thuột',
-      checkInDate: '2026-08-08',
-      checkInTime: '14:00',
-      checkOutDate: '2026-08-09',
-      checkOutTime: '12:00',
-      luggageDropAvailable: true,
-    },
-    {
-      stopId: 'stop-2',
-      status: 'booked',
-      name: 'The Arena Cam Ranh Resort',
-      address: 'Bãi Dài, Cam Ranh',
-      checkInDate: '2026-08-09',
-      checkInTime: '14:00',
-      checkOutDate: '2026-08-11',
-      checkOutTime: '12:00',
-      luggageDropAvailable: true,
-    },
-  ],
+  routeStops: [],
+  journeyLegs: [],
+  accommodations: [],
   travelers: {
     adults: 2,
-    children: [{ age: 8 }, { age: 14 }],
+    children: [],
     seniors: 0,
   },
-  mobilityAndComfortNeeds: ['Có người dễ say xe', 'Cần ăn đúng giờ'],
-  specialNote: 'Muốn ghé quán cà phê ngon ở Buôn Ma Thuột',
-  travelStyles: ['Gia đình & Trẻ em', 'Ẩm thực & Đặc sản', 'Nghỉ dưỡng & Relax'],
+  mobilityAndComfortNeeds: [],
+  specialNote: '',
+  travelStyles: [],
   pace: 'balanced',
-  avoidPreferences: ['Không dậy quá sớm (trước 7:00)'],
-  foodPreferences: ['Đặc sản nổi tiếng địa phương', 'Hải sản tươi sống'],
+  avoidPreferences: [],
+  foodPreferences: [],
   budget: {
-    total: 20000000,
+    total: 0,
     currency: 'VND',
     alreadyPaid: {
-      transport: 6500000,
-      accommodation: 5000000,
+      transport: 0,
+      accommodation: 0,
       other: 0,
     },
-    includedItems: [
-      'Ăn uống',
-      'Vé tham quan & vui chơi',
-      'Di chuyển nội thành',
-    ],
+    includedItems: [],
   },
 };
 
@@ -284,8 +157,20 @@ export const AIPlannerModule: React.FC<AIPlannerModuleProps> = ({
   const handleViewItinerary = () => {
     const routeTitle =
       formData.routeStops.map((s) => s.name).join(' → ') ||
-      'TP.HCM → Buôn Ma Thuột → Cam Ranh → TP.HCM';
-    const totalDays = 4;
+      'Chuyến đi gia đình';
+    
+    // Tính số ngày thật từ tripWindow
+    let totalDays = 4;
+    if (formData.tripWindow?.startDate && formData.tripWindow?.endDate) {
+      const start = new Date(formData.tripWindow.startDate);
+      const end = new Date(formData.tripWindow.endDate);
+      const diffTime = Math.abs(end.getTime() - start.getTime());
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1; // +1 to include both start and end days
+      if (!isNaN(diffDays) && diffDays > 0) {
+        totalDays = diffDays;
+      }
+    }
+
     onGenerateSuccess(routeTitle, totalDays);
   };
 

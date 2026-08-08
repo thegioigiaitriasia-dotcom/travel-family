@@ -55,138 +55,14 @@ interface AdminDashboardProps {
   onNavigateToModule?: (module: any) => void;
 }
 
-// Initial Mock Admin Users List
-const INITIAL_USERS: (FamilyMember & { email: string; familyName: string; status: 'active' | 'suspended'; roleType: string })[] = [
-  {
-    id: 'usr-admin-01',
-    name: 'Quản trị viên (Super Admin)',
-    username: 'admin',
-    email: 'admin@giadinhvivu.com',
-    role: 'Super Admin',
-    roleType: 'Super Admin',
-    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150',
-    familyName: 'Gia đình Vi Vu',
-    joinedDate: '2026-01-15',
-    status: 'active',
-    lastActive: 'Vừa xong',
-    isAdmin: true,
-  },
-  {
-    id: 'usr-02',
-    name: 'Trần Thị Thu Hương',
-    username: 'huong.tran',
-    email: 'huong.tran@gmail.com',
-    role: 'Trưởng nhóm',
-    roleType: 'Family Owner',
-    avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150',
-    familyName: 'Gia đình Việt',
-    joinedDate: '2026-01-16',
-    status: 'active',
-    lastActive: '10 phút trước',
-  },
-  {
-    id: 'usr-03',
-    name: 'Lê Minh Hoàng',
-    username: 'hoang.le',
-    email: 'hoang.le92@gmail.com',
-    role: 'Trưởng nhóm',
-    roleType: 'Family Owner',
-    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150',
-    familyName: 'Nhà Minh Hoàng Sài Gòn',
-    joinedDate: '2026-02-01',
-    status: 'active',
-    lastActive: '2 giờ trước',
-  },
-  {
-    id: 'usr-04',
-    name: 'Phạm Thanh Hà',
-    username: 'ha.pham',
-    email: 'ha.pham.travel@yahoo.com',
-    role: 'Thành viên',
-    roleType: 'Member',
-    avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150',
-    familyName: 'Nhà Minh Hoàng Sài Gòn',
-    joinedDate: '2026-02-03',
-    status: 'active',
-    lastActive: '1 ngày trước',
-  },
-  {
-    id: 'usr-05',
-    name: 'Đặng Tuấn Anh',
-    username: 'tuananh.mod',
-    email: 'mod.tuananh@giadinhvivu.com',
-    role: 'Quản trị viên',
-    roleType: 'System Admin',
-    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150',
-    familyName: 'Gia đình Tuấn Anh - Hà Nội',
-    joinedDate: '2026-02-10',
-    status: 'active',
-    lastActive: '30 phút trước',
-    isAdmin: true,
-  },
-  {
-    id: 'usr-06',
-    name: 'Vũ Quốc Bảo',
-    username: 'bao.vu',
-    email: 'quocbao.vu@hotmail.com',
-    role: 'Thành viên',
-    roleType: 'Member',
-    avatar: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=150',
-    familyName: 'Bảo & Mai Vi Vu',
-    joinedDate: '2026-03-12',
-    status: 'suspended',
-    lastActive: '5 ngày trước',
-  },
-];
-
-// Initial Mock Admin Trips List
-const INITIAL_TRIPS = [
-  {
-    id: 'trip-001',
-    title: 'Đà Nẵng – Hội An Mùa Hè Rực Rỡ 2026',
-    ownerName: 'Nguyễn Văn Phúc',
-    familyName: 'Gia đình Bố Phúc & Mẹ Hương',
-    destinations: ['Đà Nẵng', 'Hội An', 'Bà Nà Hills'],
-    startDate: '08/08/2026',
-    endDate: '12/08/2026',
-    status: 'upcoming',
-    isPublic: true,
-    isFeatured: true,
-    createdDate: '2026-07-28',
-  },
-  {
-    id: 'trip-002',
-    title: 'Phú Quốc – Nghỉ Dưỡng Biển Ngọc Gia Đình',
-    ownerName: 'Lê Minh Hoàng',
-    familyName: 'Nhà Minh Hoàng Sài Gòn',
-    destinations: ['Phú Quốc', 'VinWonders', 'Hòn Thơm'],
-    startDate: '15/09/2026',
-    endDate: '18/09/2026',
-    status: 'upcoming',
-    isPublic: true,
-    isFeatured: false,
-    createdDate: '2026-08-01',
-  },
-  {
-    id: 'trip-003',
-    title: 'Đà Lạt – Sương Mờ & Trải Nghiệm Hái Dâu Mẹ & Bé',
-    ownerName: 'Đặng Tuấn Anh',
-    familyName: 'Gia đình Tuấn Anh - Hà Nội',
-    destinations: ['Đà Lạt', 'Hồ Tuyền Lâm', 'Thung Lũng Tình Yêu'],
-    startDate: '20/10/2026',
-    endDate: '23/10/2026',
-    status: 'planning',
-    isPublic: false,
-    isFeatured: false,
-    createdDate: '2026-08-04',
-  },
-];
+// Không còn hardcode mock data — tất cả dữ liệu được tải từ Supabase thật
 
 export const AdminDashboard: React.FC<AdminDashboardProps> = () => {
   const [activeTab, setActiveTab] = useState<'overview' | 'users' | 'trips' | 'database' | 'logs'>('overview');
   
-  // State for Users Management
-  const [users, setUsers] = useState(INITIAL_USERS);
+  // State for Users Management — bắt đầu rỗng, chứ Supabase load
+  const [users, setUsers] = useState<any[]>([]);
+  const [isLoadingData, setIsLoadingData] = useState(true);
   const [userSearch, setUserSearch] = useState('');
   const [roleFilter, setRoleFilter] = useState<string>('all');
   const [showAddUserModal, setShowAddUserModal] = useState(false);
@@ -198,8 +74,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = () => {
     familyName: 'Gia đình Mới',
   });
 
-  // State for Trips Moderation
-  const [trips, setTrips] = useState(INITIAL_TRIPS);
+  // State for Trips Moderation — bắt đầu rỗng, chứ Supabase load
+  const [trips, setTrips] = useState<any[]>([]);
   const [tripSearch, setTripSearch] = useState('');
 
   // State for Database & API Key Management Modals
@@ -214,19 +90,15 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = () => {
   const [broadcastMsg, setBroadcastMsg] = useState('');
   const [broadcastSent, setBroadcastSent] = useState(false);
 
-  // System Audit Logs
-  const [auditLogs, setAuditLogs] = useState([
-    { id: 1, time: '05:04:12 - Hôm nay', actor: 'phuc.admin', action: 'Chạy SQL Schema khởi tạo 6 bảng Supabase', status: 'Success' },
-    { id: 2, time: '04:58:30 - Hôm nay', actor: 'System', action: 'Kiểm tra trạng thái Supabase RLS Policies', status: 'Active' },
-    { id: 3, time: '04:20:15 - Hôm nay', actor: 'hoang.le', action: 'Tạo chuyến đi mới: Phú Quốc Nghỉ Dưỡng', status: 'Success' },
-    { id: 4, time: '03:15:00 - Hôm nay', actor: 'phuc.admin', action: 'Đăng nhập vào Admin Console', status: 'Success' },
-  ]);
+  // System Audit Logs — bảng thật từ Supabase, bắt đầu rỗng
+  const [auditLogs, setAuditLogs] = useState<any[]>([]);
 
   // Run DB check & load real Supabase data on mount
   useEffect(() => {
     checkDatabase();
     loadRealSupabaseData();
   }, []);
+
 
   // Real System Stats State
   const [sysStats, setSysStats] = useState({
@@ -295,6 +167,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = () => {
       }
     } catch (err) {
       console.warn('Error loading real Supabase data for admin:', err);
+    } finally {
+      setIsLoadingData(false);
     }
   };
 

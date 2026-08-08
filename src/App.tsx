@@ -510,25 +510,32 @@ export default function App() {
       }
     } catch {}
 
+    // Dùng ngày thật từ AI Plan nếu có
+    const startDateStr = aiPlanData?.tripWindow?.startDate 
+      ? new Date(aiPlanData.tripWindow.startDate).toLocaleDateString('vi-VN') 
+      : new Date().toLocaleDateString('vi-VN');
+    
+    const endDateStr = aiPlanData?.tripWindow?.endDate
+      ? new Date(aiPlanData.tripWindow.endDate).toLocaleDateString('vi-VN')
+      : new Date(Date.now() + days * 86400000).toLocaleDateString('vi-VN');
+
     const newTripId = `trip-${Date.now()}`;
     const newTrip: TripSummary = {
       id: newTripId,
       title: aiPlanData?.title || destination,
-      coverImage: aiPlanData?.coverImage || (destination.toLowerCase().includes('đà lạt')
-        ? 'https://images.unsplash.com/photo-1506461883276-594a12b11cf3?w=800&auto=format&fit=crop&q=80'
-        : 'https://images.unsplash.com/photo-1596402184320-417e7178b2cd?w=800&auto=format&fit=crop&q=80'),
-      startDate: new Date().toLocaleDateString('vi-VN'),
-      endDate: new Date(Date.now() + days * 86400000).toLocaleDateString('vi-VN'),
+      coverImage: aiPlanData?.coverImage || 'https://images.unsplash.com/photo-1596402184320-417e7178b2cd?w=800&auto=format&fit=crop&q=80',
+      startDate: startDateStr,
+      endDate: endDateStr,
       durationDays: days,
       durationNights: Math.max(0, days - 1),
       memberCount: session.familyAccount?.members.length || 4,
       status: 'planning',
       destinations: [destination],
-      placeCount: aiPlanData?.days?.reduce((acc: number, d: any) => acc + (d.activities?.length || 0), 0) || 8,
-      foodCount: 12,
-      accommodationCount: 1,
-      budgetMin: aiPlanData?.budgetEstimatedMin || 8000000,
-      budgetMax: aiPlanData?.budgetEstimatedMax || 12000000,
+      placeCount: aiPlanData?.days?.reduce((acc: number, d: any) => acc + (d.activities?.length || 0), 0) || 0,
+      foodCount: 0,
+      accommodationCount: 0,
+      budgetMin: aiPlanData?.budgetEstimatedMin || 0,
+      budgetMax: aiPlanData?.budgetEstimatedMax || 0,
       fullData: aiPlanData ? {
         ...aiPlanData,
         days: normalizedDays,
@@ -602,14 +609,16 @@ export default function App() {
           )}
 
           {currentModule === 'travel-book' && (
-            <TravelBookModule
+          <TravelBookModule
               trip={currentTravelBook}
+              session={session}
               onNavigateHome={() => setCurrentModule('my-trips')}
               onNavigateToPlanner={() => setCurrentModule('ai-planner')}
               onNavigateToPlaces={() => setCurrentModule('my-places')}
               onNavigateToDiary={() => setCurrentModule('travel-diary')}
               onUpdateTrip={handleUpdateTravelBook}
             />
+
           )}
 
           {currentModule === 'my-places' && (

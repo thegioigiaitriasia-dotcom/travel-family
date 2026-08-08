@@ -14,19 +14,11 @@ interface BudgetSummaryCardProps {
   onViewBudgetDetail?: () => void;
 }
 
-const defaultBreakdown: CategoryCost[] = [
-  { label: 'Di chuyển', amount: 4500000 },
-  { label: 'Lưu trú', amount: 4000000 },
-  { label: 'Ăn uống', amount: 3500000 },
-  { label: 'Tham quan', amount: 1200000 },
-  { label: 'Khác', amount: 800000 },
-];
-
 export const BudgetSummaryCard: React.FC<BudgetSummaryCardProps> = ({
-  userBudget = 15000000,
-  estimatedMin = 13000000,
-  estimatedMax = 16000000,
-  breakdown = defaultBreakdown,
+  userBudget = 0,
+  estimatedMin = 0,
+  estimatedMax = 0,
+  breakdown = [],
   onViewBudgetDetail,
 }) => {
   const formatMoney = (val: number) => {
@@ -77,25 +69,24 @@ export const BudgetSummaryCard: React.FC<BudgetSummaryCardProps> = ({
         </div>
       )}
 
-      {/* Category Breakdown list */}
-      <div className="space-y-2 pt-1">
-        <span className="text-xs font-extrabold text-slate-700 flex items-center gap-1.5">
-          <PieChart className="w-3.5 h-3.5 text-slate-400" />
-          Phân bổ dự kiến
-        </span>
+      {/* Category Breakdown list — chỉ hiện khi có dữ liệu */}
+      {breakdown.length > 0 && (
+        <div className="space-y-2 pt-1">
+          <span className="text-xs font-extrabold text-slate-700 flex items-center gap-1.5">
+            <PieChart className="w-3.5 h-3.5 text-slate-400" />
+            Phân bổ dự kiến
+          </span>
 
-        <div className="space-y-1.5 text-xs">
-          {breakdown.map((item, idx) => (
-            <div
-              key={idx}
-              className="flex items-center justify-between p-2 rounded-xl bg-slate-50/60 hover:bg-slate-50 transition-colors"
-            >
-              <span className="font-medium text-slate-600">{item.label}</span>
-              <span className="font-extrabold text-slate-900">{formatMoney(item.amount)}</span>
-            </div>
-          ))}
+          <div className="space-y-1.5 text-xs">
+            {breakdown.map((item, idx) => (
+              <div key={idx} className="flex items-center justify-between p-2 rounded-xl bg-slate-50/60 hover:bg-slate-50 transition-colors">
+                <span className="font-medium text-slate-600">{item.label}</span>
+                <span className="font-extrabold text-slate-900">{formatMoney(item.amount)}</span>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Explicit Price Reference & Non-Commercial Disclaimer */}
       <div className="p-3 bg-amber-50/70 border border-amber-200/80 rounded-2xl text-[11px] text-amber-900/90 leading-relaxed space-y-1">

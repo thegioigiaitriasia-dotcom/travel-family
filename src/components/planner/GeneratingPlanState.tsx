@@ -23,6 +23,7 @@ export const GeneratingPlanState: React.FC<GeneratingPlanStateProps> = ({
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [generationSource, setGenerationSource] = useState<string>('');
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [isApiDone, setIsApiDone] = useState(false);
 
   useEffect(() => {
     let isCancelled = false;
@@ -47,6 +48,7 @@ export const GeneratingPlanState: React.FC<GeneratingPlanStateProps> = ({
                 : 'Được tối ưu bởi thuật toán thông minh'
             );
           }
+          if (!isCancelled) setIsApiDone(true);
         } else {
           if (!isCancelled) {
              setErrorMsg(data.error || 'Đã xảy ra lỗi không xác định từ AI.');
@@ -72,22 +74,28 @@ export const GeneratingPlanState: React.FC<GeneratingPlanStateProps> = ({
         if (prev < progressSteps.length - 1) {
           return prev + 1;
         } else {
-          clearInterval(timer);
-
-
-          setTimeout(() => {
-            if (!isCancelled) onComplete();
-          }, 800);
+          // Dừng tăng progress bar nếu đã ở bước cuối
           return prev;
         }
       });
-    }, 1000);
+    }, 1500);
 
     return () => {
       isCancelled = true;
       if (timer) clearInterval(timer);
     };
   }, [formData, onComplete, errorMsg]);
+
+  // Lắng nghe isApiDone, nếu API đã xong và progressbar đang ở bước cuối (hoặc gần cuối), thì complete
+  useEffect(() => {
+    if (isApiDone) {
+       // Ép progressbar chạy nốt 100% rồi complete
+       setCurrentStepIndex(progressSteps.length - 1);
+       setTimeout(() => {
+         onComplete();
+       }, 800);
+    }
+  }, [isApiDone, onComplete]);
 
   return (
     <div className="bg-white rounded-[24px] p-8 border border-slate-200 shadow-2xl max-w-md mx-auto my-8 text-center space-y-6">

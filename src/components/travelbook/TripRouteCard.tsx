@@ -1,5 +1,5 @@
 import React from 'react';
-import { MapPin, Plane, Bus, Navigation, Map } from 'lucide-react';
+import { MapPin, Plane, Bus, Navigation, Map, Route } from 'lucide-react';
 
 export interface RouteStopItem {
   id: string;
@@ -18,45 +18,8 @@ interface TripRouteCardProps {
   onOpenMap: () => void;
 }
 
-const defaultStops: RouteStopItem[] = [
-  {
-    id: 'stop-hcm-1',
-    name: 'TP. Hồ Chí Minh',
-    dateRange: '08/08 · 07:15',
-    nextTransport: {
-      method: 'Máy bay',
-      estimatedText: '1 giờ 15 phút',
-    },
-  },
-  {
-    id: 'stop-danang',
-    name: 'Đà Nẵng',
-    dateRange: '08/08 – 10/08',
-    nights: 2,
-    nextTransport: {
-      method: 'Xe ô tô 7 chỗ',
-      estimatedText: 'khoảng 45 phút',
-    },
-  },
-  {
-    id: 'stop-hoian',
-    name: 'Hội An',
-    dateRange: '10/08 – 11/08',
-    nights: 1,
-    nextTransport: {
-      method: 'Máy bay',
-      estimatedText: '1 giờ 15 phút',
-    },
-  },
-  {
-    id: 'stop-hcm-2',
-    name: 'TP. Hồ Chí Minh',
-    dateRange: '11/08 · 16:45',
-  },
-];
-
 export const TripRouteCard: React.FC<TripRouteCardProps> = ({
-  stops = defaultStops,
+  stops,
   onOpenMap,
 }) => {
   const getTransportIcon = (method: string) => {
@@ -91,66 +54,78 @@ export const TripRouteCard: React.FC<TripRouteCardProps> = ({
       </div>
 
       {/* Vertical Route Stepper */}
-      <div className="relative pl-3 space-y-6">
-        {stops.map((stop, index) => {
-          const isLast = index === stops.length - 1;
+      {(!stops || stops.length === 0) ? (
+        <div className="p-8 text-center bg-slate-50 rounded-[20px] border border-dashed border-slate-200 space-y-3">
+          <Route className="w-10 h-10 text-slate-400 mx-auto" />
+          <div>
+            <p className="font-extrabold text-slate-800 text-sm">Chưa có tuyến hành trình</p>
+            <p className="text-xs text-slate-500 mt-0.5">
+              Tuyến đường sẽ hiển thị sau khi bạn tạo lịch trình bằng AI.
+            </p>
+          </div>
+        </div>
+      ) : (
+        <div className="relative pl-3 space-y-6">
+          {stops.map((stop, index) => {
+            const isLast = index === stops.length - 1;
 
-          return (
-            <div key={stop.id} className="relative flex items-start gap-4 group">
-              {/* Vertical Connector Line */}
-              {!isLast && (
-                <div className="absolute left-[15px] top-[28px] bottom-[-24px] w-[2px] bg-slate-200 group-hover:bg-[#DC2626]/40 transition-colors" />
-              )}
+            return (
+              <div key={stop.id} className="relative flex items-start gap-4 group">
+                {/* Vertical Connector Line */}
+                {!isLast && (
+                  <div className="absolute left-[15px] top-[28px] bottom-[-24px] w-[2px] bg-slate-200 group-hover:bg-[#DC2626]/40 transition-colors" />
+                )}
 
-              {/* Stop Marker Circle */}
-              <div
-                className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 z-10 border-2 transition-transform ${
-                  index === 0 || isLast
-                    ? 'bg-[#DC2626] text-white border-sky-200 shadow-md shadow-[#DC2626]/20'
-                    : 'bg-white text-[#DC2626] border-[#DC2626]'
-                }`}
-              >
-                <MapPin className="w-4 h-4" />
-              </div>
-
-              {/* Stop Info & Connector Details */}
-              <div className="flex-1 pt-0.5 space-y-3">
-                <div className="flex flex-wrap items-center justify-between gap-2">
-                  <div>
-                    <h4 className="font-black text-slate-900 text-sm sm:text-base tracking-tight">
-                      {stop.name}
-                    </h4>
-                    {stop.dateRange && (
-                      <p className="text-xs font-semibold text-slate-500 mt-0.5">
-                        {stop.dateRange}
-                        {stop.nights !== undefined && (
-                          <span className="ml-2 px-2 py-0.5 rounded-md bg-emerald-50 text-[#2E8B57] font-bold text-[10px] border border-emerald-100">
-                            {stop.nights} đêm
-                          </span>
-                        )}
-                      </p>
-                    )}
-                  </div>
+                {/* Stop Marker Circle */}
+                <div
+                  className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 z-10 border-2 transition-transform ${
+                    index === 0 || isLast
+                      ? 'bg-[#DC2626] text-white border-sky-200 shadow-md shadow-[#DC2626]/20'
+                      : 'bg-white text-[#DC2626] border-[#DC2626]'
+                  }`}
+                >
+                  <MapPin className="w-4 h-4" />
                 </div>
 
-                {/* Next Transport Connector Banner */}
-                {stop.nextTransport && (
-                  <div className="mt-2 inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-bold text-slate-700">
-                    <span className="text-slate-400 font-extrabold">↓</span>
-                    {getTransportIcon(stop.nextTransport.method)}
-                    <span>{stop.nextTransport.method}</span>
-                    {stop.nextTransport.estimatedText && (
-                      <span className="text-slate-400 font-normal">
-                        · {stop.nextTransport.estimatedText}
-                      </span>
-                    )}
+                {/* Stop Info & Connector Details */}
+                <div className="flex-1 pt-0.5 space-y-3">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <div>
+                      <h4 className="font-black text-slate-900 text-sm sm:text-base tracking-tight">
+                        {stop.name}
+                      </h4>
+                      {stop.dateRange && (
+                        <p className="text-xs font-semibold text-slate-500 mt-0.5">
+                          {stop.dateRange}
+                          {stop.nights !== undefined && (
+                            <span className="ml-2 px-2 py-0.5 rounded-md bg-emerald-50 text-[#2E8B57] font-bold text-[10px] border border-emerald-100">
+                              {stop.nights} đêm
+                            </span>
+                          )}
+                        </p>
+                      )}
+                    </div>
                   </div>
-                )}
+
+                  {/* Next Transport Connector Banner */}
+                  {stop.nextTransport && (
+                    <div className="mt-2 inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-bold text-slate-700">
+                      <span className="text-slate-400 font-extrabold">↓</span>
+                      {getTransportIcon(stop.nextTransport.method)}
+                      <span>{stop.nextTransport.method}</span>
+                      {stop.nextTransport.estimatedText && (
+                        <span className="text-slate-400 font-normal">
+                          · {stop.nextTransport.estimatedText}
+                        </span>
+                      )}
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
+      )}
 
       {/* Footer Map Button */}
       <div className="pt-2 border-t border-slate-100">

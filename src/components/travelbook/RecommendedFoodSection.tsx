@@ -14,50 +14,7 @@ interface RecommendedFoodSectionProps {
   onViewAllFoods?: () => void;
 }
 
-const defaultFoods: FoodItem[] = [
-  {
-    id: 'food-1',
-    name: 'Mì Quảng Bà Mua',
-    destination: 'Đà Nẵng',
-    badge: 'Đặc sản',
-    imageUrl: 'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=400&auto=format&fit=crop&q=80',
-  },
-  {
-    id: 'food-2',
-    name: 'Bánh tráng thịt heo Trần',
-    destination: 'Đà Nẵng',
-    badge: 'Đặc sản',
-    imageUrl: 'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=400&auto=format&fit=crop&q=80',
-  },
-  {
-    id: 'food-3',
-    name: 'Chè Liên Đà Nẵng',
-    destination: 'Đà Nẵng',
-    badge: 'Tráng miệng',
-    imageUrl: 'https://images.unsplash.com/photo-1617093727343-374698b1b08d?w=400&auto=format&fit=crop&q=80',
-  },
-  {
-    id: 'food-4',
-    name: 'Cao lầu Hội An',
-    destination: 'Hội An',
-    badge: 'Phù hợp gia đình',
-    imageUrl: 'https://images.unsplash.com/photo-1559742811-822863646df1?w=400&auto=format&fit=crop&q=80',
-  },
-  {
-    id: 'food-5',
-    name: 'Bánh mì Phượng',
-    destination: 'Hội An',
-    badge: 'Đặc sản',
-    imageUrl: 'https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=400&auto=format&fit=crop&q=80',
-  },
-  {
-    id: 'food-6',
-    name: 'Trà Mót Hội An',
-    destination: 'Hội An',
-    badge: 'Đồ uống',
-    imageUrl: 'https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=400&auto=format&fit=crop&q=80',
-  },
-];
+const defaultFoods: FoodItem[] = [];
 
 export const RecommendedFoodSection: React.FC<RecommendedFoodSectionProps> = ({
   foods = defaultFoods,
@@ -68,6 +25,8 @@ export const RecommendedFoodSection: React.FC<RecommendedFoodSectionProps> = ({
   const toggleFavorite = (id: string) => {
     setFavorites((prev) => ({ ...prev, [id]: !prev[id] }));
   };
+
+  if (!foods || foods.length === 0) return null;
 
   return (
     <div className="bg-white rounded-[24px] p-6 border border-slate-200/80 shadow-sm space-y-5">

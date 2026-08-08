@@ -21,28 +21,7 @@ interface AccommodationSectionProps {
   onOpenMap: (placeName: string) => void;
 }
 
-const defaultAccommodations: AccommodationItem[] = [
-  {
-    id: 'acc-1',
-    period: 'Đêm 1–2',
-    name: 'Khách sạn Melia Vinpearl Danang Riverfront',
-    dates: '08/08 – 10/08',
-    status: 'confirmed',
-    checkInTime: '14:00',
-    checkOutTime: '12:00',
-    address: '341 Trần Hưng Đạo, Sơn Trà, Đà Nẵng',
-  },
-  {
-    id: 'acc-2',
-    period: 'Đêm 3',
-    name: 'Silkotel Hoi An Resort',
-    dates: '10/08 – 11/08',
-    status: 'confirmed',
-    checkInTime: '14:00',
-    checkOutTime: '12:00',
-    address: '01 Hùng Vương, Phường Cẩm Phô, Hội An',
-  },
-];
+const defaultAccommodations: AccommodationItem[] = [];
 
 export const AccommodationSection: React.FC<AccommodationSectionProps> = ({
   accommodations = defaultAccommodations,

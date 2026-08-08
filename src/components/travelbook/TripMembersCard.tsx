@@ -1,5 +1,5 @@
 import React from 'react';
-import { Users, UserPlus, Shield, Eye, Edit } from 'lucide-react';
+import { Users, UserPlus, UserX } from 'lucide-react';
 
 export interface MemberItem {
   id: string;
@@ -13,35 +13,8 @@ interface TripMembersCardProps {
   onInviteMember: () => void;
 }
 
-const defaultMembers: MemberItem[] = [
-  {
-    id: 'm-1',
-    name: 'Phúc',
-    role: 'owner',
-    avatarUrl: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=120&auto=format&fit=crop&q=80',
-  },
-  {
-    id: 'm-2',
-    name: 'Lan',
-    role: 'editor',
-    avatarUrl: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=120&auto=format&fit=crop&q=80',
-  },
-  {
-    id: 'm-3',
-    name: 'Minh',
-    role: 'viewer',
-    avatarUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&auto=format&fit=crop&q=80',
-  },
-  {
-    id: 'm-4',
-    name: 'An',
-    role: 'viewer',
-    avatarUrl: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=120&auto=format&fit=crop&q=80',
-  },
-];
-
 export const TripMembersCard: React.FC<TripMembersCardProps> = ({
-  members = defaultMembers,
+  members = [],
   onInviteMember,
 }) => {
   const getRoleBadge = (role: MemberItem['role']) => {
@@ -92,12 +65,13 @@ export const TripMembersCard: React.FC<TripMembersCardProps> = ({
       <div className="flex items-center justify-between bg-slate-50 p-3 rounded-2xl border border-slate-200/60">
         <div className="flex -space-x-2 overflow-hidden">
           {members.map((m) => (
-            <img
-              key={m.id}
-              src={m.avatarUrl}
-              alt={m.name}
-              className="inline-block h-8 w-8 rounded-full ring-2 ring-white object-cover shadow-xs"
-            />
+            m.avatarUrl ? (
+              <img key={m.id} src={m.avatarUrl} alt={m.name} className="inline-block h-8 w-8 rounded-full ring-2 ring-white object-cover shadow-xs" />
+            ) : (
+              <div key={m.id} className="inline-flex h-8 w-8 rounded-full ring-2 ring-white bg-slate-200 items-center justify-center text-xs font-bold text-slate-600">
+                {m.name.charAt(0).toUpperCase()}
+              </div>
+            )
           ))}
         </div>
 
@@ -111,26 +85,32 @@ export const TripMembersCard: React.FC<TripMembersCardProps> = ({
         </button>
       </div>
 
-      {/* Members List */}
-      <div className="space-y-2 pt-1">
-        {members.map((member) => (
-          <div
-            key={member.id}
-            className="flex items-center justify-between p-2.5 rounded-xl bg-white border border-slate-100 hover:bg-slate-50 transition-colors"
-          >
-            <div className="flex items-center gap-2.5">
-              <img
-                src={member.avatarUrl}
-                alt={member.name}
-                className="w-7 h-7 rounded-full object-cover border border-slate-200"
-              />
-              <span className="text-xs font-extrabold text-slate-800">{member.name}</span>
-            </div>
-
-            {getRoleBadge(member.role)}
+      {/* Members List or Empty State */}
+      {members.length === 0 ? (
+        <div className="flex flex-col items-center justify-center py-4 text-center gap-2">
+          <div className="w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center">
+            <UserX className="w-4 h-4 text-slate-400" />
           </div>
-        ))}
-      </div>
+          <p className="text-xs font-semibold text-slate-500">Chưa có thành viên nào</p>
+          <p className="text-[11px] text-slate-400">Nhấn "Mời người thân" để thêm thành viên vào chuyến đi.</p>
+        </div>
+      ) : (
+        <div className="space-y-2 pt-1">
+          {members.map((member) => (
+            <div key={member.id} className="flex items-center justify-between p-2.5 rounded-xl bg-white border border-slate-100 hover:bg-slate-50 transition-colors">
+              <div className="flex items-center gap-2.5">
+                {member.avatarUrl ? (
+                  <img src={member.avatarUrl} alt={member.name} className="w-7 h-7 rounded-full object-cover border border-slate-200" />
+                ) : (
+                  <div className="w-7 h-7 rounded-full bg-slate-200 flex items-center justify-center text-xs font-bold text-slate-600 border border-slate-200">{member.name.charAt(0).toUpperCase()}</div>
+                )}
+                <span className="text-xs font-extrabold text-slate-800">{member.name}</span>
+              </div>
+              {getRoleBadge(member.role)}
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

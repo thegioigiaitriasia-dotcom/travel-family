@@ -26,6 +26,7 @@ import {
 } from 'lucide-react';
 import { TravelActivity, TravelActivityType } from '../../types';
 import { DeleteActivityDialog } from './DeleteActivityDialog';
+import { supabase } from '../../lib/supabase';
 
 interface ActivityEditorDrawerProps {
   activity: TravelActivity | null;
@@ -118,6 +119,10 @@ export const ActivityEditorDrawer: React.FC<ActivityEditorDrawerProps> = ({
   const [familyTips, setFamilyTips] = useState<string>(activity.familyTips?.[0] || activity.notes || '');
   const [selectedTags, setSelectedTags] = useState<string[]>(['Gia đình']);
 
+  // Cover Image
+  const [imageUrl, setImageUrl] = useState<string>(activity.place?.imageUrl || activity.imageUrl || '');
+  const [isUploading, setIsUploading] = useState(false);
+
   // Autocomplete Location search
   const [showLocationResults, setShowLocationResults] = useState(false);
 
@@ -181,12 +186,54 @@ export const ActivityEditorDrawer: React.FC<ActivityEditorDrawerProps> = ({
             address: placeAddress.trim() || undefined,
             bookingCode: bookingCode.trim() || activity.place?.bookingCode,
             suitableFor: selectedTags,
+            imageUrl: imageUrl || activity.place?.imageUrl,
           }
         : undefined,
+      imageUrl: imageUrl || activity.imageUrl,
     };
 
     onSave(updated);
     onClose();
+  };
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    try {
+      setIsUploading(true);
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${Date.now()}-${Math.random()}.${fileExt}`;
+      const filePath = `places/${fileName}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from('poi_images')
+        .upload(filePath, file);
+
+      if (uploadError) throw uploadError;
+
+      const { data } = supabase.storage.from('poi_images').getPublicUrl(filePath);
+      
+      setImageUrl(data.publicUrl);
+      
+      // Auto-save to poi_database for crowdsourcing if placeName is present
+      if (placeName.trim()) {
+        await supabase.from('poi_database').upsert({
+          name: placeName.trim(),
+          category: type || 'Attraction',
+          address: placeAddress || '',
+          city: '', // Leave blank, AI will handle
+          image_url: data.publicUrl,
+          source: 'user_uploaded'
+        }, { onConflict: 'name,city' }).catch(console.warn);
+      }
+
+    } catch (err: any) {
+      console.error('Lỗi tải ảnh:', err);
+      alert('Không thể tải ảnh lên. Hãy thử lại. ' + err.message);
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   const handleSelectLocation = (loc: { name: string; address: string }) => {
@@ -454,6 +501,33 @@ export const ActivityEditorDrawer: React.FC<ActivityEditorDrawerProps> = ({
                 placeholder="Địa chỉ cụ thể (Tùy chọn)"
                 className="w-full px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700 mt-2"
               />
+            </div>
+
+            {/* Field 5.5: Hình ảnh Địa điểm (Upload) */}
+            <div className="space-y-1">
+              <label className="block text-slate-800 font-extrabold">
+                5.5. Hình ảnh đại diện
+              </label>
+              <div className="flex items-center gap-4">
+                {imageUrl ? (
+                  <div className="relative w-20 h-20 rounded-xl overflow-hidden shadow-sm shrink-0">
+                    <img src={imageUrl} alt="Place" className="w-full h-full object-cover" />
+                    <button type="button" onClick={() => setImageUrl('')} className="absolute top-1 right-1 bg-black/50 p-1 rounded-full text-white hover:bg-red-500 cursor-pointer transition-colors">
+                      <X className="w-3 h-3" />
+                    </button>
+                  </div>
+                ) : (
+                  <label className={`w-20 h-20 flex items-center justify-center border-2 border-dashed border-slate-300 rounded-xl bg-slate-50 cursor-pointer hover:bg-slate-100 transition-colors ${isUploading ? 'opacity-50 pointer-events-none' : ''}`}>
+                    <input type="file" accept="image/*" className="hidden" onChange={handleImageUpload} disabled={isUploading} />
+                    <div className="text-center">
+                      <span className="text-[10px] text-slate-500 font-bold block">{isUploading ? 'Đang tải...' : '+ Ảnh'}</span>
+                    </div>
+                  </label>
+                )}
+                <div className="text-xs text-slate-500 flex-1 leading-relaxed">
+                  Ảnh bạn tải lên sẽ được hiển thị trên lịch trình và đóng góp vào cơ sở dữ liệu chung của cộng đồng.
+                </div>
+              </div>
             </div>
 
             {/* Field 6: Cost Input */}
