@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import express from 'express';
 import crypto from 'crypto';
 import path from 'path';
@@ -145,6 +146,43 @@ async function enrichPlanWithRealPlaces(plan: any, supabaseAdminClient: any, goo
         members: membersRes.data || [],
         familyInfo: familyRes.data || null
       });
+    } catch (err: any) { return res.status(500).json({ success: false, message: err.message }); }
+  });
+
+  // POST /api/setup-new-user — tạo Profile + Family Account bằng Service Role Key sau khi đăng ký
+  app.post('/api/setup-new-user', async (req, res) => {
+    try {
+      const { userId, email, fullName, familyName } = req.body;
+      if (!userId || !email || !fullName) {
+        return res.status(400).json({ success: false, message: 'Missing required fields.' });
+      }
+
+      const familyId = `fam-${userId.slice(0, 8)}`;
+      const inviteCode = `VIVU-${Math.floor(1000 + Math.random() * 9000)}`;
+
+      const { error: profileError } = await supabaseAdmin.from('profiles').upsert({
+        id: userId,
+        email,
+        full_name: fullName,
+        role: 'Trưởng nhóm',
+        family_account_id: familyId,
+        status: 'active',
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      });
+      if (profileError) console.error('[setup-new-user] Profile error:', profileError.message);
+
+      const { error: familyError } = await supabaseAdmin.from('family_accounts').upsert({
+        id: familyId,
+        family_name: familyName,
+        owner_id: userId,
+        invite_code: inviteCode,
+        members_count: 1,
+        created_at: new Date().toISOString(),
+      });
+      if (familyError) console.error('[setup-new-user] Family error:', familyError.message);
+
+      return res.json({ success: true, familyId, inviteCode });
     } catch (err: any) { return res.status(500).json({ success: false, message: err.message }); }
   });
 
@@ -642,7 +680,3 @@ Bạn PHẢI trả về một JSON Object chứa dữ liệu THỰC TẾ với c
   }
 
 export default app;
-
-// Smart fallback itinerary generator function
-
-startServer();

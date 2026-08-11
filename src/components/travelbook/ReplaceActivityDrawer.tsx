@@ -19,24 +19,7 @@ const reasons = [
   'Lý do khác',
 ];
 
-const mockAIOptions = [
-  {
-    id: 'ai-opt-1',
-    title: 'Gợi ý Điểm tham quan lân cận',
-    placeName: 'Đang cập nhật từ hệ thống AI',
-    distance: 'Cách đây vài phút di chuyển',
-    reason: 'Gợi ý thay thế tối ưu dựa trên sở thích gia đình và vị trí hiện tại.',
-    cost: 150000,
-  },
-  {
-    id: 'ai-opt-2',
-    title: 'Gợi ý Nhà hàng / Quán ăn gần đó',
-    placeName: 'Đang cập nhật từ hệ thống AI',
-    distance: 'Khoảng cách gần',
-    reason: 'Đảm bảo tiêu chí sạch sẽ, phù hợp cho trẻ em.',
-    cost: 250000,
-  },
-];
+// Đã xóa mockAIOptions
 
 export const ReplaceActivityDrawer: React.FC<ReplaceActivityDrawerProps> = ({
   activity,
@@ -46,21 +29,48 @@ export const ReplaceActivityDrawer: React.FC<ReplaceActivityDrawerProps> = ({
 }) => {
   const [selectedReason, setSelectedReason] = useState<string>('Trời mưa');
   const [isGenerating, setIsGenerating] = useState(false);
-  const [selectedOptionId, setSelectedOptionId] = useState<string>('ai-opt-1');
+  const [aiOptions, setAiOptions] = useState<any[]>([]);
+  const [selectedOptionId, setSelectedOptionId] = useState<string>('');
+  const [errorMsg, setErrorMsg] = useState('');
 
   if (!isOpen || !activity) return null;
 
-  const handleReasonClick = (r: string) => {
+  const handleReasonClick = async (r: string) => {
     setSelectedReason(r);
     setIsGenerating(true);
-    setTimeout(() => {
+    setErrorMsg('');
+    setAiOptions([]);
+    try {
+      const res = await fetch(`/api/suggest-alternative`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          activity: activity.title,
+          reason: r,
+          city: activity.locationName || '',
+        })
+      });
+      const data = await res.json();
+      if (data.success && data.options) {
+        setAiOptions(data.options);
+        if (data.options.length > 0) {
+          setSelectedOptionId(data.options[0].id);
+        }
+      } else {
+        setErrorMsg('Không thể lấy gợi ý từ AI.');
+      }
+    } catch (err) {
+      setErrorMsg('Lỗi kết nối AI.');
+    } finally {
       setIsGenerating(false);
-    }, 600);
+    }
   };
 
   const handleApply = () => {
-    const chosen = mockAIOptions.find((o) => o.id === selectedOptionId) || mockAIOptions[0];
-    onConfirmReplace(activity.id, chosen.title, chosen.placeName, chosen.cost);
+    const chosen = aiOptions.find((o) => o.id === selectedOptionId);
+    if (chosen) {
+      onConfirmReplace(activity.id, chosen.title, chosen.placeName, chosen.cost);
+    }
     onClose();
   };
 
@@ -132,47 +142,48 @@ export const ReplaceActivityDrawer: React.FC<ReplaceActivityDrawerProps> = ({
               )}
             </div>
 
-            {isGenerating ? (
-              <div className="p-8 text-center text-slate-400 font-bold">
-                <RefreshCw className="w-6 h-6 animate-spin mx-auto mb-2 text-purple-600" />
-                <span>AI đang tìm phương án tối ưu...</span>
-              </div>
-            ) : (
-              <div className="space-y-2.5">
-                {mockAIOptions.map((opt) => {
+            <div className="space-y-2.5">
+              {isGenerating ? (
+                <div className="py-8 flex flex-col items-center justify-center gap-3 text-slate-400">
+                  <RefreshCw className="w-6 h-6 animate-spin text-purple-500" />
+                  <p>AI đang phân tích và tìm địa điểm thay thế...</p>
+                </div>
+              ) : errorMsg ? (
+                <div className="py-4 text-center text-red-500 bg-red-50 rounded-xl">
+                  {errorMsg}
+                </div>
+              ) : aiOptions.length > 0 ? (
+                aiOptions.map((opt) => {
                   const isSelected = selectedOptionId === opt.id;
                   return (
                     <div
                       key={opt.id}
                       onClick={() => setSelectedOptionId(opt.id)}
-                      className={`p-4 rounded-[20px] border transition-all cursor-pointer space-y-1.5 ${
+                      className={`p-3 rounded-xl border cursor-pointer transition-all ${
                         isSelected
-                          ? 'bg-purple-50/70 border-purple-600 ring-2 ring-purple-600/20'
-                          : 'bg-white border-slate-200 hover:border-slate-300'
+                          ? 'border-purple-500 bg-purple-50 shadow-sm'
+                          : 'border-slate-200 hover:border-purple-300'
                       }`}
                     >
-                      <div className="flex items-center justify-between">
-                        <span className="font-extrabold text-slate-900 text-sm">
-                          {opt.title}
-                        </span>
-                        {isSelected && (
-                          <div className="w-5 h-5 rounded-full bg-purple-700 text-white flex items-center justify-center shrink-0">
-                            <Check className="w-3.5 h-3.5 stroke-[3]" />
-                          </div>
-                        )}
+                      <div className="flex justify-between items-start mb-1">
+                        <h4 className="font-bold text-slate-900 text-sm">{opt.title}</h4>
+                        {isSelected && <Check className="w-4 h-4 text-purple-600" />}
                       </div>
-
-                      <p className="text-[11px] font-bold text-purple-700">{opt.distance}</p>
-                      <p className="text-slate-600 font-medium leading-relaxed">{opt.reason}</p>
-
-                      <div className="pt-1 text-[11px] font-bold text-slate-500">
-                        Chi phí dự kiến: {new Intl.NumberFormat('vi-VN').format(opt.cost)} đ
+                      <p className="text-purple-600 font-medium text-xs mb-2">{opt.placeName}</p>
+                      <p className="text-slate-500 text-xs mb-2">{opt.reason}</p>
+                      <div className="flex items-center justify-between text-[10px] text-slate-400 font-medium">
+                        <span>{opt.distance}</span>
+                        <span>Dự kiến: {opt.cost.toLocaleString('vi-VN')}đ</span>
                       </div>
                     </div>
                   );
-                })}
-              </div>
-            )}
+                })
+              ) : (
+                <div className="py-4 text-center text-slate-400 italic">
+                  Chọn lý do ở trên để AI gợi ý.
+                </div>
+              )}
+            </div>
           </div>
         </div>
 

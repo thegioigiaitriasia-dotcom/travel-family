@@ -38,6 +38,7 @@ interface TripOverviewPageProps {
   onNavigateToPlaces?: () => void;
   onNavigateToDiary?: () => void;
   onUpdateTrip?: (updatedFields: Partial<TravelBook>) => void;
+  onDeleteTrip?: (tripId: string) => void;
 }
 
 export const TripOverviewPage: React.FC<TripOverviewPageProps> = ({
@@ -48,6 +49,7 @@ export const TripOverviewPage: React.FC<TripOverviewPageProps> = ({
   onNavigateToPlaces = () => {},
   onNavigateToDiary = () => {},
   onUpdateTrip,
+  onDeleteTrip,
 }) => {
   const [trip, setTrip] = useState<TravelBook | undefined>(initialTrip);
 
@@ -233,6 +235,9 @@ export const TripOverviewPage: React.FC<TripOverviewPageProps> = ({
 
   const handleConfirmDelete = () => {
     setIsDeleteOpen(false);
+    if (onDeleteTrip && trip) {
+      onDeleteTrip(trip.id);
+    }
     onNavigateHome();
   };
 

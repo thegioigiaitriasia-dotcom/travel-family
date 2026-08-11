@@ -229,53 +229,65 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = () => {
     e.preventDefault();
     if (!newUserForm.name || !newUserForm.email) return;
 
-    const newId = `usr-${Date.now().toString().slice(-6)}`;
-    const created: any = {
-      id: newId,
-      name: newUserForm.name,
-      username: newUserForm.username || newUserForm.email.split('@')[0],
-      email: newUserForm.email,
-      role: newUserForm.role,
-      roleType: newUserForm.role === 'Quản trị viên' || newUserForm.role === 'Super Admin' ? 'Admin' : 'Member',
-      avatar: `https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150`,
-      familyName: newUserForm.familyName,
-      joinedDate: new Date().toISOString().split('T')[0],
-      status: 'active',
-      lastActive: 'Vừa khởi tạo',
-      isAdmin: newUserForm.role === 'Quản trị viên' || newUserForm.role === 'Super Admin',
-    };
+    try {
+      const res = await fetch('/api/create-sub-account', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: newUserForm.email,
+          password: 'VivuFamily!123',
+          name: newUserForm.name,
+          familyId: 'admin-created',
+          role: newUserForm.role,
+        }),
+      });
 
-    setUsers([created, ...users]);
-    setShowAddUserModal(false);
+      const data = await res.json();
+      if (!data.success) {
+        alert('Lỗi tạo tài khoản: ' + data.message);
+        return;
+      }
 
-    // Write to Supabase profiles
-    await supabase.from('profiles').upsert({
-      id: newId,
-      email: newUserForm.email,
-      full_name: newUserForm.name,
-      role: newUserForm.role,
-      status: 'active',
-      created_at: new Date().toISOString(),
-    });
+      const newId = data.userId;
+      const created: any = {
+        id: newId,
+        name: newUserForm.name,
+        username: newUserForm.username || newUserForm.email.split('@')[0],
+        email: newUserForm.email,
+        role: newUserForm.role,
+        roleType: newUserForm.role === 'Quản trị viên' || newUserForm.role === 'Super Admin' ? 'Admin' : 'Member',
+        avatar: `https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150`,
+        familyName: newUserForm.familyName,
+        joinedDate: new Date().toISOString().split('T')[0],
+        status: 'active',
+        lastActive: 'Vừa khởi tạo',
+        isAdmin: newUserForm.role === 'Quản trị viên' || newUserForm.role === 'Super Admin',
+      };
 
-    setNewUserForm({
-      name: '',
-      username: '',
-      email: '',
-      role: 'Thành viên',
-      familyName: 'Gia đình Mới',
-    });
+      setUsers([created, ...users]);
+      setShowAddUserModal(false);
 
-    setAuditLogs((logs) => [
-      {
-        id: Date.now(),
-        time: 'Vừa xong',
-        actor: 'phuc.admin',
-        action: `Khởi tạo người dùng mới: ${created.email} (${created.role}) trên Supabase`,
-        status: 'Created',
-      },
-      ...logs,
-    ]);
+      setNewUserForm({
+        name: '',
+        username: '',
+        email: '',
+        role: 'Thành viên',
+        familyName: 'Gia đình Mới',
+      });
+
+      setAuditLogs((logs) => [
+        {
+          id: Date.now(),
+          time: 'Vừa xong',
+          actor: 'phuc.admin',
+          action: `Khởi tạo người dùng mới: ${created.email} (${created.role}) qua API (Supabase Auth)`,
+          status: 'Created',
+        },
+        ...logs,
+      ]);
+    } catch (err: any) {
+      alert('Lỗi: ' + err.message);
+    }
   };
 
   // Toggle trip public/featured status

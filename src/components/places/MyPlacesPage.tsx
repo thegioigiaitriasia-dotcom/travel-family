@@ -79,7 +79,7 @@ export const MyPlacesPage: React.FC<MyPlacesPageProps> = ({
           updatedAt: item.created_at || new Date().toISOString(),
         }));
 
-        // Deduplicate with mock data by name
+        // Lọc trùng lặp (tránh add hai lần cùng một địa điểm)
         setPlaces((prev) => {
           const names = new Set(prev.map((p) => p.name.toLowerCase()));
           const newUnique = mapped.filter((p) => !names.has(p.name.toLowerCase()));

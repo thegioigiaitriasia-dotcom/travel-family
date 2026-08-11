@@ -65,24 +65,7 @@ const locationSuggestions = [
 
 const aiReplaceReasons = ['Quá xa', 'Không phù hợp trẻ em', 'Trời mưa', 'Muốn rẻ hơn', 'Muốn đẹp hơn'];
 
-const mockAIOptions = [
-  {
-    id: 'ai-1',
-    title: 'Gợi ý Điểm tham quan lân cận',
-    placeName: 'Đang cập nhật từ hệ thống AI',
-    distance: 'Cách đây vài phút di chuyển',
-    highlights: 'Không gian mở, tiện lợi di chuyển, phù hợp gia đình thay thế cho địa điểm cũ.',
-    cost: 150000,
-  },
-  {
-    id: 'ai-2',
-    title: 'Gợi ý Nhà hàng / Quán ăn gần đó',
-    placeName: 'Đang cập nhật từ hệ thống AI',
-    distance: 'Khoảng cách gần',
-    highlights: 'Không gian sạch sẽ, món ăn an toàn, phù hợp cho trẻ nhỏ.',
-    cost: 250000,
-  }
-];
+// Đã xóa mockAIOptions
 
 export const ActivityEditorDrawer: React.FC<ActivityEditorDrawerProps> = ({
   activity,
@@ -135,7 +118,9 @@ export const ActivityEditorDrawer: React.FC<ActivityEditorDrawerProps> = ({
   // AI Replace State
   const [selectedAIReason, setSelectedAIReason] = useState<string>('Trời mưa');
   const [isAIGenerating, setIsAIGenerating] = useState(false);
-  const [selectedAIOptionId, setSelectedAIOptionId] = useState<string>('ai-1');
+  const [selectedAIOptionId, setSelectedAIOptionId] = useState<string>('');
+  const [aiOptions, setAiOptions] = useState<any[]>([]);
+  const [aiErrorMsg, setAiErrorMsg] = useState('');
 
   // Track initial state for unsaved dirty check
   const [isDirty, setIsDirty] = useState(false);
@@ -853,10 +838,35 @@ export const ActivityEditorDrawer: React.FC<ActivityEditorDrawerProps> = ({
                     <button
                       key={r}
                       type="button"
-                      onClick={() => {
+                      onClick={async () => {
                         setSelectedAIReason(r);
                         setIsAIGenerating(true);
-                        setTimeout(() => setIsAIGenerating(false), 500);
+                        setAiErrorMsg('');
+                        setAiOptions([]);
+                        try {
+                          const res = await fetch(`/api/suggest-alternative`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                              activity: title,
+                              reason: r,
+                              city: placeName || '',
+                            })
+                          });
+                          const data = await res.json();
+                          if (data.success && data.options) {
+                            setAiOptions(data.options);
+                            if (data.options.length > 0) {
+                              setSelectedAIOptionId(data.options[0].id);
+                            }
+                          } else {
+                            setAiErrorMsg('Không thể lấy gợi ý từ AI.');
+                          }
+                        } catch (err) {
+                          setAiErrorMsg('Lỗi kết nối AI.');
+                        } finally {
+                          setIsAIGenerating(false);
+                        }
                       }}
                       className={`px-3 py-1.5 rounded-xl border font-extrabold text-xs cursor-pointer transition-all ${
                         isSelected
@@ -882,9 +892,13 @@ export const ActivityEditorDrawer: React.FC<ActivityEditorDrawerProps> = ({
                   <RefreshCw className="w-6 h-6 animate-spin mx-auto text-purple-600" />
                   <p className="text-xs">AI đang tìm địa điểm tối ưu...</p>
                 </div>
-              ) : (
+              ) : aiErrorMsg ? (
+                <div className="p-4 text-center text-red-500 bg-red-50 rounded-xl text-xs">
+                  {aiErrorMsg}
+                </div>
+              ) : aiOptions.length > 0 ? (
                 <div className="space-y-2 max-h-60 overflow-y-auto pr-1">
-                  {mockAIOptions.map((opt) => {
+                  {aiOptions.map((opt) => {
                     const isSelected = selectedAIOptionId === opt.id;
                     return (
                       <div
@@ -900,13 +914,18 @@ export const ActivityEditorDrawer: React.FC<ActivityEditorDrawerProps> = ({
                           <span>{opt.title}</span>
                           <span className="text-[10px] text-purple-700 font-bold">{opt.distance}</span>
                         </div>
-                        <p className="text-slate-600 font-medium text-[11px]">{opt.highlights}</p>
+                        <p className="text-purple-600 font-medium text-[11px] mb-1">{opt.placeName}</p>
+                        <p className="text-slate-600 font-medium text-[11px]">{opt.reason}</p>
                         <div className="text-[10px] font-bold text-slate-500 pt-1">
                           Chi phí: {new Intl.NumberFormat('vi-VN').format(opt.cost)} đ
                         </div>
                       </div>
                     );
                   })}
+                </div>
+              ) : (
+                <div className="py-4 text-center text-slate-400 italic text-xs">
+                  Chọn lý do ở trên để AI gợi ý.
                 </div>
               )}
             </div>
@@ -923,8 +942,8 @@ export const ActivityEditorDrawer: React.FC<ActivityEditorDrawerProps> = ({
               <button
                 type="button"
                 onClick={() => {
-                  const chosen = mockAIOptions.find((o) => o.id === selectedAIOptionId) || mockAIOptions[0];
-                  if (onReplaceAI) {
+                  const chosen = aiOptions.find((o) => o.id === selectedAIOptionId);
+                  if (onReplaceAI && chosen) {
                     onReplaceAI(activity.id, chosen.title, chosen.placeName, chosen.cost);
                   }
                   setShowReplaceAIDialog(false);

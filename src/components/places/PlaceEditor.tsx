@@ -41,13 +41,7 @@ const suitabilityOptions = [
   'Đặc sản địa phương',
 ];
 
-const mockCoverImages = [
-  'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=600&q=80',
-  'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=600&q=80',
-  'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80',
-  'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=600&q=80',
-  'https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=600&q=80',
-];
+// Đã xóa mockCoverImages
 
 export const PlaceEditor: React.FC<PlaceEditorProps> = ({
   place,
@@ -68,7 +62,7 @@ export const PlaceEditor: React.FC<PlaceEditorProps> = ({
   const [category, setCategory] = useState<PlaceCategoryType>(place?.category || 'food');
   const [city, setCity] = useState(place?.city || 'Đà Nẵng');
   const [address, setAddress] = useState(place?.address || '');
-  const [coverImage, setCoverImage] = useState(place?.coverImage || mockCoverImages[0]);
+  const [coverImage, setCoverImage] = useState(place?.coverImage || '');
   const [visited, setVisited] = useState(place?.visited || false);
   const [favorite, setFavorite] = useState(place?.favorite || false);
   const [personalNote, setPersonalNote] = useState(place?.personalNote || '');
@@ -300,25 +294,6 @@ export const PlaceEditor: React.FC<PlaceEditorProps> = ({
                   placeholder="https://images.unsplash.com/..."
                   className="w-full px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-xs font-medium text-slate-800 focus:outline-none focus:border-[#DC2626]"
                 />
-              </div>
-            </div>
-
-            {/* Presets Row */}
-            <div className="space-y-1">
-              <span className="text-[11px] font-bold text-slate-500">Hoặc chọn ảnh gợi ý nhanh:</span>
-              <div className="flex items-center gap-2 overflow-x-auto pb-1">
-                {mockCoverImages.map((imgUrl, i) => (
-                  <button
-                    key={i}
-                    type="button"
-                    onClick={() => setCoverImage(imgUrl)}
-                    className={`w-14 h-12 rounded-xl overflow-hidden border-2 shrink-0 cursor-pointer transition-all ${
-                      coverImage === imgUrl ? 'border-[#DC2626] ring-2 ring-[#DC2626]/30 scale-105' : 'border-transparent opacity-70 hover:opacity-100'
-                    }`}
-                  >
-                    <img src={imgUrl} alt="Cover option" className="w-full h-full object-cover" />
-                  </button>
-                ))}
               </div>
             </div>
           </div>

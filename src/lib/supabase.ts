@@ -231,35 +231,28 @@ export async function supabaseSignUp(email: string, password: string, fullName: 
     });
 
     if (authError) {
-      return { success: false, error: authError.message, user: null };
+      return { success: false, error: authError.message, user: null, session: null };
     }
 
     const user = authData.user;
     if (user) {
-      // 2. Insert or update profile in public.profiles table
-      const profileData = {
-        id: user.id,
-        email: user.email || email,
-        full_name: fullName,
-        role: 'Trưởng nhóm',
-        family_account_id: `fam-${user.id.slice(0, 8)}`,
-        status: 'active',
-        created_at: new Date().toISOString(),
-      };
-
-      await supabase.from('profiles').upsert(profileData);
-
-      // 3. Create family account in public.family_accounts table
-      const familyData = {
-        id: `fam-${user.id.slice(0, 8)}`,
-        family_name: familyName || `Gia đình ${fullName}`,
-        owner_id: user.id,
-        invite_code: `VIVU-${Math.floor(1000 + Math.random() * 9000)}`,
-        members_count: 1,
-        created_at: new Date().toISOString(),
-      };
-
-      await supabase.from('family_accounts').upsert(familyData);
+      // 2. Gọi backend API để tạo Profile + Family Account với Service Role Key
+      // (tránh lỗi RLS khi dùng Anon Key trực tiếp từ client)
+      try {
+        await fetch('/api/setup-new-user', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            userId: user.id,
+            email: user.email || email,
+            fullName,
+            familyName: familyName || `Gia đình ${fullName}`,
+          }),
+        });
+      } catch (setupErr) {
+        // Không crash đăng ký nếu setup lỗi – Supabase trigger sẽ tạo profile cơ bản
+        console.warn('[supabaseSignUp] setup-new-user failed:', setupErr);
+      }
     }
 
     return { success: true, error: null, user, session: authData.session };
@@ -302,8 +295,15 @@ export async function supabaseSignIn(email: string, password: string) {
 // Fetch all profiles from Supabase for Admin
 export async function fetchSupabaseProfiles() {
   try {
-    const appUrl = typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000';
-    const res = await fetch(`${appUrl}/api/get-profiles`);
+    const { data: sessionData } = await supabase.auth.getSession();
+    const token = sessionData?.session?.access_token;
+    
+    const res = await fetch(`/api/get-profiles`, {
+      headers: {
+        'Authorization': token ? `Bearer ${token}` : '',
+      }
+    });
+    
     const json = await res.json();
     if (!json.success) {
       console.warn('Supabase fetchSupabaseProfiles error:', json.message);
@@ -319,8 +319,7 @@ export async function fetchSupabaseProfiles() {
 // Update profile role or status for Admin
 export async function updateSupabaseProfileStatus(userId: string, updates: { role?: string; status?: string; full_name?: string }) {
   try {
-      const appUrl = typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000';
-      const res = await fetch(`${appUrl}/api/update-profile`, {
+      const res = await fetch(`/api/update-profile`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userId, updates: { ...updates, updated_at: new Date().toISOString() } })
@@ -509,8 +508,7 @@ export async function uploadAvatar(userId: string, file: File): Promise<string |
     
     if (data?.publicUrl) {
       // Cập nhật URL vào profile qua API backend để bypass RLS
-      const appUrl = typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000';
-      await fetch(`${appUrl}/api/update-profile`, {
+      await fetch(`/api/update-profile`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userId, updates: { avatar_url: data.publicUrl } })

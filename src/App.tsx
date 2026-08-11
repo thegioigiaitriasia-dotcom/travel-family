@@ -2,13 +2,13 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { ModuleType, TripSummary, UserAuthSession, FamilyAccount, FamilyMember } from './types';
 import { Navigation } from './components/Navigation';
 import { MobileBottomNavigation } from './components/MobileBottomNavigation';
-import { MyTripsModule } from './components/MyTripsModule';
-import { AIPlannerModule } from './components/AIPlannerModule';
-import { TravelBookModule } from './components/TravelBookModule';
-import { MyPlacesPage } from './components/places/MyPlacesPage';
-import { TravelDiaryModule } from './components/TravelDiaryModule';
-import { AccountPage } from './components/account/AccountPage';
-import { AdminDashboard } from './components/admin/AdminDashboard';
+const MyTripsModule = React.lazy(() => import('./components/MyTripsModule').then(m => ({ default: m.MyTripsModule })));
+const AIPlannerModule = React.lazy(() => import('./components/AIPlannerModule').then(m => ({ default: m.AIPlannerModule })));
+const TravelBookModule = React.lazy(() => import('./components/TravelBookModule').then(m => ({ default: m.TravelBookModule })));
+const MyPlacesPage = React.lazy(() => import('./components/places/MyPlacesPage').then(m => ({ default: m.MyPlacesPage })));
+const TravelDiaryModule = React.lazy(() => import('./components/TravelDiaryModule').then(m => ({ default: m.TravelDiaryModule })));
+const AccountPage = React.lazy(() => import('./components/account/AccountPage').then(m => ({ default: m.AccountPage })));
+const AdminDashboard = React.lazy(() => import('./components/admin/AdminDashboard').then(m => ({ default: m.AdminDashboard })));
 import { AuthModal } from './components/auth/AuthModal';
 import { DemoRestrictionModal } from './components/auth/DemoRestrictionModal';
 import { PaywallModal } from './components/auth/PaywallModal';
@@ -41,9 +41,8 @@ export default function App() {
       const sbUser = sbSession.user;
 
       // Fetch profile từ API backend để bypass lỗi RLS vòng lặp, subscription vẫn dùng client
-      const appUrl = typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000';
       const [profileRes, subRes] = await Promise.all([
-        fetch(`${appUrl}/api/get-profile?userId=${sbUser.id}`).then(res => res.json()),
+        fetch(`/api/get-profile?userId=${sbUser.id}`).then(res => res.json()),
         supabase.from('subscriptions').select('*').eq('user_id', sbUser.id)
           .order('created_at', { ascending: false }).limit(1).maybeSingle(),
       ]);
@@ -86,7 +85,7 @@ export default function App() {
 
       // Tải family_accounts và toàn bộ profiles (thành viên) — dùng API backend để bypass RLS
       if (profile?.family_account_id) {
-        const famMembersRes = await fetch(`${appUrl}/api/get-family-members`, {
+        const famMembersRes = await fetch(`/api/get-family-members`, {
           headers: { 'Authorization': `Bearer ${sbSession.access_token}` }
         }).then(r => r.json());
 
@@ -228,28 +227,55 @@ export default function App() {
     fullData: row.data,
   });
 
-  const handleSaveUserTrips = async (newTrips: TripSummary[]) => {
+  const handleSaveUserTripsLocal = (newTrips: TripSummary[]) => {
     setUserTrips(newTrips);
-    // Lưu vào Supabase nếu đã đăng nhập
+  };
+
+  const handleUpdateSingleTrip = async (tripId: string, updatedFields: Partial<TripSummary>) => {
+    const tripIndex = userTrips.findIndex(t => t.id === tripId);
+    if (tripIndex === -1) return;
+
+    const current = userTrips[tripIndex];
+    const updatedTrip = { ...current, ...updatedFields };
+
+    const newTrips = [...userTrips];
+    newTrips[tripIndex] = updatedTrip;
+    handleSaveUserTripsLocal(newTrips);
+
+    // Chỉ lưu 1 trip duy nhất lên Supabase
     if (!session.isDemoMode && session.currentUser?.id && isSupabaseConfigured()) {
-      const userId = session.currentUser.id;
-      // Upsert từng trip vào Supabase
-      for (const trip of newTrips) {
-        await supabase.from('trips').upsert({
-          id: trip.id,
-          user_id: userId,
-          title: trip.title,
-          cover_image: trip.coverImage,
-          start_date: trip.startDate,
-          end_date: trip.endDate,
-          duration_days: trip.durationDays,
-          status: trip.status,
-          destinations: trip.destinations,
-          budget: { min: trip.budgetMin, max: trip.budgetMax },
-          data: { ...trip.fullData, memberCount: trip.memberCount, placeCount: trip.placeCount, foodCount: trip.foodCount, accommodationCount: trip.accommodationCount },
-          updated_at: new Date().toISOString(),
-        });
-      }
+      await supabase.from('trips').upsert({
+        id: updatedTrip.id,
+        user_id: session.currentUser.id,
+        title: updatedTrip.title,
+        cover_image: updatedTrip.coverImage,
+        start_date: updatedTrip.startDate,
+        end_date: updatedTrip.endDate,
+        duration_days: updatedTrip.durationDays,
+        status: updatedTrip.status,
+        destinations: updatedTrip.destinations,
+        budget: { min: updatedTrip.budgetMin, max: updatedTrip.budgetMax },
+        data: { 
+          ...updatedTrip.fullData, 
+          memberCount: updatedTrip.memberCount, 
+          placeCount: updatedTrip.placeCount, 
+          foodCount: updatedTrip.foodCount, 
+          accommodationCount: updatedTrip.accommodationCount 
+        },
+        updated_at: new Date().toISOString(),
+      });
+    }
+  };
+
+  const handleDeleteSingleTrip = async (tripId: string) => {
+    const newTrips = userTrips.filter(t => t.id !== tripId);
+    handleSaveUserTripsLocal(newTrips);
+    if (!session.isDemoMode && session.currentUser?.id && isSupabaseConfigured()) {
+      await supabase.from('trips').delete().eq('id', tripId).eq('user_id', session.currentUser.id);
+    }
+    if (selectedTripId === tripId) {
+      setSelectedTripId('');
+      setCurrentModule('my-trips');
     }
   };
 
@@ -445,7 +471,7 @@ export default function App() {
     setCurrentModule('ai-planner');
   };
 
-  const handleGenerateSuccess = (destination: string, days: number) => {
+  const handleGenerateSuccess = async (destination: string, days: number) => {
     if (session.isDemoMode) {
       handleTriggerDemoRestriction('Tạo chuyến đi AI mới');
       return;
@@ -544,7 +570,25 @@ export default function App() {
     };
 
     const updated = [newTrip, ...userTrips];
-    handleSaveUserTrips(updated);
+    handleSaveUserTripsLocal(updated);
+    
+    // Save the newly generated trip to DB
+    if (!session.isDemoMode && session.currentUser?.id && isSupabaseConfigured()) {
+      await supabase.from('trips').upsert({
+        id: newTrip.id,
+        user_id: session.currentUser.id,
+        title: newTrip.title,
+        cover_image: newTrip.coverImage,
+        start_date: newTrip.startDate,
+        end_date: newTrip.endDate,
+        duration_days: newTrip.durationDays,
+        status: newTrip.status,
+        destinations: newTrip.destinations,
+        budget: { min: newTrip.budgetMin, max: newTrip.budgetMax },
+        data: { ...newTrip.fullData, memberCount: newTrip.memberCount, placeCount: newTrip.placeCount, foodCount: newTrip.foodCount, accommodationCount: newTrip.accommodationCount },
+        updated_at: new Date().toISOString(),
+      });
+    }
     setSelectedTripId(newTripId);
     setCurrentModule('travel-book');
     localStorage.removeItem('generated_ai_plan');
@@ -559,16 +603,11 @@ export default function App() {
     const current = userTrips[tripIndex];
     const newFullData = { ...(current.fullData || {}), ...updatedFields };
     
-    const updatedTrip: TripSummary = {
-      ...current,
-      title: updatedFields.title || current.title,
-      coverImage: updatedFields.coverImage || current.coverImage,
+    handleUpdateSingleTrip(selectedTripId, {
+      title: updatedFields.title,
+      coverImage: updatedFields.coverImage,
       fullData: newFullData
-    };
-    
-    const newTrips = [...userTrips];
-    newTrips[tripIndex] = updatedTrip;
-    handleSaveUserTrips(newTrips);
+    });
   };
 
   return (
@@ -587,6 +626,7 @@ export default function App() {
 
         {/* Main Content View Container */}
         <main className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <React.Suspense fallback={<div className="flex justify-center items-center h-64"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-slate-900"></div></div>}>
           {currentModule === 'my-trips' && (
             <MyTripsModule
               trips={currentTrips}
@@ -617,6 +657,7 @@ export default function App() {
               onNavigateToPlaces={() => setCurrentModule('my-places')}
               onNavigateToDiary={() => setCurrentModule('travel-diary')}
               onUpdateTrip={handleUpdateTravelBook}
+              onDeleteTrip={handleDeleteSingleTrip}
             />
 
           )}
@@ -692,6 +733,7 @@ export default function App() {
               </div>
             )
           )}
+          </React.Suspense>
         </main>
       </div>
 

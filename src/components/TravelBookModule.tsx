@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { TravelBook, UserAuthSession } from '../types';
 import { TripOverviewPage } from './travelbook/TripOverviewPage';
 
@@ -11,6 +11,7 @@ interface TravelBookModuleProps {
   onNavigateToPlaces?: () => void;
   onNavigateToDiary?: () => void;
   onUpdateTrip?: (updatedFields: Partial<TravelBook>) => void;
+  onDeleteTrip?: (tripId: string) => void;
 }
 
 export const TravelBookModule: React.FC<TravelBookModuleProps> = ({
@@ -21,6 +22,7 @@ export const TravelBookModule: React.FC<TravelBookModuleProps> = ({
   onNavigateToPlaces,
   onNavigateToDiary,
   onUpdateTrip,
+  onDeleteTrip,
 }) => {
   return (
     <TripOverviewPage
@@ -31,6 +33,7 @@ export const TravelBookModule: React.FC<TravelBookModuleProps> = ({
       onNavigateToPlaces={onNavigateToPlaces}
       onNavigateToDiary={onNavigateToDiary}
       onUpdateTrip={onUpdateTrip}
+      onDeleteTrip={onDeleteTrip}
     />
   );
 };

@@ -66,7 +66,7 @@ export const GeneratingPlanState: React.FC<GeneratingPlanStateProps> = ({
     fetchAiPlan();
 
     timer = setInterval(() => {
-      if (errorMsg) {
+      if (errorMsg || isCancelled) {
          clearInterval(timer);
          return;
       }
@@ -89,11 +89,11 @@ export const GeneratingPlanState: React.FC<GeneratingPlanStateProps> = ({
   // Lắng nghe isApiDone, nếu API đã xong và progressbar đang ở bước cuối (hoặc gần cuối), thì complete
   useEffect(() => {
     if (isApiDone) {
-       // Ép progressbar chạy nốt 100% rồi complete
        setCurrentStepIndex(progressSteps.length - 1);
-       setTimeout(() => {
+       const timeoutId = setTimeout(() => {
          onComplete();
-       }, 800);
+       }, 300);
+       return () => clearTimeout(timeoutId);
     }
   }, [isApiDone, onComplete]);
 

@@ -17,7 +17,8 @@ interface AuthModalProps {
 async function buildSessionFromSupabase(
   sbUser: import('@supabase/supabase-js').User,
   profile: Record<string, any> | null,
-  subscription: Record<string, any> | null
+  subscription: Record<string, any> | null,
+  accessToken?: string
 ): Promise<UserAuthSession> {
   const isAdmin = profile?.is_admin === true;
   const ownerName = profile?.full_name || sbUser.user_metadata?.full_name || sbUser.email?.split('@')[0] || 'Thành viên';
@@ -47,11 +48,10 @@ async function buildSessionFromSupabase(
   };
 
   // Tải toàn bộ members — dùng API backend để bypass RLS
-  if (profile?.family_account_id) {
-    const appUrl = typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000';
+  if (profile?.family_account_id && accessToken) {
     try {
-      const famMembersRes = await fetch(`${appUrl}/api/get-family-members`, {
-        headers: { 'Authorization': `Bearer ${sbSession.access_token}` }
+      const famMembersRes = await fetch(`/api/get-family-members`, {
+        headers: { 'Authorization': `Bearer ${accessToken}` }
       }).then(r => r.json());
       
       if (famMembersRes.success && famMembersRes.familyInfo) {
@@ -229,7 +229,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         return;
       }
 
-      const session = await buildSessionFromSupabase(data.user, profile, subscription);
+      const session = await buildSessionFromSupabase(data.user, profile, subscription, data.session?.access_token);
       onLoginSuccess(session);
       onClose();
     } catch (err: any) {
@@ -304,7 +304,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
           supabase.from('profiles').select('*').eq('id', result.user.id).maybeSingle(),
           supabase.from('subscriptions').select('*').eq('user_id', result.user.id).maybeSingle(),
         ]);
-        const session = await buildSessionFromSupabase(result.user as any, profileRes.data, subRes.data);
+        const session = await buildSessionFromSupabase(result.user as any, profileRes.data, subRes.data, result.session?.access_token);
         onLoginSuccess(session);
         onClose();
       }
@@ -338,10 +338,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({
     setIsSubmitting(true);
 
     try {
-      const appUrl = typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000';
-
       // Bước 1: Gọi API /api/join-family để TẠO tài khoản phụ trong gia đình
-      const joinRes = await fetch(`${appUrl}/api/join-family`, {
+      const joinRes = await fetch(`/api/join-family`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ displayName, inviteCode: code, password: pwd }),
@@ -369,11 +367,16 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 
       // Bước 3: Lấy profile đã được gán gia đình và build session
       const [profileRes, subRes] = await Promise.all([
-        fetch(`${appUrl}/api/get-profile?userId=${loginData.user.id}`).then(r => r.json()),
+        fetch(`/api/get-profile?userId=${loginData.user.id}`).then(r => r.json()),
         supabase.from('subscriptions').select('*').eq('user_id', loginData.user.id).maybeSingle(),
       ]);
 
-      const session = await buildSessionFromSupabase(loginData.user, profileRes.profile || profileRes.data, subRes.data);
+      const session = await buildSessionFromSupabase(
+        loginData.user,
+        profileRes.profile || profileRes.data,
+        subRes.data,
+        loginData.session?.access_token
+      );
       onLoginSuccess(session);
       onClose();
 
