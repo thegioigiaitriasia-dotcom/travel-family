@@ -412,14 +412,15 @@ export const TripOverviewPage: React.FC<TripOverviewPageProps> = ({
         isOpen={isShareOpen}
         onClose={() => setIsShareOpen(false)}
         tripTitle={trip.title}
+        tripId={trip.id}
       />
 
       <InviteMemberDialog
         isOpen={isInviteOpen}
         onClose={() => setIsInviteOpen(false)}
         tripTitle={trip.title}
-        inviteCode={trip.inviteCode}
-        familyName={trip.familyName}
+        inviteCode={session?.familyAccount?.inviteCode}
+        familyName={session?.familyAccount?.name || session?.familyAccount?.familyName}
       />
 
       <DeleteTripDialog

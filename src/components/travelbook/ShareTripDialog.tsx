@@ -5,12 +5,14 @@ interface ShareTripDialogProps {
   isOpen: boolean;
   onClose: () => void;
   tripTitle: string;
+  tripId?: string;
 }
 
 export const ShareTripDialog: React.FC<ShareTripDialogProps> = ({
   isOpen,
   onClose,
   tripTitle,
+  tripId,
 }) => {
   const [copied, setCopied] = useState(false);
   const [permission, setPermission] = useState<'view' | 'edit'>('view');
@@ -19,7 +21,7 @@ export const ShareTripDialog: React.FC<ShareTripDialogProps> = ({
   if (!isOpen) return null;
 
   const appBaseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://giadinhvivu.com';
-  const shareUrl = `${appBaseUrl}/?trip=${tripTitle ? encodeURIComponent(tripTitle) : 'shared'}&permission=${permission}`;
+  const shareUrl = `${appBaseUrl}/?trip=${tripId ? encodeURIComponent(tripId) : 'shared'}&permission=${permission}`;
 
   const handleCopy = () => {
     navigator.clipboard.writeText(shareUrl);
