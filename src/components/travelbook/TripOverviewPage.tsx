@@ -491,6 +491,7 @@ export const TripOverviewPage: React.FC<TripOverviewPageProps> = ({
                   estimatedMax={computedBudgetTotal || trip.budgetEstimatedMax}
                   onViewBudgetDetail={() => setSelectedTab(1)}
                 />
+                </div>
 
                 <TripMembersCard
                   members={realMembers}
