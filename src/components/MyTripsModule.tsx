@@ -10,6 +10,8 @@ interface MyTripsModuleProps {
   onNavigateToPlaces: () => void;
   onNavigateToDiary: () => void;
   onOpenFullMap?: () => void;
+  onCloneTrip?: (tripId: string) => void;
+  onDeleteTrip?: (tripId: string) => void;
 }
 
 export const MyTripsModule: React.FC<MyTripsModuleProps> = ({
@@ -20,6 +22,8 @@ export const MyTripsModule: React.FC<MyTripsModuleProps> = ({
   onNavigateToPlaces,
   onNavigateToDiary,
   onOpenFullMap,
+  onCloneTrip,
+  onDeleteTrip,
 }) => {
   return (
     <MyTripsPage
@@ -30,6 +34,8 @@ export const MyTripsModule: React.FC<MyTripsModuleProps> = ({
       onNavigateToPlaces={onNavigateToPlaces}
       onNavigateToDiary={onNavigateToDiary}
       onOpenFullMap={onOpenFullMap}
+      onCloneTrip={onCloneTrip}
+      onDeleteTrip={onDeleteTrip}
     />
   );
 };

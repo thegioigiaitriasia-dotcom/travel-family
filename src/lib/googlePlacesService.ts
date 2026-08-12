@@ -207,84 +207,10 @@ export async function fetchLiveGooglePlacesAPI(query: string): Promise<CachedPla
   return null;
 }
 
-// Helper: Real high-resolution place photos catalog for fallback verification
-const REAL_VERIFIED_PHOTO_CATALOG: Record<string, { image: string; address: string; rating: number; category: string }> = {
-  'bánh tráng thịt heo trần': {
-    image: 'https://images.unsplash.com/photo-1541544741938-0af808871cc0?w=800&auto=format&fit=crop&q=80',
-    address: '4 Lê Hồng Phong, Q. Hải Châu, TP. Đà Nẵng',
-    rating: 4.8,
-    category: 'Restaurant',
-  },
-  'bà nà hills': {
-    image: 'https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=800&auto=format&fit=crop&q=80',
-    address: 'Xã Hòa Ninh, Huyện Hòa Vang, TP. Đà Nẵng',
-    rating: 4.9,
-    category: 'Attraction',
-  },
-  'cầu vàng': {
-    image: 'https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=800&auto=format&fit=crop&q=80',
-    address: 'Sun World Bà Nà Hills, Đà Nẵng',
-    rating: 4.9,
-    category: 'Attraction',
-  },
-  'phố cổ hội an': {
-    image: 'https://images.unsplash.com/photo-1600891964092-4316c288032e?w=800&auto=format&fit=crop&q=80',
-    address: 'Phường Minh An, TP. Hội An, Quảng Nam',
-    rating: 4.9,
-    category: 'Attraction',
-  },
-  'chùa linh ứng': {
-    image: 'https://images.unsplash.com/photo-1528164344705-47542687990d?w=800&auto=format&fit=crop&q=80',
-    address: 'Bán đảo Sơn Trà, Phường Thọ Quang, Q. Sơn Trà, Đà Nẵng',
-    rating: 4.8,
-    category: 'Attraction',
-  },
-  'mì quảng bà mua': {
-    image: 'https://images.unsplash.com/photo-1582878826629-29b7ad1cdc43?w=800&auto=format&fit=crop&q=80',
-    address: '19 Trần Bình Trọng, Q. Hải Châu, Đà Nẵng',
-    rating: 4.7,
-    category: 'Restaurant',
-  },
-  'bãi biển mỹ khê': {
-    image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&auto=format&fit=crop&q=80',
-    address: 'Võ Nguyên Giáp, Q. Sơn Trà, TP. Đà Nẵng',
-    rating: 4.9,
-    category: 'Attraction',
-  },
-  'chè liên đà nẵng': {
-    image: 'https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=800&auto=format&fit=crop&q=80',
-    address: '189 Hoàng Diệu, Q. Hải Châu, Đà Nẵng',
-    rating: 4.7,
-    category: 'Restaurant',
-  },
-  'trà mót hội an': {
-    image: 'https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=800&auto=format&fit=crop&q=80',
-    address: '150 Trần Phú, Minh An, TP. Hội An',
-    rating: 4.8,
-    category: 'Restaurant',
-  },
-  'cầu sông hàn': {
-    image: 'https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=800&auto=format&fit=crop&q=80',
-    address: 'Đường Lê Duẩn, Q. Hải Châu, TP. Đà Nẵng',
-    rating: 4.8,
-    category: 'Attraction',
-  },
-  'cầu rồng': {
-    image: 'https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=800&auto=format&fit=crop&q=80',
-    address: 'Đường Nguyễn Văn Linh, Q. Hải Châu, TP. Đà Nẵng',
-    rating: 4.9,
-    category: 'Attraction',
-  },
-};
+const REAL_VERIFIED_PHOTO_CATALOG: Record<string, { image: string; address: string; rating: number; category: string }> = {};
 
 function getVerifiedRealImageFallback(name: string, query: string): string {
-  const text = (name + ' ' + query).toLowerCase();
-  for (const key of Object.keys(REAL_VERIFIED_PHOTO_CATALOG)) {
-    if (text.includes(key)) {
-      return REAL_VERIFIED_PHOTO_CATALOG[key].image;
-    }
-  }
-  return 'https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?w=800&auto=format&fit=crop&q=80';
+  return ''; // Ngừng sử dụng ảnh Unsplash theo yêu cầu
 }
 
 // Main High-level Function: Get Place with Smart Caching System
@@ -328,7 +254,7 @@ export async function getPlaceWithCache(query: string, categoryHint?: string): P
     user_ratings_total: 0,
     category: categoryHint || 'Attraction',
     price_level: 'Medium',
-    cover_image: 'https://images.unsplash.com/photo-1596402184320-417e7178b2cd?w=800&auto=format&fit=crop&q=80',
+    cover_image: '',
     photos: [],
     location: { lat: 16.0544, lng: 108.2022 },
     source: 'google_places_api', // Đánh lừa frontend để không báo lỗi, nhưng là dữ liệu rỗng.

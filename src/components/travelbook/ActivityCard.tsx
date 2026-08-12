@@ -95,7 +95,7 @@ export const ActivityCard: React.FC<ActivityCardProps> = ({
         );
       case 'current':
         return (
-          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-[#DC2626] text-white animate-pulse">
+          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-[#183B35] text-white animate-pulse">
             Đang diễn ra
           </span>
         );
@@ -128,15 +128,15 @@ export const ActivityCard: React.FC<ActivityCardProps> = ({
         isDone
           ? 'border-emerald-200 bg-emerald-50/20 opacity-90'
           : activity.status === 'current'
-          ? 'border-[#DC2626] ring-2 ring-[#DC2626]/20 shadow-md'
-          : 'border-slate-200 hover:border-slate-300'
+          ? 'border-[#183B35] ring-2 ring-[#183B35]/20 shadow-md'
+          : 'border-[#E2E3DE] hover:border-[#183B35]/30'
       }`}
     >
       {/* Top Header: Time, Badges, Status */}
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3">
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#E2E3DE] pb-3">
         <div className="flex items-center gap-2">
-          <span className="text-xs font-black text-slate-900 bg-slate-100 px-3 py-1 rounded-xl flex items-center gap-1.5 border border-slate-200">
-            <Clock className="w-3.5 h-3.5 text-[#DC2626]" />
+          <span className="text-xs font-black text-[#1D211F] bg-[#F7F6F0] px-3 py-1 rounded-xl flex items-center gap-1.5 border border-[#E2E3DE]">
+            <Clock className="w-3.5 h-3.5 text-[#183B35]" />
             {activity.startTime} {activity.endTime ? `– ${activity.endTime}` : ''}
           </span>
           {getTypeBadge()}
@@ -222,16 +222,48 @@ export const ActivityCard: React.FC<ActivityCardProps> = ({
         )}
       </div>
 
-      {/* Real Photo if available */}
-      {(activity.imageUrl || activity.place?.imageUrl) && (
-        <div className="pt-2">
-          <img
-            src={activity.imageUrl || activity.place?.imageUrl}
-            alt={activity.title}
-            className="w-full h-32 sm:h-40 object-cover rounded-2xl border border-slate-200 shadow-sm"
-          />
-        </div>
-      )}
+      {/* Real Photo or Placeholder Banner */}
+      <div className="pt-2">
+        {(() => {
+          const finalImageUrl = activity.imageUrl || activity.place?.imageUrl;
+          const isFakeImage = !finalImageUrl || finalImageUrl.includes('unsplash.com');
+
+          if (!isFakeImage) {
+            return (
+              <img
+                src={finalImageUrl}
+                alt={activity.title}
+                className="w-full h-32 sm:h-40 object-cover rounded-2xl border border-slate-200 shadow-sm"
+              />
+            );
+          }
+
+          return (
+            <div className="w-full h-32 sm:h-40 rounded-2xl border border-[#183B35]/20 shadow-sm bg-gradient-to-br from-[#183B35] to-[#28584E] relative overflow-hidden flex flex-col items-center justify-center p-4 text-center group cursor-pointer" onClick={() => onEdit(activity)} title="Nhấn để tải ảnh thật lên">
+              <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white via-transparent to-transparent"></div>
+              
+              <div className="relative z-10 space-y-1.5 max-w-[90%]">
+                <h4 className="text-white font-black text-sm sm:text-base leading-tight drop-shadow-md line-clamp-2">
+                  {activity.place?.name || activity.title}
+                </h4>
+                
+                {activity.place?.address && (
+                  <div className="flex items-center justify-center gap-1.5 text-white/80">
+                    <MapPin className="w-3.5 h-3.5 shrink-0" />
+                    <p className="text-[11px] font-medium truncate max-w-[200px]">
+                      {activity.place.address}
+                    </p>
+                  </div>
+                )}
+                
+                <p className="text-[10px] text-white/60 font-semibold uppercase tracking-wider mt-2 group-hover:text-white transition-colors">
+                  + Tải ảnh lên
+                </p>
+              </div>
+            </div>
+          );
+        })()}
+      </div>
 
       {/* Place & Location Info */}
       {activity.place && (

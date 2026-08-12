@@ -472,20 +472,26 @@ export const MapModal: React.FC<MapModalProps> = ({
       markersRef.current[pt.id] = marker;
     });
 
-    // Resize invalidate fix
-    const timer = setTimeout(() => {
-      if (!isCancelled && mapInstanceRef.current) {
-        try {
-          mapInstanceRef.current.invalidateSize();
-        } catch {
-          // ignore
+    // Resize invalidate fix using ResizeObserver for robustness during Modal animation
+    let resizeObserver: ResizeObserver | null = null;
+    if (mapContainerRef.current) {
+      resizeObserver = new ResizeObserver(() => {
+        if (!isCancelled && mapInstanceRef.current) {
+          try {
+            mapInstanceRef.current.invalidateSize();
+          } catch {
+            // ignore
+          }
         }
-      }
-    }, 250);
+      });
+      resizeObserver.observe(mapContainerRef.current);
+    }
 
     return () => {
       isCancelled = true;
-      clearTimeout(timer);
+      if (resizeObserver) {
+        resizeObserver.disconnect();
+      }
       if (mapInstanceRef.current) {
         try {
           mapInstanceRef.current.stop();

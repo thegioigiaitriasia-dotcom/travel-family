@@ -29,23 +29,23 @@ export const RecommendedFoodSection: React.FC<RecommendedFoodSectionProps> = ({
   if (!foods || foods.length === 0) return null;
 
   return (
-    <div className="bg-white rounded-[24px] p-6 border border-slate-200/80 shadow-sm space-y-5">
+    <div className="bg-[#FFFFFF] rounded-[24px] p-6 border border-[#E2E3DE] shadow-sm space-y-5">
       {/* Header */}
-      <div className="flex items-center justify-between border-b border-slate-100 pb-4">
+      <div className="flex items-center justify-between border-b border-[#E2E3DE] pb-4">
         <div>
-          <h3 className="text-base font-extrabold text-slate-900 tracking-tight flex items-center gap-2">
-            <Utensils className="w-5 h-5 text-amber-500" />
-            Món nên thử trong chuyến đi
+          <h3 className="text-base font-extrabold text-[#1D211F] tracking-tight flex items-center gap-2">
+            <Utensils className="w-5 h-5 text-[#183B35]" />
+            Ẩm thực đặc sản
           </h3>
-          <p className="text-xs text-slate-500 font-medium mt-0.5">
-            Đặc sản nổi tiếng không thể bỏ qua tại mỗi điểm dừng.
+          <p className="text-xs text-[#5D6B63] font-medium mt-0.5">
+            Danh sách các món ăn và nhà hàng trong lịch trình.
           </p>
         </div>
 
         <button
           type="button"
           onClick={onViewAllFoods}
-          className="px-3.5 py-2 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-700 font-bold text-xs transition-colors flex items-center gap-1 cursor-pointer border border-amber-100 hidden sm:flex"
+          className="px-3.5 py-2 rounded-xl bg-[#E9F0ED] hover:bg-[#cde2db] text-[#183B35] font-bold text-xs transition-colors flex items-center gap-1 cursor-pointer border border-[#E9F0ED] hidden sm:flex"
         >
           <span>Xem tất cả</span>
           <ArrowRight className="w-3.5 h-3.5" />
@@ -59,22 +59,29 @@ export const RecommendedFoodSection: React.FC<RecommendedFoodSectionProps> = ({
           return (
             <div
               key={item.id}
-              className="group relative rounded-[20px] overflow-hidden bg-slate-50 border border-slate-200/80 hover:border-amber-300 hover:shadow-md transition-all flex flex-col justify-between"
+              className="group relative rounded-[20px] overflow-hidden bg-[#F7F6F0] border border-[#E2E3DE] hover:border-[#183B35]/30 hover:shadow-md transition-all flex flex-col justify-between"
             >
               {/* Thumbnail Image */}
-              <div className="relative h-32 sm:h-36 w-full overflow-hidden bg-slate-200">
-                <img
-                  src={item.imageUrl}
-                  alt={item.name}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
+              <div className="relative h-32 sm:h-36 w-full overflow-hidden bg-[#E2E3DE]">
+                {(!item.imageUrl || item.imageUrl.includes('unsplash.com')) ? (
+                  <div className="w-full h-full bg-gradient-to-br from-amber-600 to-amber-700 relative flex flex-col items-center justify-center p-3 text-center">
+                    <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white via-transparent to-transparent"></div>
+                    <Utensils className="w-8 h-8 text-white/30 absolute" />
+                  </div>
+                ) : (
+                  <img
+                    src={item.imageUrl}
+                    alt={item.name}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                )}
 
                 {/* Badge Tag */}
                 <span
                   className={`absolute top-2 left-2 px-2.5 py-1 rounded-lg text-[10px] font-black shadow-sm ${
                     item.badge === 'Đặc sản'
                       ? 'bg-amber-500 text-white'
-                      : 'bg-red-600 text-white'
+                      : 'bg-[#183B35] text-white'
                   }`}
                 >
                   {item.badge}
@@ -97,10 +104,10 @@ export const RecommendedFoodSection: React.FC<RecommendedFoodSectionProps> = ({
 
               {/* Body Content */}
               <div className="p-3.5 space-y-1">
-                <h4 className="font-extrabold text-slate-900 text-xs sm:text-sm group-hover:text-amber-700 transition-colors line-clamp-1">
+                <h4 className="font-extrabold text-[#1D211F] text-xs sm:text-sm group-hover:text-[#183B35] transition-colors line-clamp-1">
                   {item.name}
                 </h4>
-                <p className="text-[11px] font-semibold text-slate-500">
+                <p className="text-[11px] font-semibold text-[#5D6B63]">
                   {item.destination}
                 </p>
               </div>
@@ -110,13 +117,13 @@ export const RecommendedFoodSection: React.FC<RecommendedFoodSectionProps> = ({
       </div>
 
       {/* Footer view all button */}
-      <div className="pt-2 border-t border-slate-100">
+      <div className="pt-2 border-t border-[#E2E3DE]">
         <button
           type="button"
           onClick={onViewAllFoods}
-          className="w-full py-3 rounded-xl bg-slate-50 hover:bg-slate-100 text-amber-800 font-extrabold text-xs transition-colors flex items-center justify-center gap-2 border border-slate-200 cursor-pointer"
+          className="w-full py-3 rounded-xl bg-[#F7F6F0] hover:bg-[#E9F0ED] text-[#183B35] font-extrabold text-xs transition-colors flex items-center justify-center gap-2 border border-[#E2E3DE] cursor-pointer"
         >
-          <Utensils className="w-4 h-4 text-amber-600" />
+          <Utensils className="w-4 h-4 text-[#183B35]" />
           <span>Xem tất cả món và quán ăn</span>
           <ArrowRight className="w-4 h-4" />
         </button>

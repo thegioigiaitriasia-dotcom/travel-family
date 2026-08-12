@@ -359,7 +359,7 @@ app.post('/api/generate-plan', async (req, res) => {
     const startTime24h = tripInput.tripWindow?.startTime || '07:00';
     const endTime24h = tripInput.tripWindow?.endTime || '20:00';
     const prompt = 'Lap lich trinh du lich gia dinh. Tu ' + (tripInput.tripWindow?.startDate || '') + ' (' + startTime24h + ') den ' + (tripInput.tripWindow?.endDate || '') + ' (' + endTime24h + '). Diem dung: ' + JSON.stringify(tripInput.routeStops || []) + '. Thanh vien: ' + JSON.stringify(tripInput.travelers || {}) + '. YEU CAU: startTime/endTime HH:MM 24h. Ngay 1 bat dau ' + startTime24h + '. Ngay cuoi ket thuc ' + endTime24h + '.';
-    const sysPrompt = 'Bạn là chuyên gia thiết kế lịch trình. Luôn xuất kết quả dạng JSON nguyên bản hợp lệ, KHÔNG dùng markdown. BẠN PHẢI TẠO DỮ LIỆU THỰC TẾ. Trả về JSON Object có: title, totalDays, summary, familyAdvice (array), days (array các ngày: dayNumber, date, cityName, theme, activities (array: startTime, endTime, title, category, description, locationName, estimatedCost, familyTip)).';
+    const sysPrompt = 'Bạn là chuyên gia thiết kế lịch trình. Luôn xuất kết quả JSON nguyên bản hợp lệ, KHÔNG markdown. BẠN PHẢI TẠO DỮ LIỆU THỰC TẾ. Trả về JSON Object: title, totalDays, summary, familyAdvice (array), days (array: dayNumber, date, cityName, theme, activities (array: startTime, endTime, title, category, description, locationName, estimatedCost (VD: "Khoảng 150.000 đ", ghi 1 giá trị, KHÔNG ghi khoảng từ-đến), familyTip)).';
     let jsonText = await callAIModel(sysPrompt, prompt, 'json_object');
     if (jsonText.startsWith('```')) { const match = jsonText.match(/```(?:json)?([\s\S]*?)```/); if (match) jsonText = match[1].trim(); }
     const plan = JSON.parse(jsonText);

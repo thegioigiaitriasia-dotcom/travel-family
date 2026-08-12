@@ -79,7 +79,7 @@ export const TripOverviewPage: React.FC<TripOverviewPageProps> = ({
 
   // Đếm số món ăn thật từ activities (type: dining/food/restaurant)
   const realFoodCount = trip.days.reduce((acc, d) => {
-    return acc + d.activities.filter(a =>
+    return acc + (d.activities || []).filter(a =>
       a.type === 'dining' || a.type === 'food' || a.type === 'restaurant' ||
       (a.type as string) === 'eating'
     ).length;
@@ -100,22 +100,137 @@ export const TripOverviewPage: React.FC<TripOverviewPageProps> = ({
     }));
   })();
 
+  // Tính toán dữ liệu thực tế (Fallback từ activities nếu AI không trả về mảng rời)
+  const computedAccommodations = useMemo(() => {
+    if (trip.accommodations && trip.accommodations.length > 0) return trip.accommodations;
+    const accs: any[] = [];
+    trip.days.forEach(day => {
+      day.activities?.forEach(act => {
+        if (act.type === 'accommodation' || act.category?.toLowerCase().includes('khách sạn') || act.category?.toLowerCase().includes('resort') || act.category?.toLowerCase().includes('lưu trú')) {
+           if (!accs.find(a => a.name === act.title)) {
+              accs.push({
+                 id: act.id || `acc-${Math.random()}`,
+                 name: act.title,
+                 address: act.locationName || '',
+                 period: `Ngày ${day.dayNumber}`,
+                 status: 'not_booked'
+              });
+           }
+        }
+      })
+    })
+    return accs;
+  }, [trip]);
+
+  const computedBudgetTotal = useMemo(() => {
+    let total = 0;
+    trip.days.forEach(day => {
+       day.activities?.forEach(act => {
+           let cost = act.estimatedCost || 0;
+           if (cost > 50000000) {
+              const strCost = String(cost);
+              cost = parseInt(strCost.substring(0, Math.floor(strCost.length / 2))) || 0;
+              if (cost > 50000000) cost = 500000;
+           }
+           total += cost;
+       });
+    });
+    return total;
+  }, [trip]);
+
+  const computedRouteStops = useMemo(() => {
+    if ((trip as any).routeStops && (trip as any).routeStops.length > 0) return (trip as any).routeStops;
+    const stops: any[] = [];
+    trip.days.forEach((day, index) => {
+       const cityName = day.cityName || day.title;
+       if (cityName && !stops.find(s => s.name === cityName)) {
+          stops.push({
+             id: `stop-${index}`,
+             name: cityName,
+             dateRange: `Ngày ${day.dayNumber}`,
+             type: 'destination'
+          });
+       }
+    });
+    if (stops.length === 0) {
+       stops.push({ id: 'stop-0', name: trip.title, dateRange: `${trip.days.length} ngày`, type: 'destination' });
+    }
+    return stops;
+  }, [trip]);
+
+  const computedFoods = useMemo(() => {
+    const foods: any[] = [];
+    trip.days.forEach(day => {
+      day.activities?.forEach(act => {
+        if (act.type === 'dining' || act.type === 'food' || act.type === 'restaurant' || (act.type as string) === 'eating') {
+          if (!foods.find(f => f.name === act.title)) {
+            foods.push({
+              id: act.id || `food-${Math.random()}`,
+              name: act.title,
+              destination: act.locationName || day.cityName || 'Chưa rõ',
+              badge: 'Đặc sản',
+              imageUrl: act.imageUrl || '',
+            });
+          }
+        }
+      });
+    });
+    return foods;
+  }, [trip]);
+
+  const computedAttractions = useMemo(() => {
+    const attractions: any[] = [];
+    trip.days.forEach(day => {
+      day.activities?.forEach(act => {
+        if (act.type === 'sightseeing' || act.type === 'entertainment' || act.type === 'experience' || act.type === 'activity') {
+          if (!attractions.find(a => a.name === act.title)) {
+            attractions.push({
+              id: act.id || `attr-${Math.random()}`,
+              name: act.title,
+              category: act.type === 'experience' ? 'tour' : (act.type === 'entertainment' ? 'entertainment' : 'sightseeing'),
+              categoryLabel: act.type === 'experience' ? 'Trải nghiệm' : 'Tham quan',
+              destination: act.locationName || day.cityName || 'Chưa rõ',
+              badge: 'Điểm nhấn',
+              rating: 4.8,
+              reviewCount: 120,
+              durationText: act.duration || '2 giờ',
+              pricePerPerson: act.estimatedCost || 0,
+              priceText: act.estimatedCost ? `${act.estimatedCost.toLocaleString('vi-VN')} đ` : 'Miễn phí',
+              imageUrl: act.imageUrl || '',
+              description: act.description || act.notes || 'Điểm đến thú vị cho cả gia đình',
+              familyTips: act.notes || 'Phù hợp cho cả gia đình',
+              suitabilityTags: ['Gia đình', 'Trẻ em', 'Người lớn tuổi'].slice(0, Math.floor(Math.random() * 3) + 1),
+            });
+          }
+        }
+      });
+    });
+    return attractions;
+  }, [trip]);
+
   // Hạng mục chuẩn bị thật từ trip.prepItems hoặc tính từ accommodations
   const realPrepItems = (() => {
     // Nếu trip có prepItems thật từ AI
     if (trip.prepItems && trip.prepItems.length > 0) {
-      return trip.prepItems.map((item: any, idx: number) => ({
-        id: item.id || `prep-${idx}`,
-        label: item.label || item.title || 'Hạng mục',
-        status: (item.status as 'completed' | 'attention' | 'pending') || 'pending',
-        value: item.value || item.note || 'Chưa hoàn thành',
-        routeKey: item.routeKey,
-      }));
+      return trip.prepItems.map((item: any, idx: number) => {
+        const itemStatus = (item.status as 'completed' | 'attention' | 'pending') || 'pending';
+        let statusText = 'Cần chuẩn bị';
+        if (itemStatus === 'completed') statusText = 'Đã xong';
+        if (itemStatus === 'attention') statusText = 'Đang tiến hành';
+
+        return {
+          id: item.id || `prep-${idx}`,
+          label: item.name || item.label || item.title || 'Hạng mục',
+          status: itemStatus,
+          value: item.value || item.note || statusText,
+          routeKey: item.routeKey || 'checklist',
+        };
+      });
     }
-    // Nếu không có prepItems, tạo từ accommodations + days
+    // Nếu không có prepItems, tạo từ computedAccommodations + days
     const items = [];
-    if (trip.accommodations && trip.accommodations.length > 0) {
-      items.push({ id: 'prep-hotel', label: 'Khách sạn / Lưu trú', status: 'attention' as const, value: `${trip.accommodations.length} nơi`, routeKey: 'hotel' });
+    if (computedAccommodations && computedAccommodations.length > 0) {
+      items.push({ id: 'prep-hotel', label: 'Khách sạn / Lưu trú', status: 'attention' as const, value: `${computedAccommodations.length} nơi`, routeKey: 'hotel' });
     }
     if (trip.days && trip.days.length > 0) {
       const totalActivities = trip.days.reduce((acc, d) => acc + d.activities.length, 0);
@@ -125,7 +240,6 @@ export const TripOverviewPage: React.FC<TripOverviewPageProps> = ({
     }
     return items;
   })();
-
 
   const [isShareOpen, setIsShareOpen] = useState(false);
   const [isInviteOpen, setIsInviteOpen] = useState(false);
@@ -255,7 +369,7 @@ export const TripOverviewPage: React.FC<TripOverviewPageProps> = ({
     );
 
   return (
-    <div className="min-h-screen bg-slate-50/50 text-slate-900 font-sans flex flex-col justify-between pb-20 sm:pb-12">
+    <div className="min-h-screen bg-[#F7F6F0] text-[#1D211F] font-sans flex flex-col justify-between pb-20 sm:pb-12">
       <div>
         <main className="max-w-[1280px] mx-auto px-4 sm:px-8 py-6 space-y-6">
           <TripHero
@@ -272,7 +386,7 @@ export const TripOverviewPage: React.FC<TripOverviewPageProps> = ({
             onOpenBookingVault={handleOpenBookingVault}
           />
 
-          <div className="sticky top-[72px] z-30 bg-slate-50/95 backdrop-blur-md pt-2 pb-1">
+          <div className="sticky top-[72px] z-30 bg-[#F7F6F0]/95 backdrop-blur-md pt-2 pb-1">
             <TripDayNavigation
               days={trip.days}
               selectedTab={selectedTab}
@@ -285,13 +399,19 @@ export const TripOverviewPage: React.FC<TripOverviewPageProps> = ({
               <div className="space-y-6 min-w-0">
                 <TripStatGrid
                   durationText={`${trip.durationDays} ngày ${trip.durationNights} đêm`}
-                  destinationCount={trip.destinations.length}
-                  placeCount={trip.days.reduce((acc, d) => acc + d.activities.length, 0)}
+                  destinationCount={computedRouteStops.length}
+                  placeCount={trip.days.reduce((acc, d) => acc + (d.activities || []).length, 0)}
                   foodCount={realFoodCount}
-                  accommodationCount={trip.accommodations.length}
+                  accommodationCount={computedAccommodations.length}
                   onSelectStat={(type) => {
-                    if (type === 'duration' || type === 'places') {
+                    if (type === 'duration') {
                       setSelectedTab(1);
+                    } else if (type === 'places') {
+                      const el = document.getElementById('attractions-section');
+                      el?.scrollIntoView({ behavior: 'smooth' });
+                    } else if (type === 'foods') {
+                      const el = document.getElementById('foods-section');
+                      el?.scrollIntoView({ behavior: 'smooth' });
                     } else if (type === 'destinations') {
                       setIsMapOpen(true);
                     } else if (type === 'accommodations') {
@@ -303,23 +423,14 @@ export const TripOverviewPage: React.FC<TripOverviewPageProps> = ({
 
                 <div id="route-section">
                   <TripRouteCard
-                    stops={(trip as any).routeStops as RouteStopItem[] | undefined}
+                    stops={computedRouteStops}
                     onOpenMap={() => setIsMapOpen(true)}
                   />
                 </div>
 
                 <div id="accommodation-section">
                   <AccommodationSection
-                    accommodations={(trip.accommodations || []).map((a: any, idx: number) => ({
-                      id: a.id || `acc-${idx}`,
-                      period: a.period || `Đêm ${idx + 1}`,
-                      name: a.name || a.hotel || 'Khách sạn',
-                      dates: a.dates || a.checkInDate || '',
-                      status: a.status || 'not_booked',
-                      checkInTime: a.checkInTime || '14:00',
-                      checkOutTime: a.checkOutTime || '12:00',
-                      address: a.address || '',
-                    }))}
+                    accommodations={computedAccommodations}
                     onAddAccommodation={() => {
                       setEditingAcc(null);
                       setIsAccModalOpen(true);
@@ -334,14 +445,20 @@ export const TripOverviewPage: React.FC<TripOverviewPageProps> = ({
                   />
                 </div>
 
-                <RecommendedAttractionsSection
-                  daysCount={trip.days.length}
-                  onAddActivityToDay={handleAddActivityToDay}
-                />
+                <div id="attractions-section">
+                  <RecommendedAttractionsSection
+                    attractions={computedAttractions}
+                    daysCount={trip.days.length}
+                    onAddActivityToDay={handleAddActivityToDay}
+                  />
+                </div>
 
-                <RecommendedFoodSection
-                  onViewAllFoods={() => onNavigateToPlaces()}
-                />
+                <div id="foods-section">
+                  <RecommendedFoodSection
+                    foods={computedFoods}
+                    onViewAllFoods={() => onNavigateToPlaces()}
+                  />
+                </div>
               </div>
 
               <div className="space-y-6 lg:sticky lg:top-[96px] lg:self-start">
@@ -353,8 +470,8 @@ export const TripOverviewPage: React.FC<TripOverviewPageProps> = ({
 
                 <BudgetSummaryCard
                   userBudget={realUserBudget}
-                  estimatedMin={trip.budgetEstimatedMin}
-                  estimatedMax={trip.budgetEstimatedMax}
+                  estimatedMin={computedBudgetTotal || trip.budgetEstimatedMin}
+                  estimatedMax={computedBudgetTotal || trip.budgetEstimatedMax}
                   onViewBudgetDetail={() => setSelectedTab(1)}
                 />
 
@@ -369,7 +486,7 @@ export const TripOverviewPage: React.FC<TripOverviewPageProps> = ({
               </div>
             </div>
           ) : selectedTab === 'checklist' ? (
-            <PreparationChecklistTab tripTitle={trip.title} />
+            <PreparationChecklistTab tripTitle={trip.title} trip={trip} onUpdateTrip={handleUpdateTrip} />
           ) : (
             activeDay && (
               <TripDayPage
@@ -487,7 +604,7 @@ export const TripOverviewPage: React.FC<TripOverviewPageProps> = ({
               ...prev,
               days: prev.days.map((day) => ({
                 ...day,
-                activities: day.activities.filter((act) => act.id !== actId),
+                activities: (day.activities || []).filter((act) => act.id !== actId),
               })),
             };
           });

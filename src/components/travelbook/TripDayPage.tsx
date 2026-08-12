@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   MapPin,
   Share2,
@@ -15,8 +15,6 @@ import {
   Receipt,
 } from 'lucide-react';
 import { TravelBook, TravelBookDay, TravelActivity, DayExpenseItem } from '../../types';
-import { CompactTripHero } from './CompactTripHero';
-import { TripDayNavigation } from './TripDayNavigation';
 import { TripDaySidebar } from './TripDaySidebar';
 import { DayHeader } from './DayHeader';
 import { TimelineConflictAlert } from './TimelineConflictAlert';
@@ -54,10 +52,47 @@ export const TripDayPage: React.FC<TripDayPageProps> = ({
   onOpenBookingVault,
 }) => {
   // Find current day
-  const day = trip.days.find((d) => d.dayNumber === dayNumber) || trip.days[0];
+  const rawDay = trip.days.find((d) => d.dayNumber === dayNumber) || trip.days[0];
+  
+  // Sửa lỗi các trip cũ bị dính 2 khoảng giá siêu to (ví dụ: > 50 triệu)
+  const fixedActivities = (rawDay.activities || []).map((act) => {
+    let cost = act.estimatedCost || 0;
+    if (cost > 50000000) {
+      const strCost = String(cost);
+      cost = parseInt(strCost.substring(0, Math.floor(strCost.length / 2))) || 0;
+      if (cost > 50000000) cost = 500000;
+    }
+    return { ...act, estimatedCost: cost };
+  });
+
+  const day = { ...rawDay, activities: fixedActivities };
 
   // Local state for interactive features
-  const [currentDayData, setCurrentDayData] = useState<TravelBookDay>(day);
+  const [currentDayData, setCurrentDayData] = useState<TravelBookDay>({
+    ...day,
+    activities: day.activities || [],
+    expenses: day.expenses || [],
+    packingItems: day.packingItems || [],
+    alternativePlans: day.alternativePlans || [],
+  });
+
+  const dayEstimatedTotal = currentDayData.activities.reduce(
+    (sum, act) => sum + (act.estimatedCost || 0),
+    0
+  );
+
+  // Sync state when day prop changes (user clicks on another Day tab)
+  useEffect(() => {
+    setCurrentDayData({
+      ...day,
+      activities: day.activities || [],
+      expenses: day.expenses || [],
+      packingItems: day.packingItems || [],
+      alternativePlans: day.alternativePlans || [],
+    });
+    setMapLocationName(day.destinationName);
+  }, [day]);
+
   const [isAddActivityOpen, setIsAddActivityOpen] = useState(false);
   const [editingActivity, setEditingActivity] = useState<TravelActivity | null>(null);
   const [isAltPlanPreviewOpen, setIsAltPlanPreviewOpen] = useState(false);
@@ -238,7 +273,7 @@ export const TripDayPage: React.FC<TripDayPageProps> = ({
   };
 
   return (
-    <div className="bg-[#F8FAFC] min-h-screen text-slate-800 font-sans pb-28 md:pb-12">
+    <div className="bg-[#F7F6F0] min-h-screen text-[#1D211F] font-sans pb-28 md:pb-12">
       {/* Container constraints */}
       <div className="max-w-[1440px] mx-auto px-4 sm:px-8 py-4 sm:py-6 space-y-6">
         {/* Offline & Sync Banner */}
@@ -246,22 +281,6 @@ export const TripDayPage: React.FC<TripDayPageProps> = ({
           isOffline={isOffline}
           hasUnsavedChanges={hasUnsavedChanges}
           onSaveNow={() => setHasUnsavedChanges(false)}
-        />
-
-        {/* 1. Compact Trip Hero */}
-        <CompactTripHero
-          trip={trip}
-          currentDayNumber={currentDayData.dayNumber}
-          currentDateStr={currentDayData.dateStr}
-          onOpenShare={onOpenShare}
-          onOpenEdit={onEditTrip}
-        />
-
-        {/* 2. Horizontal Day Navigation Tabs */}
-        <TripDayNavigation
-          days={trip.days}
-          selectedTab={currentDayData.dayNumber}
-          onSelectTab={onSelectTab}
         />
 
         {/* 3. Main Desktop 3-Column Grid Layout */}
@@ -284,7 +303,6 @@ export const TripDayPage: React.FC<TripDayPageProps> = ({
               pace={currentDayData.pace}
               mainTransport={currentDayData.mainTransport}
               activityCount={currentDayData.activities.length}
-              totalDistanceKm={38}
               weatherForecast={currentDayData.weatherForecast}
               onAddActivity={() => setIsAddActivityOpen(true)}
               onDeleteAllActivities={() => {
@@ -292,16 +310,6 @@ export const TripDayPage: React.FC<TripDayPageProps> = ({
                 setIsDeleteOpen(true);
               }}
             />
-
-            {/* Timeline Conflict Warning (if activities exist and conflict) */}
-            {currentDayData.activities.length >= 4 && (
-              <TimelineConflictAlert
-                onAutoFix={() => {
-                  alert('AI đã tự động tối ưu hóa khoảng thời gian giữa các địa điểm!');
-                }}
-                onManualFix={() => setIsAddActivityOpen(true)}
-              />
-            )}
 
             {/* Empty State or Activity Timeline */}
             {currentDayData.activities.length === 0 ? (
@@ -377,8 +385,8 @@ export const TripDayPage: React.FC<TripDayPageProps> = ({
             {/* Desktop View: Full Cards */}
             <div className="hidden xl:block space-y-6">
               <DayBudgetSummary
-                estimatedMin={currentDayData.estimatedCostMin}
-                estimatedMax={currentDayData.estimatedCostMax}
+                estimatedMin={currentDayData.estimatedCostMin || dayEstimatedTotal}
+                estimatedMax={currentDayData.estimatedCostMax || dayEstimatedTotal}
                 expenses={currentDayData.expenses}
                 onAddExpense={handleAddExpense}
               />
@@ -415,8 +423,8 @@ export const TripDayPage: React.FC<TripDayPageProps> = ({
                 {mobileBudgetOpen && (
                   <div className="p-4 border-t border-slate-100">
                     <DayBudgetSummary
-                      estimatedMin={currentDayData.estimatedCostMin}
-                      estimatedMax={currentDayData.estimatedCostMax}
+                      estimatedMin={currentDayData.estimatedCostMin || dayEstimatedTotal}
+                      estimatedMax={currentDayData.estimatedCostMax || dayEstimatedTotal}
                       expenses={currentDayData.expenses}
                       onAddExpense={handleAddExpense}
                     />
@@ -453,7 +461,7 @@ export const TripDayPage: React.FC<TripDayPageProps> = ({
                 >
                   <div className="flex items-center gap-2">
                     <CheckSquare className="w-4 h-4 text-[#DC2626]" />
-                    <span>Cần chuẩn bị ({currentDayData.packingItems.filter((i) => i.isPacked).length}/{currentDayData.packingItems.length})</span>
+                    <span>Cần chuẩn bị ({(currentDayData.packingItems || []).filter((i: any) => i.checked || i.isPacked).length}/{(currentDayData.packingItems || []).length})</span>
                   </div>
                   {mobilePackingOpen ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                 </button>

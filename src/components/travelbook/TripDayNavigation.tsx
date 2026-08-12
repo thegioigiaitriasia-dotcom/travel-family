@@ -22,8 +22,8 @@ export const TripDayNavigation: React.FC<TripDayNavigationProps> = ({
           onClick={() => onSelectTab('overview')}
           className={`px-4 py-3 rounded-[16px] text-xs font-black transition-all cursor-pointer flex items-center gap-2 shrink-0 ${
             selectedTab === 'overview'
-              ? 'bg-[#DC2626] text-white shadow-md scale-[1.02]'
-              : 'bg-slate-50 text-slate-700 hover:bg-slate-100'
+              ? 'bg-[#183B35] text-white shadow-md scale-[1.02]'
+              : 'bg-[#F7F6F0] text-[#1D211F] hover:bg-[#E9F0ED]'
           }`}
         >
           <LayoutDashboard className="w-4 h-4" />
@@ -36,8 +36,8 @@ export const TripDayNavigation: React.FC<TripDayNavigationProps> = ({
           onClick={() => onSelectTab('checklist')}
           className={`px-4 py-3 rounded-[16px] text-xs font-black transition-all cursor-pointer flex items-center gap-2 shrink-0 ${
             selectedTab === 'checklist'
-              ? 'bg-[#DC2626] text-white shadow-md scale-[1.02]'
-              : 'bg-slate-50 text-slate-700 hover:bg-slate-100'
+              ? 'bg-[#183B35] text-white shadow-md scale-[1.02]'
+              : 'bg-[#F7F6F0] text-[#1D211F] hover:bg-[#E9F0ED]'
           }`}
         >
           <CheckSquare className="w-4 h-4" />
@@ -45,7 +45,7 @@ export const TripDayNavigation: React.FC<TripDayNavigationProps> = ({
         </button>
 
         {/* Divider */}
-        <div className="w-[1px] h-8 bg-slate-200 shrink-0" />
+        <div className="w-[1px] h-8 bg-[#E2E3DE] shrink-0" />
 
         {/* Days Tabs */}
         {days.map((day) => {
@@ -57,17 +57,17 @@ export const TripDayNavigation: React.FC<TripDayNavigationProps> = ({
               onClick={() => onSelectTab(day.dayNumber)}
               className={`px-4 py-2.5 rounded-[16px] text-left transition-all cursor-pointer shrink-0 min-w-[120px] flex flex-col ${
                 isSelected
-                  ? 'bg-[#DC2626] text-white shadow-md shadow-red-600/20 scale-[1.02]'
-                  : 'bg-white border border-slate-200 text-slate-800 hover:bg-slate-50'
+                  ? 'bg-[#183B35] text-white shadow-md scale-[1.02]'
+                  : 'bg-white border border-[#E2E3DE] text-[#1D211F] hover:bg-[#F7F6F0]'
               }`}
             >
               <div className="flex items-center justify-between w-full">
-                <span className={`text-xs font-black ${isSelected ? 'text-white' : 'text-slate-900'}`}>
+                <span className={`text-xs font-black ${isSelected ? 'text-white' : 'text-[#1D211F]'}`}>
                   Ngày {day.dayNumber}
                 </span>
                 <span
                   className={`text-[10px] font-bold ${
-                    isSelected ? 'text-red-100' : 'text-slate-400'
+                    isSelected ? 'text-[#E9F0ED]' : 'text-[#5D6B63]'
                   }`}
                 >
                   {day.dateStr}
@@ -76,7 +76,7 @@ export const TripDayNavigation: React.FC<TripDayNavigationProps> = ({
 
               <span
                 className={`text-[11px] font-medium truncate max-w-[110px] mt-0.5 ${
-                  isSelected ? 'text-red-100 font-semibold' : 'text-slate-500'
+                  isSelected ? 'text-[#E9F0ED] font-semibold' : 'text-[#5D6B63]'
                 }`}
               >
                 {day.destinationName}

@@ -33,7 +33,7 @@ export const AccommodationSection: React.FC<AccommodationSectionProps> = ({
     switch (status) {
       case 'confirmed':
         return (
-          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-[#2E8B57]/10 text-[#2E8B57] border border-[#2E8B57]/20">
+          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-[#183B35]/10 text-[#183B35] border border-[#183B35]/20">
             <CheckCircle2 className="w-3.5 h-3.5" />
             Đã đặt
           </span>
@@ -57,15 +57,15 @@ export const AccommodationSection: React.FC<AccommodationSectionProps> = ({
   };
 
   return (
-    <div className="bg-white rounded-[24px] p-6 border border-slate-200/80 shadow-sm space-y-5">
+    <div className="bg-[#FFFFFF] rounded-[24px] p-6 border border-[#E2E3DE] shadow-sm space-y-5">
       {/* Header */}
-      <div className="flex items-center justify-between border-b border-slate-100 pb-4">
+      <div className="flex items-center justify-between border-b border-[#E2E3DE] pb-4">
         <div>
-          <h3 className="text-base font-extrabold text-slate-900 tracking-tight flex items-center gap-2">
-            <BedDouble className="w-5 h-5 text-[#2E8B57]" />
+          <h3 className="text-base font-extrabold text-[#1D211F] tracking-tight flex items-center gap-2">
+            <BedDouble className="w-5 h-5 text-[#183B35]" />
             Nơi lưu trú
           </h3>
-          <p className="text-xs text-slate-500 font-medium mt-0.5">
+          <p className="text-xs text-[#5D6B63] font-medium mt-0.5">
             Danh sách khách sạn & resort đã chuẩn bị cho cả gia đình.
           </p>
         </div>
@@ -73,7 +73,7 @@ export const AccommodationSection: React.FC<AccommodationSectionProps> = ({
         <button
           type="button"
           onClick={onAddAccommodation}
-          className="px-3.5 py-2 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-[#2E8B57] font-bold text-xs transition-colors flex items-center gap-1.5 cursor-pointer border border-emerald-100"
+          className="px-3.5 py-2 rounded-xl bg-[#E9F0ED] hover:bg-[#cde2db] text-[#183B35] font-bold text-xs transition-colors flex items-center gap-1.5 cursor-pointer border border-[#E9F0ED]"
         >
           <Plus className="w-4 h-4" />
           <span>Thêm nơi lưu trú</span>
@@ -82,18 +82,18 @@ export const AccommodationSection: React.FC<AccommodationSectionProps> = ({
 
       {/* Accommodations Cards Grid */}
       {accommodations.length === 0 ? (
-        <div className="p-8 text-center bg-slate-50 rounded-[20px] border border-dashed border-slate-200 space-y-3">
+        <div className="p-8 text-center bg-[#F7F6F0] rounded-[20px] border border-dashed border-[#E2E3DE] space-y-3">
           <BedDouble className="w-10 h-10 text-slate-400 mx-auto" />
           <div>
-            <p className="font-extrabold text-slate-800 text-sm">Chưa có nơi lưu trú</p>
-            <p className="text-xs text-slate-500 mt-0.5">
+            <p className="font-extrabold text-[#1D211F] text-sm">Chưa có nơi lưu trú</p>
+            <p className="text-xs text-[#5D6B63] mt-0.5">
               Thêm thông tin khách sạn để quản lý giờ nhận & trả phòng.
             </p>
           </div>
           <button
             type="button"
             onClick={onAddAccommodation}
-            className="px-4 py-2 rounded-xl bg-[#2E8B57] text-white font-bold text-xs hover:bg-[#246e45] inline-flex items-center gap-1.5 cursor-pointer"
+            className="px-4 py-2 rounded-xl bg-[#183B35] text-white font-bold text-xs hover:bg-[#132d28] inline-flex items-center gap-1.5 cursor-pointer"
           >
             <Plus className="w-4 h-4" />
             <span>Thêm nơi lưu trú</span>
@@ -104,38 +104,38 @@ export const AccommodationSection: React.FC<AccommodationSectionProps> = ({
           {accommodations.map((acc) => (
             <div
               key={acc.id}
-              className="p-5 rounded-[20px] bg-slate-50/80 border border-slate-200 hover:border-slate-300 transition-all space-y-3 flex flex-col justify-between"
+              className="p-5 rounded-[20px] bg-[#F7F6F0]/80 border border-[#E2E3DE] hover:border-[#183B35]/30 transition-all space-y-3 flex flex-col justify-between"
             >
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-black uppercase text-[#2E8B57] bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-100">
+                  <span className="text-xs font-black uppercase text-[#183B35] bg-[#E9F0ED] px-2.5 py-1 rounded-lg border border-[#E9F0ED]">
                     {acc.period}
                   </span>
                   {getStatusBadge(acc.status)}
                 </div>
 
                 <div className="pt-1">
-                  <h4 className="font-black text-slate-900 text-sm sm:text-base leading-snug">
+                  <h4 className="font-black text-[#1D211F] text-sm sm:text-base leading-snug">
                     {acc.name}
                   </h4>
-                  <p className="text-xs font-bold text-slate-500 mt-1 flex items-center gap-1">
+                  <p className="text-xs font-bold text-[#5D6B63] mt-1 flex items-center gap-1">
                     <Clock className="w-3.5 h-3.5 text-slate-400" />
                     {acc.dates}
                   </p>
                   {acc.address && (
-                    <p className="text-xs text-slate-600 mt-1 line-clamp-2">
+                    <p className="text-xs text-[#5D6B63] mt-1 line-clamp-2">
                       {acc.address}
                     </p>
                   )}
                 </div>
 
                 {/* Check in / Check out times */}
-                <div className="grid grid-cols-2 gap-2 pt-2 text-xs bg-white p-3 rounded-xl border border-slate-200/80">
+                <div className="grid grid-cols-2 gap-2 pt-2 text-xs bg-white p-3 rounded-xl border border-[#E2E3DE]">
                   <div>
                     <span className="text-[10px] font-bold text-slate-400 uppercase block">
                       Nhận phòng
                     </span>
-                    <span className="font-extrabold text-slate-800">
+                    <span className="font-extrabold text-[#1D211F]">
                       {acc.checkInTime || '14:00'}
                     </span>
                   </div>
@@ -143,7 +143,7 @@ export const AccommodationSection: React.FC<AccommodationSectionProps> = ({
                     <span className="text-[10px] font-bold text-slate-400 uppercase block">
                       Trả phòng
                     </span>
-                    <span className="font-extrabold text-slate-800">
+                    <span className="font-extrabold text-[#1D211F]">
                       {acc.checkOutTime || '12:00'}
                     </span>
                   </div>
@@ -151,20 +151,20 @@ export const AccommodationSection: React.FC<AccommodationSectionProps> = ({
               </div>
 
               {/* Action Buttons */}
-              <div className="flex items-center gap-2 pt-2 border-t border-slate-200/60">
+              <div className="flex items-center gap-2 pt-2 border-t border-[#E2E3DE]">
                 <button
                   type="button"
                   onClick={() => onOpenMap(acc.name)}
-                  className="flex-1 py-2 px-3 rounded-xl bg-white hover:bg-slate-100 text-slate-700 font-bold text-xs border border-slate-200 transition-colors flex items-center justify-center gap-1 cursor-pointer"
+                  className="flex-1 py-2 px-3 rounded-xl bg-[#FFFFFF] hover:bg-[#F7F6F0] text-[#1D211F] font-bold text-xs border border-[#E2E3DE] transition-colors flex items-center justify-center gap-1 cursor-pointer"
                 >
-                  <MapPin className="w-3.5 h-3.5 text-[#DC2626]" />
+                  <MapPin className="w-3.5 h-3.5 text-[#183B35]" />
                   <span>Bản đồ</span>
                 </button>
 
                 <button
                   type="button"
                   onClick={() => onEditAccommodation(acc)}
-                  className="p-2 rounded-xl bg-white hover:bg-slate-100 text-slate-600 border border-slate-200 transition-colors cursor-pointer"
+                  className="p-2 rounded-xl bg-[#FFFFFF] hover:bg-[#F7F6F0] text-[#5D6B63] border border-[#E2E3DE] transition-colors cursor-pointer"
                   title="Chỉnh sửa"
                 >
                   <Edit className="w-3.5 h-3.5" />

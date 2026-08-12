@@ -8,11 +8,7 @@ interface DayFoodSummaryProps {
 export const DayFoodSummary: React.FC<DayFoodSummaryProps> = ({ mustTryFoods }) => {
   const [showAllModal, setShowAllModal] = useState(false);
 
-  const defaultFoods = mustTryFoods || [
-    'Mì Quảng Bà Mua',
-    'Bánh tráng thịt heo Trần',
-    'Chè Liên Đà Nẵng',
-  ];
+  const defaultFoods = mustTryFoods || [];
 
   return (
     <div className="bg-white rounded-[22px] p-5 border border-slate-200 shadow-sm space-y-3">
@@ -63,21 +59,19 @@ export const DayFoodSummary: React.FC<DayFoodSummaryProps> = ({ mustTryFoods }) 
               </button>
             </div>
 
-            <div className="space-y-3 text-xs">
-              <div className="bg-orange-50 p-3 rounded-xl border border-orange-200">
-                <p className="font-bold text-orange-900">Món ăn sáng</p>
-                <p className="text-orange-800">Bún chìa Cô Cúc, Phở khô hai tô Tiến Mập</p>
-              </div>
-
-              <div className="bg-blue-50 p-3 rounded-xl border border-blue-200">
-                <p className="font-bold text-blue-900">Món ăn trưa & tối</p>
-                <p className="text-blue-800">Bánh tráng thịt heo Trần, Cao lầu Hội An, Hải sản Mỹ Khê</p>
-              </div>
-
-              <div className="bg-emerald-50 p-3 rounded-xl border border-emerald-200">
-                <p className="font-bold text-emerald-900">Đồ uống & Tráng miệng</p>
-                <p className="text-emerald-800">Chè Liên Đà Nẵng, Trà Mót Hội An, Cà phê muối</p>
-              </div>
+            <div className="space-y-3 text-xs max-h-[60vh] overflow-y-auto">
+              {defaultFoods.length > 0 ? (
+                defaultFoods.map((food, idx) => (
+                  <div key={idx} className="bg-orange-50 p-3 rounded-xl border border-orange-200 flex gap-2 items-center">
+                    <span className="font-extrabold text-orange-900 bg-orange-200 w-6 h-6 flex items-center justify-center rounded-full shrink-0">{idx + 1}</span>
+                    <p className="text-orange-900 font-medium">{food}</p>
+                  </div>
+                ))
+              ) : (
+                <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 text-center text-slate-500">
+                  Chưa có gợi ý ẩm thực nào cho ngày hôm nay.
+                </div>
+              )}
             </div>
 
             <button

@@ -161,6 +161,19 @@ export async function saveSupabasePlace(userId: string, place: any) {
   }
 }
 
+export async function deleteSupabasePlace(placeId: string, userId: string) {
+  try {
+    const { error } = await supabase
+      .from('saved_places')
+      .delete()
+      .eq('id', placeId)
+      .eq('user_id', userId);
+    return !error;
+  } catch {
+    return false;
+  }
+}
+
 // Fetch user diaries from Supabase
 export async function fetchSupabaseDiaries(userId?: string) {
   try {
@@ -452,7 +465,7 @@ export async function accumulateTripPOIs(userId: string, places: Array<{
       address: p.address || 'Địa điểm công cộng',
       city: p.city || 'Unknown',
       rating: p.rating || 4.8,
-      image_url: p.imageUrl || 'https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?w=800&auto=format&fit=crop&q=80',
+      image_url: p.imageUrl || '',
       description: p.description || 'Địa điểm du lịch tham khảo tích lũy dữ liệu.',
       price_level: p.priceLevel || 'Medium',
       tags: p.tags || ['Public Common POI', 'Tham khảo'],

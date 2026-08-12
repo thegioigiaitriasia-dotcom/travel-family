@@ -73,7 +73,9 @@ export const DayBudgetSummary: React.FC<DayBudgetSummaryProps> = ({
         <div>
           <span className="text-[10px] font-bold text-slate-400 uppercase">Dự kiến hôm nay</span>
           <p className="text-sm font-black text-slate-900">
-            {(estimatedMin / 1000000).toFixed(1)} – {(estimatedMax / 1000000).toFixed(1)} tr VNĐ
+            {estimatedMin && estimatedMax && estimatedMin !== estimatedMax
+              ? `${new Intl.NumberFormat('vi-VN').format(estimatedMin)} – ${new Intl.NumberFormat('vi-VN').format(estimatedMax)} đ`
+              : `${new Intl.NumberFormat('vi-VN').format(estimatedMin || estimatedMax || 0)} đ`}
           </p>
         </div>
 

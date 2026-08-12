@@ -22,40 +22,40 @@ export const TripStatGrid: React.FC<TripStatGridProps> = ({
     {
       id: 'duration' as const,
       icon: Calendar,
-      color: 'text-[#DC2626] bg-red-50 border-red-100',
-      iconColor: 'text-[#DC2626]',
+      color: 'text-[#183B35] bg-[#E9F0ED] border-[#183B35]/20',
+      iconColor: 'text-[#183B35]',
       value: durationText,
       label: 'Thời gian chuyến đi',
     },
     {
       id: 'destinations' as const,
       icon: MapPin,
-      color: 'text-indigo-600 bg-indigo-50 border-indigo-100',
-      iconColor: 'text-indigo-600',
+      color: 'text-[#183B35] bg-[#E9F0ED] border-[#183B35]/20',
+      iconColor: 'text-[#183B35]',
       value: `${destinationCount} điểm đến`,
       label: 'Tuyến hành trình',
     },
     {
       id: 'places' as const,
       icon: Compass,
-      color: 'text-red-600 bg-emerald-50 border-emerald-100',
-      iconColor: 'text-red-600',
+      color: 'text-[#183B35] bg-[#E9F0ED] border-[#183B35]/20',
+      iconColor: 'text-[#183B35]',
       value: `${placeCount} địa điểm`,
       label: 'Lịch trình tham quan',
     },
     {
       id: 'foods' as const,
       icon: Utensils,
-      color: 'text-amber-600 bg-amber-50 border-amber-100',
-      iconColor: 'text-amber-600',
+      color: 'text-[#183B35] bg-[#E9F0ED] border-[#183B35]/20',
+      iconColor: 'text-[#183B35]',
       value: `${foodCount} món nên thử`,
       label: 'Ẩm thực đặc sản',
     },
     {
       id: 'accommodations' as const,
       icon: BedDouble,
-      color: 'text-purple-600 bg-purple-50 border-purple-100',
-      iconColor: 'text-purple-600',
+      color: 'text-[#183B35] bg-[#E9F0ED] border-[#183B35]/20',
+      iconColor: 'text-[#183B35]',
       value: `${accommodationCount} nơi lưu trú`,
       label: 'Khách sạn & Resort',
     },
@@ -64,10 +64,10 @@ export const TripStatGrid: React.FC<TripStatGridProps> = ({
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between">
-        <h2 className="text-lg font-black text-slate-900 tracking-tight">
+        <h2 className="text-lg font-black text-[#1D211F] tracking-tight">
           Tổng quan chuyến đi
         </h2>
-        <span className="text-xs text-slate-500 font-medium hidden sm:inline">
+        <span className="text-xs text-[#5D6B63] font-medium hidden sm:inline">
           Bấm vào thẻ để xem chi tiết
         </span>
       </div>
@@ -81,7 +81,7 @@ export const TripStatGrid: React.FC<TripStatGridProps> = ({
               key={stat.id}
               type="button"
               onClick={() => onSelectStat?.(stat.id)}
-              className={`p-4 rounded-[20px] bg-white border border-slate-200/80 hover:border-slate-300 shadow-sm hover:shadow-md transition-all text-left group cursor-pointer flex flex-col justify-between space-y-3 ${
+              className={`p-4 rounded-[20px] bg-white border border-[#E2E3DE] hover:border-[#183B35]/30 shadow-sm hover:shadow-md transition-all text-left group cursor-pointer flex flex-col justify-between space-y-3 ${
                 isLastAndOdd ? 'col-span-2 sm:col-span-1' : ''
               }`}
             >
@@ -92,10 +92,10 @@ export const TripStatGrid: React.FC<TripStatGridProps> = ({
               </div>
 
               <div>
-                <p className="text-base sm:text-lg font-black text-slate-900 tracking-tight group-hover:text-[#DC2626] transition-colors">
+                <p className="text-base sm:text-lg font-black text-[#1D211F] tracking-tight group-hover:text-[#183B35] transition-colors">
                   {stat.value}
                 </p>
-                <p className="text-xs font-semibold text-slate-500 mt-0.5">
+                <p className="text-xs font-semibold text-[#5D6B63] mt-0.5">
                   {stat.label}
                 </p>
               </div>

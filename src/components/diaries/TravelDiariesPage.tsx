@@ -121,7 +121,7 @@ export const TravelDiariesPage: React.FC<TravelDiariesPageProps> = ({
   const inProgressDiary = diaries.find((d) => d.status === 'in_progress');
 
   // Handlers
-  const handleCreateDiary = (tripId: string) => {
+  const handleCreateDiary = async (tripId: string) => {
     const trip = completedTrips.find((t) => t.id === tripId);
     if (!trip) return;
 
@@ -163,17 +163,27 @@ export const TravelDiariesPage: React.FC<TravelDiariesPageProps> = ({
     setDiaries([newDiary, ...diaries]);
     setActiveDiaryId(newDiary.id);
     setViewMode('overview');
+    
+    if (session?.currentUser?.id) {
+      await saveSupabaseDiary(session.currentUser.id, newDiary);
+    }
   };
 
-  const handleUpdateDiary = (updated: TravelDiary) => {
+  const handleUpdateDiary = async (updated: TravelDiary) => {
     setDiaries(diaries.map((d) => (d.id === updated.id ? updated : d)));
+    if (session?.currentUser?.id) {
+      await saveSupabaseDiary(session.currentUser.id, updated);
+    }
   };
 
-  const handleDeleteDiary = (diaryId: string) => {
+  const handleDeleteDiary = async (diaryId: string) => {
     setDiaries(diaries.filter((d) => d.id !== diaryId));
     if (activeDiaryId === diaryId) {
       setActiveDiaryId(null);
       setViewMode('list');
+    }
+    if (session?.currentUser?.id) {
+      await deleteSupabaseDiary(diaryId);
     }
   };
 

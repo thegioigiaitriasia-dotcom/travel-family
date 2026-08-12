@@ -499,13 +499,27 @@ export default function App() {
               const cat = (act.category || '').toLowerCase();
               if (cat.includes('restaur') || cat.includes('food') || cat.includes('ăn')) type = 'dining';
               else if (cat.includes('trans') || cat.includes('di chuyển')) type = 'transport';
-              else if (cat.includes('hotel') || cat.includes('lưu trú')) type = 'accommodation';
+              else if (cat.includes('hotel') || cat.includes('lưu trú') || cat.includes('khách sạn') || cat.includes('resort')) type = 'accommodation';
               else if (cat.includes('rest') || cat.includes('nghỉ')) type = 'rest';
               
               let estimatedCost = 0;
               if (act.estimatedCost) {
-                const numericCost = String(act.estimatedCost).replace(/[^0-9]/g, '');
-                if (numericCost) estimatedCost = parseInt(numericCost);
+                // Trích xuất cụm số đầu tiên trong chuỗi (ví dụ từ "56.000 đến 650.000" chỉ lấy "56.000")
+                const costString = String(act.estimatedCost);
+                const match = costString.match(/\d+[\d.,]*/);
+                if (match) {
+                  const numericCost = match[0].replace(/[^0-9]/g, '');
+                  if (numericCost) {
+                    estimatedCost = parseInt(numericCost);
+                    
+                    // Nếu AI trả về số k (ví dụ 50k -> 50), tự động nhân 1000
+                    if (costString.toLowerCase().includes('k') && estimatedCost < 10000) {
+                       estimatedCost = estimatedCost * 1000;
+                    } else if (estimatedCost > 0 && estimatedCost < 1000) {
+                      estimatedCost = estimatedCost * 1000;
+                    }
+                  }
+                }
               }
 
               return {
@@ -560,8 +574,8 @@ export default function App() {
       placeCount: aiPlanData?.days?.reduce((acc: number, d: any) => acc + (d.activities?.length || 0), 0) || 0,
       foodCount: 0,
       accommodationCount: 0,
-      budgetMin: aiPlanData?.budgetEstimatedMin || 0,
-      budgetMax: aiPlanData?.budgetEstimatedMax || 0,
+      budgetMin: aiPlanData?.budgetEstimatedMin ? Number(String(aiPlanData.budgetEstimatedMin).replace(/[^0-9]/g, '')) : 0,
+      budgetMax: aiPlanData?.budgetEstimatedMax ? Number(String(aiPlanData.budgetEstimatedMax).replace(/[^0-9]/g, '')) : 0,
       fullData: aiPlanData ? {
         ...aiPlanData,
         days: normalizedDays,
@@ -593,6 +607,40 @@ export default function App() {
     setCurrentModule('travel-book');
     localStorage.removeItem('generated_ai_plan');
   };
+
+  const handleCloneTrip = async (tripId: string) => {
+    const target = userTrips.find(t => t.id === tripId);
+    if (!target) return;
+    
+    const newTripId = `trip-cloned-${Date.now()}`;
+    const clonedTrip: TripSummary = {
+      ...target,
+      id: newTripId,
+      title: `${target.title} (Bản sao)`,
+      status: 'planning',
+    };
+    
+    const newTrips = [clonedTrip, ...userTrips];
+    handleSaveUserTripsLocal(newTrips);
+    
+    if (!session.isDemoMode && session.currentUser?.id && isSupabaseConfigured()) {
+      await supabase.from('trips').insert({
+        id: clonedTrip.id,
+        user_id: session.currentUser.id,
+        title: clonedTrip.title,
+        cover_image: clonedTrip.coverImage,
+        start_date: clonedTrip.startDate,
+        end_date: clonedTrip.endDate,
+        duration_days: clonedTrip.durationDays,
+        status: clonedTrip.status,
+        destinations: clonedTrip.destinations,
+        budget: { min: clonedTrip.budgetMin, max: clonedTrip.budgetMax },
+        data: clonedTrip.fullData || {},
+        updated_at: new Date().toISOString(),
+      });
+    }
+  };
+
 
   const handleUpdateTravelBook = (updatedFields: Partial<TravelBook>) => {
     if (!selectedTripId || session.isDemoMode) return;
@@ -636,6 +684,8 @@ export default function App() {
               onNavigateToPlaces={() => setCurrentModule('my-places')}
               onNavigateToDiary={() => setCurrentModule('travel-diary')}
               onOpenFullMap={() => setCurrentModule('travel-book')}
+              onCloneTrip={handleCloneTrip}
+              onDeleteTrip={handleDeleteSingleTrip}
             />
           )}
 
@@ -665,6 +715,7 @@ export default function App() {
           {currentModule === 'my-places' && (
             <MyPlacesPage
               trips={formattedTripsForPlaces}
+              session={session}
               onAddActivityToTrip={(tripId, dayNumber, activityType, startTime, place) => {
                 if (session.isDemoMode) {
                   handleTriggerDemoRestriction('Thêm địa điểm vào chuyến đi');

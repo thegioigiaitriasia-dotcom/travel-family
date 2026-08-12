@@ -44,6 +44,11 @@ export const MyTripsPage: React.FC<MyTripsPageProps> = ({
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [hasError, setHasError] = useState<boolean>(false);
 
+  React.useEffect(() => {
+    setTripsList(initialTrips);
+  }, [initialTrips]);
+
+
   // Find upcoming trip for the top highlight card
   const upcomingTrip =
     tripsList.find((t) => t.status === 'upcoming') ||
@@ -98,6 +103,7 @@ export const MyTripsPage: React.FC<MyTripsPageProps> = ({
       };
       setTripsList([cloned, ...tripsList]);
     }
+    if (onCloneTrip) onCloneTrip(id);
   };
 
   const handleDelete = (id: string) => {

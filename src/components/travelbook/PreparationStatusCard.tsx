@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { ShieldCheck, CheckCircle2, Clock, AlertCircle, ChevronRight, ClipboardList } from 'lucide-react';
 
 export interface PreparationRowItem {
@@ -46,14 +46,14 @@ export const PreparationStatusCard: React.FC<PreparationStatusCardProps> = ({
           <div className="w-8 h-8 rounded-xl bg-emerald-50 text-[#2E8B57] flex items-center justify-center border border-emerald-100">
             <ShieldCheck className="w-4 h-4" />
           </div>
-          <h3 className="text-base font-black text-slate-900 tracking-tight">Chuan bi cho chuyen di</h3>
+          <h3 className="text-base font-black text-slate-900 tracking-tight">Chuẩn bị cho chuyến đi</h3>
         </div>
       </div>
 
       <div className="space-y-1.5 bg-slate-50 p-3 rounded-2xl border border-slate-200/60">
         <div className="flex items-center justify-between text-xs font-bold">
-          <span className="text-slate-700">Tien do chuan bi</span>
-          <span className="text-[#2E8B57] font-extrabold">Hoan thanh {computedProgress}%</span>
+          <span className="text-slate-700">Tiến độ chuẩn bị</span>
+          <span className="text-[#2E8B57] font-extrabold">Hoàn thành {computedProgress}%</span>
         </div>
         <div className="w-full h-2.5 bg-slate-200 rounded-full overflow-hidden">
           <div className="h-full bg-[#2E8B57] transition-all duration-500 rounded-full" style={{ width: `${computedProgress}%` }} />

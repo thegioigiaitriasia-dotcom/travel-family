@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Plus, Trash2, CheckSquare, Square, RefreshCw } from 'lucide-react';
+import { PrepItem, TravelBook } from '../../types';
 
 export interface ChecklistItem {
   id: string;
@@ -28,120 +29,39 @@ const CATEGORY_CONFIG: Record<
   },
 };
 
-const initialChecklistItems: ChecklistItem[] = [
-  // Giấy tờ
-  {
-    id: 'ck-1',
-    category: 'giay_to',
-    title: 'Căn cước công dân / Hộ chiếu (Tất cả thành viên)',
-    note: 'Bắt buộc làm thủ tục sân bay và check-in khách sạn',
-    checked: true,
-    assignedTo: 'Phúc',
-  },
-  {
-    id: 'ck-2',
-    category: 'giay_to',
-    title: 'Mã đặt chỗ vé máy bay (Khứ hồi)',
-    note: 'Lưu bản PDF offline trên điện thoại',
-    checked: true,
-    assignedTo: 'Phúc',
-  },
-  {
-    id: 'ck-3',
-    category: 'giay_to',
-    title: 'Xác nhận đặt phòng khách sạn',
-    note: 'Melia Vinpearl Danang & Resort Hội An',
-    checked: true,
-    assignedTo: 'Mẹ',
-  },
-  {
-    id: 'ck-4',
-    category: 'giay_to',
-    title: 'Tiền mặt chi tiêu lẻ & Thẻ ngân hàng',
-    note: 'Dùng mua quà lưu niệm và ăn uống đặc sản',
-    checked: false,
-    assignedTo: 'Chung',
-  },
-
-  // Đồ dùng cá nhân
-  {
-    id: 'ck-5',
-    category: 'do_ca_nhan',
-    title: 'Quần áo du lịch (4 ngày 3 đêm)',
-    note: 'Trang phục thoải mái, chụp hình đẹp',
-    checked: true,
-    assignedTo: 'Mẹ',
-  },
-  {
-    id: 'ck-6',
-    category: 'do_ca_nhan',
-    title: 'Đồ bơi & Khăn tắm biển',
-    note: 'Dùng cho ngày tắm biển Mỹ Khê',
-    checked: true,
-    assignedTo: 'Chung',
-  },
-  {
-    id: 'ck-7',
-    category: 'do_ca_nhan',
-    title: 'Nón rộng vành & Kính mát',
-    checked: false,
-    assignedTo: 'Chung',
-  },
-  {
-    id: 'ck-8',
-    category: 'do_ca_nhan',
-    title: 'Giày thể thao nhẹ & Dép đi biển',
-    checked: true,
-    assignedTo: 'Chung',
-  },
-  {
-    id: 'ck-9',
-    category: 'do_ca_nhan',
-    title: 'Sạc dự phòng & Dây sạc điện thoại',
-    checked: true,
-    assignedTo: 'Phúc',
-  },
-
-  // Y tế
-  {
-    id: 'ck-10',
-    category: 'y_te',
-    title: 'Thuốc say xe & Say đèo',
-    note: 'Uống trước 30 phút khi di chuyển',
-    checked: true,
-    assignedTo: 'Mẹ',
-  },
-  {
-    id: 'ck-11',
-    category: 'y_te',
-    title: 'Thuốc hạ sốt & Thuốc tiêu hóa gia đình',
-    checked: true,
-    assignedTo: 'Mẹ',
-  },
-  {
-    id: 'ck-12',
-    category: 'y_te',
-    title: 'Kem chống nắng SPF 50+ & Xịt chống muỗi',
-    checked: false,
-    assignedTo: 'Phúc',
-  },
-  {
-    id: 'ck-13',
-    category: 'y_te',
-    title: 'Băng gạc cá nhân & Nước rửa tay khô',
-    checked: true,
-    assignedTo: 'Chung',
-  },
-];
-
 interface PreparationChecklistTabProps {
   tripTitle?: string;
+  trip?: TravelBook;
+  onUpdateTrip?: (updatedFields: Partial<TravelBook>) => void;
 }
 
 export const PreparationChecklistTab: React.FC<PreparationChecklistTabProps> = ({
   tripTitle = 'Đà Nẵng – Hội An',
+  trip,
+  onUpdateTrip,
 }) => {
-  const [items, setItems] = useState<ChecklistItem[]>(initialChecklistItems);
+  // Chuyển đổi dữ liệu từ AI (prepItems) thành định dạng ChecklistItem để render UI
+  const getInitialItems = () => {
+    if (!trip || !trip.prepItems || trip.prepItems.length === 0) return [];
+    
+    return trip.prepItems.map((item: PrepItem) => {
+      // Map AI category to UI category
+      let mappedCategory: 'giay_to' | 'do_ca_nhan' | 'y_te' = 'do_ca_nhan';
+      if (item.category === 'health' || item.category === 'y_te') mappedCategory = 'y_te';
+      if (item.category === 'giay_to' || item.category === 'documents') mappedCategory = 'giay_to';
+      
+      return {
+        id: item.id,
+        category: mappedCategory,
+        title: item.name || (item as any).label || (item as any).title || 'Hạng mục',
+        note: (item as any).note || (item as any).value || '',
+        checked: item.status === 'completed',
+        assignedTo: 'Gia đình',
+      };
+    });
+  };
+
+  const [items, setItems] = useState<ChecklistItem[]>(getInitialItems());
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [showOnlyPending, setShowOnlyPending] = useState(false);
 

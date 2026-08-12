@@ -238,7 +238,7 @@ async function enrichPlanWithRealPlaces(plan: any, supabaseAdminClient: any, goo
     const { name, photo_reference } = req.query;
     const apiKey = process.env.VITE_GOOGLE_MAPS_API_KEY || process.env.GOOGLE_MAPS_API_KEY;
     if (!apiKey) {
-      return res.redirect('https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?w=800&auto=format&fit=crop&q=80');
+      return res.redirect('');
     }
 
     if (name) {

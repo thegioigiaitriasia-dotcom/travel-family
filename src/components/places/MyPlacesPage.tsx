@@ -26,6 +26,7 @@ import {
   PlacesFilterState,
   TravelBook,
   TravelActivityType,
+  UserAuthSession,
 } from '../../types';
 
 import { PlaceCard } from './PlaceCard';
@@ -35,10 +36,11 @@ import { PlaceEditor } from './PlaceEditor';
 import { AddPlaceToTripDialog } from './AddPlaceToTripDialog';
 import { CreateCollectionDialog } from './CreateCollectionDialog';
 import { PlaceDetailPage } from './PlaceDetailPage';
-import { fetchAccumulatedPOIs } from '../../lib/supabase';
+import { fetchSupabasePlaces, saveSupabasePlace, deleteSupabasePlace } from '../../lib/supabase';
 
 interface MyPlacesPageProps {
   trips?: TravelBook[];
+  session?: UserAuthSession;
   onAddActivityToTrip?: (
     tripId: string,
     dayNumber: number,
@@ -50,6 +52,7 @@ interface MyPlacesPageProps {
 
 export const MyPlacesPage: React.FC<MyPlacesPageProps> = ({
   trips = [],
+  session,
   onAddActivityToTrip,
 }) => {
   const [places, setPlaces] = useState<SavedPlace[]>([]);
@@ -58,7 +61,7 @@ export const MyPlacesPage: React.FC<MyPlacesPageProps> = ({
   // Load accumulated POIs from Supabase database
   useEffect(() => {
     async function loadPOIs() {
-      const dbPOIs = await fetchAccumulatedPOIs();
+      const dbPOIs = await fetchSupabasePlaces(session?.currentUser?.id);
       if (dbPOIs && dbPOIs.length > 0) {
         const mapped: SavedPlace[] = dbPOIs.map((item: any) => ({
           id: item.id,
@@ -69,8 +72,8 @@ export const MyPlacesPage: React.FC<MyPlacesPageProps> = ({
           personalRating: item.rating || 4.5,
           coverImage: item.image_url || 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800',
           images: [item.image_url || 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800'],
-          personalNote: item.description || 'Địa điểm tích lũy dùng chung công cộng.',
-          suitabilityTags: item.tags || ['Dùng chung', 'Tham khảo'],
+          personalNote: item.description || 'Địa điểm cá nhân.',
+          suitabilityTags: item.tags || ['Dành cho gia đình'],
           collectionIds: [],
           verificationStatus: 'verified',
           visited: false,
@@ -88,7 +91,7 @@ export const MyPlacesPage: React.FC<MyPlacesPageProps> = ({
       }
     }
     loadPOIs();
-  }, []);
+  }, [session]);
 
   // Selected Detail View Place
   const [selectedDetailPlace, setSelectedDetailPlace] = useState<SavedPlace | null>(null);
@@ -199,53 +202,76 @@ export const MyPlacesPage: React.FC<MyPlacesPageProps> = ({
   }, [places, filterState, selectedCategory, selectedCollectionId]);
 
   // Handle Save / Edit Place
-  const handleSavePlace = (placeData: Partial<SavedPlace>) => {
+  const handleSavePlace = async (placeData: Partial<SavedPlace>) => {
+    let finalPlace: SavedPlace;
     if (editingPlace) {
       // Update existing
+      finalPlace = { ...editingPlace, ...placeData } as SavedPlace;
       setPlaces((prev) =>
-        prev.map((p) => (p.id === editingPlace.id ? ({ ...p, ...placeData } as SavedPlace) : p))
+        prev.map((p) => (p.id === editingPlace.id ? finalPlace : p))
       );
     } else {
       // Create new
-      const newPlace = placeData as SavedPlace;
-      setPlaces((prev) => [newPlace, ...prev]);
+      finalPlace = { ...placeData, id: placeData.id || `poi-${Date.now()}` } as SavedPlace;
+      setPlaces((prev) => [finalPlace, ...prev]);
     }
     setEditingPlace(null);
+
+    if (session?.currentUser?.id) {
+      await saveSupabasePlace(session.currentUser.id, finalPlace);
+    }
   };
 
   // Toggle Favorite
-  const handleToggleFavorite = (placeId: string) => {
+  const handleToggleFavorite = async (placeId: string) => {
+    const pIdx = places.findIndex(p => p.id === placeId);
+    if (pIdx < 0) return;
+    const updatedPlace = { ...places[pIdx], favorite: !places[pIdx].favorite };
     setPlaces((prev) =>
-      prev.map((p) => (p.id === placeId ? { ...p, favorite: !p.favorite } : p))
+      prev.map((p) => (p.id === placeId ? updatedPlace : p))
     );
+    if (session?.currentUser?.id) {
+      await saveSupabasePlace(session.currentUser.id, updatedPlace);
+    }
   };
 
   // Toggle Visited
-  const handleToggleVisited = (placeId: string) => {
+  const handleToggleVisited = async (placeId: string) => {
+    const pIdx = places.findIndex(p => p.id === placeId);
+    if (pIdx < 0) return;
+    const isNowVisited = !places[pIdx].visited;
+    const updatedPlace = { 
+      ...places[pIdx], 
+      visited: isNowVisited,
+      visitedAt: isNowVisited ? new Date().toISOString() : undefined 
+    };
+    
     setPlaces((prev) =>
-      prev.map((p) =>
-        p.id === placeId
-          ? {
-              ...p,
-              visited: !p.visited,
-              visitedAt: !p.visited ? new Date().toISOString() : undefined,
-            }
-          : p
-      )
+      prev.map((p) => (p.id === placeId ? updatedPlace : p))
     );
+    if (session?.currentUser?.id) {
+      await saveSupabasePlace(session.currentUser.id, updatedPlace);
+    }
   };
 
   // Delete Place
-  const handleDeletePlace = (placeId: string) => {
+  const handleDeletePlace = async (placeId: string) => {
     setPlaces((prev) => prev.filter((p) => p.id !== placeId));
     setSelectedPlaceIds((prev) => prev.filter((id) => id !== placeId));
+    if (session?.currentUser?.id) {
+      await deleteSupabasePlace(placeId, session.currentUser.id);
+    }
   };
 
   // Bulk Delete (Section 14)
-  const handleBulkDelete = () => {
+  const handleBulkDelete = async () => {
     if (confirm(`Bạn có chắc muốn xóa ${selectedPlaceIds.length} địa điểm đã chọn?`)) {
-      setPlaces((prev) => prev.filter((p) => !selectedPlaceIds.includes(p.id)));
+      const idsToDelete = [...selectedPlaceIds];
+      setPlaces((prev) => prev.filter((p) => !idsToDelete.includes(p.id)));
       setSelectedPlaceIds([]);
+      if (session?.currentUser?.id) {
+        await Promise.all(idsToDelete.map(id => deleteSupabasePlace(id, session.currentUser!.id)));
+      }
     }
   };
 

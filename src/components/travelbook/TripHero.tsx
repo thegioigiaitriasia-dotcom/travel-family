@@ -64,21 +64,21 @@ export const TripHero: React.FC<TripHeroProps> = ({
     switch (trip.status) {
       case 'ongoing':
         return (
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black bg-[#2E8B57] text-white shadow-md animate-pulse">
-            <span className="w-2 h-2 rounded-full bg-white"></span>
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black bg-[#183B35] text-white shadow-md animate-pulse">
+            <span className="w-2 h-2 rounded-full bg-[#E9F0ED]"></span>
             Đang diễn ra
           </span>
         );
       case 'upcoming':
         return (
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#FFB545] text-slate-900 shadow-md">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#E9F0ED] text-[#183B35] shadow-md border border-[#183B35]/20">
             <Clock className="w-3.5 h-3.5" />
             Sắp khởi hành {trip.countdownDays !== undefined ? `· Còn ${trip.countdownDays} ngày` : ''}
           </span>
         );
       case 'completed':
         return (
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-slate-700 text-slate-200">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#F7F6F0] text-[#5D6B63] border border-[#E2E3DE]">
             <Check className="w-3.5 h-3.5" />
             Đã hoàn thành
           </span>
