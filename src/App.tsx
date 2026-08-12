@@ -21,6 +21,8 @@ import { Sparkles, LogIn, UserPlus, Info, CheckCircle2 } from 'lucide-react';
 
 export default function App() {
   const [currentModule, setCurrentModule] = useState<ModuleType>('my-trips');
+  const [travelBookInitialTab, setTravelBookInitialTab] = useState<'overview' | 'checklist' | number>('overview');
+  const [travelBookScrollToBudget, setTravelBookScrollToBudget] = useState(false);
   
   // Auth state: Default to Demo Mode so visitors can explore sample data without auto-login
   const [session, setSession] = useState<UserAuthSession>({
@@ -683,6 +685,18 @@ export default function App() {
               onNavigateToPlanner={handleNavigateToPlanner}
               onNavigateToPlaces={() => setCurrentModule('my-places')}
               onNavigateToDiary={() => setCurrentModule('travel-diary')}
+              onNavigateToBudget={(id) => {
+                setSelectedTripId(id);
+                setTravelBookInitialTab('overview');
+                setTravelBookScrollToBudget(true);
+                setCurrentModule('travel-book');
+              }}
+              onNavigateToChecklist={(id) => {
+                setSelectedTripId(id);
+                setTravelBookInitialTab('checklist');
+                setTravelBookScrollToBudget(false);
+                setCurrentModule('travel-book');
+              }}
               onOpenFullMap={() => setCurrentModule('travel-book')}
               onCloneTrip={handleCloneTrip}
               onDeleteTrip={handleDeleteSingleTrip}
@@ -708,6 +722,8 @@ export default function App() {
               onNavigateToDiary={() => setCurrentModule('travel-diary')}
               onUpdateTrip={handleUpdateTravelBook}
               onDeleteTrip={handleDeleteSingleTrip}
+              initialTab={travelBookInitialTab}
+              scrollToBudget={travelBookScrollToBudget}
             />
 
           )}

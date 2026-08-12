@@ -39,6 +39,8 @@ interface TripOverviewPageProps {
   onNavigateToDiary?: () => void;
   onUpdateTrip?: (updatedFields: Partial<TravelBook>) => void;
   onDeleteTrip?: (tripId: string) => void;
+  initialTab?: 'overview' | 'checklist' | number;
+  scrollToBudget?: boolean;
 }
 
 export const TripOverviewPage: React.FC<TripOverviewPageProps> = ({
@@ -50,6 +52,8 @@ export const TripOverviewPage: React.FC<TripOverviewPageProps> = ({
   onNavigateToDiary = () => {},
   onUpdateTrip,
   onDeleteTrip,
+  initialTab = 'overview',
+  scrollToBudget = false,
 }) => {
   const [trip, setTrip] = useState<TravelBook | undefined>(initialTrip);
 
@@ -67,7 +71,19 @@ export const TripOverviewPage: React.FC<TripOverviewPageProps> = ({
   React.useEffect(() => {
     setTrip(initialTrip);
   }, [initialTrip]);
-  const [selectedTab, setSelectedTab] = useState<'overview' | 'checklist' | number>('overview');
+
+  React.useEffect(() => {
+    if (scrollToBudget && selectedTab === 'overview') {
+      setTimeout(() => {
+        const el = document.getElementById('budget-summary-section');
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 500);
+    }
+  }, [scrollToBudget, selectedTab]);
+
+  const [selectedTab, setSelectedTab] = useState<'overview' | 'checklist' | number>(initialTab);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
 
@@ -468,7 +484,8 @@ export const TripOverviewPage: React.FC<TripOverviewPageProps> = ({
                   onOpenChecklistModal={() => setSelectedTab('checklist')}
                 />
 
-                <BudgetSummaryCard
+                <div id="budget-summary-section">
+                  <BudgetSummaryCard
                   userBudget={realUserBudget}
                   estimatedMin={computedBudgetTotal || trip.budgetEstimatedMin}
                   estimatedMax={computedBudgetTotal || trip.budgetEstimatedMax}

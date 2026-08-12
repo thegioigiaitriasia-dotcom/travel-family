@@ -12,6 +12,8 @@ interface TravelBookModuleProps {
   onNavigateToDiary?: () => void;
   onUpdateTrip?: (updatedFields: Partial<TravelBook>) => void;
   onDeleteTrip?: (tripId: string) => void;
+  initialTab?: 'overview' | 'checklist' | number;
+  scrollToBudget?: boolean;
 }
 
 export const TravelBookModule: React.FC<TravelBookModuleProps> = ({
@@ -23,6 +25,8 @@ export const TravelBookModule: React.FC<TravelBookModuleProps> = ({
   onNavigateToDiary,
   onUpdateTrip,
   onDeleteTrip,
+  initialTab,
+  scrollToBudget,
 }) => {
   return (
     <TripOverviewPage
@@ -34,6 +38,8 @@ export const TravelBookModule: React.FC<TravelBookModuleProps> = ({
       onNavigateToDiary={onNavigateToDiary}
       onUpdateTrip={onUpdateTrip}
       onDeleteTrip={onDeleteTrip}
+      initialTab={initialTab}
+      scrollToBudget={scrollToBudget}
     />
   );
 };

@@ -9,6 +9,8 @@ interface MyTripsModuleProps {
   onNavigateToPlanner: () => void;
   onNavigateToPlaces: () => void;
   onNavigateToDiary: () => void;
+  onNavigateToBudget?: (tripId: string) => void;
+  onNavigateToChecklist?: (tripId: string) => void;
   onOpenFullMap?: () => void;
   onCloneTrip?: (tripId: string) => void;
   onDeleteTrip?: (tripId: string) => void;
@@ -21,6 +23,8 @@ export const MyTripsModule: React.FC<MyTripsModuleProps> = ({
   onNavigateToPlanner,
   onNavigateToPlaces,
   onNavigateToDiary,
+  onNavigateToBudget,
+  onNavigateToChecklist,
   onOpenFullMap,
   onCloneTrip,
   onDeleteTrip,
@@ -33,6 +37,8 @@ export const MyTripsModule: React.FC<MyTripsModuleProps> = ({
       onCreateTrip={onNavigateToPlanner}
       onNavigateToPlaces={onNavigateToPlaces}
       onNavigateToDiary={onNavigateToDiary}
+      onNavigateToBudget={onNavigateToBudget}
+      onNavigateToChecklist={onNavigateToChecklist}
       onOpenFullMap={onOpenFullMap}
       onCloneTrip={onCloneTrip}
       onDeleteTrip={onDeleteTrip}
