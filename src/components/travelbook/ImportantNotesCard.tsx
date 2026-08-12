@@ -25,7 +25,7 @@ export const ImportantNotesCard: React.FC<ImportantNotesCardProps> = ({
       {/* Header */}
       <div className="flex items-center justify-between border-b border-slate-100 pb-3">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center border border-amber-100">
+          <div className="w-8 h-8 rounded-xl bg-bronze-50 text-bronze-600 flex items-center justify-center border border-bronze-100">
             <AlertCircle className="w-4 h-4" />
           </div>
           <h3 className="text-base font-black text-slate-900 tracking-tight">
@@ -39,9 +39,9 @@ export const ImportantNotesCard: React.FC<ImportantNotesCardProps> = ({
         {displayedNotes.map((note, idx) => (
           <div
             key={idx}
-            className="flex items-start gap-2 bg-amber-50/50 p-2.5 rounded-xl border border-amber-100/80"
+            className="flex items-start gap-2 bg-bronze-50/50 p-2.5 rounded-xl border border-bronze-100/80"
           >
-            <span className="text-amber-600 font-black text-sm leading-none mt-0.5">•</span>
+            <span className="text-bronze-600 font-black text-sm leading-none mt-0.5">•</span>
             <p className="leading-relaxed text-slate-800">{note}</p>
           </div>
         ))}
@@ -55,7 +55,7 @@ export const ImportantNotesCard: React.FC<ImportantNotesCardProps> = ({
             setExpanded(!expanded);
             onViewAllNotes?.();
           }}
-          className="w-full py-2.5 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-700 font-extrabold text-xs transition-colors flex items-center justify-center gap-1.5 border border-slate-200 cursor-pointer"
+          className="w-full py-2.5 rounded-xl bg-sand-50 hover:bg-slate-100 text-slate-700 font-extrabold text-xs transition-colors flex items-center justify-center gap-1.5 border border-slate-200 cursor-pointer"
         >
           <span>{expanded ? 'Thu gọn' : 'Xem tất cả lưu ý'}</span>
           {expanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}

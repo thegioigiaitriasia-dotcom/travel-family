@@ -57,7 +57,7 @@ export const CreateCollectionDialog: React.FC<CreateCollectionDialogProps> = ({
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="VD: Quán ăn gia đình thích, Đi Đà Lạt..."
-              className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-xs font-bold text-slate-900 focus:outline-none focus:border-purple-600"
+              className="w-full px-3.5 py-2.5 rounded-xl bg-sand-50 border border-slate-300 text-xs font-bold text-slate-900 focus:outline-none focus:border-purple-600"
             />
           </div>
 
@@ -69,7 +69,7 @@ export const CreateCollectionDialog: React.FC<CreateCollectionDialogProps> = ({
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Mô tả ngắn gọn mục đích..."
-              className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-xs font-bold text-slate-900 focus:outline-none focus:border-purple-600"
+              className="w-full px-3.5 py-2.5 rounded-xl bg-sand-50 border border-slate-300 text-xs font-bold text-slate-900 focus:outline-none focus:border-purple-600"
             />
           </div>
 

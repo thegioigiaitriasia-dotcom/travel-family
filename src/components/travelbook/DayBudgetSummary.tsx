@@ -69,7 +69,7 @@ export const DayBudgetSummary: React.FC<DayBudgetSummaryProps> = ({
         </button>
       </div>
 
-      <div className="grid grid-cols-2 gap-3 bg-slate-50 p-3.5 rounded-2xl border border-slate-200 text-xs">
+      <div className="grid grid-cols-2 gap-3 bg-sand-50 p-3.5 rounded-2xl border border-slate-200 text-xs">
         <div>
           <span className="text-[10px] font-bold text-slate-400 uppercase">Dự kiến hôm nay</span>
           <p className="text-sm font-black text-slate-900">
@@ -97,7 +97,7 @@ export const DayBudgetSummary: React.FC<DayBudgetSummaryProps> = ({
             {expenses.map((exp) => (
               <div
                 key={exp.id}
-                className="flex items-center justify-between text-xs p-2 rounded-xl bg-slate-50 border border-slate-100"
+                className="flex items-center justify-between text-xs p-2 rounded-xl bg-sand-50 border border-slate-100"
               >
                 <div className="flex items-center gap-2">
                   <span className="text-[10px] font-bold px-2 py-0.5 bg-white rounded border text-slate-600">
@@ -166,7 +166,7 @@ export const DayBudgetSummary: React.FC<DayBudgetSummaryProps> = ({
               <button
                 type="button"
                 onClick={() => setShowAddModal(false)}
-                className="flex-1 py-2.5 rounded-xl border border-slate-200 text-slate-700 text-xs font-bold hover:bg-slate-50"
+                className="flex-1 py-2.5 rounded-xl border border-slate-200 text-slate-700 text-xs font-bold hover:bg-sand-50"
               >
                 Hủy
               </button>

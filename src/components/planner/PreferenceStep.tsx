@@ -121,7 +121,7 @@ export const PreferenceStep: React.FC<PreferenceStepProps> = ({
   return (
     <div className="bg-white rounded-[24px] p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6 max-w-2xl mx-auto">
       <div>
-        <span className="text-xs font-bold uppercase tracking-wider text-[#DC2626]">Bước 3 / 5</span>
+        <span className="text-xs font-bold uppercase tracking-wider text-bronze-600">Bước 3 / 5</span>
         <h3 className="text-2xl font-extrabold text-slate-900 tracking-tight mt-1">
           Phong cách & Điểm tham quan / Tour
         </h3>
@@ -133,7 +133,7 @@ export const PreferenceStep: React.FC<PreferenceStepProps> = ({
       {/* Grid 2 Cột với Card Lớn + Emoji */}
       <div className="space-y-3">
         <label className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
-          <Compass className="w-4 h-4 text-[#DC2626]" />
+          <Compass className="w-4 h-4 text-bronze-600" />
           1. Phong cách du lịch chính
         </label>
 
@@ -147,8 +147,8 @@ export const PreferenceStep: React.FC<PreferenceStepProps> = ({
                 onClick={() => toggleStyle(item.id)}
                 className={`p-4 rounded-[20px] border text-left transition-all duration-200 cursor-pointer flex items-center justify-between group ${
                   isSelected
-                    ? 'bg-[#DC2626] text-white border-[#DC2626] shadow-lg shadow-[#DC2626]/20 scale-[1.02]'
-                    : 'bg-slate-50 border-slate-200 text-slate-800 hover:bg-slate-100 hover:border-slate-300'
+                    ? 'bg-bronze-600 text-white border-[#DC2626] shadow-lg shadow-[#DC2626]/20 scale-[1.02]'
+                    : 'bg-sand-50 border-slate-200 text-slate-800 hover:bg-slate-100 hover:border-slate-300'
                 }`}
               >
                 <div className="flex items-center gap-3">
@@ -156,7 +156,7 @@ export const PreferenceStep: React.FC<PreferenceStepProps> = ({
                   <span className="text-xs font-extrabold tracking-tight">{item.label}</span>
                 </div>
                 {isSelected && (
-                  <div className="w-5 h-5 rounded-full bg-white text-[#DC2626] flex items-center justify-center shrink-0">
+                  <div className="w-5 h-5 rounded-full bg-white text-bronze-600 flex items-center justify-center shrink-0">
                     <Check className="w-3.5 h-3.5 stroke-[3]" />
                   </div>
                 )}
@@ -170,10 +170,10 @@ export const PreferenceStep: React.FC<PreferenceStepProps> = ({
       <div className="space-y-3 pt-4 border-t border-slate-100">
         <div className="flex items-center justify-between">
           <label className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
-            <Ticket className="w-4 h-4 text-[#DC2626]" />
+            <Ticket className="w-4 h-4 text-bronze-600" />
             2. Địa điểm tham quan & Tour chọn trước (AI ưu tiên xếp)
           </label>
-          <span className="text-[11px] text-[#DC2626] font-semibold bg-[#FEF2F2] px-2.5 py-0.5 rounded-full border border-[#FECACA]">
+          <span className="text-[11px] text-bronze-600 font-semibold bg-[#FEF2F2] px-2.5 py-0.5 rounded-full border border-[#FECACA]">
             Đã chọn {selectedAttractions.length}
           </span>
         </div>
@@ -188,8 +188,8 @@ export const PreferenceStep: React.FC<PreferenceStepProps> = ({
                 onClick={() => toggleAttraction(attr.name)}
                 className={`p-3 rounded-2xl border text-left transition-all cursor-pointer flex items-center gap-3 ${
                   isChecked
-                    ? 'bg-[#DC2626] text-white border-[#DC2626] shadow-xs'
-                    : 'bg-slate-50 border-slate-200 text-slate-800 hover:bg-slate-100'
+                    ? 'bg-bronze-600 text-white border-[#DC2626] shadow-xs'
+                    : 'bg-sand-50 border-slate-200 text-slate-800 hover:bg-slate-100'
                 }`}
               >
                 <img
@@ -209,7 +209,7 @@ export const PreferenceStep: React.FC<PreferenceStepProps> = ({
                 </div>
                 <div
                   className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 ${
-                    isChecked ? 'border-white bg-white text-[#DC2626]' : 'border-slate-300 bg-white'
+                    isChecked ? 'border-white bg-white text-bronze-600' : 'border-slate-300 bg-white'
                   }`}
                 >
                   {isChecked && <Check className="w-3.5 h-3.5 stroke-[3]" />}
@@ -238,7 +238,7 @@ export const PreferenceStep: React.FC<PreferenceStepProps> = ({
                 className={`w-full p-4 rounded-[20px] border text-left transition-all cursor-pointer flex items-center justify-between ${
                   isSelected
                     ? 'bg-[#2E8B57]/10 border-[#2E8B57] ring-2 ring-[#2E8B57]/20'
-                    : 'bg-white border-slate-200 hover:bg-slate-50'
+                    : 'bg-white border-slate-200 hover:bg-sand-50'
                 }`}
               >
                 <div className="space-y-0.5">
@@ -269,7 +269,7 @@ export const PreferenceStep: React.FC<PreferenceStepProps> = ({
         <button
           type="button"
           onClick={onBack}
-          className="px-5 py-3 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600 font-bold text-xs transition-colors cursor-pointer"
+          className="px-5 py-3 rounded-xl border border-slate-200 hover:bg-sand-50 text-slate-600 font-bold text-xs transition-colors cursor-pointer"
         >
           Quay lại
         </button>
@@ -277,7 +277,7 @@ export const PreferenceStep: React.FC<PreferenceStepProps> = ({
         <button
           type="button"
           onClick={onNext}
-          className="px-6 py-3 rounded-xl bg-[#DC2626] hover:bg-[#B91C1C] text-white font-bold text-xs transition-colors shadow-md shadow-[#DC2626]/20 flex items-center gap-1.5 cursor-pointer"
+          className="px-6 py-3 rounded-xl bg-bronze-600 hover:bg-[#B91C1C] text-white font-bold text-xs transition-colors shadow-md shadow-[#DC2626]/20 flex items-center gap-1.5 cursor-pointer"
         >
           <span>Tiếp tục</span>
           <ArrowRight className="w-4 h-4" />

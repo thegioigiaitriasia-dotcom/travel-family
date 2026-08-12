@@ -40,27 +40,27 @@ export const GenerationSuccessState: React.FC<GenerationSuccessStateProps> = ({
       </p>
 
       {/* 4 Cards Summary Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-slate-50 p-4 rounded-[20px] border border-slate-200 text-center">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-sand-50 p-4 rounded-[20px] border border-slate-200 text-center">
         <div className="p-2.5 bg-white rounded-xl border border-slate-200 space-y-1 shadow-xs">
-          <Calendar className="w-5 h-5 text-[#DC2626] mx-auto" />
+          <Calendar className="w-5 h-5 text-bronze-600 mx-auto" />
           <p className="text-[10px] font-bold text-slate-400 uppercase">Thời gian</p>
           <p className="text-xs font-black text-slate-900">4 ngày 3 đêm</p>
         </div>
 
         <div className="p-2.5 bg-white rounded-xl border border-slate-200 space-y-1 shadow-xs">
-          <MapPin className="w-5 h-5 text-[#DC2626] mx-auto" />
+          <MapPin className="w-5 h-5 text-bronze-600 mx-auto" />
           <p className="text-[10px] font-bold text-slate-400 uppercase">Điểm đến</p>
           <p className="text-xs font-black text-slate-900">12 tham quan</p>
         </div>
 
         <div className="p-2.5 bg-white rounded-xl border border-slate-200 space-y-1 shadow-xs">
-          <Utensils className="w-5 h-5 text-[#DC2626] mx-auto" />
+          <Utensils className="w-5 h-5 text-bronze-600 mx-auto" />
           <p className="text-[10px] font-bold text-slate-400 uppercase">Ẩm thực</p>
           <p className="text-xs font-black text-slate-900">9 món ăn</p>
         </div>
 
         <div className="p-2.5 bg-white rounded-xl border border-slate-200 space-y-1 shadow-xs">
-          <BedDouble className="w-5 h-5 text-[#DC2626] mx-auto" />
+          <BedDouble className="w-5 h-5 text-bronze-600 mx-auto" />
           <p className="text-[10px] font-bold text-slate-400 uppercase">Lưu trú</p>
           <p className="text-xs font-black text-slate-900">2 khách sạn</p>
         </div>
@@ -71,7 +71,7 @@ export const GenerationSuccessState: React.FC<GenerationSuccessStateProps> = ({
         <button
           type="button"
           onClick={onViewItinerary}
-          className="w-full py-4 px-6 rounded-[20px] bg-[#DC2626] hover:bg-[#B91C1C] text-white font-extrabold text-base transition-all shadow-xl shadow-[#DC2626]/30 flex items-center justify-center gap-2 cursor-pointer group"
+          className="w-full py-4 px-6 rounded-[20px] bg-bronze-600 hover:bg-[#B91C1C] text-white font-extrabold text-base transition-all shadow-xl shadow-[#DC2626]/30 flex items-center justify-center gap-2 cursor-pointer group"
         >
           <BookOpen className="w-5 h-5" />
           <span>Xem Travel Book</span>
@@ -82,7 +82,7 @@ export const GenerationSuccessState: React.FC<GenerationSuccessStateProps> = ({
           <button
             type="button"
             onClick={onEditPreferences}
-            className="py-3 px-4 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-bold text-xs transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+            className="py-3 px-4 rounded-xl border border-slate-200 bg-white hover:bg-sand-50 text-slate-700 font-bold text-xs transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
           >
             <Edit3 className="w-3.5 h-3.5 text-slate-500" />
             <span>Chỉnh sửa yêu cầu</span>
@@ -91,7 +91,7 @@ export const GenerationSuccessState: React.FC<GenerationSuccessStateProps> = ({
           <button
             type="button"
             onClick={() => setShowConfirmModal(true)}
-            className="py-3 px-4 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-bold text-xs transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+            className="py-3 px-4 rounded-xl border border-slate-200 bg-white hover:bg-sand-50 text-slate-700 font-bold text-xs transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
           >
             <RefreshCw className="w-3.5 h-3.5 text-slate-500" />
             <span>Tạo lại lịch trình</span>
@@ -103,7 +103,7 @@ export const GenerationSuccessState: React.FC<GenerationSuccessStateProps> = ({
       {showConfirmModal && (
         <div className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4">
           <div className="bg-white rounded-[24px] p-6 max-w-sm w-full space-y-4 shadow-2xl text-left border border-slate-100">
-            <div className="w-10 h-10 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-full bg-bronze-100 text-bronze-600 flex items-center justify-center">
               <AlertTriangle className="w-5 h-5" />
             </div>
             <div className="space-y-1">
@@ -116,7 +116,7 @@ export const GenerationSuccessState: React.FC<GenerationSuccessStateProps> = ({
               <button
                 type="button"
                 onClick={() => setShowConfirmModal(false)}
-                className="flex-1 py-2.5 rounded-xl border border-slate-200 text-slate-700 text-xs font-bold hover:bg-slate-50"
+                className="flex-1 py-2.5 rounded-xl border border-slate-200 text-slate-700 text-xs font-bold hover:bg-sand-50"
               >
                 Hủy bỏ
               </button>
@@ -126,7 +126,7 @@ export const GenerationSuccessState: React.FC<GenerationSuccessStateProps> = ({
                   setShowConfirmModal(false);
                   onRegenerate();
                 }}
-                className="flex-1 py-2.5 rounded-xl bg-[#DC2626] text-white text-xs font-bold hover:bg-[#B91C1C]"
+                className="flex-1 py-2.5 rounded-xl bg-bronze-600 text-white text-xs font-bold hover:bg-[#B91C1C]"
               >
                 Đồng ý tạo lại
               </button>

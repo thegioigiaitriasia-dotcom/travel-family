@@ -20,8 +20,8 @@ export const GenerationErrorState: React.FC<GenerationErrorStateProps> = ({
 }) => {
   if (errorType === 'missing_info') {
     return (
-      <div className="bg-amber-50 border border-amber-200 rounded-3xl p-6 sm:p-8 text-center space-y-4 max-w-md mx-auto my-8">
-        <div className="w-12 h-12 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center mx-auto">
+      <div className="bg-bronze-50 border border-bronze-200 rounded-3xl p-6 sm:p-8 text-center space-y-4 max-w-md mx-auto my-8">
+        <div className="w-12 h-12 rounded-full bg-bronze-100 text-bronze-700 flex items-center justify-center mx-auto">
           <Info className="w-6 h-6" />
         </div>
         <div className="space-y-1">
@@ -34,7 +34,7 @@ export const GenerationErrorState: React.FC<GenerationErrorStateProps> = ({
         </div>
         <button
           onClick={onGoToMissingStep || onRetry}
-          className="w-full py-3 px-5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs shadow-sm transition-all cursor-pointer"
+          className="w-full py-3 px-5 rounded-xl bg-bronze-600 hover:bg-bronze-700 text-white font-bold text-xs shadow-sm transition-all cursor-pointer"
         >
           Bổ sung thông tin còn thiếu
         </button>
@@ -44,7 +44,7 @@ export const GenerationErrorState: React.FC<GenerationErrorStateProps> = ({
 
   if (errorType === 'limited_destination') {
     return (
-      <div className="bg-slate-50 border border-slate-200 rounded-3xl p-6 sm:p-8 text-center space-y-4 max-w-md mx-auto my-8">
+      <div className="bg-sand-50 border border-slate-200 rounded-3xl p-6 sm:p-8 text-center space-y-4 max-w-md mx-auto my-8">
         <div className="w-12 h-12 rounded-full bg-slate-200 text-slate-700 flex items-center justify-center mx-auto">
           <MapPin className="w-6 h-6" />
         </div>
@@ -59,7 +59,7 @@ export const GenerationErrorState: React.FC<GenerationErrorStateProps> = ({
         <div className="space-y-2 pt-2">
           <button
             onClick={onContinueBasic || onRetry}
-            className="w-full py-3 px-5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-xs shadow-sm transition-all cursor-pointer"
+            className="w-full py-3 px-5 rounded-xl bg-bronze-600 hover:bg-red-700 text-white font-bold text-xs shadow-sm transition-all cursor-pointer"
           >
             Tiếp tục với lịch trình cơ bản
           </button>
@@ -77,7 +77,7 @@ export const GenerationErrorState: React.FC<GenerationErrorStateProps> = ({
   // Connection Error (Default)
   return (
     <div className="bg-red-50 border border-red-200 rounded-3xl p-6 sm:p-8 text-center space-y-4 max-w-md mx-auto my-8">
-      <div className="w-12 h-12 rounded-full bg-red-100 text-red-600 flex items-center justify-center mx-auto">
+      <div className="w-12 h-12 rounded-full bg-red-100 text-bronze-600 flex items-center justify-center mx-auto">
         <AlertCircle className="w-6 h-6" />
       </div>
       <div className="space-y-1">
@@ -91,14 +91,14 @@ export const GenerationErrorState: React.FC<GenerationErrorStateProps> = ({
       <div className="flex gap-2 pt-2">
         <button
           onClick={onReturnHome}
-          className="flex-1 py-2.5 px-4 rounded-xl border border-red-200 bg-white text-slate-700 font-bold text-xs hover:bg-slate-50 transition-colors flex items-center justify-center gap-1 cursor-pointer"
+          className="flex-1 py-2.5 px-4 rounded-xl border border-red-200 bg-white text-slate-700 font-bold text-xs hover:bg-sand-50 transition-colors flex items-center justify-center gap-1 cursor-pointer"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Về chuyến đi</span>
         </button>
         <button
           onClick={onRetry}
-          className="flex-1 py-2.5 px-4 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-xs shadow-sm transition-all flex items-center justify-center gap-1 cursor-pointer"
+          className="flex-1 py-2.5 px-4 rounded-xl bg-bronze-600 hover:bg-red-700 text-white font-bold text-xs shadow-sm transition-all flex items-center justify-center gap-1 cursor-pointer"
         >
           <RefreshCw className="w-4 h-4" />
           <span>Thử lại</span>

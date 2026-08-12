@@ -23,10 +23,10 @@ export const TripRouteCard: React.FC<TripRouteCardProps> = ({
   onOpenMap,
 }) => {
   const getTransportIcon = (method: string) => {
-    if (method.toLowerCase().includes('bay')) return <Plane className="w-3.5 h-3.5 text-[#DC2626]" />;
+    if (method.toLowerCase().includes('bay')) return <Plane className="w-3.5 h-3.5 text-bronze-600" />;
     if (method.toLowerCase().includes('limousine') || method.toLowerCase().includes('xe'))
-      return <Bus className="w-3.5 h-3.5 text-amber-600" />;
-    return <Navigation className="w-3.5 h-3.5 text-red-600" />;
+      return <Bus className="w-3.5 h-3.5 text-bronze-600" />;
+    return <Navigation className="w-3.5 h-3.5 text-bronze-600" />;
   };
 
   return (

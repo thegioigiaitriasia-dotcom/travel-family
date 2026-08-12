@@ -29,7 +29,7 @@ export const TripOverviewError: React.FC<TripOverviewErrorProps> = ({
         <button
           type="button"
           onClick={onRetry}
-          className="py-3 px-4 rounded-xl bg-[#DC2626] hover:bg-[#B91C1C] text-white font-extrabold text-xs shadow-md transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+          className="py-3 px-4 rounded-xl bg-bronze-600 hover:bg-[#B91C1C] text-white font-extrabold text-xs shadow-md transition-all flex items-center justify-center gap-1.5 cursor-pointer"
         >
           <RefreshCw className="w-4 h-4" />
           <span>Thử lại</span>

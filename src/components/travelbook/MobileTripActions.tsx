@@ -41,9 +41,9 @@ export const MobileTripActions: React.FC<MobileTripActionsProps> = ({
               setShowAddMenu(false);
               onAddActivity?.();
             }}
-            className="w-full text-left px-3 py-2.5 rounded-xl hover:bg-slate-50 flex items-center gap-2.5 text-slate-800 cursor-pointer"
+            className="w-full text-left px-3 py-2.5 rounded-xl hover:bg-sand-50 flex items-center gap-2.5 text-slate-800 cursor-pointer"
           >
-            <div className="w-7 h-7 rounded-lg bg-red-50 text-[#DC2626] flex items-center justify-center">
+            <div className="w-7 h-7 rounded-lg bg-red-50 text-bronze-600 flex items-center justify-center">
               <Activity className="w-4 h-4" />
             </div>
             <span>Thêm hoạt động</span>
@@ -55,9 +55,9 @@ export const MobileTripActions: React.FC<MobileTripActionsProps> = ({
               setShowAddMenu(false);
               onAddExpense?.();
             }}
-            className="w-full text-left px-3 py-2.5 rounded-xl hover:bg-slate-50 flex items-center gap-2.5 text-slate-800 cursor-pointer"
+            className="w-full text-left px-3 py-2.5 rounded-xl hover:bg-sand-50 flex items-center gap-2.5 text-slate-800 cursor-pointer"
           >
-            <div className="w-7 h-7 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center">
+            <div className="w-7 h-7 rounded-lg bg-bronze-50 text-bronze-600 flex items-center justify-center">
               <DollarSign className="w-4 h-4" />
             </div>
             <span>Ghi khoản chi</span>
@@ -69,7 +69,7 @@ export const MobileTripActions: React.FC<MobileTripActionsProps> = ({
               setShowAddMenu(false);
               onAddNote?.();
             }}
-            className="w-full text-left px-3 py-2.5 rounded-xl hover:bg-slate-50 flex items-center gap-2.5 text-slate-800 cursor-pointer"
+            className="w-full text-left px-3 py-2.5 rounded-xl hover:bg-sand-50 flex items-center gap-2.5 text-slate-800 cursor-pointer"
           >
             <div className="w-7 h-7 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center">
               <FileText className="w-4 h-4" />
@@ -83,9 +83,9 @@ export const MobileTripActions: React.FC<MobileTripActionsProps> = ({
               setShowAddMenu(false);
               onAddAccommodation?.();
             }}
-            className="w-full text-left px-3 py-2.5 rounded-xl hover:bg-slate-50 flex items-center gap-2.5 text-slate-800 cursor-pointer"
+            className="w-full text-left px-3 py-2.5 rounded-xl hover:bg-sand-50 flex items-center gap-2.5 text-slate-800 cursor-pointer"
           >
-            <div className="w-7 h-7 rounded-lg bg-emerald-50 text-[#2E8B57] flex items-center justify-center">
+            <div className="w-7 h-7 rounded-lg bg-forest-50 text-[#2E8B57] flex items-center justify-center">
               <BedDouble className="w-4 h-4" />
             </div>
             <span>Thêm nơi lưu trú</span>
@@ -98,7 +98,7 @@ export const MobileTripActions: React.FC<MobileTripActionsProps> = ({
         <button
           type="button"
           onClick={onViewDay}
-          className="py-2.5 px-3 rounded-xl bg-[#DC2626] text-white font-black text-xs shadow-md flex items-center justify-center gap-1.5 cursor-pointer"
+          className="py-2.5 px-3 rounded-xl bg-bronze-600 text-white font-black text-xs shadow-md flex items-center justify-center gap-1.5 cursor-pointer"
         >
           <Calendar className="w-4 h-4" />
           <span>{isOngoing ? 'Xem hôm nay' : 'Xem Ngày 1'}</span>
@@ -116,7 +116,7 @@ export const MobileTripActions: React.FC<MobileTripActionsProps> = ({
         <button
           type="button"
           onClick={() => setShowAddMenu(!showAddMenu)}
-          className="py-2.5 px-3 rounded-xl bg-emerald-50 text-[#2E8B57] border border-emerald-200 font-extrabold text-xs flex items-center justify-center gap-1.5 cursor-pointer"
+          className="py-2.5 px-3 rounded-xl bg-forest-50 text-[#2E8B57] border border-forest-200 font-extrabold text-xs flex items-center justify-center gap-1.5 cursor-pointer"
         >
           <Plus className="w-4 h-4" />
           <span>Thêm</span>

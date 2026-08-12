@@ -38,7 +38,7 @@ export const PlaceSearchBar: React.FC<PlaceSearchBarProps> = ({
             value={filterState.search}
             onChange={(e) => onFilterChange({ search: e.target.value })}
             placeholder="Tìm tên địa điểm, thành phố, địa chỉ hoặc ghi chú..."
-            className="w-full px-4 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs font-bold text-slate-900 pl-10 focus:outline-none focus:border-[#DC2626] focus:bg-white transition-all"
+            className="w-full px-4 py-2.5 rounded-2xl bg-sand-50 border border-slate-200 text-xs font-bold text-slate-900 pl-10 focus:outline-none focus:border-[#DC2626] focus:bg-white transition-all"
           />
           <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
           {filterState.search && (
@@ -58,7 +58,7 @@ export const PlaceSearchBar: React.FC<PlaceSearchBarProps> = ({
           <select
             value={filterState.cities[0] || ''}
             onChange={(e) => onFilterChange({ cities: e.target.value ? [e.target.value] : [] })}
-            className="px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs font-bold text-slate-700 focus:outline-none cursor-pointer"
+            className="px-3 py-2 rounded-xl bg-sand-50 border border-slate-200 text-xs font-bold text-slate-700 focus:outline-none cursor-pointer"
           >
             <option value="">Tất cả thành phố</option>
             {availableCities.map((city) => (
@@ -72,7 +72,7 @@ export const PlaceSearchBar: React.FC<PlaceSearchBarProps> = ({
           <select
             value={filterState.sort}
             onChange={(e) => onFilterChange({ sort: e.target.value as PlacesFilterState['sort'] })}
-            className="px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs font-bold text-slate-700 focus:outline-none cursor-pointer"
+            className="px-3 py-2 rounded-xl bg-sand-50 border border-slate-200 text-xs font-bold text-slate-700 focus:outline-none cursor-pointer"
           >
             <option value="recent">Mới lưu gần đây</option>
             <option value="name_asc">Tên A–Z</option>
@@ -117,8 +117,8 @@ export const PlaceSearchBar: React.FC<PlaceSearchBarProps> = ({
           }
           className={`px-3 py-1.5 rounded-xl border cursor-pointer transition-all ${
             filterState.visited === true
-              ? 'bg-red-600 text-white border-red-600 shadow-xs'
-              : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50'
+              ? 'bg-bronze-600 text-white border-red-600 shadow-xs'
+              : 'bg-white border-slate-200 text-slate-700 hover:bg-sand-50'
           }`}
         >
           ✓ Đã ghé
@@ -133,8 +133,8 @@ export const PlaceSearchBar: React.FC<PlaceSearchBarProps> = ({
           }
           className={`px-3 py-1.5 rounded-xl border cursor-pointer transition-all ${
             filterState.visited === false
-              ? 'bg-amber-600 text-white border-amber-600 shadow-xs'
-              : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50'
+              ? 'bg-bronze-600 text-white border-bronze-600 shadow-xs'
+              : 'bg-white border-slate-200 text-slate-700 hover:bg-sand-50'
           }`}
         >
           ⏱️ Muốn ghé
@@ -150,7 +150,7 @@ export const PlaceSearchBar: React.FC<PlaceSearchBarProps> = ({
           className={`px-3 py-1.5 rounded-xl border cursor-pointer transition-all ${
             filterState.favorite
               ? 'bg-rose-500 text-white border-rose-500 shadow-xs'
-              : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50'
+              : 'bg-white border-slate-200 text-slate-700 hover:bg-sand-50'
           }`}
         >
           ❤️ Yêu thích

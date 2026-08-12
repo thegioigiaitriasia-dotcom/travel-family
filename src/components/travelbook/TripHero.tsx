@@ -64,28 +64,28 @@ export const TripHero: React.FC<TripHeroProps> = ({
     switch (trip.status) {
       case 'ongoing':
         return (
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black bg-[#183B35] text-white shadow-md animate-pulse">
-            <span className="w-2 h-2 rounded-full bg-[#E9F0ED]"></span>
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black bg-forest-900 text-white shadow-md animate-pulse">
+            <span className="w-2 h-2 rounded-full bg-forest-100"></span>
             Đang diễn ra
           </span>
         );
       case 'upcoming':
         return (
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#E9F0ED] text-[#183B35] shadow-md border border-[#183B35]/20">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-forest-100 text-forest-900 shadow-md border border-forest-900/20">
             <Clock className="w-3.5 h-3.5" />
             Sắp khởi hành {trip.countdownDays !== undefined ? `· Còn ${trip.countdownDays} ngày` : ''}
           </span>
         );
       case 'completed':
         return (
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#F7F6F0] text-[#5D6B63] border border-[#E2E3DE]">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-sand-50 text-ink-600 border border-line">
             <Check className="w-3.5 h-3.5" />
             Đã hoàn thành
           </span>
         );
       default:
         return (
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#DC2626] text-white">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-bronze-600 text-white">
             Đang lên kế hoạch
           </span>
         );
@@ -119,7 +119,7 @@ export const TripHero: React.FC<TripHeroProps> = ({
       {/* Toast Notification */}
       {toastMsg && (
         <div className="absolute top-4 left-1/2 -translate-x-1/2 z-50 bg-slate-900 text-white text-xs font-extrabold px-4 py-2 rounded-xl shadow-2xl border border-slate-700 flex items-center gap-2 animate-fadeIn">
-          <Sparkles className="w-4 h-4 text-[#FFB545]" />
+          <Sparkles className="w-4 h-4 text-bronze-500" />
           <span>{toastMsg}</span>
         </div>
       )}
@@ -165,13 +165,13 @@ export const TripHero: React.FC<TripHeroProps> = ({
               <button
                 type="button"
                 onClick={onOpenBookingVault}
-                className="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs transition-all shadow-md flex items-center gap-1.5 cursor-pointer relative"
+                className="px-3.5 py-2 rounded-xl bg-forest-600 hover:bg-forest-700 text-white font-extrabold text-xs transition-all shadow-md flex items-center gap-1.5 cursor-pointer relative"
                 title="Kho vé máy bay & booking khách sạn xác nhận"
               >
                 <Check className="w-3.5 h-3.5" />
                 <span>Vé & Booking</span>
                 {trip.bookingDocuments && trip.bookingDocuments.length > 0 && (
-                  <span className="w-5 h-5 rounded-full bg-white text-emerald-800 text-[10px] font-black flex items-center justify-center -mr-1 shadow-xs">
+                  <span className="w-5 h-5 rounded-full bg-white text-forest-800 text-[10px] font-black flex items-center justify-center -mr-1 shadow-xs">
                     {trip.bookingDocuments.length}
                   </span>
                 )}
@@ -181,7 +181,7 @@ export const TripHero: React.FC<TripHeroProps> = ({
             <button
               type="button"
               onClick={onOpenPdf}
-              className="px-3.5 py-2 rounded-xl bg-[#DC2626] hover:bg-[#B91C1C] text-white font-bold text-xs transition-all shadow-md flex items-center gap-1.5 cursor-pointer"
+              className="px-3.5 py-2 rounded-xl bg-bronze-600 hover:bg-[#B91C1C] text-white font-bold text-xs transition-all shadow-md flex items-center gap-1.5 cursor-pointer"
             >
               <FileText className="w-3.5 h-3.5" />
               <span>Tải PDF</span>
@@ -205,7 +205,7 @@ export const TripHero: React.FC<TripHeroProps> = ({
                       setShowMoreMenu(false);
                       fileInputRef.current?.click();
                     }}
-                    className="w-full text-left px-4 py-2.5 hover:bg-red-50 text-[#DC2626] flex items-center gap-2 cursor-pointer"
+                    className="w-full text-left px-4 py-2.5 hover:bg-red-50 text-bronze-600 flex items-center gap-2 cursor-pointer"
                   >
                     <Upload className="w-3.5 h-3.5" />
                     <span>Tải ảnh bìa từ thiết bị</span>
@@ -214,16 +214,16 @@ export const TripHero: React.FC<TripHeroProps> = ({
                   <button
                     type="button"
                     onClick={handleChangeCover}
-                    className="w-full text-left px-4 py-2.5 hover:bg-slate-50 flex items-center gap-2 cursor-pointer"
+                    className="w-full text-left px-4 py-2.5 hover:bg-sand-50 flex items-center gap-2 cursor-pointer"
                   >
-                    <Image className="w-3.5 h-3.5 text-emerald-600" />
+                    <Image className="w-3.5 h-3.5 text-forest-600" />
                     <span>Đổi ảnh bìa ngẫu nhiên</span>
                   </button>
 
                   <button
                     type="button"
                     onClick={handleDuplicate}
-                    className="w-full text-left px-4 py-2.5 hover:bg-slate-50 flex items-center gap-2 cursor-pointer"
+                    className="w-full text-left px-4 py-2.5 hover:bg-sand-50 flex items-center gap-2 cursor-pointer"
                   >
                     <Copy className="w-3.5 h-3.5 text-blue-600" />
                     <span>Nhân bản chuyến đi</span>
@@ -232,9 +232,9 @@ export const TripHero: React.FC<TripHeroProps> = ({
                   <button
                     type="button"
                     onClick={handleArchive}
-                    className="w-full text-left px-4 py-2.5 hover:bg-slate-50 flex items-center gap-2 cursor-pointer"
+                    className="w-full text-left px-4 py-2.5 hover:bg-sand-50 flex items-center gap-2 cursor-pointer"
                   >
-                    <Archive className="w-3.5 h-3.5 text-amber-600" />
+                    <Archive className="w-3.5 h-3.5 text-bronze-600" />
                     <span>Lưu trữ</span>
                   </button>
 
@@ -246,7 +246,7 @@ export const TripHero: React.FC<TripHeroProps> = ({
                       setShowMoreMenu(false);
                       triggerToast('Đã chọn xóa chuyến đi.');
                     }}
-                    className="w-full text-left px-4 py-2.5 hover:bg-red-50 text-red-600 flex items-center gap-2 cursor-pointer"
+                    className="w-full text-left px-4 py-2.5 hover:bg-red-50 text-bronze-600 flex items-center gap-2 cursor-pointer"
                   >
                     <Trash2 className="w-3.5 h-3.5" />
                     <span>Xóa chuyến đi</span>
@@ -278,7 +278,7 @@ export const TripHero: React.FC<TripHeroProps> = ({
                 {trip.startDate} – {trip.endDate}
               </span>
               <span className="flex items-center gap-1.5 bg-white/10 backdrop-blur-md px-3 py-1 rounded-xl">
-                <MapPin className="w-3.5 h-3.5 text-[#DC2626]" />
+                <MapPin className="w-3.5 h-3.5 text-bronze-600" />
                 {trip.durationDays} ngày {trip.durationNights} đêm · {trip.memberCount} thành viên
               </span>
             </div>

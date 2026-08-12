@@ -99,7 +99,7 @@ export const JourneyLegEditor: React.FC<JourneyLegEditorProps> = ({
       case 'flight':
         return <Plane className="w-4 h-4 text-sky-600" />;
       case 'train':
-        return <Train className="w-4 h-4 text-amber-600" />;
+        return <Train className="w-4 h-4 text-bronze-600" />;
       case 'coach':
       case 'limousine':
         return <Bus className="w-4 h-4 text-[#2E8B57]" />;
@@ -169,7 +169,7 @@ export const JourneyLegEditor: React.FC<JourneyLegEditorProps> = ({
           return (
             <div
               key={leg.id}
-              className="bg-slate-50 border border-slate-200 rounded-2xl p-4 sm:p-5 space-y-4 shadow-sm"
+              className="bg-sand-50 border border-slate-200 rounded-2xl p-4 sm:p-5 space-y-4 shadow-sm"
             >
               {/* Leg Header */}
               <div className="flex items-center justify-between flex-wrap gap-2 pb-3 border-b border-slate-200">
@@ -359,7 +359,7 @@ export const JourneyLegEditor: React.FC<JourneyLegEditorProps> = ({
                       <Sparkles className="w-4 h-4 text-[#2E8B57]" />
                       <span>
                         AI tự tính giờ nên rời KS:{' '}
-                        <strong className="text-red-600 font-extrabold text-sm">
+                        <strong className="text-bronze-600 font-extrabold text-sm">
                           ~{suggestedLeaveTime}
                         </strong>
                       </span>
@@ -377,7 +377,7 @@ export const JourneyLegEditor: React.FC<JourneyLegEditorProps> = ({
         <button
           type="button"
           onClick={onBack}
-          className="px-5 py-2.5 rounded-xl border border-slate-300 text-slate-700 font-bold text-sm hover:bg-slate-50 transition-all"
+          className="px-5 py-2.5 rounded-xl border border-slate-300 text-slate-700 font-bold text-sm hover:bg-sand-50 transition-all"
         >
           Quay lại
         </button>

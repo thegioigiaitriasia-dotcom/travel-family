@@ -38,9 +38,9 @@ const CATEGORY_MAP: Record<
   },
   trang_phuc: {
     label: 'Trang phục & Phụ kiện',
-    icon: <Shirt className="w-4 h-4 text-red-600" />,
-    color: 'text-emerald-700',
-    bg: 'bg-emerald-50 border-emerald-200',
+    icon: <Shirt className="w-4 h-4 text-bronze-600" />,
+    color: 'text-forest-700',
+    bg: 'bg-forest-50 border-forest-200',
   },
   y_te: {
     label: 'Y tế & Tủ thuốc',
@@ -50,9 +50,9 @@ const CATEGORY_MAP: Record<
   },
   cong_nghe: {
     label: 'Công nghệ & Sạc',
-    icon: <Smartphone className="w-4 h-4 text-amber-600" />,
-    color: 'text-amber-700',
-    bg: 'bg-amber-50 border-amber-200',
+    icon: <Smartphone className="w-4 h-4 text-bronze-600" />,
+    color: 'text-bronze-700',
+    bg: 'bg-bronze-50 border-bronze-200',
   },
   do_be: {
     label: 'Đồ dùng Trẻ em / Người lớn',
@@ -64,7 +64,7 @@ const CATEGORY_MAP: Record<
     label: 'Vật dụng khác',
     icon: <CheckSquare className="w-4 h-4 text-slate-600" />,
     color: 'text-slate-700',
-    bg: 'bg-slate-50 border-slate-200',
+    bg: 'bg-sand-50 border-slate-200',
   },
 };
 
@@ -277,15 +277,15 @@ export const PreparationChecklistModal: React.FC<PreparationChecklistModalProps>
         {/* Modal Header */}
         <div className="px-6 py-4 border-b border-slate-200 flex items-center justify-between bg-white z-10 shrink-0">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-emerald-50 text-[#DC2626] flex items-center justify-center border border-emerald-200">
-              <CheckSquare className="w-5 h-5 text-[#DC2626]" />
+            <div className="w-10 h-10 rounded-2xl bg-forest-50 text-bronze-600 flex items-center justify-center border border-forest-200">
+              <CheckSquare className="w-5 h-5 text-bronze-600" />
             </div>
             <div>
               <div className="flex items-center gap-2">
                 <h3 className="text-base sm:text-lg font-bold text-slate-900 tracking-tight">
                   Danh sách chuẩn bị đồ dùng gia đình
                 </h3>
-                <span className="text-[10px] font-semibold bg-[#FEF2F2] text-[#DC2626] px-2 py-0.5 rounded-full border border-[#FECACA] hidden sm:inline-block">
+                <span className="text-[10px] font-semibold bg-[#FEF2F2] text-bronze-600 px-2 py-0.5 rounded-full border border-[#FECACA] hidden sm:inline-block">
                   {completedCount}/{totalCount} mục xong
                 </span>
               </div>
@@ -306,20 +306,20 @@ export const PreparationChecklistModal: React.FC<PreparationChecklistModalProps>
         </div>
 
         {/* Progress Overview Banner */}
-        <div className="bg-[#FEF2F2]/60 p-4 sm:px-6 border-b border-emerald-100 space-y-2 shrink-0">
+        <div className="bg-[#FEF2F2]/60 p-4 sm:px-6 border-b border-forest-100 space-y-2 shrink-0">
           <div className="flex items-center justify-between text-xs font-bold">
             <div className="flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-[#C98745]" />
               <span className="text-slate-800">
                 Tiến độ xếp hành lý:{' '}
-                <span className="text-[#DC2626] font-extrabold">{completedCount} mục đã chuẩn bị</span>
+                <span className="text-bronze-600 font-extrabold">{completedCount} mục đã chuẩn bị</span>
               </span>
             </div>
-            <span className="text-[#DC2626] font-black text-sm">{progressPercent}%</span>
+            <span className="text-bronze-600 font-black text-sm">{progressPercent}%</span>
           </div>
 
           {/* Progress Bar */}
-          <div className="w-full h-3 bg-white rounded-full overflow-hidden border border-emerald-200/80 shadow-inner">
+          <div className="w-full h-3 bg-white rounded-full overflow-hidden border border-forest-200/80 shadow-inner">
             <div
               className="h-full bg-gradient-to-r from-emerald-600 to-teal-500 transition-all duration-500 rounded-full"
               style={{ width: `${progressPercent}%` }}
@@ -329,13 +329,13 @@ export const PreparationChecklistModal: React.FC<PreparationChecklistModalProps>
           <div className="flex items-center justify-between text-[11px] text-slate-600 pt-1">
             <span>
               {totalCount - completedCount > 0 ? (
-                <span className="text-amber-700 font-semibold flex items-center gap-1">
-                  <AlertCircle className="w-3.5 h-3.5 text-amber-600 inline" />
+                <span className="text-bronze-700 font-semibold flex items-center gap-1">
+                  <AlertCircle className="w-3.5 h-3.5 text-bronze-600 inline" />
                   Còn {totalCount - completedCount} mục chưa xếp vào vali
                 </span>
               ) : (
-                <span className="text-emerald-700 font-bold flex items-center gap-1">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-red-600 inline" />
+                <span className="text-forest-700 font-bold flex items-center gap-1">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-bronze-600 inline" />
                   Tuyệt vời! Đã chuẩn bị đầy đủ 100%
                 </span>
               )}
@@ -345,7 +345,7 @@ export const PreparationChecklistModal: React.FC<PreparationChecklistModalProps>
               <button
                 type="button"
                 onClick={() => handleSelectAll(true)}
-                className="text-[11px] text-[#DC2626] font-bold hover:underline cursor-pointer"
+                className="text-[11px] text-bronze-600 font-bold hover:underline cursor-pointer"
               >
                 Chọn tất cả
               </button>
@@ -370,7 +370,7 @@ export const PreparationChecklistModal: React.FC<PreparationChecklistModalProps>
               onClick={() => setActiveCategory('all')}
               className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
                 activeCategory === 'all'
-                  ? 'bg-[#DC2626] text-white shadow-xs'
+                  ? 'bg-bronze-600 text-white shadow-xs'
                   : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
               }`}
             >
@@ -386,7 +386,7 @@ export const PreparationChecklistModal: React.FC<PreparationChecklistModalProps>
                   onClick={() => setActiveCategory(catKey)}
                   className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer flex items-center gap-1.5 ${
                     activeCategory === catKey
-                      ? 'bg-[#DC2626] text-white shadow-xs'
+                      ? 'bg-bronze-600 text-white shadow-xs'
                       : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
                   }`}
                 >
@@ -405,7 +405,7 @@ export const PreparationChecklistModal: React.FC<PreparationChecklistModalProps>
                 type="checkbox"
                 checked={showOnlyPending}
                 onChange={(e) => setShowOnlyPending(e.target.checked)}
-                className="rounded text-[#DC2626] focus:ring-[#DC2626]"
+                className="rounded text-bronze-600 focus:ring-[#DC2626]"
               />
               <span>Chưa xong</span>
             </label>
@@ -413,7 +413,7 @@ export const PreparationChecklistModal: React.FC<PreparationChecklistModalProps>
             <button
               type="button"
               onClick={() => setIsAdding(!isAdding)}
-              className="px-3 py-1.5 rounded-xl bg-[#DC2626] hover:bg-[#B91C1C] text-white text-xs font-bold transition-all cursor-pointer flex items-center gap-1 shadow-xs"
+              className="px-3 py-1.5 rounded-xl bg-bronze-600 hover:bg-[#B91C1C] text-white text-xs font-bold transition-all cursor-pointer flex items-center gap-1 shadow-xs"
             >
               <Plus className="w-3.5 h-3.5" />
               <span>Thêm đồ</span>
@@ -425,10 +425,10 @@ export const PreparationChecklistModal: React.FC<PreparationChecklistModalProps>
         {isAdding && (
           <form
             onSubmit={handleAddItem}
-            className="p-4 bg-emerald-50/70 border-b border-emerald-200 space-y-3 animate-fadeIn shrink-0"
+            className="p-4 bg-forest-50/70 border-b border-forest-200 space-y-3 animate-fadeIn shrink-0"
           >
             <div className="flex items-center justify-between">
-              <h4 className="text-xs font-bold text-[#DC2626] uppercase tracking-wider">
+              <h4 className="text-xs font-bold text-bronze-600 uppercase tracking-wider">
                 Thêm món đồ cần chuẩn bị mới
               </h4>
               <button
@@ -474,7 +474,7 @@ export const PreparationChecklistModal: React.FC<PreparationChecklistModalProps>
               <button
                 type="submit"
                 disabled={!newItemTitle.trim()}
-                className="px-4 py-2 bg-[#DC2626] text-white rounded-xl font-bold text-xs hover:bg-[#B91C1C] disabled:opacity-50 cursor-pointer transition-colors"
+                className="px-4 py-2 bg-bronze-600 text-white rounded-xl font-bold text-xs hover:bg-[#B91C1C] disabled:opacity-50 cursor-pointer transition-colors"
               >
                 Lưu món đồ
               </button>
@@ -503,8 +503,8 @@ export const PreparationChecklistModal: React.FC<PreparationChecklistModalProps>
                   key={item.id}
                   className={`p-3.5 rounded-2xl border transition-all flex items-start justify-between gap-3 group ${
                     item.checked
-                      ? 'bg-slate-50 border-slate-200 text-slate-500'
-                      : 'bg-white border-slate-200/90 hover:border-emerald-300 text-slate-800 shadow-xs'
+                      ? 'bg-sand-50 border-slate-200 text-slate-500'
+                      : 'bg-white border-slate-200/90 hover:border-forest-300 text-slate-800 shadow-xs'
                   }`}
                 >
                   <button
@@ -514,9 +514,9 @@ export const PreparationChecklistModal: React.FC<PreparationChecklistModalProps>
                   >
                     <div className="mt-0.5 shrink-0">
                       {item.checked ? (
-                        <CheckSquare className="w-5 h-5 text-red-600 stroke-[2.5]" />
+                        <CheckSquare className="w-5 h-5 text-bronze-600 stroke-[2.5]" />
                       ) : (
-                        <Square className="w-5 h-5 text-slate-400 group-hover:text-red-600 transition-colors" />
+                        <Square className="w-5 h-5 text-slate-400 group-hover:text-bronze-600 transition-colors" />
                       )}
                     </div>
 
@@ -570,16 +570,16 @@ export const PreparationChecklistModal: React.FC<PreparationChecklistModalProps>
         </div>
 
         {/* Modal Footer */}
-        <div className="px-6 py-3.5 bg-slate-50 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3 shrink-0">
+        <div className="px-6 py-3.5 bg-sand-50 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3 shrink-0">
           <div className="flex items-center gap-2 text-xs text-slate-500">
-            <RefreshCw className="w-3.5 h-3.5 text-[#DC2626]" />
+            <RefreshCw className="w-3.5 h-3.5 text-bronze-600" />
             <span>Tự động đồng bộ offline & sẵn sàng tải về điện thoại</span>
           </div>
 
           <button
             type="button"
             onClick={onClose}
-            className="w-full sm:w-auto px-6 py-2 rounded-xl bg-[#DC2626] hover:bg-[#B91C1C] text-white font-bold text-xs transition-colors cursor-pointer"
+            className="w-full sm:w-auto px-6 py-2 rounded-xl bg-bronze-600 hover:bg-[#B91C1C] text-white font-bold text-xs transition-colors cursor-pointer"
           >
             Hoàn tất & Đóng
           </button>

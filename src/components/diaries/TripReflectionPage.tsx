@@ -87,12 +87,12 @@ export const TripReflectionPage: React.FC<TripReflectionPageProps> = ({
       {/* Hero Banner */}
       <div className="bg-[#183B35] rounded-3xl p-8 text-white relative overflow-hidden shadow-xl">
         <div className="relative z-10 max-w-xl space-y-3">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md text-emerald-100 text-xs font-semibold border border-white/10">
-            <Award className="w-4 h-4 text-amber-400" />
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md text-forest-100 text-xs font-semibold border border-white/10">
+            <Award className="w-4 h-4 text-bronze-400" />
             <span>Tổng kết chuyến đi gia đình</span>
           </span>
           <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">{diary.title}</h1>
-          <p className="text-xs sm:text-sm text-emerald-100/90 leading-relaxed">
+          <p className="text-xs sm:text-sm text-forest-100/90 leading-relaxed">
             Dành 5 phút nhìn lại những kỉ niệm đáng nhớ nhất, những điều trải nghiệm xuất sắc và những lưu ý rút kinh nghiệm cho chuyến đi sau.
           </p>
         </div>
@@ -115,7 +115,7 @@ export const TripReflectionPage: React.FC<TripReflectionPageProps> = ({
                 className={`h-11 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer ${
                   rating === val
                     ? 'bg-[#183B35] text-white shadow-md scale-105'
-                    : 'bg-slate-50 text-slate-700 hover:bg-slate-100 border border-slate-200/60'
+                    : 'bg-sand-50 text-slate-700 hover:bg-slate-100 border border-slate-200/60'
                 }`}
               >
                 {val}
@@ -135,7 +135,7 @@ export const TripReflectionPage: React.FC<TripReflectionPageProps> = ({
         <div className="space-y-2">
           <div className="flex items-center justify-between">
             <label className="font-bold text-slate-900 text-sm flex items-center gap-2">
-              <Heart className="w-4 h-4 text-emerald-600" />
+              <Heart className="w-4 h-4 text-forest-600" />
               <span>2. Điều cả gia đình thích nhất là gì?</span>
             </label>
             <VoiceInputButton
@@ -154,7 +154,7 @@ export const TripReflectionPage: React.FC<TripReflectionPageProps> = ({
             value={bestThings}
             onChange={(e) => setBestThings(e.target.value)}
             placeholder="Ví dụ: Hoàng hôn Bãi biển Mỹ Khê cực kì yên bình, không khí Bà Nà mát mẻ, món mì Quảng Bà Mua rất ngon..."
-            className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#183B35]/20 focus:border-[#183B35] leading-relaxed"
+            className="w-full bg-sand-50 border border-slate-200 rounded-xl p-3 text-xs text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#183B35]/20 focus:border-[#183B35] leading-relaxed"
           />
         </div>
 
@@ -162,7 +162,7 @@ export const TripReflectionPage: React.FC<TripReflectionPageProps> = ({
         <div className="space-y-2">
           <div className="flex items-center justify-between">
             <label className="font-bold text-slate-900 text-sm flex items-center gap-2">
-              <AlertCircle className="w-4 h-4 text-amber-500" />
+              <AlertCircle className="w-4 h-4 text-bronze-500" />
               <span>3. Điều gì khiến chuyến đi chưa thực sự thuận tiện?</span>
             </label>
             <VoiceInputButton
@@ -181,7 +181,7 @@ export const TripReflectionPage: React.FC<TripReflectionPageProps> = ({
             value={inconveniences}
             onChange={(e) => setInconveniences(e.target.value)}
             placeholder="Ví dụ: Chặng đường di chuyển xe ô tô hơi mệt với em bé nhỏ..."
-            className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#183B35]/20 focus:border-[#183B35] leading-relaxed"
+            className="w-full bg-sand-50 border border-slate-200 rounded-xl p-3 text-xs text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#183B35]/20 focus:border-[#183B35] leading-relaxed"
           />
         </div>
 
@@ -205,7 +205,7 @@ export const TripReflectionPage: React.FC<TripReflectionPageProps> = ({
                 className={`p-3 rounded-xl border text-xs font-medium text-center transition-all cursor-pointer ${
                   returnIntent === opt.id
                     ? 'border-[#183B35] bg-[#E9F0ED] text-[#183B35] font-bold shadow-sm'
-                    : 'border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100'
+                    : 'border-slate-200 bg-sand-50 text-slate-700 hover:bg-slate-100'
                 }`}
               >
                 {opt.label}
@@ -230,7 +230,7 @@ export const TripReflectionPage: React.FC<TripReflectionPageProps> = ({
                   className={`px-3 py-2 rounded-xl text-xs font-medium border transition-all flex items-center gap-1.5 cursor-pointer ${
                     isSelected
                       ? 'bg-[#183B35] text-white border-[#183B35] shadow-sm'
-                      : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
+                      : 'bg-sand-50 text-slate-700 border-slate-200 hover:bg-slate-100'
                   }`}
                 >
                   {isSelected && <CheckCircle2 className="w-3.5 h-3.5" />}
@@ -260,7 +260,7 @@ export const TripReflectionPage: React.FC<TripReflectionPageProps> = ({
                 className={`p-3 rounded-xl border text-xs font-medium text-center transition-all cursor-pointer ${
                   recommendToFamily === opt.id
                     ? 'border-[#183B35] bg-[#E9F0ED] text-[#183B35] font-bold shadow-sm'
-                    : 'border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100'
+                    : 'border-slate-200 bg-sand-50 text-slate-700 hover:bg-slate-100'
                 }`}
               >
                 {opt.label}

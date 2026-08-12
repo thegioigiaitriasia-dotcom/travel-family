@@ -586,7 +586,7 @@ export const MapModal: React.FC<MapModalProps> = ({
         {/* Top Header */}
         <div className="px-6 py-4 border-b border-slate-200 flex items-center justify-between bg-white z-10 shrink-0">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-[#FEF2F2] text-[#DC2626] flex items-center justify-center border border-[#FECACA] shrink-0">
+            <div className="w-10 h-10 rounded-2xl bg-[#FEF2F2] text-bronze-600 flex items-center justify-center border border-[#FECACA] shrink-0">
               <MapIcon className="w-5 h-5" />
             </div>
             <div>
@@ -594,8 +594,8 @@ export const MapModal: React.FC<MapModalProps> = ({
                 <h3 className="text-base sm:text-lg font-black text-slate-900 tracking-tight">
                   {displayTitle}
                 </h3>
-                <span className="text-[10px] font-extrabold bg-[#FEF2F2] text-[#DC2626] px-2.5 py-0.5 rounded-full border border-[#FECACA] hidden sm:inline-flex items-center gap-1">
-                  <Navigation className="w-3 h-3 text-[#DC2626]" />
+                <span className="text-[10px] font-extrabold bg-[#FEF2F2] text-bronze-600 px-2.5 py-0.5 rounded-full border border-[#FECACA] hidden sm:inline-flex items-center gap-1">
+                  <Navigation className="w-3 h-3 text-bronze-600" />
                   Leaflet.js & Lucide
                 </span>
               </div>
@@ -629,7 +629,7 @@ export const MapModal: React.FC<MapModalProps> = ({
                 onClick={() => setFilterType('all')}
                 className={`px-3 py-1.5 rounded-xl transition-all cursor-pointer ${
                   filterType === 'all'
-                    ? 'bg-[#DC2626] text-white shadow-xs'
+                    ? 'bg-bronze-600 text-white shadow-xs'
                     : 'text-slate-700 hover:bg-slate-100'
                 }`}
               >
@@ -641,7 +641,7 @@ export const MapModal: React.FC<MapModalProps> = ({
                 onClick={() => setFilterType('sightseeing')}
                 className={`px-3 py-1.5 rounded-xl transition-all cursor-pointer flex items-center gap-1 ${
                   filterType === 'sightseeing'
-                    ? 'bg-[#DC2626] text-white shadow-xs'
+                    ? 'bg-bronze-600 text-white shadow-xs'
                     : 'text-slate-700 hover:bg-slate-100'
                 }`}
               >
@@ -700,7 +700,7 @@ export const MapModal: React.FC<MapModalProps> = ({
           </div>
 
           {/* Right Sidebar - Points List */}
-          <div className="w-full md:w-80 bg-slate-50 border-t md:border-t-0 md:border-l border-slate-200 p-4 space-y-3 overflow-y-auto shrink-0 flex flex-col">
+          <div className="w-full md:w-80 bg-sand-50 border-t md:border-t-0 md:border-l border-slate-200 p-4 space-y-3 overflow-y-auto shrink-0 flex flex-col">
             {/* Search Input */}
             <div className="relative">
               <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
@@ -718,7 +718,7 @@ export const MapModal: React.FC<MapModalProps> = ({
               <h4 className="text-xs font-extrabold text-slate-900 uppercase tracking-wider">
                 Các điểm dừng ({filteredPoints.length})
               </h4>
-              <span className="text-[11px] font-bold text-[#DC2626]">
+              <span className="text-[11px] font-bold text-bronze-600">
                 Nối lộ trình
               </span>
             </div>
@@ -739,19 +739,19 @@ export const MapModal: React.FC<MapModalProps> = ({
                       onClick={() => handleSelectPoint(pt)}
                       className={`w-full p-3 rounded-2xl border text-left transition-all cursor-pointer space-y-1.5 ${
                         isSel
-                          ? 'bg-[#DC2626] text-white border-[#DC2626] shadow-md scale-[1.01]'
+                          ? 'bg-bronze-600 text-white border-[#DC2626] shadow-md scale-[1.01]'
                           : 'bg-white border-slate-200 text-slate-800 hover:bg-slate-100'
                       }`}
                     >
                       <div className="flex items-center justify-between gap-1">
                         <span
                           className={`text-[10px] font-extrabold px-2 py-0.5 rounded-md ${
-                            isSel ? 'bg-white/20 text-white' : 'bg-[#FEF2F2] text-[#DC2626]'
+                            isSel ? 'bg-white/20 text-white' : 'bg-[#FEF2F2] text-bronze-600'
                           }`}
                         >
                           #{idx + 1} · {pt.categoryLabel}
                         </span>
-                        {isSel && <Check className="w-4 h-4 text-emerald-300 shrink-0" />}
+                        {isSel && <Check className="w-4 h-4 text-forest-300 shrink-0" />}
                       </div>
 
                       <h5 className="font-extrabold text-xs leading-snug line-clamp-1">
@@ -776,7 +776,7 @@ export const MapModal: React.FC<MapModalProps> = ({
                           rel="noopener noreferrer"
                           onClick={(e) => e.stopPropagation()}
                           className={`font-bold hover:underline flex items-center gap-0.5 ${
-                            isSel ? 'text-white' : 'text-[#DC2626]'
+                            isSel ? 'text-white' : 'text-bronze-600'
                           }`}
                         >
                           Chỉ đường <ExternalLink className="w-3 h-3 inline" />
@@ -792,8 +792,8 @@ export const MapModal: React.FC<MapModalProps> = ({
 
         {/* Footer */}
         <div className="px-6 py-3 bg-white border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-500 font-medium">
-          <div className="flex items-center gap-2 text-[#DC2626] font-extrabold">
-            <Compass className="w-4 h-4 text-[#DC2626]" />
+          <div className="flex items-center gap-2 text-bronze-600 font-extrabold">
+            <Compass className="w-4 h-4 text-bronze-600" />
             <span>Leaflet.js + OpenStreetMap Vector Tiles & Icon Lucide</span>
           </div>
 

@@ -91,7 +91,7 @@ export const TravelerStep: React.FC<TravelerStepProps> = ({
   return (
     <div className="bg-white rounded-[24px] p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6 max-w-2xl mx-auto">
       <div>
-        <span className="text-xs font-bold uppercase tracking-wider text-[#DC2626]">Bước 2 / 5</span>
+        <span className="text-xs font-bold uppercase tracking-wider text-bronze-600">Bước 2 / 5</span>
         <h3 className="text-2xl font-extrabold text-slate-900 tracking-tight mt-1">
           Gia đình tham gia
         </h3>
@@ -108,7 +108,7 @@ export const TravelerStep: React.FC<TravelerStepProps> = ({
       )}
 
       {/* Steppers for Adults, Children, Seniors */}
-      <div className="space-y-3 bg-slate-50 p-5 rounded-[20px] border border-slate-200">
+      <div className="space-y-3 bg-sand-50 p-5 rounded-[20px] border border-slate-200">
         {/* Người lớn */}
         <div className="flex items-center justify-between">
           <div>
@@ -130,7 +130,7 @@ export const TravelerStep: React.FC<TravelerStepProps> = ({
             <button
               type="button"
               onClick={() => handleUpdateCount('adults', 1)}
-              className="w-8 h-8 rounded-xl bg-[#DC2626] text-white font-bold flex items-center justify-center hover:bg-[#B91C1C] cursor-pointer"
+              className="w-8 h-8 rounded-xl bg-bronze-600 text-white font-bold flex items-center justify-center hover:bg-[#B91C1C] cursor-pointer"
             >
               <Plus className="w-4 h-4" />
             </button>
@@ -158,7 +158,7 @@ export const TravelerStep: React.FC<TravelerStepProps> = ({
             <button
               type="button"
               onClick={() => handleUpdateCount('children', 1)}
-              className="w-8 h-8 rounded-xl bg-[#DC2626] text-white font-bold flex items-center justify-center hover:bg-[#B91C1C] cursor-pointer"
+              className="w-8 h-8 rounded-xl bg-bronze-600 text-white font-bold flex items-center justify-center hover:bg-[#B91C1C] cursor-pointer"
             >
               <Plus className="w-4 h-4" />
             </button>
@@ -186,7 +186,7 @@ export const TravelerStep: React.FC<TravelerStepProps> = ({
             <button
               type="button"
               onClick={() => handleUpdateCount('seniors', 1)}
-              className="w-8 h-8 rounded-xl bg-[#DC2626] text-white font-bold flex items-center justify-center hover:bg-[#B91C1C] cursor-pointer"
+              className="w-8 h-8 rounded-xl bg-bronze-600 text-white font-bold flex items-center justify-center hover:bg-[#B91C1C] cursor-pointer"
             >
               <Plus className="w-4 h-4" />
             </button>
@@ -198,14 +198,14 @@ export const TravelerStep: React.FC<TravelerStepProps> = ({
       {children.length > 0 && (
         <div className="space-y-2 pt-2 border-t border-slate-100">
           <label className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
-            <Baby className="w-4 h-4 text-[#DC2626]" />
+            <Baby className="w-4 h-4 text-bronze-600" />
             Độ tuổi trẻ em
           </label>
           <div className="flex flex-wrap gap-2">
             {children.map((child, idx) => (
               <div
                 key={idx}
-                className="flex items-center gap-2 bg-[#DC2626]/10 text-[#DC2626] px-3.5 py-2 rounded-xl border border-[#DC2626]/30 font-extrabold text-xs"
+                className="flex items-center gap-2 bg-bronze-600/10 text-bronze-600 px-3.5 py-2 rounded-xl border border-[#DC2626]/30 font-extrabold text-xs"
               >
                 <span>Trẻ {idx + 1}:</span>
                 <input
@@ -240,8 +240,8 @@ export const TravelerStep: React.FC<TravelerStepProps> = ({
                 onClick={() => selectNeedCard(opt)}
                 className={`p-4 rounded-[18px] border text-left text-xs font-bold transition-all cursor-pointer flex items-center justify-between ${
                   isSelected
-                    ? 'bg-[#DC2626] text-white border-[#DC2626] shadow-md shadow-[#DC2626]/20 scale-[1.02]'
-                    : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50'
+                    ? 'bg-bronze-600 text-white border-[#DC2626] shadow-md shadow-[#DC2626]/20 scale-[1.02]'
+                    : 'bg-white border-slate-200 text-slate-700 hover:bg-sand-50'
                 }`}
               >
                 <span>{opt}</span>
@@ -257,7 +257,7 @@ export const TravelerStep: React.FC<TravelerStepProps> = ({
         <button
           type="button"
           onClick={onBack}
-          className="px-5 py-3 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600 font-bold text-xs transition-colors cursor-pointer"
+          className="px-5 py-3 rounded-xl border border-slate-200 hover:bg-sand-50 text-slate-600 font-bold text-xs transition-colors cursor-pointer"
         >
           Quay lại
         </button>
@@ -265,7 +265,7 @@ export const TravelerStep: React.FC<TravelerStepProps> = ({
         <button
           type="button"
           onClick={validateAndNext}
-          className="px-6 py-3 rounded-xl bg-[#DC2626] hover:bg-[#B91C1C] text-white font-bold text-xs transition-colors shadow-md shadow-[#DC2626]/20 flex items-center gap-1.5 cursor-pointer"
+          className="px-6 py-3 rounded-xl bg-bronze-600 hover:bg-[#B91C1C] text-white font-bold text-xs transition-colors shadow-md shadow-[#DC2626]/20 flex items-center gap-1.5 cursor-pointer"
         >
           <span>Tiếp tục</span>
           <ArrowRight className="w-4 h-4" />

@@ -130,13 +130,13 @@ export const BookingVaultModal: React.FC<BookingVaultModalProps> = ({
         return {
           label: 'Xác nhận khách sạn',
           icon: Hotel,
-          bg: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+          bg: 'bg-forest-50 text-forest-700 border-forest-200',
         };
       case 'ticket':
         return {
           label: 'Vé tham quan',
           icon: Ticket,
-          bg: 'bg-red-50 text-[#DC2626] border-red-200',
+          bg: 'bg-red-50 text-bronze-600 border-red-200',
         };
       case 'transport':
       default:
@@ -154,7 +154,7 @@ export const BookingVaultModal: React.FC<BookingVaultModalProps> = ({
         {/* Header */}
         <div className="px-6 py-4 border-b border-slate-200 flex items-center justify-between bg-white shrink-0">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-[#FEF2F2] text-[#DC2626] flex items-center justify-center border border-[#FECACA] shrink-0">
+            <div className="w-10 h-10 rounded-2xl bg-[#FEF2F2] text-bronze-600 flex items-center justify-center border border-[#FECACA] shrink-0">
               <Ticket className="w-5 h-5" />
             </div>
             <div>
@@ -162,8 +162,8 @@ export const BookingVaultModal: React.FC<BookingVaultModalProps> = ({
                 <h3 className="text-base sm:text-lg font-black text-slate-900 tracking-tight">
                   Kho Vé Máy Bay & Booking Xác Nhận
                 </h3>
-                <span className="text-[10px] font-extrabold bg-emerald-100 text-emerald-800 px-2.5 py-0.5 rounded-full border border-emerald-200 flex items-center gap-1">
-                  <CheckCircle2 className="w-3 h-3 text-emerald-600" />
+                <span className="text-[10px] font-extrabold bg-forest-100 text-forest-800 px-2.5 py-0.5 rounded-full border border-forest-200 flex items-center gap-1">
+                  <CheckCircle2 className="w-3 h-3 text-forest-600" />
                   Dùng chung gia đình
                 </span>
               </div>
@@ -183,7 +183,7 @@ export const BookingVaultModal: React.FC<BookingVaultModalProps> = ({
         </div>
 
         {/* Content Body */}
-        <div className="p-6 overflow-y-auto flex-1 space-y-5 bg-slate-50/60">
+        <div className="p-6 overflow-y-auto flex-1 space-y-5 bg-sand-50/60">
           {/* Action Row & Tabs */}
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
             {/* Filter Tabs */}
@@ -193,7 +193,7 @@ export const BookingVaultModal: React.FC<BookingVaultModalProps> = ({
                 onClick={() => setActiveTab('all')}
                 className={`px-3.5 py-2 rounded-xl text-xs font-extrabold transition-all cursor-pointer whitespace-nowrap ${
                   activeTab === 'all'
-                    ? 'bg-[#DC2626] text-white shadow-xs'
+                    ? 'bg-bronze-600 text-white shadow-xs'
                     : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-100'
                 }`}
               >
@@ -216,7 +216,7 @@ export const BookingVaultModal: React.FC<BookingVaultModalProps> = ({
                 onClick={() => setActiveTab('hotel')}
                 className={`px-3.5 py-2 rounded-xl text-xs font-extrabold transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5 ${
                   activeTab === 'hotel'
-                    ? 'bg-emerald-600 text-white shadow-xs'
+                    ? 'bg-forest-600 text-white shadow-xs'
                     : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-100'
                 }`}
               >
@@ -228,7 +228,7 @@ export const BookingVaultModal: React.FC<BookingVaultModalProps> = ({
                 onClick={() => setActiveTab('ticket')}
                 className={`px-3.5 py-2 rounded-xl text-xs font-extrabold transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5 ${
                   activeTab === 'ticket'
-                    ? 'bg-[#DC2626] text-white shadow-xs'
+                    ? 'bg-bronze-600 text-white shadow-xs'
                     : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-100'
                 }`}
               >
@@ -241,7 +241,7 @@ export const BookingVaultModal: React.FC<BookingVaultModalProps> = ({
             <button
               type="button"
               onClick={() => setShowUploadForm(!showUploadForm)}
-              className="px-4 py-2.5 rounded-xl bg-[#DC2626] hover:bg-[#B91C1C] text-white text-xs font-extrabold flex items-center justify-center gap-1.5 transition-all cursor-pointer shadow-md shadow-red-600/20 shrink-0"
+              className="px-4 py-2.5 rounded-xl bg-bronze-600 hover:bg-[#B91C1C] text-white text-xs font-extrabold flex items-center justify-center gap-1.5 transition-all cursor-pointer shadow-md shadow-red-600/20 shrink-0"
             >
               {showUploadForm ? (
                 <>
@@ -265,7 +265,7 @@ export const BookingVaultModal: React.FC<BookingVaultModalProps> = ({
             >
               <div className="flex items-center justify-between pb-2 border-b border-slate-100">
                 <h4 className="text-sm font-extrabold text-slate-900 flex items-center gap-2">
-                  <Upload className="w-4 h-4 text-[#DC2626]" />
+                  <Upload className="w-4 h-4 text-bronze-600" />
                   <span>Tải lên xác nhận booking hoặc vé từ thiết bị</span>
                 </h4>
                 <span className="text-[11px] font-bold text-slate-500">
@@ -284,7 +284,7 @@ export const BookingVaultModal: React.FC<BookingVaultModalProps> = ({
                     value={newTitle}
                     onChange={(e) => setNewTitle(e.target.value)}
                     placeholder="VD: Vé máy bay SGN ➔ BMV (Vietnam Airlines)"
-                    className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:outline-none focus:border-[#DC2626] font-medium"
+                    className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-sand-50 focus:bg-white focus:outline-none focus:border-[#DC2626] font-medium"
                   />
                 </div>
 
@@ -293,7 +293,7 @@ export const BookingVaultModal: React.FC<BookingVaultModalProps> = ({
                   <select
                     value={newType}
                     onChange={(e) => setNewType(e.target.value as BookingDocument['type'])}
-                    className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:outline-none focus:border-[#DC2626] font-bold"
+                    className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-sand-50 focus:bg-white focus:outline-none focus:border-[#DC2626] font-bold"
                   >
                     <option value="flight">✈️ Vé máy bay (Đi / Về)</option>
                     <option value="hotel">🏨 Booking Khách sạn / Resort</option>
@@ -311,7 +311,7 @@ export const BookingVaultModal: React.FC<BookingVaultModalProps> = ({
                     value={newBookingCode}
                     onChange={(e) => setNewBookingCode(e.target.value)}
                     placeholder="VD: VN-89231 / AGD-99812"
-                    className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:outline-none focus:border-[#DC2626] font-bold font-mono text-slate-900"
+                    className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-sand-50 focus:bg-white focus:outline-none focus:border-[#DC2626] font-bold font-mono text-slate-900"
                   />
                 </div>
 
@@ -322,7 +322,7 @@ export const BookingVaultModal: React.FC<BookingVaultModalProps> = ({
                     value={newProvider}
                     onChange={(e) => setNewProvider(e.target.value)}
                     placeholder="VD: Vietnam Airlines, Traveloka, Agoda..."
-                    className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:outline-none focus:border-[#DC2626] font-medium"
+                    className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-sand-50 focus:bg-white focus:outline-none focus:border-[#DC2626] font-medium"
                   />
                 </div>
 
@@ -333,7 +333,7 @@ export const BookingVaultModal: React.FC<BookingVaultModalProps> = ({
                     value={newUploadedBy}
                     onChange={(e) => setNewUploadedBy(e.target.value)}
                     placeholder="VD: Bố Minh, Mẹ Mai..."
-                    className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:outline-none focus:border-[#DC2626] font-medium"
+                    className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-sand-50 focus:bg-white focus:outline-none focus:border-[#DC2626] font-medium"
                   />
                 </div>
 
@@ -344,7 +344,7 @@ export const BookingVaultModal: React.FC<BookingVaultModalProps> = ({
                     value={newNotes}
                     onChange={(e) => setNewNotes(e.target.value)}
                     placeholder="VD: Đã bao gồm 20kg ký gửi, xuất trình mã QR tại quầy 4"
-                    className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:outline-none focus:border-[#DC2626] font-medium"
+                    className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-sand-50 focus:bg-white focus:outline-none focus:border-[#DC2626] font-medium"
                   />
                 </div>
               </div>
@@ -354,7 +354,7 @@ export const BookingVaultModal: React.FC<BookingVaultModalProps> = ({
                 <label className="block font-bold text-slate-700 text-xs">
                   Hình ảnh vé / Mã QR / Cuống vé xác nhận từ thiết bị
                 </label>
-                <div className="flex flex-col sm:flex-row items-center gap-3 p-3 bg-slate-50 border border-dashed border-slate-300 rounded-xl">
+                <div className="flex flex-col sm:flex-row items-center gap-3 p-3 bg-sand-50 border border-dashed border-slate-300 rounded-xl">
                   {newFileUrl ? (
                     <img
                       src={newFileUrl}
@@ -404,7 +404,7 @@ export const BookingVaultModal: React.FC<BookingVaultModalProps> = ({
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 rounded-xl bg-[#DC2626] hover:bg-[#B91C1C] text-white font-extrabold text-xs cursor-pointer shadow-sm"
+                  className="px-5 py-2 rounded-xl bg-bronze-600 hover:bg-[#B91C1C] text-white font-extrabold text-xs cursor-pointer shadow-sm"
                 >
                   Lưu vé vào kho gia đình
                 </button>
@@ -444,8 +444,8 @@ export const BookingVaultModal: React.FC<BookingVaultModalProps> = ({
                         <span>{badge.label}</span>
                       </span>
 
-                      <span className="text-[10px] font-extrabold bg-emerald-100 text-emerald-800 px-2.5 py-0.5 rounded-full border border-emerald-200 flex items-center gap-1">
-                        <CheckCircle2 className="w-3 h-3 text-emerald-600" />
+                      <span className="text-[10px] font-extrabold bg-forest-100 text-forest-800 px-2.5 py-0.5 rounded-full border border-forest-200 flex items-center gap-1">
+                        <CheckCircle2 className="w-3 h-3 text-forest-600" />
                         Đã có booking
                       </span>
                     </div>
@@ -485,11 +485,11 @@ export const BookingVaultModal: React.FC<BookingVaultModalProps> = ({
                             <button
                               type="button"
                               onClick={() => handleCopyCode(doc.bookingCode!, doc.id)}
-                              className="text-slate-500 hover:text-[#DC2626] ml-1 cursor-pointer"
+                              className="text-slate-500 hover:text-bronze-600 ml-1 cursor-pointer"
                               title="Sao chép mã booking"
                             >
                               {isCopied ? (
-                                <Check className="w-3 h-3 text-emerald-600" />
+                                <Check className="w-3 h-3 text-forest-600" />
                               ) : (
                                 <Copy className="w-3 h-3" />
                               )}
@@ -501,7 +501,7 @@ export const BookingVaultModal: React.FC<BookingVaultModalProps> = ({
 
                     {/* Notes & Footer */}
                     {doc.notes && (
-                      <p className="text-[11px] text-slate-600 bg-slate-50 p-2 rounded-xl border border-slate-100 line-clamp-2">
+                      <p className="text-[11px] text-slate-600 bg-sand-50 p-2 rounded-xl border border-slate-100 line-clamp-2">
                         💡 {doc.notes}
                       </p>
                     )}
@@ -516,7 +516,7 @@ export const BookingVaultModal: React.FC<BookingVaultModalProps> = ({
                         <button
                           type="button"
                           onClick={() => handleDeleteDocument(doc.id)}
-                          className="p-1 hover:bg-red-50 text-slate-400 hover:text-red-600 rounded-lg transition-colors cursor-pointer"
+                          className="p-1 hover:bg-red-50 text-slate-400 hover:text-bronze-600 rounded-lg transition-colors cursor-pointer"
                           title="Xóa vé này"
                         >
                           <Trash2 className="w-3.5 h-3.5" />
@@ -525,7 +525,7 @@ export const BookingVaultModal: React.FC<BookingVaultModalProps> = ({
                         <button
                           type="button"
                           onClick={() => setPreviewDoc(doc)}
-                          className="px-3 py-1.5 rounded-xl bg-[#DC2626] hover:bg-[#B91C1C] text-white font-extrabold text-[11px] flex items-center gap-1 transition-colors cursor-pointer shadow-xs"
+                          className="px-3 py-1.5 rounded-xl bg-bronze-600 hover:bg-[#B91C1C] text-white font-extrabold text-[11px] flex items-center gap-1 transition-colors cursor-pointer shadow-xs"
                         >
                           <Eye className="w-3.5 h-3.5" />
                           <span>Mở vé xuất trình</span>
@@ -562,7 +562,7 @@ export const BookingVaultModal: React.FC<BookingVaultModalProps> = ({
             {/* Modal Header */}
             <div className="p-4 bg-slate-900 text-white flex items-center justify-between border-b border-slate-800">
               <div className="flex items-center gap-2">
-                <span className="p-1.5 bg-[#DC2626] text-white rounded-lg">
+                <span className="p-1.5 bg-bronze-600 text-white rounded-lg">
                   <Ticket className="w-4 h-4" />
                 </span>
                 <span className="font-extrabold text-sm tracking-tight">
@@ -580,17 +580,17 @@ export const BookingVaultModal: React.FC<BookingVaultModalProps> = ({
             </div>
 
             {/* Document Details & Image */}
-            <div className="p-5 overflow-y-auto space-y-4 bg-slate-50">
+            <div className="p-5 overflow-y-auto space-y-4 bg-sand-50">
               <div className="p-4 bg-white rounded-2xl border border-slate-200 shadow-xs space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#DC2626] bg-red-50 px-2.5 py-0.5 rounded-full border border-red-200">
+                  <span className="text-[10px] font-extrabold uppercase tracking-wider text-bronze-600 bg-red-50 px-2.5 py-0.5 rounded-full border border-red-200">
                     {previewDoc.type === 'flight'
                       ? 'Vé máy bay'
                       : previewDoc.type === 'hotel'
                       ? 'Xác nhận khách sạn'
                       : 'Vé tham quan'}
                   </span>
-                  <span className="text-xs font-extrabold text-emerald-600 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200 flex items-center gap-1">
+                  <span className="text-xs font-extrabold text-forest-600 bg-forest-50 px-2.5 py-0.5 rounded-full border border-forest-200 flex items-center gap-1">
                     <CheckCircle2 className="w-3.5 h-3.5" />
                     ĐÃ XÁC NHẬN BOOKING
                   </span>
@@ -617,7 +617,7 @@ export const BookingVaultModal: React.FC<BookingVaultModalProps> = ({
                       className="px-3 py-1.5 rounded-lg bg-white/20 hover:bg-white/30 text-white font-bold text-xs flex items-center gap-1 cursor-pointer"
                     >
                       {copiedId === previewDoc.id ? (
-                        <Check className="w-3.5 h-3.5 text-emerald-400" />
+                        <Check className="w-3.5 h-3.5 text-forest-400" />
                       ) : (
                         <Copy className="w-3.5 h-3.5" />
                       )}
@@ -627,7 +627,7 @@ export const BookingVaultModal: React.FC<BookingVaultModalProps> = ({
                 )}
 
                 {previewDoc.notes && (
-                  <p className="text-xs text-slate-700 bg-amber-50 p-2.5 rounded-xl border border-amber-200 font-medium">
+                  <p className="text-xs text-slate-700 bg-bronze-50 p-2.5 rounded-xl border border-bronze-200 font-medium">
                     📌 <strong>Ghi chú xuất trình:</strong> {previewDoc.notes}
                   </p>
                 )}
@@ -664,7 +664,7 @@ export const BookingVaultModal: React.FC<BookingVaultModalProps> = ({
               <button
                 type="button"
                 onClick={() => setPreviewDoc(null)}
-                className="px-6 py-2 rounded-xl bg-[#DC2626] hover:bg-[#B91C1C] text-white font-extrabold text-xs cursor-pointer shadow-sm"
+                className="px-6 py-2 rounded-xl bg-bronze-600 hover:bg-[#B91C1C] text-white font-extrabold text-xs cursor-pointer shadow-sm"
               >
                 Đóng
               </button>

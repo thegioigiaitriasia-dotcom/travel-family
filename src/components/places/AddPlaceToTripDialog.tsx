@@ -66,7 +66,7 @@ export const AddPlaceToTripDialog: React.FC<AddPlaceToTripDialogProps> = ({
         {/* Header */}
         <div className="p-5 border-b border-slate-100 flex items-center justify-between bg-white">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-sky-100 text-[#DC2626] flex items-center justify-center shrink-0 border border-sky-200">
+            <div className="w-10 h-10 rounded-2xl bg-sky-100 text-bronze-600 flex items-center justify-center shrink-0 border border-sky-200">
               <Calendar className="w-5 h-5" />
             </div>
             <div>
@@ -89,7 +89,7 @@ export const AddPlaceToTripDialog: React.FC<AddPlaceToTripDialogProps> = ({
         {/* Success Banner */}
         {showSuccessToast ? (
           <div className="p-8 text-center space-y-3">
-            <div className="w-12 h-12 bg-emerald-100 text-red-600 rounded-full flex items-center justify-center mx-auto border border-emerald-200 animate-bounce">
+            <div className="w-12 h-12 bg-forest-100 text-bronze-600 rounded-full flex items-center justify-center mx-auto border border-forest-200 animate-bounce">
               <Check className="w-6 h-6" />
             </div>
             <h4 className="text-base font-black text-slate-900">
@@ -112,7 +112,7 @@ export const AddPlaceToTripDialog: React.FC<AddPlaceToTripDialogProps> = ({
                   setSelectedTripId(e.target.value);
                   setSelectedDayNumber(1);
                 }}
-                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-xs font-semibold text-slate-900 focus:outline-none focus:border-[#183B35] cursor-pointer"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-sand-50 border border-slate-300 text-xs font-semibold text-slate-900 focus:outline-none focus:border-[#183B35] cursor-pointer"
               >
                 {trips.map((trip) => (
                   <option key={trip.id} value={trip.id}>
@@ -139,7 +139,7 @@ export const AddPlaceToTripDialog: React.FC<AddPlaceToTripDialogProps> = ({
                         className={`p-2.5 rounded-xl border text-left cursor-pointer transition-all ${
                           isSelected
                             ? 'bg-[#183B35] text-white border-[#183B35] font-semibold shadow-xs'
-                            : 'bg-white border-slate-200 text-slate-800 hover:bg-slate-50'
+                            : 'bg-white border-slate-200 text-slate-800 hover:bg-sand-50'
                         }`}
                       >
                         <p className="text-xs font-semibold">NGÀY {day.dayNumber}</p>
@@ -167,7 +167,7 @@ export const AddPlaceToTripDialog: React.FC<AddPlaceToTripDialogProps> = ({
                     className={`px-3 py-1.5 rounded-xl border text-xs font-semibold cursor-pointer transition-all ${
                       activityType === act.id
                         ? 'bg-[#E9F0ED] text-[#183B35] border-[#183B35]'
-                        : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100'
+                        : 'bg-sand-50 border-slate-200 text-slate-700 hover:bg-slate-100'
                     }`}
                   >
                     {act.label}
@@ -187,7 +187,7 @@ export const AddPlaceToTripDialog: React.FC<AddPlaceToTripDialogProps> = ({
                   value={startTime}
                   onChange={(e) => setStartTime(e.target.value)}
                   placeholder="09:00"
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-xs font-bold text-slate-900 pl-9"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-sand-50 border border-slate-300 text-xs font-bold text-slate-900 pl-9"
                 />
                 <Clock className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
               </div>
@@ -195,8 +195,8 @@ export const AddPlaceToTripDialog: React.FC<AddPlaceToTripDialogProps> = ({
 
             {/* Duplicate Notice */}
             {isDuplicateOnDay && (
-              <div className="p-3 bg-amber-50 border border-amber-200 rounded-xl text-amber-900 text-xs flex items-center gap-2">
-                <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0" />
+              <div className="p-3 bg-bronze-50 border border-bronze-200 rounded-xl text-bronze-900 text-xs flex items-center gap-2">
+                <AlertTriangle className="w-4 h-4 text-bronze-600 shrink-0" />
                 <span>Cảnh báo: Địa điểm này đã xuất hiện trong Ngày {selectedDayNumber}.</span>
               </div>
             )}

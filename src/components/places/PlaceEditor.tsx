@@ -155,8 +155,8 @@ export const PlaceEditor: React.FC<PlaceEditorProps> = ({
 
         {/* Duplicate Warning Notification */}
         {duplicateMatch && (
-          <div className="bg-amber-50 border-b border-amber-200 px-6 py-3 flex items-start gap-2 text-xs font-bold text-amber-900">
-            <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+          <div className="bg-bronze-50 border-b border-bronze-200 px-6 py-3 flex items-start gap-2 text-xs font-bold text-bronze-900">
+            <AlertTriangle className="w-4 h-4 text-bronze-600 shrink-0 mt-0.5" />
             <div>
               <p>Có thể bạn đã lưu địa điểm này: <span className="underline">{duplicateMatch.name}</span> ({duplicateMatch.city})</p>
             </div>
@@ -180,7 +180,7 @@ export const PlaceEditor: React.FC<PlaceEditorProps> = ({
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="VD: Bún chìa Cô Cúc, Làng Cà phê Trung Nguyên..."
-              className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-xs font-bold text-slate-900 focus:outline-none focus:border-[#DC2626]"
+              className="w-full px-3.5 py-2.5 rounded-xl bg-sand-50 border border-slate-300 text-xs font-bold text-slate-900 focus:outline-none focus:border-[#DC2626]"
             />
           </div>
 
@@ -201,7 +201,7 @@ export const PlaceEditor: React.FC<PlaceEditorProps> = ({
                     className={`p-2.5 rounded-xl border text-left transition-all flex items-center gap-2 cursor-pointer ${
                       isSelected
                         ? `${meta.badgeBg} ${meta.textColor} font-black ring-2 ring-[#DC2626]/20`
-                        : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50'
+                        : 'bg-white border-slate-200 text-slate-700 hover:bg-sand-50'
                     }`}
                   >
                     {meta.icon}
@@ -224,7 +224,7 @@ export const PlaceEditor: React.FC<PlaceEditorProps> = ({
                 value={city}
                 onChange={(e) => setCity(e.target.value)}
                 placeholder="Đà Nẵng, Hội An, Phú Quốc..."
-                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-xs font-bold text-slate-900 focus:outline-none focus:border-[#DC2626]"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-sand-50 border border-slate-300 text-xs font-bold text-slate-900 focus:outline-none focus:border-[#DC2626]"
               />
             </div>
 
@@ -237,7 +237,7 @@ export const PlaceEditor: React.FC<PlaceEditorProps> = ({
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
                 placeholder="VD: 222 Điện Biên Phủ..."
-                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-xs font-bold text-slate-900 focus:outline-none focus:border-[#DC2626]"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-sand-50 border border-slate-300 text-xs font-bold text-slate-900 focus:outline-none focus:border-[#DC2626]"
               />
             </div>
           </div>
@@ -249,7 +249,7 @@ export const PlaceEditor: React.FC<PlaceEditorProps> = ({
             </label>
 
             {/* Current Image Preview & Device Upload Trigger */}
-            <div className="flex flex-col sm:flex-row items-center gap-3 p-3 bg-slate-50 border border-slate-200 rounded-2xl">
+            <div className="flex flex-col sm:flex-row items-center gap-3 p-3 bg-sand-50 border border-slate-200 rounded-2xl">
               <div className="w-full sm:w-28 h-20 rounded-xl overflow-hidden border border-slate-300 relative bg-slate-100 shrink-0">
                 {coverImage ? (
                   <img src={coverImage} alt="Cover preview" className="w-full h-full object-cover" />
@@ -262,7 +262,7 @@ export const PlaceEditor: React.FC<PlaceEditorProps> = ({
 
               <div className="flex-1 w-full space-y-2">
                 <div className="flex flex-wrap items-center gap-2">
-                  <label className="px-3.5 py-2 rounded-xl bg-[#DC2626] hover:bg-[#B91C1C] text-white font-bold text-xs transition-all shadow-sm flex items-center gap-1.5 cursor-pointer">
+                  <label className="px-3.5 py-2 rounded-xl bg-bronze-600 hover:bg-[#B91C1C] text-white font-bold text-xs transition-all shadow-sm flex items-center gap-1.5 cursor-pointer">
                     <Upload className="w-3.5 h-3.5" />
                     <span>Tải ảnh từ thiết bị</span>
                     <input
@@ -299,7 +299,7 @@ export const PlaceEditor: React.FC<PlaceEditorProps> = ({
           </div>
 
           {/* Field 6: Status & Favorite */}
-          <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
+          <div className="p-3.5 rounded-2xl bg-sand-50 border border-slate-200 space-y-3">
             <label className="block text-slate-900 font-extrabold">
               6. Trạng thái & Yêu thích
             </label>
@@ -309,7 +309,7 @@ export const PlaceEditor: React.FC<PlaceEditorProps> = ({
                   type="checkbox"
                   checked={visited}
                   onChange={(e) => setVisited(e.target.checked)}
-                  className="rounded text-[#DC2626] w-4 h-4"
+                  className="rounded text-bronze-600 w-4 h-4"
                 />
                 <span className="text-xs font-bold text-slate-800">Đã từng ghé qua</span>
               </label>
@@ -331,8 +331,8 @@ export const PlaceEditor: React.FC<PlaceEditorProps> = ({
 
           {/* Personal Rating if Visited */}
           {visited && (
-            <div className="space-y-1 bg-amber-50/50 p-3.5 rounded-2xl border border-amber-200">
-              <label className="block text-amber-950 font-extrabold">
+            <div className="space-y-1 bg-bronze-50/50 p-3.5 rounded-2xl border border-bronze-200">
+              <label className="block text-bronze-950 font-extrabold">
                 Đánh giá cá nhân của bạn
               </label>
               <div className="flex items-center gap-2 pt-1">
@@ -346,13 +346,13 @@ export const PlaceEditor: React.FC<PlaceEditorProps> = ({
                     <Star
                       className={`w-6 h-6 ${
                         star <= personalRating
-                          ? 'fill-amber-400 text-amber-400'
+                          ? 'fill-amber-400 text-bronze-400'
                           : 'text-slate-300'
                       }`}
                     />
                   </button>
                 ))}
-                <span className="text-xs font-black text-amber-900 ml-2">
+                <span className="text-xs font-black text-bronze-900 ml-2">
                   {personalRating.toFixed(1)} / 5 sao
                 </span>
               </div>
@@ -373,7 +373,7 @@ export const PlaceEditor: React.FC<PlaceEditorProps> = ({
               value={personalNote}
               onChange={(e) => setPersonalNote(e.target.value)}
               placeholder="VD: Nên ghé buổi sáng, quán gần Chùa Khải Đoan, cả nhà muốn thử bún chìa..."
-              className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-xs font-bold text-slate-900 focus:outline-none focus:border-[#DC2626]"
+              className="w-full px-3.5 py-2.5 rounded-xl bg-sand-50 border border-slate-300 text-xs font-bold text-slate-900 focus:outline-none focus:border-[#DC2626]"
             />
           </div>
 
@@ -392,8 +392,8 @@ export const PlaceEditor: React.FC<PlaceEditorProps> = ({
                     onClick={() => toggleTag(tag)}
                     className={`px-3 py-1 rounded-full text-[11px] font-bold border transition-all cursor-pointer ${
                       isSelected
-                        ? 'bg-[#DC2626] text-white border-[#DC2626]'
-                        : 'bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100'
+                        ? 'bg-bronze-600 text-white border-[#DC2626]'
+                        : 'bg-sand-50 text-slate-600 border-slate-200 hover:bg-slate-100'
                     }`}
                   >
                     {tag}
@@ -422,7 +422,7 @@ export const PlaceEditor: React.FC<PlaceEditorProps> = ({
                   className={`py-2 px-3 rounded-xl border text-xs font-bold cursor-pointer transition-all ${
                     priceLevel === lvl.id
                       ? 'bg-slate-900 text-white border-slate-900 shadow-xs'
-                      : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50'
+                      : 'bg-white border-slate-200 text-slate-700 hover:bg-sand-50'
                   }`}
                 >
                   {lvl.label}
@@ -442,7 +442,7 @@ export const PlaceEditor: React.FC<PlaceEditorProps> = ({
                 <button
                   type="button"
                   onClick={onCreateNewCollection}
-                  className="text-xs text-[#DC2626] hover:underline flex items-center gap-1 font-bold cursor-pointer"
+                  className="text-xs text-bronze-600 hover:underline flex items-center gap-1 font-bold cursor-pointer"
                 >
                   <Plus className="w-3.5 h-3.5" />
                   <span>Tạo bộ sưu tập mới</span>
@@ -459,7 +459,7 @@ export const PlaceEditor: React.FC<PlaceEditorProps> = ({
                     className={`p-2.5 rounded-xl border flex items-center justify-between cursor-pointer transition-all ${
                       isSelected
                         ? 'bg-purple-50 border-purple-300 text-purple-950 font-black'
-                        : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50'
+                        : 'bg-white border-slate-200 text-slate-700 hover:bg-sand-50'
                     }`}
                   >
                     <div className="flex items-center gap-2">
@@ -507,7 +507,7 @@ export const PlaceEditor: React.FC<PlaceEditorProps> = ({
               type="submit"
               form="place-editor-form"
               disabled={!name.trim()}
-              className="px-5 py-3 rounded-xl bg-[#DC2626] hover:bg-[#B91C1C] text-white font-extrabold text-xs shadow-md shadow-[#DC2626]/20 flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+              className="px-5 py-3 rounded-xl bg-bronze-600 hover:bg-[#B91C1C] text-white font-extrabold text-xs shadow-md shadow-[#DC2626]/20 flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
             >
               <Check className="w-4 h-4" />
               <span>{isEdit ? 'Lưu địa điểm' : 'Tạo địa điểm'}</span>

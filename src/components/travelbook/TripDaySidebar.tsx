@@ -19,7 +19,7 @@ export const TripDaySidebar: React.FC<TripDaySidebarProps> = ({
         <h3 className="text-[11px] font-black uppercase tracking-wider text-slate-400">
           Danh sách ngày
         </h3>
-        <span className="text-[10px] font-extrabold text-[#DC2626] bg-red-50 px-2 py-0.5 rounded-full border border-red-100">
+        <span className="text-[10px] font-extrabold text-bronze-600 bg-red-50 px-2 py-0.5 rounded-full border border-red-100">
           {days.length} ngày
         </span>
       </div>
@@ -36,8 +36,8 @@ export const TripDaySidebar: React.FC<TripDaySidebarProps> = ({
               onClick={() => onSelectDay(day.dayNumber)}
               className={`w-full p-3 rounded-2xl border text-left transition-all cursor-pointer space-y-1 relative group ${
                 isSelected
-                  ? 'bg-[#DC2626] text-white border-[#DC2626] shadow-md shadow-[#DC2626]/20 scale-[1.02]'
-                  : 'bg-white border-slate-200 text-slate-800 hover:border-slate-300 hover:bg-slate-50'
+                  ? 'bg-bronze-600 text-white border-[#DC2626] shadow-md shadow-[#DC2626]/20 scale-[1.02]'
+                  : 'bg-white border-slate-200 text-slate-800 hover:border-slate-300 hover:bg-sand-50'
               }`}
             >
               <div className="flex items-center justify-between">
@@ -46,7 +46,7 @@ export const TripDaySidebar: React.FC<TripDaySidebarProps> = ({
                 </span>
 
                 {isPast ? (
-                  <CheckCircle2 className={`w-3.5 h-3.5 ${isSelected ? 'text-emerald-300' : 'text-red-600'}`} />
+                  <CheckCircle2 className={`w-3.5 h-3.5 ${isSelected ? 'text-forest-300' : 'text-bronze-600'}`} />
                 ) : isSelected ? (
                   <span className="text-[9px] font-black px-1.5 py-0.5 rounded bg-white/20 text-white uppercase">
                     Đang xem
@@ -66,7 +66,7 @@ export const TripDaySidebar: React.FC<TripDaySidebarProps> = ({
                 <span className={isSelected ? 'text-sky-100' : 'text-slate-400'}>
                   {day.dateStr}
                 </span>
-                <span className={`font-bold ${isSelected ? 'text-white' : 'text-[#DC2626]'}`}>
+                <span className={`font-bold ${isSelected ? 'text-white' : 'text-bronze-600'}`}>
                   {day.activities.length} HĐ
                 </span>
               </div>

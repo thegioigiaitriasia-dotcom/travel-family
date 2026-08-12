@@ -30,11 +30,11 @@ export const AlternativePlanPreviewDialog: React.FC<AlternativePlanPreviewDialog
 
         {/* Header */}
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center shrink-0 border border-amber-200">
+          <div className="w-10 h-10 rounded-2xl bg-bronze-100 text-bronze-700 flex items-center justify-center shrink-0 border border-bronze-200">
             <CloudRain className="w-5 h-5" />
           </div>
           <div>
-            <span className="text-[10px] font-black uppercase text-amber-800 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">
+            <span className="text-[10px] font-black uppercase text-bronze-800 bg-bronze-50 px-2 py-0.5 rounded border border-bronze-200">
               Phương án dự phòng
             </span>
             <h3 className="text-lg font-black text-slate-900 tracking-tight mt-0.5">
@@ -48,7 +48,7 @@ export const AlternativePlanPreviewDialog: React.FC<AlternativePlanPreviewDialog
         </p>
 
         {/* Preview of items */}
-        <div className="space-y-2 bg-slate-50 p-3.5 rounded-2xl border border-slate-200 text-xs font-bold text-slate-800">
+        <div className="space-y-2 bg-sand-50 p-3.5 rounded-2xl border border-slate-200 text-xs font-bold text-slate-800">
           <span className="text-slate-500 font-extrabold uppercase text-[10px] block">
             Hoạt động thay thế đề xuất:
           </span>
@@ -58,7 +58,7 @@ export const AlternativePlanPreviewDialog: React.FC<AlternativePlanPreviewDialog
                 key={idx}
                 className="flex items-center gap-2 p-2 rounded-xl bg-white border border-slate-200"
               >
-                <Sparkles className="w-3.5 h-3.5 text-amber-500 shrink-0" />
+                <Sparkles className="w-3.5 h-3.5 text-bronze-500 shrink-0" />
                 <span className="leading-snug">{item}</span>
               </div>
             ))}
@@ -66,7 +66,7 @@ export const AlternativePlanPreviewDialog: React.FC<AlternativePlanPreviewDialog
         </div>
 
         <div className="p-3 rounded-2xl bg-red-50 border border-red-100 flex items-start gap-2 text-xs text-sky-900 font-medium">
-          <AlertCircle className="w-4 h-4 text-[#DC2626] shrink-0 mt-0.5" />
+          <AlertCircle className="w-4 h-4 text-bronze-600 shrink-0 mt-0.5" />
           <span>Lịch trình cũ sẽ được lưu lại trong lịch sử để bạn có thể hoàn tác bất kỳ lúc nào.</span>
         </div>
 
@@ -86,7 +86,7 @@ export const AlternativePlanPreviewDialog: React.FC<AlternativePlanPreviewDialog
               onConfirmApply();
               onClose();
             }}
-            className="py-3 px-4 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-black text-xs shadow-md shadow-amber-600/20 transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+            className="py-3 px-4 rounded-xl bg-bronze-600 hover:bg-bronze-700 text-white font-black text-xs shadow-md shadow-amber-600/20 transition-all flex items-center justify-center gap-1.5 cursor-pointer"
           >
             <Check className="w-4 h-4" />
             <span>Áp dụng phương án này</span>

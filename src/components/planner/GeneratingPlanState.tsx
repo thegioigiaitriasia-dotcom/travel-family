@@ -101,15 +101,15 @@ export const GeneratingPlanState: React.FC<GeneratingPlanStateProps> = ({
     <div className="bg-white rounded-[24px] p-8 border border-slate-200 shadow-2xl max-w-md mx-auto my-8 text-center space-y-6">
       {/* Animated Icon */}
       <div className="relative w-20 h-20 mx-auto">
-        <div className="absolute inset-0 rounded-full bg-[#DC2626]/20 animate-ping opacity-60" />
-        <div className="relative w-20 h-20 rounded-full bg-[#DC2626] text-white flex items-center justify-center shadow-lg shadow-[#DC2626]/30">
+        <div className="absolute inset-0 rounded-full bg-bronze-600/20 animate-ping opacity-60" />
+        <div className="relative w-20 h-20 rounded-full bg-bronze-600 text-white flex items-center justify-center shadow-lg shadow-[#DC2626]/30">
           <Sparkles className="w-10 h-10 text-[#FFB545] animate-spin" />
         </div>
       </div>
 
       {errorMsg ? (
         <div className="space-y-1">
-          <h3 className="text-xl font-extrabold text-red-600 tracking-tight">
+          <h3 className="text-xl font-extrabold text-bronze-600 tracking-tight">
             Tạo lịch trình thất bại
           </h3>
           <p className="text-xs text-slate-500">{errorMsg}</p>
@@ -126,7 +126,7 @@ export const GeneratingPlanState: React.FC<GeneratingPlanStateProps> = ({
       )}
 
       {/* Progress Animated Steps */}
-      <div className="space-y-3 bg-slate-50 p-5 rounded-[20px] border border-slate-200 text-left">
+      <div className="space-y-3 bg-sand-50 p-5 rounded-[20px] border border-slate-200 text-left">
         {progressSteps.map((step, idx) => {
           const isDone = idx < currentStepIndex;
           const isCurrent = idx === currentStepIndex;
@@ -138,7 +138,7 @@ export const GeneratingPlanState: React.FC<GeneratingPlanStateProps> = ({
                   <Check className="w-3.5 h-3.5 stroke-[3]" />
                 </div>
               ) : isCurrent ? (
-                <div className="w-5 h-5 rounded-full bg-[#DC2626]/20 text-[#DC2626] flex items-center justify-center shrink-0">
+                <div className="w-5 h-5 rounded-full bg-bronze-600/20 text-bronze-600 flex items-center justify-center shrink-0">
                   <Loader2 className="w-3.5 h-3.5 animate-spin stroke-[2.5]" />
                 </div>
               ) : (
@@ -149,7 +149,7 @@ export const GeneratingPlanState: React.FC<GeneratingPlanStateProps> = ({
                   isDone
                     ? 'text-slate-900 font-bold'
                     : isCurrent
-                    ? 'text-[#DC2626] font-black text-sm animate-pulse'
+                    ? 'text-bronze-600 font-black text-sm animate-pulse'
                     : 'text-slate-400'
                 }`}
               >
@@ -163,12 +163,12 @@ export const GeneratingPlanState: React.FC<GeneratingPlanStateProps> = ({
       {errorMsg ? (
          <button 
            onClick={() => window.location.reload()}
-           className="mt-4 px-6 py-2 bg-red-600 text-white rounded-xl font-bold hover:bg-red-700 transition"
+           className="mt-4 px-6 py-2 bg-bronze-600 text-white rounded-xl font-bold hover:bg-red-700 transition"
          >
             Thử lại
          </button>
       ) : (
-        <div className="bg-[#DC2626]/10 text-[#DC2626] text-xs p-3.5 rounded-2xl border border-[#DC2626]/20 font-bold">
+        <div className="bg-bronze-600/10 text-bronze-600 text-xs p-3.5 rounded-2xl border border-[#DC2626]/20 font-bold">
           💡 Lịch trình cá nhân hóa đang được tính toán theo độ tuổi gia đình bạn.
         </div>
       )}

@@ -52,7 +52,7 @@ export const TripDayViewTab: React.FC<TripDayViewTabProps> = ({
       <div className="bg-white rounded-[24px] p-6 border border-slate-200 shadow-sm space-y-4">
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-4">
           <div>
-            <span className="text-xs font-black uppercase tracking-wider text-[#DC2626]">
+            <span className="text-xs font-black uppercase tracking-wider text-bronze-600">
               NGÀY {day.dayNumber} · {day.dateStr}
             </span>
             <h2 className="text-2xl font-black text-slate-900 tracking-tight mt-0.5">
@@ -66,7 +66,7 @@ export const TripDayViewTab: React.FC<TripDayViewTabProps> = ({
           <button
             type="button"
             onClick={onAddActivity}
-            className="px-4 py-2.5 rounded-xl bg-[#DC2626] hover:bg-[#B91C1C] text-white font-extrabold text-xs transition-all shadow-md shadow-[#DC2626]/20 flex items-center gap-1.5 cursor-pointer shrink-0"
+            className="px-4 py-2.5 rounded-xl bg-bronze-600 hover:bg-[#B91C1C] text-white font-extrabold text-xs transition-all shadow-md shadow-[#DC2626]/20 flex items-center gap-1.5 cursor-pointer shrink-0"
           >
             <Plus className="w-4 h-4" />
             <span>Thêm hoạt động</span>
@@ -75,7 +75,7 @@ export const TripDayViewTab: React.FC<TripDayViewTabProps> = ({
 
         {/* Metadata Chips: Nhịp độ, Thời tiết, Di chuyển, Chi phí */}
         <div className="flex flex-wrap items-center gap-2 text-xs font-bold text-slate-700">
-          <div className="flex items-center gap-1.5 bg-slate-50 px-3 py-1.5 rounded-xl border border-slate-200">
+          <div className="flex items-center gap-1.5 bg-sand-50 px-3 py-1.5 rounded-xl border border-slate-200">
             <Gauge className="w-3.5 h-3.5 text-[#2E8B57]" />
             <span>
               Nhịp độ:{' '}
@@ -88,21 +88,21 @@ export const TripDayViewTab: React.FC<TripDayViewTabProps> = ({
           </div>
 
           {day.weatherForecast && (
-            <div className="flex items-center gap-1.5 bg-slate-50 px-3 py-1.5 rounded-xl border border-slate-200">
-              <CloudSun className="w-3.5 h-3.5 text-amber-500" />
+            <div className="flex items-center gap-1.5 bg-sand-50 px-3 py-1.5 rounded-xl border border-slate-200">
+              <CloudSun className="w-3.5 h-3.5 text-bronze-500" />
               <span>{day.weatherForecast}</span>
             </div>
           )}
 
           {day.mainTransport && (
-            <div className="flex items-center gap-1.5 bg-slate-50 px-3 py-1.5 rounded-xl border border-slate-200">
-              <Plane className="w-3.5 h-3.5 text-[#DC2626]" />
+            <div className="flex items-center gap-1.5 bg-sand-50 px-3 py-1.5 rounded-xl border border-slate-200">
+              <Plane className="w-3.5 h-3.5 text-bronze-600" />
               <span>Di chuyển: {day.mainTransport}</span>
             </div>
           )}
 
-          <div className="flex items-center gap-1.5 bg-amber-50 px-3 py-1.5 rounded-xl border border-amber-200 text-amber-900">
-            <DollarSign className="w-3.5 h-3.5 text-amber-600" />
+          <div className="flex items-center gap-1.5 bg-bronze-50 px-3 py-1.5 rounded-xl border border-bronze-200 text-bronze-900">
+            <DollarSign className="w-3.5 h-3.5 text-bronze-600" />
             <span>
               Dự kiến: {(day.estimatedCostMin / 1000000).toFixed(1)}–
               {(day.estimatedCostMax / 1000000).toFixed(1)} tr VNĐ
@@ -124,7 +124,7 @@ export const TripDayViewTab: React.FC<TripDayViewTabProps> = ({
               <button
                 type="button"
                 onClick={onAddActivity}
-                className="px-4 py-2 bg-[#DC2626] text-white rounded-xl text-xs font-bold"
+                className="px-4 py-2 bg-bronze-600 text-white rounded-xl text-xs font-bold"
               >
                 + Thêm hoạt động
               </button>
@@ -180,7 +180,7 @@ export const TripDayViewTab: React.FC<TripDayViewTabProps> = ({
         <button
           type="button"
           onClick={onAddActivity}
-          className="flex-1 py-2.5 px-3 rounded-xl bg-[#DC2626] text-white font-extrabold text-xs flex items-center justify-center gap-1 shadow-md"
+          className="flex-1 py-2.5 px-3 rounded-xl bg-bronze-600 text-white font-extrabold text-xs flex items-center justify-center gap-1 shadow-md"
         >
           <Plus className="w-4 h-4" />
           <span>Thêm hoạt động</span>
@@ -191,7 +191,7 @@ export const TripDayViewTab: React.FC<TripDayViewTabProps> = ({
           onClick={() => onOpenMap(day.destinationName)}
           className="py-2.5 px-3 rounded-xl bg-slate-100 text-slate-700 font-bold text-xs flex items-center gap-1 border border-slate-200"
         >
-          <MapPin className="w-3.5 h-3.5 text-[#DC2626]" />
+          <MapPin className="w-3.5 h-3.5 text-bronze-600" />
           <span>Bản đồ</span>
         </button>
 

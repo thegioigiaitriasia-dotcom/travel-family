@@ -92,7 +92,7 @@ export const AccommodationModal: React.FC<AccommodationModalProps> = ({
               placeholder="VD: Melia Vinpearl Danang Riverfront"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-xs font-bold text-slate-900 focus:outline-none focus:border-[#2E8B57]"
+              className="w-full px-3.5 py-2.5 rounded-xl bg-sand-50 border border-slate-300 text-xs font-bold text-slate-900 focus:outline-none focus:border-[#2E8B57]"
             />
           </div>
 
@@ -104,7 +104,7 @@ export const AccommodationModal: React.FC<AccommodationModalProps> = ({
                 placeholder="VD: Đêm 1 hoặc Đêm 2–3"
                 value={period}
                 onChange={(e) => setPeriod(e.target.value)}
-                className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-300 text-xs font-bold text-slate-900"
+                className="w-full px-3 py-2 rounded-xl bg-sand-50 border border-slate-300 text-xs font-bold text-slate-900"
               />
             </div>
 
@@ -115,7 +115,7 @@ export const AccommodationModal: React.FC<AccommodationModalProps> = ({
                 placeholder="VD: 08/08 – 09/08"
                 value={dates}
                 onChange={(e) => setDates(e.target.value)}
-                className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-300 text-xs font-bold text-slate-900"
+                className="w-full px-3 py-2 rounded-xl bg-sand-50 border border-slate-300 text-xs font-bold text-slate-900"
               />
             </div>
           </div>
@@ -127,7 +127,7 @@ export const AccommodationModal: React.FC<AccommodationModalProps> = ({
                 type="text"
                 value={checkInTime}
                 onChange={(e) => setCheckInTime(e.target.value)}
-                className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-300 text-xs font-bold text-slate-900"
+                className="w-full px-3 py-2 rounded-xl bg-sand-50 border border-slate-300 text-xs font-bold text-slate-900"
               />
             </div>
 
@@ -137,7 +137,7 @@ export const AccommodationModal: React.FC<AccommodationModalProps> = ({
                 type="text"
                 value={checkOutTime}
                 onChange={(e) => setCheckOutTime(e.target.value)}
-                className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-300 text-xs font-bold text-slate-900"
+                className="w-full px-3 py-2 rounded-xl bg-sand-50 border border-slate-300 text-xs font-bold text-slate-900"
               />
             </div>
           </div>
@@ -147,7 +147,7 @@ export const AccommodationModal: React.FC<AccommodationModalProps> = ({
             <select
               value={status}
               onChange={(e) => setStatus(e.target.value as BookingStatusType)}
-              className="w-full px-3 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-xs font-bold text-slate-900 focus:outline-none focus:border-[#2E8B57]"
+              className="w-full px-3 py-2.5 rounded-xl bg-sand-50 border border-slate-300 text-xs font-bold text-slate-900 focus:outline-none focus:border-[#2E8B57]"
             >
               <option value="confirmed">Đã đặt (Confirmed)</option>
               <option value="pending">Chờ xác nhận (Pending)</option>
@@ -162,7 +162,7 @@ export const AccommodationModal: React.FC<AccommodationModalProps> = ({
               placeholder="VD: 341 Trần Hưng Đạo, Sơn Trà, TP. Đà Nẵng"
               value={address}
               onChange={(e) => setAddress(e.target.value)}
-              className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-xs font-bold text-slate-900"
+              className="w-full px-3.5 py-2.5 rounded-xl bg-sand-50 border border-slate-300 text-xs font-bold text-slate-900"
             />
           </div>
 

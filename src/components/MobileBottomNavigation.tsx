@@ -21,7 +21,7 @@ export const MobileBottomNavigation: React.FC<MobileBottomNavigationProps> = Rea
           className={`flex items-center justify-center min-h-[44px] min-w-[44px] rounded-full transition-all duration-300 ${
             currentModule === 'my-trips'
               ? 'text-[#183B35] bg-[#E9F0ED]'
-              : 'text-[#8D9490] hover:text-[#1D211F] hover:bg-slate-50'
+              : 'text-[#8D9490] hover:text-[#1D211F] hover:bg-sand-50'
           }`}
           aria-label="Chuyến đi"
         >
@@ -35,7 +35,7 @@ export const MobileBottomNavigation: React.FC<MobileBottomNavigationProps> = Rea
           className={`flex items-center justify-center min-h-[44px] min-w-[44px] rounded-full transition-all duration-300 ${
             currentModule === 'ai-planner'
               ? 'text-[#183B35] bg-[#E9F0ED]'
-              : 'text-[#8D9490] hover:text-[#1D211F] hover:bg-slate-50'
+              : 'text-[#8D9490] hover:text-[#1D211F] hover:bg-sand-50'
           }`}
           aria-label="Tạo kế hoạch AI"
         >
@@ -64,7 +64,7 @@ export const MobileBottomNavigation: React.FC<MobileBottomNavigationProps> = Rea
           className={`flex items-center justify-center min-h-[44px] min-w-[44px] rounded-full transition-all duration-300 ${
             currentModule === 'my-places'
               ? 'text-[#183B35] bg-[#E9F0ED]'
-              : 'text-[#8D9490] hover:text-[#1D211F] hover:bg-slate-50'
+              : 'text-[#8D9490] hover:text-[#1D211F] hover:bg-sand-50'
           }`}
           aria-label="Địa điểm"
         >
@@ -78,7 +78,7 @@ export const MobileBottomNavigation: React.FC<MobileBottomNavigationProps> = Rea
           className={`flex items-center justify-center min-h-[44px] min-w-[44px] rounded-full transition-all duration-300 ${
             currentModule === 'travel-diary'
               ? 'text-[#183B35] bg-[#E9F0ED]'
-              : 'text-[#8D9490] hover:text-[#1D211F] hover:bg-slate-50'
+              : 'text-[#8D9490] hover:text-[#1D211F] hover:bg-sand-50'
           }`}
           aria-label="Nhật ký"
         >

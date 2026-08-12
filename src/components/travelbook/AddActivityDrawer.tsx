@@ -42,14 +42,14 @@ export const AddActivityDrawer: React.FC<AddActivityDrawerProps> = ({
     {
       id: 'sightseeing',
       label: 'Tham quan',
-      icon: <Compass className="w-4 h-4 text-red-600" />,
-      color: 'bg-emerald-50 border-emerald-200 text-emerald-900',
+      icon: <Compass className="w-4 h-4 text-bronze-600" />,
+      color: 'bg-forest-50 border-forest-200 text-forest-900',
     },
     {
       id: 'food',
       label: 'Ăn uống',
-      icon: <Utensils className="w-4 h-4 text-orange-600" />,
-      color: 'bg-orange-50 border-orange-200 text-orange-900',
+      icon: <Utensils className="w-4 h-4 text-bronze-600" />,
+      color: 'bg-bronze-50 border-bronze-200 text-bronze-900',
     },
     {
       id: 'transport',
@@ -72,8 +72,8 @@ export const AddActivityDrawer: React.FC<AddActivityDrawerProps> = ({
     {
       id: 'experience',
       label: 'Trải nghiệm',
-      icon: <Sparkles className="w-4 h-4 text-amber-600" />,
-      color: 'bg-amber-50 border-amber-200 text-amber-900',
+      icon: <Sparkles className="w-4 h-4 text-bronze-600" />,
+      color: 'bg-bronze-50 border-bronze-200 text-bronze-900',
     },
   ];
 
@@ -136,7 +136,7 @@ export const AddActivityDrawer: React.FC<AddActivityDrawerProps> = ({
 
           {/* Quick Suggestions Chips */}
           <div className="space-y-2 bg-[#FEF2F2] p-3 rounded-2xl border border-[#FECACA]">
-            <div className="flex items-center gap-1.5 text-xs font-semibold text-[#DC2626]">
+            <div className="flex items-center gap-1.5 text-xs font-semibold text-bronze-600">
               <Sparkles className="w-4 h-4 text-[#C98745]" />
               <span>Gợi ý nhanh điểm tham quan, Tour & Vui chơi:</span>
             </div>
@@ -199,7 +199,7 @@ export const AddActivityDrawer: React.FC<AddActivityDrawerProps> = ({
                     setDescription(sug.desc);
                     setNotes(sug.notes);
                   }}
-                  className="px-2.5 py-1 rounded-full bg-white hover:bg-[#DC2626] hover:text-white text-[#DC2626] text-[11px] font-semibold transition-all border border-[#FECACA] cursor-pointer shadow-2xs"
+                  className="px-2.5 py-1 rounded-full bg-white hover:bg-bronze-600 hover:text-white text-bronze-600 text-[11px] font-semibold transition-all border border-[#FECACA] cursor-pointer shadow-2xs"
                 >
                   + {sug.label}
                 </button>
@@ -223,7 +223,7 @@ export const AddActivityDrawer: React.FC<AddActivityDrawerProps> = ({
                     className={`p-2.5 rounded-xl border text-left transition-all flex items-center gap-2 cursor-pointer ${
                       isSelected
                         ? `${cat.color} font-black shadow-xs ring-2 ring-[#DC2626]/20`
-                        : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50 font-bold'
+                        : 'bg-white border-slate-200 text-slate-700 hover:bg-sand-50 font-bold'
                     }`}
                   >
                     {cat.icon}
@@ -244,7 +244,7 @@ export const AddActivityDrawer: React.FC<AddActivityDrawerProps> = ({
                 placeholder="VD: Tham quan Bảo tàng Thế giới Cà phê"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-xs font-bold text-slate-900 focus:outline-none focus:border-[#DC2626]"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-sand-50 border border-slate-300 text-xs font-bold text-slate-900 focus:outline-none focus:border-[#DC2626]"
               />
             </div>
 
@@ -256,7 +256,7 @@ export const AddActivityDrawer: React.FC<AddActivityDrawerProps> = ({
                     type="text"
                     value={startTime}
                     onChange={(e) => setStartTime(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-300 text-xs font-bold text-slate-900 pl-8"
+                    className="w-full px-3 py-2 rounded-xl bg-sand-50 border border-slate-300 text-xs font-bold text-slate-900 pl-8"
                   />
                   <Clock className="w-4 h-4 text-slate-400 absolute left-2.5 top-2.5" />
                 </div>
@@ -269,7 +269,7 @@ export const AddActivityDrawer: React.FC<AddActivityDrawerProps> = ({
                     type="text"
                     value={endTime}
                     onChange={(e) => setEndTime(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-300 text-xs font-bold text-slate-900 pl-8"
+                    className="w-full px-3 py-2 rounded-xl bg-sand-50 border border-slate-300 text-xs font-bold text-slate-900 pl-8"
                   />
                   <Clock className="w-4 h-4 text-slate-400 absolute left-2.5 top-2.5" />
                 </div>
@@ -284,7 +284,7 @@ export const AddActivityDrawer: React.FC<AddActivityDrawerProps> = ({
                   placeholder="VD: Bảo tàng Cà phê"
                   value={placeName}
                   onChange={(e) => setPlaceName(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-xs font-bold text-slate-900 pl-9"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-sand-50 border border-slate-300 text-xs font-bold text-slate-900 pl-9"
                 />
                 <MapPin className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
               </div>
@@ -297,7 +297,7 @@ export const AddActivityDrawer: React.FC<AddActivityDrawerProps> = ({
                 placeholder="VD: 341 Trần Hưng Đạo, Sơn Trà, TP. Đà Nẵng"
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-xs font-bold text-slate-900"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-sand-50 border border-slate-300 text-xs font-bold text-slate-900"
               />
             </div>
 
@@ -309,7 +309,7 @@ export const AddActivityDrawer: React.FC<AddActivityDrawerProps> = ({
                   placeholder="0"
                   value={cost || ''}
                   onChange={(e) => setCost(Number(e.target.value))}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-xs font-bold text-slate-900 pl-9"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-sand-50 border border-slate-300 text-xs font-bold text-slate-900 pl-9"
                 />
                 <DollarSign className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
               </div>
@@ -322,7 +322,7 @@ export const AddActivityDrawer: React.FC<AddActivityDrawerProps> = ({
                 placeholder="VD: Tìm hiểu quy trình sản xuất cà phê, chụp ảnh lưu niệm"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-xs font-bold text-slate-900 focus:outline-none focus:border-[#DC2626]"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-sand-50 border border-slate-300 text-xs font-bold text-slate-900 focus:outline-none focus:border-[#DC2626]"
               />
             </div>
 
@@ -333,7 +333,7 @@ export const AddActivityDrawer: React.FC<AddActivityDrawerProps> = ({
                 placeholder="VD: Nên đi buổi sáng không khí mát mẻ"
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-xs font-bold text-slate-900"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-sand-50 border border-slate-300 text-xs font-bold text-slate-900"
               />
             </div>
           </form>
@@ -352,7 +352,7 @@ export const AddActivityDrawer: React.FC<AddActivityDrawerProps> = ({
           <button
             type="submit"
             form="add-act-form"
-            className="flex-1 py-3 rounded-xl bg-[#DC2626] text-white font-extrabold text-xs hover:bg-[#B91C1C] shadow-md shadow-[#DC2626]/20 flex items-center justify-center gap-1.5 cursor-pointer"
+            className="flex-1 py-3 rounded-xl bg-bronze-600 text-white font-extrabold text-xs hover:bg-[#B91C1C] shadow-md shadow-[#DC2626]/20 flex items-center justify-center gap-1.5 cursor-pointer"
           >
             <Check className="w-4 h-4" />
             <span>Thêm hoạt động</span>

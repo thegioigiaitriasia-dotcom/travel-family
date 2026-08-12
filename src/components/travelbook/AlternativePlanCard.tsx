@@ -23,14 +23,14 @@ export const AlternativePlanCard: React.FC<AlternativePlanCardProps> = ({
   };
 
   return (
-    <div className="bg-gradient-to-br from-amber-50 to-orange-50/50 rounded-[22px] p-5 border border-amber-200/80 shadow-sm space-y-3">
+    <div className="bg-gradient-to-br from-amber-50 to-orange-50/50 rounded-[22px] p-5 border border-bronze-200/80 shadow-sm space-y-3">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-xl bg-amber-400/20 text-amber-700 flex items-center justify-center shrink-0">
+          <div className="w-8 h-8 rounded-xl bg-bronze-400/20 text-bronze-700 flex items-center justify-center shrink-0">
             <CloudRain className="w-4 h-4" />
           </div>
           <div>
-            <span className="text-[10px] font-black uppercase tracking-wider text-amber-700">
+            <span className="text-[10px] font-black uppercase tracking-wider text-bronze-700">
               PHƯƠNG ÁN DỰ PHÒNG
             </span>
             <h4 className="text-sm font-extrabold text-slate-900">{mainPlan.condition}</h4>
@@ -38,14 +38,14 @@ export const AlternativePlanCard: React.FC<AlternativePlanCardProps> = ({
         </div>
 
         {applied ? (
-          <span className="px-3 py-1 rounded-full bg-red-600 text-white font-extrabold text-xs flex items-center gap-1">
+          <span className="px-3 py-1 rounded-full bg-bronze-600 text-white font-extrabold text-xs flex items-center gap-1">
             <Check className="w-3.5 h-3.5 stroke-[3]" /> Đã áp dụng
           </span>
         ) : (
           <button
             type="button"
             onClick={handleApply}
-            className="px-3.5 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-extrabold text-xs transition-all shadow-sm flex items-center gap-1 cursor-pointer"
+            className="px-3.5 py-1.5 rounded-xl bg-bronze-500 hover:bg-bronze-600 text-slate-950 font-extrabold text-xs transition-all shadow-sm flex items-center gap-1 cursor-pointer"
           >
             <Sparkles className="w-3.5 h-3.5" />
             <span>Áp dụng phương án này</span>
@@ -53,7 +53,7 @@ export const AlternativePlanCard: React.FC<AlternativePlanCardProps> = ({
         )}
       </div>
 
-      <div className="text-xs text-slate-700 space-y-1 bg-white/70 p-3 rounded-xl border border-amber-200/50">
+      <div className="text-xs text-slate-700 space-y-1 bg-white/70 p-3 rounded-xl border border-bronze-200/50">
         <p className="font-bold text-slate-900">{mainPlan.title}</p>
         <p className="text-slate-600 font-medium">{mainPlan.description}</p>
         {mainPlan.replacementActivities && (
@@ -61,7 +61,7 @@ export const AlternativePlanCard: React.FC<AlternativePlanCardProps> = ({
             {mainPlan.replacementActivities.map((act, idx) => (
               <span
                 key={idx}
-                className="text-[10px] font-bold bg-amber-100 text-amber-900 px-2.5 py-1 rounded-lg"
+                className="text-[10px] font-bold bg-bronze-100 text-bronze-900 px-2.5 py-1 rounded-lg"
               >
                 + {act}
               </span>

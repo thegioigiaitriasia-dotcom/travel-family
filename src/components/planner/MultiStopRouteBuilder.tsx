@@ -146,7 +146,7 @@ export const MultiStopRouteBuilder: React.FC<MultiStopRouteBuilderProps> = ({
     switch (type) {
       case 'origin':
         return (
-          <span className="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold flex items-center gap-1">
+          <span className="px-2.5 py-1 rounded-full bg-forest-100 text-forest-800 text-xs font-bold flex items-center gap-1">
             <Home className="w-3 h-3" /> Điểm xuất phát
           </span>
         );
@@ -158,7 +158,7 @@ export const MultiStopRouteBuilder: React.FC<MultiStopRouteBuilderProps> = ({
         );
       case 'transit':
         return (
-          <span className="px-2.5 py-1 rounded-full bg-amber-100 text-amber-800 text-xs font-bold flex items-center gap-1">
+          <span className="px-2.5 py-1 rounded-full bg-bronze-100 text-bronze-800 text-xs font-bold flex items-center gap-1">
             <Navigation className="w-3 h-3" /> Quá cảnh / Transit
           </span>
         );
@@ -209,11 +209,11 @@ export const MultiStopRouteBuilder: React.FC<MultiStopRouteBuilderProps> = ({
               <div
                 className={`rounded-2xl border transition-all p-4 sm:p-5 ${
                   isOrigin
-                    ? 'border-emerald-300 bg-emerald-50/40'
+                    ? 'border-forest-300 bg-forest-50/40'
                     : isDestination
                     ? 'border-purple-300 bg-purple-50/40'
                     : stop.type === 'transit'
-                    ? 'border-amber-300 bg-amber-50/40'
+                    ? 'border-bronze-300 bg-bronze-50/40'
                     : 'border-slate-300 bg-white shadow-sm'
                 }`}
               >
@@ -263,7 +263,7 @@ export const MultiStopRouteBuilder: React.FC<MultiStopRouteBuilderProps> = ({
                         <button
                           type="button"
                           onClick={() => handleRemoveStop(stop.id)}
-                          className="p-1.5 rounded-lg border border-red-200 text-red-600 hover:bg-red-50"
+                          className="p-1.5 rounded-lg border border-red-200 text-bronze-600 hover:bg-red-50"
                           title="Xóa điểm này"
                         >
                           <Trash2 className="w-4 h-4" />
@@ -387,7 +387,7 @@ export const MultiStopRouteBuilder: React.FC<MultiStopRouteBuilderProps> = ({
         <button
           type="button"
           onClick={onBack}
-          className="px-5 py-2.5 rounded-xl border border-slate-300 text-slate-700 font-bold text-sm hover:bg-slate-50 transition-all"
+          className="px-5 py-2.5 rounded-xl border border-slate-300 text-slate-700 font-bold text-sm hover:bg-sand-50 transition-all"
         >
           Quay lại
         </button>

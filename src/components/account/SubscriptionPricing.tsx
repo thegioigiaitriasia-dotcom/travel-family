@@ -74,14 +74,14 @@ export const SubscriptionPricing: React.FC<SubscriptionPricingProps> = ({
           Vui lòng dùng ứng dụng ngân hàng quét mã QR bên dưới để thanh toán. Hệ thống sẽ tự động xác nhận trong 1-3 phút.
         </p>
         
-        <div className="bg-slate-50 p-4 rounded-2xl flex justify-center border border-slate-200">
+        <div className="bg-sand-50 p-4 rounded-2xl flex justify-center border border-slate-200">
           <img src={qrUrl} alt="VietQR" className="w-64 h-64 object-contain rounded-xl shadow-sm" />
         </div>
 
-        <div className="space-y-2 text-sm text-slate-600 bg-amber-50 text-amber-900 p-4 rounded-xl text-left border border-amber-200">
+        <div className="space-y-2 text-sm text-slate-600 bg-bronze-50 text-bronze-900 p-4 rounded-xl text-left border border-bronze-200">
           <p><strong>Số tiền:</strong> <span className="font-bold text-rose-600">{planDetail?.price}</span></p>
-          <p><strong>Nội dung:</strong> <span className="font-mono bg-white px-2 py-1 rounded border border-amber-300 font-bold">{orderCode}</span></p>
-          <p className="text-xs mt-2 italic text-amber-700">* Nội dung chuyển khoản phải ghi chính xác mã trên để tự động kích hoạt.</p>
+          <p><strong>Nội dung:</strong> <span className="font-mono bg-white px-2 py-1 rounded border border-bronze-300 font-bold">{orderCode}</span></p>
+          <p className="text-xs mt-2 italic text-bronze-700">* Nội dung chuyển khoản phải ghi chính xác mã trên để tự động kích hoạt.</p>
         </div>
 
         <button 
@@ -115,8 +115,8 @@ export const SubscriptionPricing: React.FC<SubscriptionPricingProps> = ({
             onClick={() => setSelectedPlan(plan.id as SubscriptionPlan)}
             className={`relative rounded-3xl p-6 border-2 transition-all cursor-pointer ${
               selectedPlan === plan.id 
-                ? 'border-[#2E8B57] bg-emerald-50/30 shadow-xl shadow-emerald-900/5' 
-                : 'border-slate-200 bg-white hover:border-emerald-200 hover:bg-slate-50'
+                ? 'border-[#2E8B57] bg-forest-50/30 shadow-xl shadow-emerald-900/5' 
+                : 'border-slate-200 bg-white hover:border-forest-200 hover:bg-sand-50'
             }`}
           >
             {plan.recommended && (
@@ -144,7 +144,7 @@ export const SubscriptionPricing: React.FC<SubscriptionPricingProps> = ({
                 }}
                 className={`w-full py-3 rounded-xl font-bold transition-all ${
                   selectedPlan === plan.id
-                    ? 'bg-[#2E8B57] text-white hover:bg-emerald-700 shadow-md shadow-emerald-900/10'
+                    ? 'bg-[#2E8B57] text-white hover:bg-forest-700 shadow-md shadow-emerald-900/10'
                     : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
                 }`}
               >

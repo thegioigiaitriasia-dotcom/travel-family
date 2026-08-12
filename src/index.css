@@ -1,45 +1,72 @@
 @import "tailwindcss";
 
 @theme {
-  --color-forest-900: #183B35;
-  --color-forest-700: #28584E;
+  --color-forest-50: #F3F7F6;
   --color-forest-100: #E9F0ED;
+  --color-forest-200: #C2D4CF;
+  --color-forest-300: #9AB8B1;
+  --color-forest-400: #739C93;
+  --color-forest-500: #5F7F75;
+  --color-forest-600: #4B6F64;
+  --color-forest-700: #28584E;
+  --color-forest-800: #1F453D;
+  --color-forest-900: #183B35;
+
+  --color-bronze-50: #FCF9F5;
+  --color-bronze-100: #F3E9DD;
+  --color-bronze-200: #EAD8C4;
+  --color-bronze-300: #DFC2A4;
+  --color-bronze-400: #D3AC84;
+  --color-bronze-500: #D9943D;
+  --color-bronze-600: #A46F3D;
+  --color-bronze-700: #86552B;
+  --color-bronze-800: #684121;
+  --color-bronze-900: #4B2E17;
 
   --color-sand-50: #F7F5F0;
   --color-sand-100: #EFEAE1;
+  --color-sand-200: #E7DFD2;
 
-  --color-bronze-600: #A46F3D;
-  --color-bronze-100: #F3E9DD;
-
-  --color-ink-900: #1D211F;
-  --color-ink-600: #606864;
+  --color-ink-50: #F3F4F4;
+  --color-ink-100: #E2E3DE;
+  --color-ink-200: #C7CAC8;
+  --color-ink-300: #AAB0AD;
   --color-ink-400: #8D9490;
+  --color-ink-500: #747C78;
+  --color-ink-600: #606864;
+  --color-ink-700: #464C49;
+  --color-ink-800: #2C302E;
+  --color-ink-900: #1D211F;
 
-  --color-line: #E2E3DE;
   --color-surface: #FFFFFF;
-
   --font-sans: 'Be Vietnam Pro', system-ui, -apple-system, sans-serif;
 }
 
 @layer base {
   :root {
-    --forest-900: #183B35;
-    --forest-700: #28584E;
+    --forest-50: #F3F7F6;
     --forest-100: #E9F0ED;
+    --forest-500: #5F7F75;
+    --forest-600: #4B6F64;
+    --forest-700: #28584E;
+    --forest-800: #1F453D;
+    --forest-900: #183B35;
+
+    --bronze-50: #FCF9F5;
+    --bronze-100: #F3E9DD;
+    --bronze-500: #D9943D;
+    --bronze-600: #A46F3D;
 
     --sand-50: #F7F5F0;
     --sand-100: #EFEAE1;
 
-    --bronze-600: #A46F3D;
-    --bronze-100: #F3E9DD;
-
-    --ink-900: #1D211F;
-    --ink-600: #606864;
+    --ink-100: #E2E3DE;
     --ink-400: #8D9490;
+    --ink-500: #747C78;
+    --ink-600: #606864;
+    --ink-900: #1D211F;
 
-    --line: #E2E3DE;
     --surface: #FFFFFF;
-
     --font-sans: 'Be Vietnam Pro', system-ui, -apple-system, sans-serif;
   }
 

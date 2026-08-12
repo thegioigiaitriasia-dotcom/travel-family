@@ -54,7 +54,7 @@ export const InviteMemberDialog: React.FC<InviteMemberDialogProps> = ({
         {/* Header */}
         <div className="space-y-1">
           <h3 className="text-xl font-black text-slate-900 tracking-tight flex items-center gap-2">
-            <UserPlus className="w-5 h-5 text-emerald-600" />
+            <UserPlus className="w-5 h-5 text-forest-600" />
             Mời người thân tham gia
           </h3>
           <p className="text-xs text-slate-500 font-medium">
@@ -64,12 +64,12 @@ export const InviteMemberDialog: React.FC<InviteMemberDialogProps> = ({
         </div>
 
         {/* Hướng dẫn sử dụng */}
-        <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-3.5 space-y-1.5">
-          <p className="text-xs font-bold text-emerald-800 flex items-center gap-1.5">
+        <div className="bg-forest-50 border border-forest-200 rounded-2xl p-3.5 space-y-1.5">
+          <p className="text-xs font-bold text-forest-800 flex items-center gap-1.5">
             <Info className="w-3.5 h-3.5" />
             Cách người thân tham gia:
           </p>
-          <ol className="text-[11px] text-emerald-900 space-y-1 pl-4 list-decimal">
+          <ol className="text-[11px] text-forest-900 space-y-1 pl-4 list-decimal">
             <li>Truy cập đường dẫn mời hoặc mở app</li>
             <li>Bấm tab <strong>Mã mời</strong> trong màn hình đăng nhập</li>
             <li>Nhập Mã mời + Tên của mình + Tạo mật khẩu</li>
@@ -80,11 +80,11 @@ export const InviteMemberDialog: React.FC<InviteMemberDialogProps> = ({
         {/* Mã mời nổi bật */}
         <div className="space-y-2">
           <label className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
-            <Key className="w-3.5 h-3.5 text-amber-500" />
+            <Key className="w-3.5 h-3.5 text-bronze-500" />
             Mã mời gia đình
           </label>
           <div className="flex gap-2 items-center">
-            <div className="flex-1 px-4 py-3 rounded-2xl bg-amber-50 border-2 border-amber-300 font-mono font-black text-lg text-amber-800 tracking-widest text-center">
+            <div className="flex-1 px-4 py-3 rounded-2xl bg-bronze-50 border-2 border-bronze-300 font-mono font-black text-lg text-bronze-800 tracking-widest text-center">
               {code}
             </div>
             <button
@@ -92,7 +92,7 @@ export const InviteMemberDialog: React.FC<InviteMemberDialogProps> = ({
               onClick={handleCopyCode}
               className={`px-4 py-3 rounded-2xl text-xs font-bold flex items-center gap-1.5 cursor-pointer transition-colors ${
                 copiedCode
-                  ? 'bg-emerald-100 text-emerald-700 border border-emerald-300'
+                  ? 'bg-forest-100 text-forest-700 border border-forest-300'
                   : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
               }`}
             >
@@ -116,14 +116,14 @@ export const InviteMemberDialog: React.FC<InviteMemberDialogProps> = ({
               type="text"
               readOnly
               value={inviteLink}
-              className="flex-1 px-3 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-[11px] font-mono text-slate-600 truncate"
+              className="flex-1 px-3 py-2.5 rounded-xl bg-sand-50 border border-slate-200 text-[11px] font-mono text-slate-600 truncate"
             />
             <button
               type="button"
               onClick={handleCopyLink}
               className={`px-3 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1 cursor-pointer transition-colors ${
                 copiedLink
-                  ? 'bg-emerald-100 text-emerald-700 border border-emerald-300'
+                  ? 'bg-forest-100 text-forest-700 border border-forest-300'
                   : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
               }`}
             >
@@ -134,7 +134,7 @@ export const InviteMemberDialog: React.FC<InviteMemberDialogProps> = ({
         </div>
 
         {/* Thông tin tổng kết */}
-        <div className="bg-slate-50 rounded-xl p-3 flex items-center gap-2.5 border border-slate-200">
+        <div className="bg-sand-50 rounded-xl p-3 flex items-center gap-2.5 border border-slate-200">
           <Users className="w-4 h-4 text-slate-400 flex-shrink-0" />
           <p className="text-[11px] text-slate-500">
             Mỗi thành viên tạo tài khoản riêng bằng mã mời và sẽ thấy toàn bộ lịch trình gia đình sau khi gia nhập.

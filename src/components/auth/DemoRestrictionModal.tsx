@@ -28,13 +28,13 @@ export const DemoRestrictionModal: React.FC<DemoRestrictionModalProps> = ({
         </button>
 
         <div className="p-6 text-center space-y-4">
-          <div className="w-16 h-16 rounded-2xl bg-amber-100 text-amber-600 border border-amber-200 flex items-center justify-center mx-auto shadow-sm">
+          <div className="w-16 h-16 rounded-2xl bg-bronze-100 text-bronze-600 border border-bronze-200 flex items-center justify-center mx-auto shadow-sm">
             <Lock className="w-8 h-8" />
           </div>
 
           <div className="space-y-1.5">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 text-amber-800 border border-amber-200 text-xs font-semibold">
-              <Sparkles className="w-3.5 h-3.5 text-amber-600" />
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-bronze-50 text-bronze-800 border border-bronze-200 text-xs font-semibold">
+              <Sparkles className="w-3.5 h-3.5 text-bronze-600" />
               <span>Chế độ Trải nghiệm Mẫu (Demo)</span>
             </div>
             <h3 className="text-xl font-bold text-slate-900 tracking-tight">
@@ -45,9 +45,9 @@ export const DemoRestrictionModal: React.FC<DemoRestrictionModalProps> = ({
             </p>
           </div>
 
-          <div className="bg-slate-50 border border-slate-200 rounded-2xl p-3.5 text-left text-xs space-y-2">
+          <div className="bg-sand-50 border border-slate-200 rounded-2xl p-3.5 text-left text-xs space-y-2">
             <p className="font-bold text-slate-800 flex items-center gap-2">
-              <ShieldAlert className="w-4 h-4 text-amber-600" />
+              <ShieldAlert className="w-4 h-4 text-bronze-600" />
               <span>Khi đăng nhập tài khoản gia đình:</span>
             </p>
             <ul className="space-y-1 text-slate-600 font-medium pl-6 list-disc">
@@ -64,7 +64,7 @@ export const DemoRestrictionModal: React.FC<DemoRestrictionModalProps> = ({
                 onClose();
                 onOpenAuth('login');
               }}
-              className="w-full bg-[#DC2626] hover:bg-red-700 text-white font-bold text-xs py-3 rounded-xl shadow-md transition-colors flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full bg-bronze-600 hover:bg-red-700 text-white font-bold text-xs py-3 rounded-xl shadow-md transition-colors flex items-center justify-center gap-2 cursor-pointer"
             >
               <LogIn className="w-4 h-4" />
               <span>Đăng nhập ngay</span>

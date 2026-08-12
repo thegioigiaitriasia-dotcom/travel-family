@@ -169,7 +169,7 @@ export const RecommendedAttractionsSection: React.FC<RecommendedAttractionsSecti
                     onClick={() => toggleFavorite(item.id)}
                     className={`w-8 h-8 rounded-full flex items-center justify-center transition-all cursor-pointer backdrop-blur-md ${
                       isFav
-                        ? 'bg-emerald-500 text-white'
+                        ? 'bg-forest-500 text-white'
                         : 'bg-black/30 hover:bg-black/50 text-white border border-white/20'
                     }`}
                     title={isFav ? 'Đã lưu yêu thích' : 'Lưu địa điểm'}
@@ -185,7 +185,7 @@ export const RecommendedAttractionsSection: React.FC<RecommendedAttractionsSecti
                     <span>{item.destination}</span>
                   </div>
                   <div className="flex items-center gap-1 bg-black/40 px-2 py-0.5 rounded-full text-[11px] backdrop-blur-xs">
-                    <Star className="w-3 h-3 text-amber-400 fill-amber-400" />
+                    <Star className="w-3 h-3 text-bronze-400 fill-amber-400" />
                     <span className="font-bold">{item.rating}</span>
                     <span className="text-slate-300">({item.reviewCount})</span>
                   </div>

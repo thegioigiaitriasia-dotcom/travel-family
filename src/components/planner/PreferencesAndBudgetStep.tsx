@@ -127,7 +127,7 @@ export const PreferencesAndBudgetStep: React.FC<PreferencesAndBudgetStepProps> =
       </div>
 
       {/* Part 1: Accommodations by Stop */}
-      <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 sm:p-5 space-y-4">
+      <div className="bg-sand-50 border border-slate-200 rounded-2xl p-4 sm:p-5 space-y-4">
         <h3 className="font-extrabold text-slate-900 text-sm sm:text-base flex items-center gap-2">
           <Building2 className="w-5 h-5 text-[#2E8B57]" />
           Lưu trú theo từng điểm dừng
@@ -253,7 +253,7 @@ export const PreferencesAndBudgetStep: React.FC<PreferencesAndBudgetStepProps> =
       </div>
 
       {/* Part 2: Styles, Pace & Avoid */}
-      <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 sm:p-5 space-y-4">
+      <div className="bg-sand-50 border border-slate-200 rounded-2xl p-4 sm:p-5 space-y-4">
         <h3 className="font-extrabold text-slate-900 text-sm sm:text-base flex items-center gap-2">
           <Compass className="w-5 h-5 text-[#2E8B57]" />
           Gu du lịch & Nhịp độ chuyến đi
@@ -342,7 +342,7 @@ export const PreferencesAndBudgetStep: React.FC<PreferencesAndBudgetStepProps> =
                   }
                   className={`px-3 py-1.5 rounded-full text-xs font-bold border transition-all ${
                     active
-                      ? 'bg-red-600 text-white border-red-600'
+                      ? 'bg-bronze-600 text-white border-red-600'
                       : 'bg-white text-slate-700 border-slate-200 hover:border-slate-300'
                   }`}
                 >
@@ -355,7 +355,7 @@ export const PreferencesAndBudgetStep: React.FC<PreferencesAndBudgetStepProps> =
       </div>
 
       {/* Part 3: Budget Separation */}
-      <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 sm:p-5 space-y-4">
+      <div className="bg-sand-50 border border-slate-200 rounded-2xl p-4 sm:p-5 space-y-4">
         <h3 className="font-extrabold text-slate-900 text-sm sm:text-base flex items-center gap-2">
           <Wallet className="w-5 h-5 text-[#2E8B57]" />
           Tách bạch Ngân sách toàn chuyến
@@ -436,7 +436,7 @@ export const PreferencesAndBudgetStep: React.FC<PreferencesAndBudgetStepProps> =
         <button
           type="button"
           onClick={onBack}
-          className="px-5 py-2.5 rounded-xl border border-slate-300 text-slate-700 font-bold text-sm hover:bg-slate-50 transition-all"
+          className="px-5 py-2.5 rounded-xl border border-slate-300 text-slate-700 font-bold text-sm hover:bg-sand-50 transition-all"
         >
           Quay lại
         </button>

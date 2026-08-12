@@ -23,7 +23,7 @@ export const PlannerIntro: React.FC<PlannerIntroProps> = ({ onStartAI }) => {
         {/* Content */}
         <div className="relative z-10 p-6 sm:p-10 space-y-8 text-center max-w-xl mx-auto">
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#DC2626]/30 backdrop-blur-md text-[#64B5F6] text-xs font-bold border border-[#DC2626]/50 shadow-sm">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-bronze-600/30 backdrop-blur-md text-[#64B5F6] text-xs font-bold border border-[#DC2626]/50 shadow-sm">
             <Sparkles className="w-4 h-4 text-[#FFB545]" />
             <span>AI Travel Planner 2.0</span>
           </div>
@@ -87,7 +87,7 @@ export const PlannerIntro: React.FC<PlannerIntroProps> = ({ onStartAI }) => {
           <button
             type="button"
             onClick={onStartAI}
-            className="w-full py-4 px-8 rounded-[20px] bg-[#DC2626] hover:bg-[#B91C1C] text-white font-extrabold text-base transition-all duration-200 shadow-xl shadow-[#DC2626]/30 flex items-center justify-center gap-2 cursor-pointer group hover:scale-[1.01]"
+            className="w-full py-4 px-8 rounded-[20px] bg-bronze-600 hover:bg-[#B91C1C] text-white font-extrabold text-base transition-all duration-200 shadow-xl shadow-[#DC2626]/30 flex items-center justify-center gap-2 cursor-pointer group hover:scale-[1.01]"
           >
             <span>Bắt đầu ngay</span>
             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />

@@ -195,7 +195,7 @@ export const AccountPage: React.FC<AccountPageProps> = ({
     <div className="space-y-8 pb-12 animate-fadeIn max-w-[1000px] mx-auto">
       {/* Top Banner Card */}
       <div className="bg-gradient-to-r from-slate-900 via-slate-800 to-red-950 rounded-3xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden border border-slate-800">
-        <div className="absolute right-0 top-0 translate-x-12 -translate-y-12 w-64 h-64 bg-red-600/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute right-0 top-0 translate-x-12 -translate-y-12 w-64 h-64 bg-bronze-600/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative z-10">
           <div className="flex items-center gap-5">
@@ -221,10 +221,10 @@ export const AccountPage: React.FC<AccountPageProps> = ({
             </div>
             <div className="space-y-1">
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="bg-red-600/90 text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full border border-red-500/30">
+                <span className="bg-bronze-600/90 text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full border border-red-500/30">
                   Tài khoản Gia đình
                 </span>
-                <span className="bg-emerald-500/20 text-emerald-300 text-[10px] font-semibold px-2.5 py-0.5 rounded-full border border-emerald-500/30 flex items-center gap-1">
+                <span className="bg-forest-500/20 text-forest-300 text-[10px] font-semibold px-2.5 py-0.5 rounded-full border border-forest-500/30 flex items-center gap-1">
                   <CheckCircle2 className="w-3 h-3" />
                   <span>Hoạt động chính thức</span>
                 </span>
@@ -235,7 +235,7 @@ export const AccountPage: React.FC<AccountPageProps> = ({
               <p className="text-slate-300 text-xs sm:text-sm flex items-center gap-2">
                 <span>Chủ tài khoản: <strong className="text-white font-semibold">{currentUser.name}</strong></span>
                 <span>&bull;</span>
-                <span>Username: <code className="bg-slate-800 text-amber-300 px-1.5 py-0.5 rounded text-xs">{currentUser.username}</code></span>
+                <span>Username: <code className="bg-slate-800 text-bronze-300 px-1.5 py-0.5 rounded text-xs">{currentUser.username}</code></span>
               </p>
             </div>
           </div>
@@ -252,7 +252,7 @@ export const AccountPage: React.FC<AccountPageProps> = ({
             <button
               type="button"
               onClick={onLogout}
-              className="flex-1 md:flex-none px-4 py-2.5 bg-red-600 hover:bg-red-700 text-white font-bold text-xs rounded-xl transition-colors flex items-center justify-center gap-2 cursor-pointer"
+              className="flex-1 md:flex-none px-4 py-2.5 bg-bronze-600 hover:bg-red-700 text-white font-bold text-xs rounded-xl transition-colors flex items-center justify-center gap-2 cursor-pointer"
             >
               <span>Đăng xuất</span>
             </button>
@@ -264,7 +264,7 @@ export const AccountPage: React.FC<AccountPageProps> = ({
       <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
           <div>
-            <div className="flex items-center gap-2 text-red-600 font-bold text-xs uppercase tracking-wider mb-1">
+            <div className="flex items-center gap-2 text-bronze-600 font-bold text-xs uppercase tracking-wider mb-1">
               <Users className="w-4 h-4" />
               <span>Thành viên gia đình</span>
             </div>
@@ -279,7 +279,7 @@ export const AccountPage: React.FC<AccountPageProps> = ({
           <button
             type="button"
             onClick={() => setShowAddMemberModal(true)}
-            className="bg-[#DC2626] hover:bg-red-700 text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow-xs transition-colors flex items-center gap-2 shrink-0 cursor-pointer"
+            className="bg-bronze-600 hover:bg-red-700 text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow-xs transition-colors flex items-center gap-2 shrink-0 cursor-pointer"
           >
             <UserPlus className="w-4 h-4" />
             <span>+ Thêm thành viên mới</span>
@@ -293,7 +293,7 @@ export const AccountPage: React.FC<AccountPageProps> = ({
             return (
               <div
                 key={member.id}
-                className="bg-slate-50 border border-slate-200 rounded-2xl p-4 flex items-center justify-between gap-3 hover:border-slate-300 transition-all"
+                className="bg-sand-50 border border-slate-200 rounded-2xl p-4 flex items-center justify-between gap-3 hover:border-slate-300 transition-all"
               >
                 <div className="flex items-center gap-3 min-w-0">
                   <div className="w-11 h-11 rounded-full overflow-hidden border-2 border-slate-300 shrink-0 bg-white">
@@ -318,7 +318,7 @@ export const AccountPage: React.FC<AccountPageProps> = ({
                   <button
                     type="button"
                     onClick={() => handleRemoveMember(member.id)}
-                    className="text-slate-400 hover:text-red-600 p-1.5 rounded-lg hover:bg-red-50 transition-colors cursor-pointer shrink-0"
+                    className="text-slate-400 hover:text-bronze-600 p-1.5 rounded-lg hover:bg-red-50 transition-colors cursor-pointer shrink-0"
                     title="Xóa thành viên"
                   >
                     <Trash2 className="w-4 h-4" />
@@ -330,11 +330,11 @@ export const AccountPage: React.FC<AccountPageProps> = ({
         </div>
 
         {/* Permissions note banner */}
-        <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-4 text-xs text-emerald-950 flex items-start gap-3">
-          <ShieldCheck className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
+        <div className="bg-forest-50 border border-forest-200 rounded-2xl p-4 text-xs text-forest-950 flex items-start gap-3">
+          <ShieldCheck className="w-5 h-5 text-forest-600 shrink-0 mt-0.5" />
           <div className="space-y-1">
             <p className="font-bold">Nguyên tắc phân quyền bình đẳng:</p>
-            <p className="text-emerald-800 leading-relaxed font-normal">
+            <p className="text-forest-800 leading-relaxed font-normal">
               Tất cả các thành viên trong gia đình (dù là Trưởng nhóm hay Thành viên) đều có <strong>quyền hạn như nhau</strong> để xem, thêm mới, cập nhật lịch trình, bổ sung địa điểm và viết nhật ký du lịch.
             </p>
           </div>
@@ -344,7 +344,7 @@ export const AccountPage: React.FC<AccountPageProps> = ({
       {/* Grid Section 2: Shareable Invite Link */}
       <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-5">
         <div>
-          <div className="flex items-center gap-2 text-amber-600 font-bold text-xs uppercase tracking-wider mb-1">
+          <div className="flex items-center gap-2 text-bronze-600 font-bold text-xs uppercase tracking-wider mb-1">
             <Link className="w-4 h-4" />
             <span>Link & Mã lời mời gia đình</span>
           </div>
@@ -358,22 +358,22 @@ export const AccountPage: React.FC<AccountPageProps> = ({
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {/* Invite Code card */}
-          <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4 space-y-2">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-amber-800">Mã gia đình (Invite Code)</span>
+          <div className="bg-bronze-50 border border-bronze-200 rounded-2xl p-4 space-y-2">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-bronze-800">Mã gia đình (Invite Code)</span>
             <div className="flex items-center justify-between gap-2">
-              <code className="text-base font-mono font-bold text-amber-950">{familyAccount.inviteCode}</code>
+              <code className="text-base font-mono font-bold text-bronze-950">{familyAccount.inviteCode}</code>
               <button
                 type="button"
                 onClick={handleCopyCode}
-                className="p-1.5 bg-amber-200 hover:bg-amber-300 text-amber-900 rounded-lg text-xs font-bold transition-colors cursor-pointer"
+                className="p-1.5 bg-bronze-200 hover:bg-bronze-300 text-bronze-900 rounded-lg text-xs font-bold transition-colors cursor-pointer"
               >
-                {copiedCode ? <Check className="w-4 h-4 text-emerald-700" /> : <Copy className="w-4 h-4" />}
+                {copiedCode ? <Check className="w-4 h-4 text-forest-700" /> : <Copy className="w-4 h-4" />}
               </button>
             </div>
           </div>
 
           {/* Direct Invite Link card */}
-          <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 md:col-span-2 space-y-2">
+          <div className="bg-sand-50 border border-slate-200 rounded-2xl p-4 md:col-span-2 space-y-2">
             <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Đường link mời trực tiếp</span>
             <div className="flex items-center gap-2">
               <input
@@ -385,7 +385,7 @@ export const AccountPage: React.FC<AccountPageProps> = ({
               <button
                 type="button"
                 onClick={handleCopyLink}
-                className="px-4 py-2 bg-[#DC2626] hover:bg-red-700 text-white text-xs font-bold rounded-xl transition-colors flex items-center gap-1.5 shrink-0 cursor-pointer"
+                className="px-4 py-2 bg-bronze-600 hover:bg-red-700 text-white text-xs font-bold rounded-xl transition-colors flex items-center gap-1.5 shrink-0 cursor-pointer"
               >
                 {copiedLink ? (
                   <>
@@ -407,7 +407,7 @@ export const AccountPage: React.FC<AccountPageProps> = ({
       {/* Grid Section 3: Subscription Membership */}
       <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-5">
         <div>
-          <div className="flex items-center gap-2 text-emerald-600 font-bold text-xs uppercase tracking-wider mb-1">
+          <div className="flex items-center gap-2 text-forest-600 font-bold text-xs uppercase tracking-wider mb-1">
             <Sparkles className="w-4 h-4" />
             <span>Gói Thành Viên Gia Đình</span>
           </div>
@@ -431,7 +431,7 @@ export const AccountPage: React.FC<AccountPageProps> = ({
         <div className="bg-slate-900 text-white rounded-3xl p-6 sm:p-8 shadow-md space-y-4 border border-slate-800">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 border-b border-slate-800">
             <div className="space-y-1">
-              <div className="flex items-center gap-2 text-emerald-400 font-bold text-xs uppercase tracking-wider">
+              <div className="flex items-center gap-2 text-forest-400 font-bold text-xs uppercase tracking-wider">
                 <Database className="w-4 h-4" />
                 <span>Cấu hình Hạ tầng Supabase Database (Admin Management)</span>
               </div>
@@ -446,7 +446,7 @@ export const AccountPage: React.FC<AccountPageProps> = ({
             <button
               type="button"
               onClick={() => setShowSupabaseModal(true)}
-              className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-4 py-2.5 rounded-xl transition-all shadow-xs flex items-center gap-2 shrink-0 cursor-pointer"
+              className="bg-forest-600 hover:bg-forest-500 text-white font-bold text-xs px-4 py-2.5 rounded-xl transition-all shadow-xs flex items-center gap-2 shrink-0 cursor-pointer"
             >
               <Code2 className="w-4 h-4" />
               <span>Xem & Sao chép SQL Schema</span>
@@ -456,15 +456,15 @@ export const AccountPage: React.FC<AccountPageProps> = ({
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
             <div className="bg-slate-800/80 p-3.5 rounded-2xl border border-slate-700/80 space-y-1">
               <span className="text-slate-400 font-bold">Supabase Project Endpoint:</span>
-              <code className="block text-emerald-400 font-mono text-[11px] truncate">
+              <code className="block text-forest-400 font-mono text-[11px] truncate">
                 {SUPABASE_URL}
               </code>
             </div>
 
             <div className="bg-slate-800/80 p-3.5 rounded-2xl border border-slate-700/80 space-y-1">
               <span className="text-slate-400 font-bold">Trạng thái hạ tầng:</span>
-              <div className="text-emerald-400 font-bold flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              <div className="text-forest-400 font-bold flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-forest-400 animate-pulse"></span>
                 <span>Đã sẵn sàng 100% (6 Bảng Dữ liệu & RLS Security)</span>
               </div>
             </div>
@@ -560,7 +560,7 @@ export const AccountPage: React.FC<AccountPageProps> = ({
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2.5 bg-[#DC2626] hover:bg-red-700 text-white font-bold text-xs rounded-xl shadow-xs cursor-pointer"
+                  className="px-5 py-2.5 bg-bronze-600 hover:bg-red-700 text-white font-bold text-xs rounded-xl shadow-xs cursor-pointer"
                 >
                   Xác nhận thêm
                 </button>
@@ -606,7 +606,7 @@ export const AccountPage: React.FC<AccountPageProps> = ({
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2.5 bg-[#DC2626] hover:bg-red-700 text-white font-bold text-xs rounded-xl shadow-xs cursor-pointer"
+                  className="px-5 py-2.5 bg-bronze-600 hover:bg-red-700 text-white font-bold text-xs rounded-xl shadow-xs cursor-pointer"
                 >
                   Lưu thay đổi
                 </button>

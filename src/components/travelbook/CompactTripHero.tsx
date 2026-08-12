@@ -106,7 +106,7 @@ export const CompactTripHero: React.FC<CompactTripHeroProps> = ({
       {/* Bottom Metadata Line */}
       <div className="relative z-10 flex items-center gap-3 text-xs font-extrabold text-slate-200">
         <div className="flex items-center gap-1.5 bg-black/40 px-3 py-1 rounded-xl backdrop-blur-xs border border-white/10">
-          <Calendar className="w-3.5 h-3.5 text-amber-400" />
+          <Calendar className="w-3.5 h-3.5 text-bronze-400" />
           <span>
             Ngày {currentDayNumber} / {trip.days.length}
           </span>

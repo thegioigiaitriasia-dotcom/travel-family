@@ -19,7 +19,7 @@ export const OfflineBanner: React.FC<OfflineBannerProps> = ({
       <div className="flex items-center gap-2">
         {isOffline ? (
           <>
-            <WifiOff className="w-4 h-4 text-amber-400" />
+            <WifiOff className="w-4 h-4 text-bronze-400" />
             <span>Chế độ ngoại tuyến: Dữ liệu đang được lưu tạm trên thiết bị.</span>
           </>
         ) : (
@@ -33,7 +33,7 @@ export const OfflineBanner: React.FC<OfflineBannerProps> = ({
       <button
         type="button"
         onClick={onSaveNow}
-        className="px-3 py-1 bg-[#DC2626] hover:bg-[#B91C1C] text-white rounded-xl text-[11px] font-extrabold flex items-center gap-1 cursor-pointer"
+        className="px-3 py-1 bg-bronze-600 hover:bg-[#B91C1C] text-white rounded-xl text-[11px] font-extrabold flex items-center gap-1 cursor-pointer"
       >
         <Check className="w-3.5 h-3.5 stroke-[3]" />
         <span>Lưu ngay</span>

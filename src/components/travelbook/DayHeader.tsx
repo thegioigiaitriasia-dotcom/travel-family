@@ -69,7 +69,7 @@ export const DayHeader: React.FC<DayHeaderProps> = ({
       <div className="flex flex-wrap items-start justify-between gap-4 border-b border-slate-100 pb-4">
         <div className="space-y-1 max-w-2xl">
           <div className="flex items-center gap-2">
-            <span className="text-xs font-black uppercase tracking-wider text-[#DC2626] bg-red-50 px-2.5 py-1 rounded-lg border border-red-100">
+            <span className="text-xs font-black uppercase tracking-wider text-bronze-600 bg-red-50 px-2.5 py-1 rounded-lg border border-red-100">
               NGÀY {dayNumber} · {dateStr}
             </span>
           </div>
@@ -90,7 +90,7 @@ export const DayHeader: React.FC<DayHeaderProps> = ({
           <button
             type="button"
             onClick={onAddActivity}
-            className="px-4 py-2.5 rounded-xl bg-[#DC2626] hover:bg-[#B91C1C] text-white font-extrabold text-xs transition-all shadow-md shadow-[#DC2626]/20 flex items-center gap-1.5 cursor-pointer"
+            className="px-4 py-2.5 rounded-xl bg-bronze-600 hover:bg-[#B91C1C] text-white font-extrabold text-xs transition-all shadow-md shadow-[#DC2626]/20 flex items-center gap-1.5 cursor-pointer"
           >
             <Plus className="w-4 h-4" />
             <span>Thêm hoạt động</span>
@@ -115,7 +115,7 @@ export const DayHeader: React.FC<DayHeaderProps> = ({
                     setShowMenu(false);
                     onRenameDay?.();
                   }}
-                  className="w-full text-left px-3 py-2 rounded-xl hover:bg-slate-50 flex items-center gap-2 text-slate-800 cursor-pointer"
+                  className="w-full text-left px-3 py-2 rounded-xl hover:bg-sand-50 flex items-center gap-2 text-slate-800 cursor-pointer"
                 >
                   <Edit2 className="w-3.5 h-3.5 text-slate-500" />
                   <span>Đổi tên ngày</span>
@@ -127,7 +127,7 @@ export const DayHeader: React.FC<DayHeaderProps> = ({
                     setShowMenu(false);
                     onSortActivities?.();
                   }}
-                  className="w-full text-left px-3 py-2 rounded-xl hover:bg-slate-50 flex items-center gap-2 text-slate-800 cursor-pointer"
+                  className="w-full text-left px-3 py-2 rounded-xl hover:bg-sand-50 flex items-center gap-2 text-slate-800 cursor-pointer"
                 >
                   <ArrowUpDown className="w-3.5 h-3.5 text-slate-500" />
                   <span>Sắp xếp hoạt động</span>
@@ -139,7 +139,7 @@ export const DayHeader: React.FC<DayHeaderProps> = ({
                     setShowMenu(false);
                     onCopyDay?.();
                   }}
-                  className="w-full text-left px-3 py-2 rounded-xl hover:bg-slate-50 flex items-center gap-2 text-slate-800 cursor-pointer"
+                  className="w-full text-left px-3 py-2 rounded-xl hover:bg-sand-50 flex items-center gap-2 text-slate-800 cursor-pointer"
                 >
                   <Copy className="w-3.5 h-3.5 text-slate-500" />
                   <span>Sao chép ngày</span>
@@ -151,7 +151,7 @@ export const DayHeader: React.FC<DayHeaderProps> = ({
                     setShowMenu(false);
                     onMoveActivities?.();
                   }}
-                  className="w-full text-left px-3 py-2 rounded-xl hover:bg-slate-50 flex items-center gap-2 text-slate-800 cursor-pointer"
+                  className="w-full text-left px-3 py-2 rounded-xl hover:bg-sand-50 flex items-center gap-2 text-slate-800 cursor-pointer"
                 >
                   <ArrowRightLeft className="w-3.5 h-3.5 text-slate-500" />
                   <span>Chuyển HĐ sang ngày khác</span>
@@ -179,29 +179,29 @@ export const DayHeader: React.FC<DayHeaderProps> = ({
       {/* Meta Badges */}
       <div className="flex flex-wrap items-center gap-2 text-xs font-bold text-slate-700">
         {weatherForecast && (
-          <div className="flex items-center gap-1.5 bg-amber-50 text-amber-900 px-3 py-1.5 rounded-xl border border-amber-200">
-            <Sun className="w-3.5 h-3.5 text-amber-600" />
+          <div className="flex items-center gap-1.5 bg-bronze-50 text-bronze-900 px-3 py-1.5 rounded-xl border border-bronze-200">
+            <Sun className="w-3.5 h-3.5 text-bronze-600" />
             <span>Thời tiết: {weatherForecast}</span>
           </div>
         )}
 
-        <div className="flex items-center gap-1.5 bg-slate-50 px-3 py-1.5 rounded-xl border border-slate-200">
+        <div className="flex items-center gap-1.5 bg-sand-50 px-3 py-1.5 rounded-xl border border-slate-200">
           <Gauge className="w-3.5 h-3.5 text-[#2E8B57]" />
           <span>Nhịp độ: {getPaceText(pace)}</span>
         </div>
 
-        <div className="flex items-center gap-1.5 bg-slate-50 px-3 py-1.5 rounded-xl border border-slate-200">
-          <Navigation className="w-3.5 h-3.5 text-[#DC2626]" />
+        <div className="flex items-center gap-1.5 bg-sand-50 px-3 py-1.5 rounded-xl border border-slate-200">
+          <Navigation className="w-3.5 h-3.5 text-bronze-600" />
           <span>Di chuyển chính: {mainTransport}</span>
         </div>
 
-        <div className="flex items-center gap-1.5 bg-slate-50 px-3 py-1.5 rounded-xl border border-slate-200">
-          <Activity className="w-3.5 h-3.5 text-amber-600" />
+        <div className="flex items-center gap-1.5 bg-sand-50 px-3 py-1.5 rounded-xl border border-slate-200">
+          <Activity className="w-3.5 h-3.5 text-bronze-600" />
           <span>{activityCount} hoạt động</span>
         </div>
 
         {totalDistanceKm && (
-          <div className="flex items-center gap-1.5 bg-slate-50 px-3 py-1.5 rounded-xl border border-slate-200">
+          <div className="flex items-center gap-1.5 bg-sand-50 px-3 py-1.5 rounded-xl border border-slate-200">
             <MapPin className="w-3.5 h-3.5 text-purple-600" />
             <span>Khoảng {totalDistanceKm} km</span>
           </div>

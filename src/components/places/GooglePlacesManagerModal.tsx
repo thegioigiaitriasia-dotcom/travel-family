@@ -164,7 +164,7 @@ export const GooglePlacesManagerModal: React.FC<GooglePlacesManagerModalProps> =
             </div>
             <div>
               <h2 className="text-lg font-bold">Google Places API & Supabase Cache Service</h2>
-              <p className="text-xs text-emerald-100">
+              <p className="text-xs text-forest-100">
                 Tải ảnh thực tế từ Google Maps & Lưu bộ nhớ đệm Supabase tối ưu chi phí (0$ API cost)
               </p>
             </div>
@@ -185,15 +185,15 @@ export const GooglePlacesManagerModal: React.FC<GooglePlacesManagerModalProps> =
             <div
               className={`rounded-xl border p-4 ${
                 apiKeyPresent
-                  ? 'border-emerald-200 bg-emerald-50/50 dark:border-emerald-900/50 dark:bg-emerald-950/20'
-                  : 'border-amber-200 bg-amber-50/50 dark:border-amber-900/50 dark:bg-amber-950/20'
+                  ? 'border-forest-200 bg-forest-50/50 dark:border-forest-900/50 dark:bg-forest-950/20'
+                  : 'border-bronze-200 bg-bronze-50/50 dark:border-bronze-900/50 dark:bg-bronze-950/20'
               }`}
             >
               <div className="flex items-start justify-between">
                 <div className="flex items-center gap-2.5">
                   <div
                     className={`flex h-8 w-8 items-center justify-center rounded-lg ${
-                      apiKeyPresent ? 'bg-emerald-600 text-white' : 'bg-amber-500 text-white'
+                      apiKeyPresent ? 'bg-forest-600 text-white' : 'bg-bronze-500 text-white'
                     }`}
                   >
                     <Globe className="h-4 w-4" />
@@ -210,8 +210,8 @@ export const GooglePlacesManagerModal: React.FC<GooglePlacesManagerModalProps> =
                 <span
                   className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-medium ${
                     apiKeyPresent
-                      ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-300'
-                      : 'bg-amber-100 text-amber-800 dark:bg-amber-900/50 dark:text-amber-300'
+                      ? 'bg-forest-100 text-forest-800 dark:bg-forest-900/50 dark:text-forest-300'
+                      : 'bg-bronze-100 text-bronze-800 dark:bg-bronze-900/50 dark:text-bronze-300'
                   }`}
                 >
                   {apiKeyPresent ? (
@@ -249,7 +249,7 @@ export const GooglePlacesManagerModal: React.FC<GooglePlacesManagerModalProps> =
                   </div>
                 </div>
                 <span className="inline-flex items-center gap-1 rounded-full bg-teal-100 px-2.5 py-0.5 text-xs font-medium text-teal-800 dark:bg-teal-900/50 dark:text-teal-300">
-                  <Zap className="h-3 w-3 text-amber-500" /> Tối ưu 0$ API Cost
+                  <Zap className="h-3 w-3 text-bronze-500" /> Tối ưu 0$ API Cost
                 </span>
               </div>
               <p className="mt-3 text-xs text-slate-600 dark:text-slate-300">
@@ -259,10 +259,10 @@ export const GooglePlacesManagerModal: React.FC<GooglePlacesManagerModalProps> =
           </div>
 
           {/* Interactive Search & Real Photo Verifier */}
-          <div className="rounded-2xl border border-slate-200 bg-slate-50/50 p-5 dark:border-slate-800 dark:bg-slate-800/40 space-y-4">
+          <div className="rounded-2xl border border-slate-200 bg-sand-50/50 p-5 dark:border-slate-800 dark:bg-slate-800/40 space-y-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Search className="h-5 w-5 text-emerald-600" />
+                <Search className="h-5 w-5 text-forest-600" />
                 <h3 className="font-semibold text-slate-900 dark:text-white">
                   Kiểm tra & Lấy dữ liệu / Ảnh thực tế từ Google Places API
                 </h3>
@@ -283,13 +283,13 @@ export const GooglePlacesManagerModal: React.FC<GooglePlacesManagerModalProps> =
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Nhập tên địa điểm (VD: Bánh tráng thịt heo Trần Đà Nẵng, Bà Nà Hills...)"
                   onKeyDown={(e) => e.key === 'Enter' && handlePerformSearch()}
-                  className="w-full rounded-xl border border-slate-300 bg-white pl-10 pr-4 py-2.5 text-sm outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 dark:border-slate-700 dark:bg-slate-900 dark:text-white"
+                  className="w-full rounded-xl border border-slate-300 bg-white pl-10 pr-4 py-2.5 text-sm outline-none focus:border-forest-500 focus:ring-2 focus:ring-emerald-500/20 dark:border-slate-700 dark:bg-slate-900 dark:text-white"
                 />
               </div>
               <button
                 onClick={() => handlePerformSearch()}
                 disabled={searching}
-                className="flex items-center justify-center gap-2 rounded-xl bg-emerald-600 px-5 py-2.5 text-sm font-medium text-white shadow-sm transition-all hover:bg-emerald-700 disabled:opacity-50"
+                className="flex items-center justify-center gap-2 rounded-xl bg-forest-600 px-5 py-2.5 text-sm font-medium text-white shadow-sm transition-all hover:bg-forest-700 disabled:opacity-50"
               >
                 {searching ? (
                   <RefreshCw className="h-4 w-4 animate-spin" />
@@ -303,7 +303,7 @@ export const GooglePlacesManagerModal: React.FC<GooglePlacesManagerModalProps> =
                   onClick={() => handlePerformSearch(searchQuery, true)}
                   disabled={searching}
                   title="Bỏ qua cache và gọi lại trực tiếp Google Places API"
-                  className="flex items-center justify-center gap-1.5 rounded-xl border border-emerald-300 bg-emerald-50 px-4 py-2.5 text-sm font-medium text-emerald-700 transition-colors hover:bg-emerald-100 dark:border-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-300"
+                  className="flex items-center justify-center gap-1.5 rounded-xl border border-forest-300 bg-forest-50 px-4 py-2.5 text-sm font-medium text-forest-700 transition-colors hover:bg-forest-100 dark:border-forest-800 dark:bg-forest-950/40 dark:text-forest-300"
                 >
                   <RefreshCw className="h-3.5 w-3.5" />
                   <span className="hidden sm:inline">Gọi lại API Thật</span>
@@ -327,7 +327,7 @@ export const GooglePlacesManagerModal: React.FC<GooglePlacesManagerModalProps> =
                     setSearchQuery(tag);
                     handlePerformSearch(tag);
                   }}
-                  className="rounded-lg bg-white px-2.5 py-1 text-slate-700 border border-slate-200 hover:border-emerald-400 hover:bg-emerald-50 transition-colors dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300"
+                  className="rounded-lg bg-white px-2.5 py-1 text-slate-700 border border-slate-200 hover:border-forest-400 hover:bg-forest-50 transition-colors dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300"
                 >
                   {tag}
                 </button>
@@ -362,15 +362,15 @@ export const GooglePlacesManagerModal: React.FC<GooglePlacesManagerModalProps> =
                     <span
                       className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold shadow-md ${
                         searchResult.source === 'supabase_cache'
-                          ? 'bg-emerald-500 text-white'
+                          ? 'bg-forest-500 text-white'
                           : searchResult.source === 'google_places_api'
                           ? 'bg-blue-600 text-white'
-                          : 'bg-amber-500 text-white'
+                          : 'bg-bronze-500 text-white'
                       }`}
                     >
                       {searchResult.source === 'supabase_cache' ? (
                         <>
-                          <Zap className="h-3.5 w-3.5 fill-current text-amber-300" />
+                          <Zap className="h-3.5 w-3.5 fill-current text-bronze-300" />
                           ⚡ Lấy từ Supabase Cache (0$ API Cost)
                         </>
                       ) : searchResult.source === 'google_places_api' ? (
@@ -390,7 +390,7 @@ export const GooglePlacesManagerModal: React.FC<GooglePlacesManagerModalProps> =
                   <div className="absolute bottom-3 left-4 right-4 text-white">
                     <h4 className="text-xl font-bold">{searchResult.place.name}</h4>
                     <p className="text-xs text-slate-200 flex items-center gap-1 mt-1">
-                      <MapPin className="h-3.5 w-3.5 text-emerald-400 shrink-0" />
+                      <MapPin className="h-3.5 w-3.5 text-forest-400 shrink-0" />
                       <span className="truncate">{searchResult.place.address}</span>
                     </p>
                   </div>
@@ -399,7 +399,7 @@ export const GooglePlacesManagerModal: React.FC<GooglePlacesManagerModalProps> =
                 <div className="p-4 space-y-3">
                   <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3 text-xs dark:border-slate-800">
                     <div className="flex items-center gap-3">
-                      <span className="flex items-center gap-1 font-semibold text-amber-500 bg-amber-50 px-2 py-0.5 rounded dark:bg-amber-950/40">
+                      <span className="flex items-center gap-1 font-semibold text-bronze-500 bg-bronze-50 px-2 py-0.5 rounded dark:bg-bronze-950/40">
                         <Star className="h-3.5 w-3.5 fill-current" />
                         {searchResult.place.rating} ({searchResult.place.user_ratings_total || 250}+ đánh giá)
                       </span>
@@ -440,7 +440,7 @@ export const GooglePlacesManagerModal: React.FC<GooglePlacesManagerModalProps> =
                     </p>
                     <button
                       onClick={() => saveToSupabaseCache(searchResult.place).then(() => loadCacheList())}
-                      className="flex items-center gap-1 text-xs font-medium text-emerald-600 hover:text-emerald-700 dark:text-emerald-400"
+                      className="flex items-center gap-1 text-xs font-medium text-forest-600 hover:text-forest-700 dark:text-forest-400"
                     >
                       <Database className="h-3.5 w-3.5" /> Lưu lại Supabase
                     </button>
@@ -451,11 +451,11 @@ export const GooglePlacesManagerModal: React.FC<GooglePlacesManagerModalProps> =
           </div>
 
           {/* Bulk Sync & Enrich Section */}
-          <div className="rounded-2xl border border-emerald-100 bg-gradient-to-br from-emerald-50/70 to-teal-50/40 p-5 dark:border-emerald-900/40 dark:from-emerald-950/20 dark:to-teal-950/10">
+          <div className="rounded-2xl border border-forest-100 bg-gradient-to-br from-emerald-50/70 to-teal-50/40 p-5 dark:border-forest-900/40 dark:from-emerald-950/20 dark:to-teal-950/10">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div className="space-y-1">
                 <h3 className="font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                  <Sparkles className="h-5 w-5 text-emerald-600" />
+                  <Sparkles className="h-5 w-5 text-forest-600" />
                   Đồng bộ & Tối ưu hình ảnh thật cho tất cả địa điểm trong ứng dụng
                 </h3>
                 <p className="text-xs text-slate-600 dark:text-slate-300 max-w-xl">
@@ -471,7 +471,7 @@ export const GooglePlacesManagerModal: React.FC<GooglePlacesManagerModalProps> =
                 {syncing ? (
                   <RefreshCw className="h-5 w-5 animate-spin" />
                 ) : (
-                  <Zap className="h-5 w-5 text-amber-300 fill-current" />
+                  <Zap className="h-5 w-5 text-bronze-300 fill-current" />
                 )}
                 <span>{syncing ? 'Đang đồng bộ...' : 'Tối ưu Toàn bộ Địa điểm ngay'}</span>
               </button>
@@ -486,9 +486,9 @@ export const GooglePlacesManagerModal: React.FC<GooglePlacesManagerModalProps> =
                     {syncProgress.current} / {syncProgress.total}
                   </span>
                 </div>
-                <div className="h-2 w-full overflow-hidden rounded-full bg-emerald-200 dark:bg-emerald-900">
+                <div className="h-2 w-full overflow-hidden rounded-full bg-forest-200 dark:bg-forest-900">
                   <div
-                    className="h-full bg-emerald-600 transition-all duration-300"
+                    className="h-full bg-forest-600 transition-all duration-300"
                     style={{
                       width: `${(syncProgress.current / (syncProgress.total || 1)) * 100}%`,
                     }}
@@ -502,13 +502,13 @@ export const GooglePlacesManagerModal: React.FC<GooglePlacesManagerModalProps> =
           <div className="space-y-3">
             <div className="flex items-center justify-between">
               <h3 className="font-bold text-slate-900 dark:text-white flex items-center gap-2 text-sm">
-                <Layers className="h-4 w-4 text-emerald-600" />
+                <Layers className="h-4 w-4 text-forest-600" />
                 Danh sách địa điểm trong Supabase Cache ({cachedPlaces.length})
               </h3>
               <button
                 onClick={loadCacheList}
                 disabled={loadingCache}
-                className="flex items-center gap-1 text-xs text-slate-500 hover:text-emerald-600"
+                className="flex items-center gap-1 text-xs text-slate-500 hover:text-forest-600"
               >
                 <RefreshCw className={`h-3.5 w-3.5 ${loadingCache ? 'animate-spin' : ''}`} /> Làm mới
               </button>
@@ -540,10 +540,10 @@ export const GooglePlacesManagerModal: React.FC<GooglePlacesManagerModalProps> =
                       </h4>
                       <p className="text-[11px] text-slate-500 truncate">{p.address}</p>
                       <div className="flex items-center gap-2 mt-1 text-[10px]">
-                        <span className="font-semibold text-amber-500 flex items-center gap-0.5">
+                        <span className="font-semibold text-bronze-500 flex items-center gap-0.5">
                           ★ {p.rating}
                         </span>
-                        <span className="text-emerald-600 font-medium">⚡ Cached</span>
+                        <span className="text-forest-600 font-medium">⚡ Cached</span>
                       </div>
                     </div>
                   </div>
@@ -554,9 +554,9 @@ export const GooglePlacesManagerModal: React.FC<GooglePlacesManagerModalProps> =
         </div>
 
         {/* Modal Footer */}
-        <div className="flex items-center justify-between border-t border-slate-100 bg-slate-50 px-6 py-4 dark:border-slate-800 dark:bg-slate-900/80">
+        <div className="flex items-center justify-between border-t border-slate-100 bg-sand-50 px-6 py-4 dark:border-slate-800 dark:bg-slate-900/80">
           <div className="flex items-center gap-2 text-xs text-slate-500">
-            <Info className="h-4 w-4 text-emerald-600" />
+            <Info className="h-4 w-4 text-forest-600" />
             <span>Mọi truy vấn thành công sẽ giúp ứng dụng tự động giàu dữ liệu mà không tốn chi phí.</span>
           </div>
           <button

@@ -39,7 +39,7 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
     <div className="bg-white rounded-[24px] p-6 sm:p-8 border border-slate-200 shadow-xl space-y-6 max-w-xl mx-auto relative overflow-hidden">
       {/* Top Banner Tag */}
       <div className="text-center space-y-1">
-        <span className="text-xs font-bold uppercase tracking-wider text-[#DC2626]">Bước 5 / 5</span>
+        <span className="text-xs font-bold uppercase tracking-wider text-bronze-600">Bước 5 / 5</span>
         <h3 className="text-2xl font-extrabold text-slate-900 tracking-tight">
           Xác nhận chuyến đi
         </h3>
@@ -49,7 +49,7 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
       </div>
 
       {/* "Tờ Giấy Tổng Kết" Card Design with Dashed Ticket Line */}
-      <div className="bg-slate-50 rounded-[20px] p-6 border-2 border-slate-200 shadow-inner relative space-y-4">
+      <div className="bg-sand-50 rounded-[20px] p-6 border-2 border-slate-200 shadow-inner relative space-y-4">
         {/* Decorative Ticket Notches */}
         <div className="absolute -left-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-white border border-slate-200" />
         <div className="absolute -right-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-white border border-slate-200" />
@@ -57,7 +57,7 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
         {/* Row 1: Gia đình */}
         <div className="flex items-center justify-between pb-3 border-b border-slate-200/80">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-[#DC2626]/10 text-[#DC2626] flex items-center justify-center shrink-0">
+            <div className="w-9 h-9 rounded-xl bg-bronze-600/10 text-bronze-600 flex items-center justify-center shrink-0">
               <Users className="w-5 h-5" />
             </div>
             <div>
@@ -68,7 +68,7 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
           <button
             type="button"
             onClick={() => onGoToStep(2)}
-            className="text-xs font-bold text-[#DC2626] hover:underline flex items-center gap-1 cursor-pointer"
+            className="text-xs font-bold text-bronze-600 hover:underline flex items-center gap-1 cursor-pointer"
           >
             <Edit3 className="w-3.5 h-3.5" /> Chỉnh
           </button>
@@ -77,7 +77,7 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
         {/* Row 2: Điểm đến */}
         <div className="flex items-center justify-between pb-3 border-b border-slate-200/80">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-[#DC2626]/10 text-[#DC2626] flex items-center justify-center shrink-0">
+            <div className="w-9 h-9 rounded-xl bg-bronze-600/10 text-bronze-600 flex items-center justify-center shrink-0">
               <MapPin className="w-5 h-5" />
             </div>
             <div>
@@ -89,7 +89,7 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
           <button
             type="button"
             onClick={() => onGoToStep(1)}
-            className="text-xs font-bold text-[#DC2626] hover:underline flex items-center gap-1 cursor-pointer"
+            className="text-xs font-bold text-bronze-600 hover:underline flex items-center gap-1 cursor-pointer"
           >
             <Edit3 className="w-3.5 h-3.5" /> Chỉnh
           </button>
@@ -98,7 +98,7 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
         {/* Row 3: Thời gian & Lịch di chuyển */}
         <div className="flex items-center justify-between pb-3 border-b border-slate-200/80">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-[#DC2626]/10 text-[#DC2626] flex items-center justify-center shrink-0">
+            <div className="w-9 h-9 rounded-xl bg-bronze-600/10 text-bronze-600 flex items-center justify-center shrink-0">
               <Calendar className="w-5 h-5" />
             </div>
             <div className="space-y-0.5">
@@ -108,7 +108,7 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
                 ⏱ Chặng đi: <strong className="text-slate-900">{data.departureTime || '06:30'}</strong> ➔ Đến: <strong className="text-slate-900">{data.estimatedArrivalTime || '10:30'}</strong>
               </p>
               <p className="text-[11px] text-slate-600 font-medium">
-                🔑 Check-in: <strong className="text-[#DC2626]">{data.hotelCheckInTime || '14:00'}</strong> | 🗝 Check-out: <strong className="text-[#DC2626]">{data.hotelCheckOutTime || '12:00'}</strong>
+                🔑 Check-in: <strong className="text-bronze-600">{data.hotelCheckInTime || '14:00'}</strong> | 🗝 Check-out: <strong className="text-bronze-600">{data.hotelCheckOutTime || '12:00'}</strong>
               </p>
               <p className="text-[11px] text-slate-600 font-medium">
                 🛫 Chặng về: <strong className="text-slate-900">{data.returnDepartureTime || '15:30'}</strong> ➔ Về nhà: <strong className="text-slate-900">{data.returnArrivalTime || '19:30'}</strong>
@@ -118,7 +118,7 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
           <button
             type="button"
             onClick={() => onGoToStep(1)}
-            className="text-xs font-bold text-[#DC2626] hover:underline flex items-center gap-1 cursor-pointer shrink-0"
+            className="text-xs font-bold text-bronze-600 hover:underline flex items-center gap-1 cursor-pointer shrink-0"
           >
             <Edit3 className="w-3.5 h-3.5" /> Chỉnh
           </button>
@@ -128,7 +128,7 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
         {data.destinations.length > 1 && (
           <div className="flex items-start justify-between pb-3 border-b border-slate-200/80">
             <div className="flex items-start gap-3">
-              <div className="w-9 h-9 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center shrink-0 mt-0.5">
+              <div className="w-9 h-9 rounded-xl bg-bronze-100 text-bronze-700 flex items-center justify-center shrink-0 mt-0.5">
                 <Plane className="w-5 h-5" />
               </div>
               <div className="space-y-1">
@@ -140,7 +140,7 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
                     estimatedHours: 4.5,
                   };
                   return (
-                    <p key={idx} className="text-[11px] font-semibold text-amber-950">
+                    <p key={idx} className="text-[11px] font-semibold text-bronze-950">
                       • {fromDest.name} ➔ {toDest.name}: {leg.transportMethod} ({leg.estimatedHours || 4}h)
                     </p>
                   );
@@ -150,7 +150,7 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
             <button
               type="button"
               onClick={() => onGoToStep(1)}
-              className="text-xs font-bold text-[#DC2626] hover:underline flex items-center gap-1 cursor-pointer shrink-0"
+              className="text-xs font-bold text-bronze-600 hover:underline flex items-center gap-1 cursor-pointer shrink-0"
             >
               <Edit3 className="w-3.5 h-3.5" /> Chỉnh
             </button>
@@ -172,7 +172,7 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
                 {data.travelStyles.join(', ') || 'Gia đình, Ẩm thực, Nghỉ dưỡng'}
               </p>
               {data.preferredAttractions && data.preferredAttractions.length > 0 && (
-                <p className="text-[11px] text-[#DC2626] font-semibold mt-0.5">
+                <p className="text-[11px] text-bronze-600 font-semibold mt-0.5">
                   📍 Địa điểm & Tour chọn trước ({data.preferredAttractions.length}): {data.preferredAttractions.join(', ')}
                 </p>
               )}
@@ -181,7 +181,7 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
           <button
             type="button"
             onClick={() => onGoToStep(3)}
-            className="text-xs font-bold text-[#DC2626] hover:underline flex items-center gap-1 cursor-pointer"
+            className="text-xs font-bold text-bronze-600 hover:underline flex items-center gap-1 cursor-pointer"
           >
             <Edit3 className="w-3.5 h-3.5" /> Chỉnh
           </button>
@@ -203,7 +203,7 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
           <button
             type="button"
             onClick={() => onGoToStep(4)}
-            className="text-xs font-bold text-[#DC2626] hover:underline flex items-center gap-1 cursor-pointer"
+            className="text-xs font-bold text-bronze-600 hover:underline flex items-center gap-1 cursor-pointer"
           >
             <Edit3 className="w-3.5 h-3.5" /> Chỉnh
           </button>
@@ -215,7 +215,7 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
         <button
           type="button"
           onClick={onConfirmGenerate}
-          className="w-full py-4 px-6 rounded-[20px] bg-[#DC2626] hover:bg-[#B91C1C] text-white font-extrabold text-base transition-all duration-200 shadow-xl shadow-[#DC2626]/30 flex items-center justify-center gap-2 cursor-pointer group"
+          className="w-full py-4 px-6 rounded-[20px] bg-bronze-600 hover:bg-[#B91C1C] text-white font-extrabold text-base transition-all duration-200 shadow-xl shadow-[#DC2626]/30 flex items-center justify-center gap-2 cursor-pointer group"
         >
           <Sparkles className="w-5 h-5 text-[#FFB545] animate-bounce" />
           <span>✨ Tạo lịch trình</span>
@@ -224,7 +224,7 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
         <button
           type="button"
           onClick={onSaveDraft}
-          className="w-full py-3 px-6 rounded-xl bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 font-bold text-xs transition-colors flex items-center justify-center gap-2 cursor-pointer"
+          className="w-full py-3 px-6 rounded-xl bg-white border border-slate-200 hover:bg-sand-50 text-slate-700 font-bold text-xs transition-colors flex items-center justify-center gap-2 cursor-pointer"
         >
           <BookmarkCheck className="w-4 h-4 text-slate-500" />
           <span>Lưu bản nháp</span>

@@ -19,7 +19,7 @@ export const FamilyNoteCard: React.FC<FamilyNoteCardProps> = ({ note, onUpdateNo
     <div className="bg-red-50/80 rounded-[22px] p-5 border border-sky-200/80 shadow-sm space-y-2 text-sky-950">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <HeartHandshake className="w-4 h-4 text-[#DC2626]" />
+          <HeartHandshake className="w-4 h-4 text-bronze-600" />
           <h4 className="text-sm font-extrabold text-slate-900">Ghi chú cho cả nhà</h4>
         </div>
 
@@ -27,7 +27,7 @@ export const FamilyNoteCard: React.FC<FamilyNoteCardProps> = ({ note, onUpdateNo
           <button
             type="button"
             onClick={() => setIsEditing(true)}
-            className="text-xs font-bold text-[#DC2626] hover:underline flex items-center gap-1 cursor-pointer"
+            className="text-xs font-bold text-bronze-600 hover:underline flex items-center gap-1 cursor-pointer"
           >
             <Edit3 className="w-3.5 h-3.5" /> Chỉnh
           </button>

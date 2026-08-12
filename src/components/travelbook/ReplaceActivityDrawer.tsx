@@ -117,7 +117,7 @@ export const ReplaceActivityDrawer: React.FC<ReplaceActivityDrawerProps> = ({
                     className={`px-3 py-1.5 rounded-xl border font-bold transition-all cursor-pointer ${
                       isSelected
                         ? 'bg-purple-700 text-white border-purple-700 shadow-sm'
-                        : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100'
+                        : 'bg-sand-50 border-slate-200 text-slate-700 hover:bg-slate-100'
                     }`}
                   >
                     {r}
@@ -192,7 +192,7 @@ export const ReplaceActivityDrawer: React.FC<ReplaceActivityDrawerProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="flex-1 py-3 rounded-xl border border-slate-200 text-slate-700 font-bold text-xs hover:bg-slate-50 cursor-pointer"
+            className="flex-1 py-3 rounded-xl border border-slate-200 text-slate-700 font-bold text-xs hover:bg-sand-50 cursor-pointer"
           >
             Hủy bỏ
           </button>

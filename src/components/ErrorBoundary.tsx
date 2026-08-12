@@ -43,7 +43,7 @@ export class ErrorBoundary extends Component<Props, State> {
             </div>
             
             {this.state.error && (
-              <div className="bg-slate-50 p-4 rounded-xl text-left border border-slate-100 overflow-x-auto">
+              <div className="bg-sand-50 p-4 rounded-xl text-left border border-slate-100 overflow-x-auto">
                 <p className="text-xs text-red-500 font-mono whitespace-pre-wrap">
                   {this.state.error.toString()}
                 </p>

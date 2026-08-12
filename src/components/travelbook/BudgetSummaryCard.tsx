@@ -33,7 +33,7 @@ export const BudgetSummaryCard: React.FC<BudgetSummaryCardProps> = ({
       {/* Header */}
       <div className="flex items-center justify-between border-b border-slate-100 pb-3">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center border border-amber-100">
+          <div className="w-8 h-8 rounded-xl bg-bronze-50 text-bronze-600 flex items-center justify-center border border-bronze-100">
             <DollarSign className="w-4 h-4" />
           </div>
           <h3 className="text-base font-black text-slate-900 tracking-tight">
@@ -43,7 +43,7 @@ export const BudgetSummaryCard: React.FC<BudgetSummaryCardProps> = ({
       </div>
 
       {/* Main Budget Range Display */}
-      <div className="space-y-2 bg-slate-50 p-4 rounded-2xl border border-slate-200/60">
+      <div className="space-y-2 bg-sand-50 p-4 rounded-2xl border border-slate-200/60">
         <div>
           <span className="text-[11px] font-bold text-slate-500 uppercase block">
             Dự toán khoảng
@@ -55,14 +55,14 @@ export const BudgetSummaryCard: React.FC<BudgetSummaryCardProps> = ({
 
         <div className="pt-2 border-t border-slate-200/60 flex items-center justify-between text-xs">
           <span className="text-slate-600 font-medium">Ngân sách gia đình đặt ra</span>
-          <span className="font-extrabold text-[#DC2626]">{formatMoney(userBudget)}</span>
+          <span className="font-extrabold text-bronze-600">{formatMoney(userBudget)}</span>
         </div>
       </div>
 
       {/* Budget Warning if Exceeded */}
       {isExceeded && (
-        <div className="p-3 rounded-2xl bg-amber-50 border border-amber-200 flex items-start gap-2.5 text-xs text-amber-900">
-          <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+        <div className="p-3 rounded-2xl bg-bronze-50 border border-bronze-200 flex items-start gap-2.5 text-xs text-bronze-900">
+          <AlertTriangle className="w-4 h-4 text-bronze-600 shrink-0 mt-0.5" />
           <p className="font-bold leading-snug">
             Dự toán cao nhất đang vượt ngân sách {formatMoney(exceedAmount)}.
           </p>
@@ -79,7 +79,7 @@ export const BudgetSummaryCard: React.FC<BudgetSummaryCardProps> = ({
 
           <div className="space-y-1.5 text-xs">
             {breakdown.map((item, idx) => (
-              <div key={idx} className="flex items-center justify-between p-2 rounded-xl bg-slate-50/60 hover:bg-slate-50 transition-colors">
+              <div key={idx} className="flex items-center justify-between p-2 rounded-xl bg-sand-50/60 hover:bg-sand-50 transition-colors">
                 <span className="font-medium text-slate-600">{item.label}</span>
                 <span className="font-extrabold text-slate-900">{formatMoney(item.amount)}</span>
               </div>
@@ -89,15 +89,15 @@ export const BudgetSummaryCard: React.FC<BudgetSummaryCardProps> = ({
       )}
 
       {/* Explicit Price Reference & Non-Commercial Disclaimer */}
-      <div className="p-3 bg-amber-50/70 border border-amber-200/80 rounded-2xl text-[11px] text-amber-900/90 leading-relaxed space-y-1">
-        <p className="font-bold flex items-center gap-1.5 text-amber-950">
-          <AlertTriangle className="w-3.5 h-3.5 text-amber-600 shrink-0" />
+      <div className="p-3 bg-bronze-50/70 border border-bronze-200/80 rounded-2xl text-[11px] text-bronze-900/90 leading-relaxed space-y-1">
+        <p className="font-bold flex items-center gap-1.5 text-bronze-950">
+          <AlertTriangle className="w-3.5 h-3.5 text-bronze-600 shrink-0" />
           <span>Ghi chú quan trọng về chi phí & giá vé:</span>
         </p>
         <p className="text-[10.5px]">
           Tất cả thông tin giá cả, chi phí dịch vụ, vé tham quan được liệt kê mang tính <strong>THAM KHẢO</strong> (có thể thay đổi tùy thời điểm, chính sách địa điểm hoặc mùa du lịch).
         </p>
-        <p className="text-[10.5px] italic font-medium text-amber-900/80">
+        <p className="text-[10.5px] italic font-medium text-bronze-900/80">
           * GiaĐìnhViVu hỗ trợ lên kế hoạch lịch trình tự do cho gia đình, <strong>KHÔNG</strong> bán dịch vụ hay thu phí trực tiếp từ các cơ sở này.
         </p>
       </div>
@@ -106,7 +106,7 @@ export const BudgetSummaryCard: React.FC<BudgetSummaryCardProps> = ({
       <button
         type="button"
         onClick={onViewBudgetDetail}
-        className="w-full py-2.5 rounded-xl bg-slate-50 hover:bg-slate-100 text-[#DC2626] font-extrabold text-xs transition-colors flex items-center justify-center gap-1.5 border border-slate-200 cursor-pointer"
+        className="w-full py-2.5 rounded-xl bg-sand-50 hover:bg-slate-100 text-bronze-600 font-extrabold text-xs transition-colors flex items-center justify-center gap-1.5 border border-slate-200 cursor-pointer"
       >
         <span>Xem chi tiết chi phí</span>
         <ArrowRight className="w-4 h-4" />

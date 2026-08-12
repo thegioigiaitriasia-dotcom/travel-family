@@ -100,7 +100,7 @@ export const UpcomingTripCard: React.FC<UpcomingTripCardProps> = ({
                       setShowMenu(false);
                       setShowDeleteConfirm(true);
                     }}
-                    className="w-full text-left px-4 py-2 hover:bg-red-50 text-red-600 flex items-center gap-2 cursor-pointer"
+                    className="w-full text-left px-4 py-2 hover:bg-red-50 text-bronze-600 flex items-center gap-2 cursor-pointer"
                   >
                     <Trash2 className="w-3.5 h-3.5" />
                     <span>Xóa chuyến đi</span>
@@ -180,7 +180,7 @@ export const UpcomingTripCard: React.FC<UpcomingTripCardProps> = ({
                   setShowDeleteConfirm(false);
                   onDeleteTrip(trip.id);
                 }}
-                className="px-4 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-white text-xs font-semibold cursor-pointer"
+                className="px-4 py-2 rounded-xl bg-bronze-600 hover:bg-red-700 text-white text-xs font-semibold cursor-pointer"
               >
                 Xóa chuyến đi
               </button>

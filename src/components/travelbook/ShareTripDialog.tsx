@@ -50,9 +50,9 @@ export const ShareTripDialog: React.FC<ShareTripDialogProps> = ({
         </div>
 
         {/* Access Permission Toggle */}
-        <div className="space-y-2 bg-slate-50 p-4 rounded-[20px] border border-slate-200 text-xs">
+        <div className="space-y-2 bg-sand-50 p-4 rounded-[20px] border border-slate-200 text-xs">
           <label className="font-extrabold text-slate-800 flex items-center gap-1.5">
-            <Shield className="w-4 h-4 text-[#DC2626]" />
+            <Shield className="w-4 h-4 text-bronze-600" />
             Quyền truy cập:
           </label>
 
@@ -62,7 +62,7 @@ export const ShareTripDialog: React.FC<ShareTripDialogProps> = ({
               onClick={() => setPermission('view')}
               className={`p-2.5 rounded-xl border text-left font-bold flex items-center gap-2 cursor-pointer ${
                 permission === 'view'
-                  ? 'bg-[#DC2626] text-white border-[#DC2626]'
+                  ? 'bg-bronze-600 text-white border-[#DC2626]'
                   : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-100'
               }`}
             >
@@ -75,7 +75,7 @@ export const ShareTripDialog: React.FC<ShareTripDialogProps> = ({
               onClick={() => setPermission('edit')}
               className={`p-2.5 rounded-xl border text-left font-bold flex items-center gap-2 cursor-pointer ${
                 permission === 'edit'
-                  ? 'bg-[#DC2626] text-white border-[#DC2626]'
+                  ? 'bg-bronze-600 text-white border-[#DC2626]'
                   : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-100'
               }`}
             >
@@ -93,12 +93,12 @@ export const ShareTripDialog: React.FC<ShareTripDialogProps> = ({
               type="text"
               readOnly
               value={shareUrl}
-              className="flex-1 px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs font-mono font-bold text-slate-700"
+              className="flex-1 px-3 py-2 rounded-xl bg-sand-50 border border-slate-200 text-xs font-mono font-bold text-slate-700"
             />
             <button
               type="button"
               onClick={handleCopy}
-              className="px-4 py-2 rounded-xl bg-[#DC2626] text-white text-xs font-bold hover:bg-[#B91C1C] flex items-center gap-1 shrink-0"
+              className="px-4 py-2 rounded-xl bg-bronze-600 text-white text-xs font-bold hover:bg-[#B91C1C] flex items-center gap-1 shrink-0"
             >
               {copied ? (
                 <>
@@ -119,13 +119,13 @@ export const ShareTripDialog: React.FC<ShareTripDialogProps> = ({
             <button
               type="button"
               onClick={() => setShowQr(true)}
-              className="text-xs font-bold text-[#DC2626] hover:underline flex items-center justify-center gap-1.5 mx-auto cursor-pointer"
+              className="text-xs font-bold text-bronze-600 hover:underline flex items-center justify-center gap-1.5 mx-auto cursor-pointer"
             >
               <QrCode className="w-4 h-4" />
               <span>Tạo mã QR cho chuyến đi</span>
             </button>
           ) : (
-            <div className="bg-slate-50 p-4 rounded-[20px] border border-slate-200 space-y-2 max-w-xs mx-auto animate-fadeIn">
+            <div className="bg-sand-50 p-4 rounded-[20px] border border-slate-200 space-y-2 max-w-xs mx-auto animate-fadeIn">
               <div className="w-40 h-40 bg-white p-2 rounded-xl mx-auto border border-slate-200 flex items-center justify-center shadow-xs">
                 {/* Real Scannable QR Code */}
                 <img

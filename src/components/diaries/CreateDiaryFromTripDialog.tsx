@@ -33,7 +33,7 @@ export const CreateDiaryFromTripDialog: React.FC<CreateDiaryFromTripDialogProps>
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4 overflow-y-auto">
       <div className="bg-white rounded-2xl shadow-xl max-w-lg w-full overflow-hidden border border-slate-100 animate-in fade-in zoom-in-95 duration-200">
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 bg-slate-50">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 bg-sand-50">
           <div className="flex items-center gap-2.5">
             <div className="w-9 h-9 rounded-xl bg-[#E9F0ED] text-[#183B35] flex items-center justify-center font-bold">
               <BookOpen className="w-5 h-5" />
@@ -59,7 +59,7 @@ export const CreateDiaryFromTripDialog: React.FC<CreateDiaryFromTripDialogProps>
               1. Chọn chuyến đi đã hoàn thành
             </label>
             {completedTrips.length === 0 ? (
-              <div className="p-4 rounded-xl bg-amber-50 border border-amber-200 text-amber-800 text-xs">
+              <div className="p-4 rounded-xl bg-bronze-50 border border-bronze-200 text-bronze-800 text-xs">
                 Bạn chưa có chuyến đi nào đã hoàn thành. Hãy hoàn tất kế hoạch chuyến đi trong Travel Book để bắt đầu viết nhật ký!
               </div>
             ) : (
@@ -118,7 +118,7 @@ export const CreateDiaryFromTripDialog: React.FC<CreateDiaryFromTripDialogProps>
               2. Nội dung tự động sao chép
             </label>
             <div className="grid grid-cols-2 gap-2 text-xs">
-              <label className="flex items-center gap-2.5 p-3 rounded-xl border border-slate-200 bg-slate-50 cursor-pointer hover:bg-slate-100 transition-colors">
+              <label className="flex items-center gap-2.5 p-3 rounded-xl border border-slate-200 bg-sand-50 cursor-pointer hover:bg-slate-100 transition-colors">
                 <input
                   type="checkbox"
                   checked={copyDays}
@@ -127,7 +127,7 @@ export const CreateDiaryFromTripDialog: React.FC<CreateDiaryFromTripDialogProps>
                 />
                 <span className="font-medium text-slate-700">Các ngày lịch trình</span>
               </label>
-              <label className="flex items-center gap-2.5 p-3 rounded-xl border border-slate-200 bg-slate-50 cursor-pointer hover:bg-slate-100 transition-colors">
+              <label className="flex items-center gap-2.5 p-3 rounded-xl border border-slate-200 bg-sand-50 cursor-pointer hover:bg-slate-100 transition-colors">
                 <input
                   type="checkbox"
                   checked={copyPlaces}
@@ -136,7 +136,7 @@ export const CreateDiaryFromTripDialog: React.FC<CreateDiaryFromTripDialogProps>
                 />
                 <span className="font-medium text-slate-700">Địa điểm đã ghé</span>
               </label>
-              <label className="flex items-center gap-2.5 p-3 rounded-xl border border-slate-200 bg-slate-50 cursor-pointer hover:bg-slate-100 transition-colors">
+              <label className="flex items-center gap-2.5 p-3 rounded-xl border border-slate-200 bg-sand-50 cursor-pointer hover:bg-slate-100 transition-colors">
                 <input
                   type="checkbox"
                   checked={copyCosts}
@@ -145,7 +145,7 @@ export const CreateDiaryFromTripDialog: React.FC<CreateDiaryFromTripDialogProps>
                 />
                 <span className="font-medium text-slate-700">Chi phí thực tế</span>
               </label>
-              <label className="flex items-center gap-2.5 p-3 rounded-xl border border-slate-200 bg-slate-50 cursor-pointer hover:bg-slate-100 transition-colors">
+              <label className="flex items-center gap-2.5 p-3 rounded-xl border border-slate-200 bg-sand-50 cursor-pointer hover:bg-slate-100 transition-colors">
                 <input
                   type="checkbox"
                   checked={copyPhotos}
@@ -162,7 +162,7 @@ export const CreateDiaryFromTripDialog: React.FC<CreateDiaryFromTripDialogProps>
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-end gap-3 px-6 py-4 bg-slate-50 border-t border-slate-100">
+        <div className="flex items-center justify-end gap-3 px-6 py-4 bg-sand-50 border-t border-slate-100">
           <button
             onClick={onClose}
             className="px-4 py-2 text-xs font-semibold text-slate-600 hover:text-slate-800 rounded-xl transition-colors cursor-pointer"

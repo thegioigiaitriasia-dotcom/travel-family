@@ -88,7 +88,7 @@ export const TripWindowStep: React.FC<TripWindowStepProps> = ({
       </div>
 
       {/* Start Trip Section */}
-      <div className="bg-slate-50 rounded-2xl p-4 sm:p-5 border border-slate-200/80 space-y-4">
+      <div className="bg-sand-50 rounded-2xl p-4 sm:p-5 border border-slate-200/80 space-y-4">
         <div className="flex items-center justify-between flex-wrap gap-2">
           <h3 className="font-bold text-slate-900 text-sm sm:text-base flex items-center gap-2">
             <span className="w-6 h-6 rounded-full bg-[#2E8B57] text-white text-xs font-bold flex items-center justify-center">
@@ -155,8 +155,8 @@ export const TripWindowStep: React.FC<TripWindowStepProps> = ({
         </div>
 
         {windowData.startTimeStatus === 'preferred' && (
-          <div className="bg-amber-50 border border-amber-200/70 rounded-xl p-3 text-xs text-amber-800 flex items-start gap-2">
-            <AlertCircle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+          <div className="bg-bronze-50 border border-bronze-200/70 rounded-xl p-3 text-xs text-bronze-800 flex items-start gap-2">
+            <AlertCircle className="w-4 h-4 text-bronze-600 shrink-0 mt-0.5" />
             <span>
               <strong>Lưu ý:</strong> Giờ mong muốn giúp AI gợi ý các lịch trình phù hợp, nhưng sẽ được đánh dấu là chưa xác nhận vé cho đến khi bạn nhập chính xác mã vé ở Bước 3.
             </span>
@@ -165,7 +165,7 @@ export const TripWindowStep: React.FC<TripWindowStepProps> = ({
       </div>
 
       {/* End Trip Section */}
-      <div className="bg-slate-50 rounded-2xl p-4 sm:p-5 border border-slate-200/80 space-y-4">
+      <div className="bg-sand-50 rounded-2xl p-4 sm:p-5 border border-slate-200/80 space-y-4">
         <div className="flex items-center justify-between flex-wrap gap-2">
           <h3 className="font-bold text-slate-900 text-sm sm:text-base flex items-center gap-2">
             <span className="w-6 h-6 rounded-full bg-[#183B35] text-white text-xs font-bold flex items-center justify-center">
@@ -236,7 +236,7 @@ export const TripWindowStep: React.FC<TripWindowStepProps> = ({
         <button
           type="button"
           onClick={onBack}
-          className="px-5 py-2.5 rounded-xl border border-slate-300 text-slate-700 font-bold text-sm hover:bg-slate-50 transition-all"
+          className="px-5 py-2.5 rounded-xl border border-slate-300 text-slate-700 font-bold text-sm hover:bg-sand-50 transition-all"
         >
           Quay lại
         </button>

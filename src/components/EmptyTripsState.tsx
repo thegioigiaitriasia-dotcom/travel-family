@@ -13,13 +13,13 @@ export const EmptyTripsState: React.FC<EmptyTripsStateProps> = ({ onCreateTrip }
 
       <div className="relative z-10 space-y-6">
         {/* Luxury Icon Badge */}
-        <div className="w-16 h-16 rounded-[16px] bg-[#FEF2F2] text-[#DC2626] border border-[#FECACA] flex items-center justify-center mx-auto shadow-xs">
-          <Compass className="w-8 h-8 text-[#DC2626]" strokeWidth={1.5} />
+        <div className="w-16 h-16 rounded-[16px] bg-[#FEF2F2] text-bronze-600 border border-[#FECACA] flex items-center justify-center mx-auto shadow-xs">
+          <Compass className="w-8 h-8 text-bronze-600" strokeWidth={1.5} />
         </div>
 
         {/* Header Text Block */}
         <div className="space-y-3">
-          <div className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-wider text-[#DC2626] bg-[#FEF2F2] px-3.5 py-1 rounded-full border border-[#FECACA]">
+          <div className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-wider text-bronze-600 bg-[#FEF2F2] px-3.5 py-1 rounded-full border border-[#FECACA]">
             <span>Hành trình gia đình</span>
           </div>
 
@@ -35,7 +35,7 @@ export const EmptyTripsState: React.FC<EmptyTripsStateProps> = ({ onCreateTrip }
         {/* Feature Highlights Grid */}
         <div className="pt-2 flex flex-wrap items-center justify-center gap-2.5 max-w-md mx-auto">
           <div className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#18181B] bg-[#FAF9F9] border border-[#E4E4E7] px-3 py-1.5 rounded-[10px]">
-            <Sparkles className="w-3.5 h-3.5 text-[#DC2626]" strokeWidth={1.75} />
+            <Sparkles className="w-3.5 h-3.5 text-bronze-600" strokeWidth={1.75} />
             <span>Gợi ý AI thông minh</span>
           </div>
           <div className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#18181B] bg-[#FAF9F9] border border-[#E4E4E7] px-3 py-1.5 rounded-[10px]">
@@ -43,7 +43,7 @@ export const EmptyTripsState: React.FC<EmptyTripsStateProps> = ({ onCreateTrip }
             <span>Dự toán ngân sách</span>
           </div>
           <div className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#18181B] bg-[#FAF9F9] border border-[#E4E4E7] px-3 py-1.5 rounded-[10px]">
-            <BookOpen className="w-3.5 h-3.5 text-[#DC2626]" strokeWidth={1.75} />
+            <BookOpen className="w-3.5 h-3.5 text-bronze-600" strokeWidth={1.75} />
             <span>Lưu giữ kỷ niệm</span>
           </div>
         </div>

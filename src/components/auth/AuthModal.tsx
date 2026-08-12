@@ -152,8 +152,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({
   const getPasswordStrength = (pwd: string) => {
     if (pwd.length === 0) return null;
     if (pwd.length < 6) return { label: 'Quá ngắn', color: 'text-red-500' };
-    if (pwd.length < 8) return { label: 'Yếu', color: 'text-orange-500' };
-    if (pwd.length >= 8 && /[A-Z]/.test(pwd) && /[0-9]/.test(pwd)) return { label: 'Mạnh', color: 'text-emerald-600' };
+    if (pwd.length < 8) return { label: 'Yếu', color: 'text-bronze-500' };
+    if (pwd.length >= 8 && /[A-Z]/.test(pwd) && /[0-9]/.test(pwd)) return { label: 'Mạnh', color: 'text-forest-600' };
     return { label: 'Trung bình', color: 'text-yellow-600' };
   };
 
@@ -404,13 +404,13 @@ export const AuthModal: React.FC<AuthModalProps> = ({
           <div className="mb-3">
             <GiaDinhViVuLogo variant="inverse" size="md" />
           </div>
-          <p className="text-emerald-100 text-xs mt-1">
+          <p className="text-forest-100 text-xs mt-1">
             Đăng nhập để tự do tạo, chỉnh sửa & lưu giữ khoảnh khắc các chuyến đi của gia đình bạn.
           </p>
         </div>
 
         {/* Tab switcher */}
-        <div className="flex border-b border-slate-200 bg-slate-50 p-1 flex-shrink-0">
+        <div className="flex border-b border-slate-200 bg-sand-50 p-1 flex-shrink-0">
           {(['login', 'register', 'invite'] as const).map((tab) => (
             <button
               key={tab}
@@ -458,7 +458,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                 <div className="animate-fadeIn">
                   <label className="block text-xs font-bold text-slate-700 mb-1 flex justify-between">
                     Mã gia đình (Invite Code)
-                    <span className="text-[10px] text-amber-600 font-normal">Cho tài khoản phụ</span>
+                    <span className="text-[10px] text-bronze-600 font-normal">Cho tài khoản phụ</span>
                   </label>
                   <div className="relative">
                     <Key className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
@@ -467,7 +467,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                       value={loginFamilyCode}
                       onChange={(e) => setLoginFamilyCode(e.target.value)}
                       placeholder="VD: VIVU-123456"
-                      className="w-full pl-9 pr-4 py-2.5 text-xs bg-amber-50/50 border border-amber-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent focus:outline-none uppercase font-mono text-slate-900"
+                      className="w-full pl-9 pr-4 py-2.5 text-xs bg-bronze-50/50 border border-bronze-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent focus:outline-none uppercase font-mono text-slate-900"
                     />
                   </div>
                 </div>
@@ -528,8 +528,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                 </div>
               )}
               {regSuccess && (
-                <div className="flex items-start gap-2 text-xs text-emerald-800 font-medium bg-emerald-50 border border-emerald-200 p-3 rounded-xl">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-500 mt-0.5 flex-shrink-0" />
+                <div className="flex items-start gap-2 text-xs text-forest-800 font-medium bg-forest-50 border border-forest-200 p-3 rounded-xl">
+                  <CheckCircle2 className="w-4 h-4 text-forest-500 mt-0.5 flex-shrink-0" />
                   <span>{regSuccess}</span>
                 </div>
               )}
@@ -632,8 +632,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({
               </div>
 
               {/* Trial info box */}
-              <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-3 text-xs text-emerald-900 flex items-start gap-2">
-                <Sparkles className="w-4 h-4 text-emerald-600 flex-shrink-0 mt-0.5" />
+              <div className="bg-forest-50 border border-forest-200 rounded-2xl p-3 text-xs text-forest-900 flex items-start gap-2">
+                <Sparkles className="w-4 h-4 text-forest-600 flex-shrink-0 mt-0.5" />
                 <div>
                   <span className="font-bold">Dùng thử miễn phí 30 ngày</span> — không cần thẻ ngân hàng. Đăng ký xong là dùng ngay!
                 </div>
@@ -658,9 +658,9 @@ export const AuthModal: React.FC<AuthModalProps> = ({
           {activeTab === 'invite' && (
             <form onSubmit={handleInviteSubmit} className="space-y-4">
               {/* Hướng dẫn */}
-              <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-3 space-y-1">
-                <p className="text-xs font-bold text-emerald-900">📨 Tham gia nhóm gia đình bằng Mã mời</p>
-                <p className="text-[11px] text-emerald-800 leading-relaxed">
+              <div className="bg-forest-50 border border-forest-200 rounded-2xl p-3 space-y-1">
+                <p className="text-xs font-bold text-forest-900">📨 Tham gia nhóm gia đình bằng Mã mời</p>
+                <p className="text-[11px] text-forest-800 leading-relaxed">
                   Nhận mã mời từ Trưởng nhóm → Điền Tên + Mã mời + Tạo mật khẩu → Gia nhập ngay!
                 </p>
               </div>
@@ -672,8 +672,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                 </div>
               )}
               {inviteSuccess && (
-                <div className="flex items-start gap-2 text-xs text-emerald-800 font-medium bg-emerald-50 border border-emerald-200 p-3 rounded-xl">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-500 mt-0.5 flex-shrink-0" />
+                <div className="flex items-start gap-2 text-xs text-forest-800 font-medium bg-forest-50 border border-forest-200 p-3 rounded-xl">
+                  <CheckCircle2 className="w-4 h-4 text-forest-500 mt-0.5 flex-shrink-0" />
                   <span>{inviteSuccess}</span>
                 </div>
               )}

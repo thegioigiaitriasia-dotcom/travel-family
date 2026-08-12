@@ -18,15 +18,15 @@ export const MyPlacesModule: React.FC<MyPlacesModuleProps> = ({ categories, plac
   const getCategoryIcon = (categoryName: string) => {
     switch (categoryName) {
       case 'Cafe':
-        return <Coffee className="w-4 h-4 text-amber-600" />;
+        return <Coffee className="w-4 h-4 text-bronze-600" />;
       case 'Nhà hàng':
-        return <Utensils className="w-4 h-4 text-orange-600" />;
+        return <Utensils className="w-4 h-4 text-bronze-600" />;
       case 'Biển':
         return <Waves className="w-4 h-4 text-cyan-600" />;
       case 'Khách sạn':
         return <Hotel className="w-4 h-4 text-indigo-600" />;
       case 'Chùa':
-        return <Landmark className="w-4 h-4 text-red-600" />;
+        return <Landmark className="w-4 h-4 text-bronze-600" />;
       default:
         return <MapPin className="w-4 h-4 text-slate-500" />;
     }
@@ -54,7 +54,7 @@ export const MyPlacesModule: React.FC<MyPlacesModuleProps> = ({ categories, plac
             className={`p-3.5 rounded-xl border flex flex-col items-center justify-center space-y-1 transition-all cursor-pointer ${
               selectedCategory === cat.name
                 ? 'bg-indigo-600 text-white border-indigo-700 shadow-sm'
-                : 'bg-white text-slate-800 border-slate-200 hover:bg-slate-50'
+                : 'bg-white text-slate-800 border-slate-200 hover:bg-sand-50'
             }`}
           >
             <div className="flex items-center gap-1.5">
@@ -96,7 +96,7 @@ export const MyPlacesModule: React.FC<MyPlacesModuleProps> = ({ categories, plac
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-md px-2.5 py-1 rounded-full text-xs font-bold text-slate-900 flex items-center gap-1 shadow-sm">
-                  <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
+                  <Star className="w-3.5 h-3.5 text-bronze-500 fill-amber-500" />
                   <span>{place.rating}</span>
                 </div>
                 <button className="absolute top-3 right-3 bg-white/90 backdrop-blur-md p-1.5 rounded-full text-slate-700 hover:text-indigo-600 transition-colors shadow-sm cursor-pointer">
@@ -118,7 +118,7 @@ export const MyPlacesModule: React.FC<MyPlacesModuleProps> = ({ categories, plac
                   </p>
                 </div>
 
-                <p className="text-xs text-slate-600 bg-slate-50 p-2.5 rounded-lg border border-slate-100 italic">
+                <p className="text-xs text-slate-600 bg-sand-50 p-2.5 rounded-lg border border-slate-100 italic">
                   "{place.notes}"
                 </p>
 

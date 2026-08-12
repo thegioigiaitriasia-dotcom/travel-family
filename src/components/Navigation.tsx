@@ -389,7 +389,7 @@ export const Navigation: React.FC<NavigationProps> = React.memo(({
                           setShowUserMenu(false);
                           onLogout();
                         }}
-                        className="w-full text-left px-3 py-2 rounded-xl hover:bg-red-50 text-red-600 flex items-center gap-2 font-medium cursor-pointer"
+                        className="w-full text-left px-3 py-2 rounded-xl hover:bg-red-50 text-bronze-600 flex items-center gap-2 font-medium cursor-pointer"
                       >
                         <LogOut className="w-4 h-4 text-red-500" />
                         <span>Đăng xuất</span>

@@ -314,7 +314,7 @@ export const TripDayPage: React.FC<TripDayPageProps> = ({
             {/* Empty State or Activity Timeline */}
             {currentDayData.activities.length === 0 ? (
               <div className="bg-white rounded-[24px] p-8 border border-slate-200 text-center space-y-4 shadow-sm">
-                <div className="w-12 h-12 rounded-full bg-red-50 text-[#DC2626] flex items-center justify-center mx-auto border border-red-100">
+                <div className="w-12 h-12 rounded-full bg-red-50 text-bronze-600 flex items-center justify-center mx-auto border border-red-100">
                   <Compass className="w-6 h-6" />
                 </div>
                 <div className="space-y-1">
@@ -329,7 +329,7 @@ export const TripDayPage: React.FC<TripDayPageProps> = ({
                   <button
                     type="button"
                     onClick={() => setIsAddActivityOpen(true)}
-                    className="px-4 py-2.5 bg-[#DC2626] hover:bg-[#B91C1C] text-white rounded-xl text-xs font-extrabold shadow-md flex items-center gap-1.5 cursor-pointer"
+                    className="px-4 py-2.5 bg-bronze-600 hover:bg-[#B91C1C] text-white rounded-xl text-xs font-extrabold shadow-md flex items-center gap-1.5 cursor-pointer"
                   >
                     <Plus className="w-4 h-4" />
                     <span>Thêm hoạt động</span>
@@ -348,9 +348,9 @@ export const TripDayPage: React.FC<TripDayPageProps> = ({
                         description: 'Thưởng thức món ăn truyền thống nổi tiếng địa phương.',
                       });
                     }}
-                    className="px-4 py-2.5 bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 rounded-xl text-xs font-bold flex items-center gap-1.5 cursor-pointer"
+                    className="px-4 py-2.5 bg-bronze-50 hover:bg-bronze-100 text-bronze-900 border border-bronze-200 rounded-xl text-xs font-bold flex items-center gap-1.5 cursor-pointer"
                   >
-                    <Sparkles className="w-4 h-4 text-amber-600" />
+                    <Sparkles className="w-4 h-4 text-bronze-600" />
                     <span>AI Gợi ý lịch trình</span>
                   </button>
                 </div>
@@ -412,10 +412,10 @@ export const TripDayPage: React.FC<TripDayPageProps> = ({
                 <button
                   type="button"
                   onClick={() => setMobileBudgetOpen(!mobileBudgetOpen)}
-                  className="w-full p-4 flex items-center justify-between font-black text-xs text-slate-900 bg-slate-50/50 cursor-pointer"
+                  className="w-full p-4 flex items-center justify-between font-black text-xs text-slate-900 bg-sand-50/50 cursor-pointer"
                 >
                   <div className="flex items-center gap-2">
-                    <DollarSign className="w-4 h-4 text-red-600" />
+                    <DollarSign className="w-4 h-4 text-bronze-600" />
                     <span>Chi phí hôm nay</span>
                   </div>
                   {mobileBudgetOpen ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
@@ -437,10 +437,10 @@ export const TripDayPage: React.FC<TripDayPageProps> = ({
                 <button
                   type="button"
                   onClick={() => setMobileFoodOpen(!mobileFoodOpen)}
-                  className="w-full p-4 flex items-center justify-between font-black text-xs text-slate-900 bg-slate-50/50 cursor-pointer"
+                  className="w-full p-4 flex items-center justify-between font-black text-xs text-slate-900 bg-sand-50/50 cursor-pointer"
                 >
                   <div className="flex items-center gap-2">
-                    <Utensils className="w-4 h-4 text-orange-500" />
+                    <Utensils className="w-4 h-4 text-bronze-500" />
                     <span>Gợi ý ăn uống</span>
                   </div>
                   {mobileFoodOpen ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
@@ -457,10 +457,10 @@ export const TripDayPage: React.FC<TripDayPageProps> = ({
                 <button
                   type="button"
                   onClick={() => setMobilePackingOpen(!mobilePackingOpen)}
-                  className="w-full p-4 flex items-center justify-between font-black text-xs text-slate-900 bg-slate-50/50 cursor-pointer"
+                  className="w-full p-4 flex items-center justify-between font-black text-xs text-slate-900 bg-sand-50/50 cursor-pointer"
                 >
                   <div className="flex items-center gap-2">
-                    <CheckSquare className="w-4 h-4 text-[#DC2626]" />
+                    <CheckSquare className="w-4 h-4 text-bronze-600" />
                     <span>Cần chuẩn bị ({(currentDayData.packingItems || []).filter((i: any) => i.checked || i.isPacked).length}/{(currentDayData.packingItems || []).length})</span>
                   </div>
                   {mobilePackingOpen ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
@@ -481,10 +481,10 @@ export const TripDayPage: React.FC<TripDayPageProps> = ({
                 <button
                   type="button"
                   onClick={() => setMobileNotesOpen(!mobileNotesOpen)}
-                  className="w-full p-4 flex items-center justify-between font-black text-xs text-slate-900 bg-slate-50/50 cursor-pointer"
+                  className="w-full p-4 flex items-center justify-between font-black text-xs text-slate-900 bg-sand-50/50 cursor-pointer"
                 >
                   <div className="flex items-center gap-2">
-                    <FileText className="w-4 h-4 text-amber-500" />
+                    <FileText className="w-4 h-4 text-bronze-500" />
                     <span>Ghi chú gia đình</span>
                   </div>
                   {mobileNotesOpen ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
@@ -508,7 +508,7 @@ export const TripDayPage: React.FC<TripDayPageProps> = ({
         <button
           type="button"
           onClick={() => setIsAddActivityOpen(true)}
-          className="flex-1 py-2.5 px-3 rounded-xl bg-[#DC2626] text-white font-extrabold text-xs flex items-center justify-center gap-1 shadow-md cursor-pointer"
+          className="flex-1 py-2.5 px-3 rounded-xl bg-bronze-600 text-white font-extrabold text-xs flex items-center justify-center gap-1 shadow-md cursor-pointer"
         >
           <Plus className="w-4 h-4" />
           <span>Thêm HĐ</span>
@@ -519,14 +519,14 @@ export const TripDayPage: React.FC<TripDayPageProps> = ({
           onClick={() => handleOpenMap(currentDayData.destinationName)}
           className="py-2.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs flex items-center gap-1 border border-slate-200 cursor-pointer shrink-0"
         >
-          <MapPin className="w-3.5 h-3.5 text-[#DC2626]" />
+          <MapPin className="w-3.5 h-3.5 text-bronze-600" />
           <span>Bản đồ</span>
         </button>
 
         <button
           type="button"
           onClick={handleScrollToNextActivity}
-          className="py-2.5 px-3 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-extrabold text-xs flex items-center gap-1 shadow-sm cursor-pointer shrink-0"
+          className="py-2.5 px-3 rounded-xl bg-bronze-500 hover:bg-bronze-600 text-white font-extrabold text-xs flex items-center gap-1 shadow-sm cursor-pointer shrink-0"
         >
           <span>HĐ Tiếp theo</span>
           <ArrowRight className="w-3.5 h-3.5" />

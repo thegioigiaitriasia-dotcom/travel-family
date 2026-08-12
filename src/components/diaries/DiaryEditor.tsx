@@ -81,11 +81,11 @@ export const DiaryEditor: React.FC<DiaryEditorProps> = ({
     <div className="fixed inset-0 z-50 overflow-hidden bg-slate-900/60 backdrop-blur-sm flex justify-end">
       <div className="w-full sm:w-[620px] bg-white h-full flex flex-col shadow-2xl animate-in slide-in-from-right duration-300">
         {/* Header */}
-        <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50">
+        <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-sand-50">
           <div>
             <div className="flex items-center gap-2">
               <h2 className="font-bold text-slate-900 text-base">Chỉnh sửa Nhật ký</h2>
-              <span className="text-[10px] bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded-full border border-emerald-200 font-semibold">
+              <span className="text-[10px] bg-forest-50 text-forest-700 px-2 py-0.5 rounded-full border border-forest-200 font-semibold">
                 Tự động lưu {lastSavedTime}
               </span>
             </div>
@@ -179,7 +179,7 @@ export const DiaryEditor: React.FC<DiaryEditorProps> = ({
                       className={`py-2 rounded-xl font-semibold border transition-all cursor-pointer ${
                         editedDiary.status === st.id
                           ? 'bg-[#183B35] text-white border-[#183B35] shadow-sm'
-                          : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
+                          : 'bg-sand-50 text-slate-700 border-slate-200 hover:bg-slate-100'
                       }`}
                     >
                       {st.label}
@@ -190,7 +190,7 @@ export const DiaryEditor: React.FC<DiaryEditorProps> = ({
 
               <div>
                 <label className="block font-semibold text-slate-700 mb-1.5">Ảnh bìa nhật ký</label>
-                <div className="flex flex-col sm:flex-row items-center gap-3 p-3 bg-slate-50 border border-slate-200 rounded-xl">
+                <div className="flex flex-col sm:flex-row items-center gap-3 p-3 bg-sand-50 border border-slate-200 rounded-xl">
                   {editedDiary.coverImage ? (
                     <img
                       src={editedDiary.coverImage}
@@ -253,7 +253,7 @@ export const DiaryEditor: React.FC<DiaryEditorProps> = ({
                     className={`px-3 py-2 rounded-xl font-bold border transition-all shrink-0 cursor-pointer ${
                       selectedDayNumber === day.dayNumber
                         ? 'bg-[#183B35] text-white border-[#183B35] shadow-sm'
-                        : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
+                        : 'bg-sand-50 text-slate-700 border-slate-200 hover:bg-slate-100'
                     }`}
                   >
                     Ngày {day.dayNumber}
@@ -263,7 +263,7 @@ export const DiaryEditor: React.FC<DiaryEditorProps> = ({
 
               {currentDay && (
                 <div className="space-y-4 pt-2">
-                  <div className="flex items-center justify-between bg-slate-50 p-3 rounded-xl border border-slate-200">
+                  <div className="flex items-center justify-between bg-sand-50 p-3 rounded-xl border border-slate-200">
                     <span className="font-bold text-slate-900">
                       Ngày {currentDay.dayNumber} – {currentDay.date}
                     </span>
@@ -303,7 +303,7 @@ export const DiaryEditor: React.FC<DiaryEditorProps> = ({
           {activeTab === 'photos' && (
             <div className="space-y-5 text-xs">
               {/* Add Photo Input */}
-              <div className="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-3">
+              <div className="p-4 bg-sand-50 border border-slate-200 rounded-xl space-y-3">
                 <h4 className="font-bold text-slate-900 flex items-center justify-between">
                   <span className="flex items-center gap-1.5">
                     <ImageIcon className="w-4 h-4 text-[#183B35]" />
@@ -409,7 +409,7 @@ export const DiaryEditor: React.FC<DiaryEditorProps> = ({
 
           {activeTab === 'privacy' && (
             <div className="space-y-4 text-xs">
-              <div className="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-3">
+              <div className="p-4 bg-sand-50 border border-slate-200 rounded-xl space-y-3">
                 <h4 className="font-bold text-slate-900">Cấu hình riêng tư mặc định</h4>
                 <p className="text-slate-500 text-[11px]">
                   Mọi nhật ký du lịch gia đình đều mặc định ở chế độ Riêng tư chỉ mình bạn truy cập được.
@@ -420,7 +420,7 @@ export const DiaryEditor: React.FC<DiaryEditorProps> = ({
         </div>
 
         {/* Footer */}
-        <div className="p-6 bg-slate-50 border-t border-slate-100 flex items-center justify-end gap-3">
+        <div className="p-6 bg-sand-50 border-t border-slate-100 flex items-center justify-end gap-3">
           <button
             onClick={onClose}
             className="px-4 py-2 text-xs font-semibold text-slate-600 hover:text-slate-800 rounded-xl transition-colors cursor-pointer"

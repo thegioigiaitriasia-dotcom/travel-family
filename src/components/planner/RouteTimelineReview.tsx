@@ -136,7 +136,7 @@ export const RouteTimelineReview: React.FC<RouteTimelineReviewProps> = ({
         <button
           type="button"
           onClick={onSaveDraft}
-          className="px-4 py-2 rounded-xl border border-slate-300 text-slate-700 text-xs font-bold hover:bg-slate-50 flex items-center gap-1.5"
+          className="px-4 py-2 rounded-xl border border-slate-300 text-slate-700 text-xs font-bold hover:bg-sand-50 flex items-center gap-1.5"
         >
           <Save className="w-4 h-4 text-slate-500" />
           <span>Lưu bản nháp</span>
@@ -147,7 +147,7 @@ export const RouteTimelineReview: React.FC<RouteTimelineReviewProps> = ({
       {warnings.length > 0 && (
         <div className="space-y-2">
           <h3 className="text-xs font-extrabold text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
-            <AlertTriangle className="w-4 h-4 text-amber-600" />
+            <AlertTriangle className="w-4 h-4 text-bronze-600" />
             Kiểm tra logic hành trình ({warnings.length} lưu ý)
           </h3>
           <div className="space-y-2">
@@ -158,7 +158,7 @@ export const RouteTimelineReview: React.FC<RouteTimelineReviewProps> = ({
                   w.severity === 'critical'
                     ? 'bg-red-50 border-red-200 text-red-900'
                     : w.severity === 'warning'
-                    ? 'bg-amber-50 border-amber-200 text-amber-900'
+                    ? 'bg-bronze-50 border-bronze-200 text-bronze-900'
                     : 'bg-blue-50 border-blue-200 text-blue-900'
                 }`}
               >
@@ -166,9 +166,9 @@ export const RouteTimelineReview: React.FC<RouteTimelineReviewProps> = ({
                   <AlertCircle
                     className={`w-4 h-4 shrink-0 mt-0.5 ${
                       w.severity === 'critical'
-                        ? 'text-red-600'
+                        ? 'text-bronze-600'
                         : w.severity === 'warning'
-                        ? 'text-amber-600'
+                        ? 'text-bronze-600'
                         : 'text-blue-600'
                     }`}
                   />
@@ -225,7 +225,7 @@ export const RouteTimelineReview: React.FC<RouteTimelineReviewProps> = ({
       )}
 
       {/* Comprehensive Route Timeline */}
-      <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 sm:p-5 space-y-4">
+      <div className="bg-sand-50 border border-slate-200 rounded-2xl p-4 sm:p-5 space-y-4">
         <h3 className="font-extrabold text-slate-900 text-sm sm:text-base flex items-center gap-2">
           <Calendar className="w-5 h-5 text-[#2E8B57]" />
           Timeline hành trình chi tiết
@@ -240,7 +240,7 @@ export const RouteTimelineReview: React.FC<RouteTimelineReviewProps> = ({
                 <span className="text-[#2E8B57]">
                   {windowData.startDate} • {windowData.startTime || '07:00'}
                 </span>
-                <span className="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px]">
+                <span className="px-2 py-0.5 rounded bg-forest-100 text-forest-800 text-[10px]">
                   {windowData.startTimeStatus === 'confirmed' ? 'Đã có vé' : 'Khung giờ mong muốn'}
                 </span>
               </div>
@@ -269,8 +269,8 @@ export const RouteTimelineReview: React.FC<RouteTimelineReviewProps> = ({
                       <span
                         className={`px-2 py-0.5 rounded text-[10px] font-bold ${
                           isConfirmed
-                            ? 'bg-emerald-100 text-emerald-800'
-                            : 'bg-amber-100 text-amber-800'
+                            ? 'bg-forest-100 text-forest-800'
+                            : 'bg-bronze-100 text-bronze-800'
                         }`}
                       >
                         {isConfirmed ? 'Đã xác nhận' : 'Chưa đặt vé'}
@@ -347,7 +347,7 @@ export const RouteTimelineReview: React.FC<RouteTimelineReviewProps> = ({
         <button
           type="button"
           onClick={() => onGoToStep(1)}
-          className="px-5 py-2.5 rounded-xl border border-slate-300 text-slate-700 font-bold text-sm hover:bg-slate-50 transition-all"
+          className="px-5 py-2.5 rounded-xl border border-slate-300 text-slate-700 font-bold text-sm hover:bg-sand-50 transition-all"
         >
           Sửa lại thông tin
         </button>

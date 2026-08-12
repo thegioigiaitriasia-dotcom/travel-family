@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Sun, CloudSun, CloudRain, Thermometer,
   Wind, Droplets, Shirt, Sparkles, MapPin,
@@ -40,32 +40,32 @@ const mapWMOCode = (code: number): WeatherForecastItem['condition'] => {
 
 const getConditionText = (condition: string): string => {
   switch (condition) {
-    case 'sunny': return 'Trời trong xanh, nắng ấm';
-    case 'partly_cloudy': return 'Có mây, thời tiết dễ chịu';
-    case 'rainy': return 'Có mưa, cần mang dù';
-    case 'cool_mountain': return 'Sương mù hoặc se lạnh';
-    case 'thunderstorm': return 'Mưa dông, hạn chế ra ngoài';
-    default: return 'Thời tiết ổn định';
+    case 'sunny': return 'Tr?i trong xanh, n?ng ?m';
+    case 'partly_cloudy': return 'C� m�y, th?i ti?t d? ch?u';
+    case 'rainy': return 'C� mua, c?n mang d�';
+    case 'cool_mountain': return 'Suong m� ho?c se l?nh';
+    case 'thunderstorm': return 'Mua d�ng, h?n ch? ra ngo�i';
+    default: return 'Th?i ti?t ?n d?nh';
   }
 };
 
 const getClothingTip = (condition: string): string => {
   switch (condition) {
-    case 'sunny': return 'Trang phục thoáng mát, nón rộng vành, kính râm';
-    case 'partly_cloudy': return 'Áo thun, quần dài nhẹ, giày thể thao';
-    case 'rainy': return 'Áo mưa tiện lợi, giày chống nước hoặc sandal';
-    case 'cool_mountain': return 'Áo khoác gió, khăn quàng nhẹ, giày ấm';
-    case 'thunderstorm': return 'Áo mưa bộ, giày đi mưa, hạn chế đồ sáng màu';
-    default: return 'Trang phục thoải mái tự do';
+    case 'sunny': return 'Trang ph?c tho�ng m�t, n�n r?ng v�nh, k�nh r�m';
+    case 'partly_cloudy': return '�o thun, qu?n d�i nh?, gi�y th? thao';
+    case 'rainy': return '�o mua ti?n l?i, gi�y ch?ng nu?c ho?c sandal';
+    case 'cool_mountain': return '�o kho�c gi�, khan qu�ng nh?, gi�y ?m';
+    case 'thunderstorm': return '�o mua b?, gi�y di mua, h?n ch? d? s�ng m�u';
+    default: return 'Trang ph?c tho?i m�i t? do';
   }
 };
 
 const getUVLevelText = (uv: number): string => {
-  if (uv <= 2) return 'Thấp';
-  if (uv <= 5) return 'Trung bình';
+  if (uv <= 2) return 'Th?p';
+  if (uv <= 5) return 'Trung b�nh';
   if (uv <= 7) return 'Cao';
-  if (uv <= 10) return 'Rất cao';
-  return 'Cực độ';
+  if (uv <= 10) return 'R?t cao';
+  return 'C?c d?';
 };
 
 export const TripWeatherWidget: React.FC<TripWeatherWidgetProps> = ({
@@ -84,7 +84,7 @@ export const TripWeatherWidget: React.FC<TripWeatherWidgetProps> = ({
       setIsLoading(true);
       setIsError(false);
       try {
-        const primaryDest = trip.destinations?.[0] || 'Hà Nội';
+        const primaryDest = trip.destinations?.[0] || 'H� N?i';
         
         // 1. Geocoding
         const geoRes = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(primaryDest)}&count=1&language=vi`);
@@ -124,7 +124,7 @@ export const TripWeatherWidget: React.FC<TripWeatherWidgetProps> = ({
             uvIndex: Math.round(uvMax),
             uvLevelText: getUVLevelText(Math.round(uvMax)),
             clothingTip: getClothingTip(condition),
-            familyAdvice: `Dựa trên dự báo thực tế tại ${primaryDest}, ${getConditionText(condition).toLowerCase()}.`
+            familyAdvice: `D?a tr�n d? b�o th?c t? t?i ${primaryDest}, ${getConditionText(condition).toLowerCase()}.`
           };
         });
         
@@ -151,22 +151,22 @@ export const TripWeatherWidget: React.FC<TripWeatherWidgetProps> = ({
 
   const getWeatherIcon = (cond: WeatherForecastItem['condition']) => {
     switch (cond) {
-      case 'sunny': return <Sun className="w-6 h-6 text-amber-500 animate-spin-slow" />;
-      case 'partly_cloudy': return <CloudSun className="w-6 h-6 text-amber-400" />;
+      case 'sunny': return <Sun className="w-6 h-6 text-bronze-500 animate-spin-slow" />;
+      case 'partly_cloudy': return <CloudSun className="w-6 h-6 text-bronze-400" />;
       case 'cool_mountain': return <Wind className="w-6 h-6 text-cyan-500" />;
       case 'rainy':
       case 'thunderstorm': return <CloudRain className="w-6 h-6 text-blue-500" />;
-      default: return <Sun className="w-6 h-6 text-amber-500" />;
+      default: return <Sun className="w-6 h-6 text-bronze-500" />;
     }
   };
 
   const getWeatherBadgeColor = (cond: WeatherForecastItem['condition']) => {
     switch (cond) {
-      case 'sunny': return 'bg-amber-50 text-amber-900 border-amber-200/80';
+      case 'sunny': return 'bg-bronze-50 text-bronze-900 border-bronze-200/80';
       case 'partly_cloudy': return 'bg-sky-50 text-sky-900 border-sky-200/80';
       case 'cool_mountain': return 'bg-cyan-50 text-cyan-900 border-cyan-200/80';
       case 'rainy': return 'bg-blue-50 text-blue-900 border-blue-200/80';
-      default: return 'bg-amber-50 text-amber-900 border-amber-200';
+      default: return 'bg-bronze-50 text-bronze-900 border-bronze-200';
     }
   };
 
@@ -175,18 +175,18 @@ export const TripWeatherWidget: React.FC<TripWeatherWidgetProps> = ({
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
         <div>
           <div className="flex items-center gap-2">
-            <span className="p-1.5 rounded-xl bg-amber-100 text-amber-700">
+            <span className="p-1.5 rounded-xl bg-bronze-100 text-bronze-700">
               <Sun className="w-5 h-5" />
             </span>
             <h3 className="text-base sm:text-lg font-black text-slate-900 tracking-tight">
-              Dự báo Thời tiết & Chuẩn bị Gia đình
+              D? b�o Th?i ti?t & Chu?n b? Gia d�nh
             </h3>
-            <span className="px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-800 font-bold text-[11px] border border-amber-200">
-              {trip.destinations.join(' • ')}
+            <span className="px-2.5 py-0.5 rounded-full bg-bronze-50 text-bronze-800 font-bold text-[11px] border border-bronze-200">
+              {trip.destinations.join(' � ')}
             </span>
           </div>
           <p className="text-xs text-slate-500 font-medium mt-1">
-            Dữ liệu dự báo thực tế từ Open-Meteo giúp gia đình chủ động trang phục và vật dụng.
+            D? li?u d? b�o th?c t? t? Open-Meteo gi�p gia d�nh ch? d?ng trang ph?c v� v?t d?ng.
           </p>
         </div>
 
@@ -201,7 +201,7 @@ export const TripWeatherWidget: React.FC<TripWeatherWidgetProps> = ({
                   : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
               }`}
             >
-              Tất cả các ngày
+              T?t c? c�c ng�y
             </button>
             {trip.days.map((day) => (
               <button
@@ -213,11 +213,11 @@ export const TripWeatherWidget: React.FC<TripWeatherWidgetProps> = ({
                 }}
                 className={`px-3 py-1.5 rounded-xl transition-all cursor-pointer whitespace-nowrap ${
                   activeTab === day.dayNumber
-                    ? 'bg-[#DC2626] text-white font-bold shadow-xs'
+                    ? 'bg-bronze-600 text-white font-bold shadow-xs'
                     : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                 }`}
               >
-                Ngày {day.dayNumber}
+                Ng�y {day.dayNumber}
               </button>
             ))}
           </div>
@@ -226,13 +226,13 @@ export const TripWeatherWidget: React.FC<TripWeatherWidgetProps> = ({
 
       {isLoading ? (
         <div className="flex flex-col items-center justify-center py-10 space-y-3">
-          <Loader2 className="w-8 h-8 text-amber-500 animate-spin" />
-          <p className="text-sm text-slate-500 font-medium">Đang tải dữ liệu thời tiết thực tế...</p>
+          <Loader2 className="w-8 h-8 text-bronze-500 animate-spin" />
+          <p className="text-sm text-slate-500 font-medium">�ang t?i d? li?u th?i ti?t th?c t?...</p>
         </div>
       ) : isError ? (
         <div className="flex flex-col items-center justify-center py-10 space-y-3 bg-red-50 rounded-2xl border border-red-100">
           <ShieldAlert className="w-8 h-8 text-red-400" />
-          <p className="text-sm text-red-600 font-medium">Không thể tải dự báo thời tiết. Vui lòng thử lại sau.</p>
+          <p className="text-sm text-bronze-600 font-medium">Kh�ng th? t?i d? b�o th?i ti?t. Vui l�ng th? l?i sau.</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
@@ -247,12 +247,12 @@ export const TripWeatherWidget: React.FC<TripWeatherWidgetProps> = ({
                 <div className="space-y-0.5">
                   <div className="flex items-center gap-1.5">
                     <span className="px-2 py-0.5 bg-black/10 rounded-md font-extrabold text-[10px] tracking-wide uppercase">
-                      Ngày {item.dayNumber}
+                      Ng�y {item.dayNumber}
                     </span>
                     <span className="text-xs font-bold opacity-80">{item.dateStr}</span>
                   </div>
                   <h4 className="font-black text-sm text-slate-900 flex items-center gap-1 mt-0.5">
-                    <MapPin className="w-3.5 h-3.5 text-[#DC2626]" />
+                    <MapPin className="w-3.5 h-3.5 text-bronze-600" />
                     <span>{item.destination}</span>
                   </h4>
                 </div>
@@ -261,7 +261,7 @@ export const TripWeatherWidget: React.FC<TripWeatherWidgetProps> = ({
                   {getWeatherIcon(item.condition)}
                   <div className="text-right">
                     <div className="text-sm font-black text-slate-900 leading-none">
-                      {item.tempMin}°C – {item.tempMax}°C
+                      {item.tempMin}�C � {item.tempMax}�C
                     </div>
                     <div className="text-[10px] text-slate-500 font-bold mt-0.5">
                       {item.conditionText}
@@ -274,7 +274,7 @@ export const TripWeatherWidget: React.FC<TripWeatherWidgetProps> = ({
                 <div className="bg-white/70 p-2 rounded-xl border border-white/50">
                   <div className="text-slate-400 text-[9px] uppercase flex items-center justify-center gap-1 mb-0.5">
                     <Droplets className="w-3 h-3 text-blue-500" />
-                    <span>Độ ẩm</span>
+                    <span>�? ?m</span>
                   </div>
                   <div className="text-slate-800">{item.humidity}%</div>
                 </div>
@@ -282,31 +282,31 @@ export const TripWeatherWidget: React.FC<TripWeatherWidgetProps> = ({
                 <div className="bg-white/70 p-2 rounded-xl border border-white/50">
                   <div className="text-slate-400 text-[9px] uppercase flex items-center justify-center gap-1 mb-0.5">
                     <Umbrella className="w-3 h-3 text-indigo-500" />
-                    <span>Tỷ lệ mưa</span>
+                    <span>T? l? mua</span>
                   </div>
                   <div className="text-slate-800">{item.rainProbability}%</div>
                 </div>
 
                 <div className="bg-white/70 p-2 rounded-xl border border-white/50">
                   <div className="text-slate-400 text-[9px] uppercase flex items-center justify-center gap-1 mb-0.5">
-                    <Sun className="w-3 h-3 text-amber-500" />
-                    <span>Chỉ số UV</span>
+                    <Sun className="w-3 h-3 text-bronze-500" />
+                    <span>Ch? s? UV</span>
                   </div>
-                  <div className="text-amber-900">{item.uvIndex} ({item.uvLevelText})</div>
+                  <div className="text-bronze-900">{item.uvIndex} ({item.uvLevelText})</div>
                 </div>
               </div>
 
               <div className="bg-white/90 rounded-xl p-2.5 border border-white/80 space-y-1.5 text-xs text-slate-800">
                 <div className="flex items-start gap-2">
-                  <Shirt className="w-4 h-4 text-[#DC2626] shrink-0 mt-0.5" />
+                  <Shirt className="w-4 h-4 text-bronze-600 shrink-0 mt-0.5" />
                   <div>
-                    <span className="font-bold text-slate-900">Trang phục khuyên dùng: </span>
+                    <span className="font-bold text-slate-900">Trang ph?c khuy�n d�ng: </span>
                     <span className="text-slate-700">{item.clothingTip}</span>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-2 pt-1 border-t border-slate-100">
-                  <Sparkles className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+                  <Sparkles className="w-4 h-4 text-bronze-600 shrink-0 mt-0.5" />
                   <p className="text-[11px] text-slate-600 italic leading-relaxed">
                     {item.familyAdvice}
                   </p>

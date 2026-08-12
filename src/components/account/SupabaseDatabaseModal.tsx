@@ -208,7 +208,7 @@ CREATE INDEX IF NOT EXISTS idx_places_cache_name ON public.places_cache(name);
 
         {/* Header */}
         <div className="flex items-center gap-3 border-b border-slate-100 pb-4">
-          <div className="p-3 rounded-2xl bg-emerald-50 text-emerald-600 border border-emerald-200 shrink-0">
+          <div className="p-3 rounded-2xl bg-forest-50 text-forest-600 border border-forest-200 shrink-0">
             <Database className="w-6 h-6" />
           </div>
           <div>
@@ -216,7 +216,7 @@ CREATE INDEX IF NOT EXISTS idx_places_cache_name ON public.places_cache(name);
               <h3 className="text-lg font-black text-slate-900">
                 Hạ tầng Database Supabase (Production)
               </h3>
-              <span className="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold">
+              <span className="px-2.5 py-0.5 rounded-full bg-forest-100 text-forest-800 text-[10px] font-bold">
                 Chính thức 100%
               </span>
             </div>
@@ -227,26 +227,26 @@ CREATE INDEX IF NOT EXISTS idx_places_cache_name ON public.places_cache(name);
         </div>
 
         {/* Status card */}
-        <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-3">
+        <div className="bg-sand-50 p-4 rounded-2xl border border-slate-200 space-y-3">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
-              <Server className="w-4 h-4 text-emerald-600" />
+              <Server className="w-4 h-4 text-forest-600" />
               <span>URL Dự án Supabase:</span>
             </span>
             <button
               type="button"
               onClick={handleCopyUrl}
-              className="text-xs font-bold text-[#DC2626] hover:underline flex items-center gap-1 cursor-pointer"
+              className="text-xs font-bold text-bronze-600 hover:underline flex items-center gap-1 cursor-pointer"
             >
               {copiedUrl ? (
-                <Check className="w-3.5 h-3.5 text-emerald-600" />
+                <Check className="w-3.5 h-3.5 text-forest-600" />
               ) : (
                 <Copy className="w-3.5 h-3.5" />
               )}
               <span>{copiedUrl ? 'Đã sao chép' : 'Sao chép URL'}</span>
             </button>
           </div>
-          <code className="block bg-slate-900 text-emerald-400 p-2.5 rounded-xl text-xs font-mono break-all">
+          <code className="block bg-slate-900 text-forest-400 p-2.5 rounded-xl text-xs font-mono break-all">
             {SUPABASE_URL}
           </code>
 
@@ -254,13 +254,13 @@ CREATE INDEX IF NOT EXISTS idx_places_cache_name ON public.places_cache(name);
           <div className="pt-2 border-t border-slate-200 flex items-center justify-between">
             <div className="flex items-center gap-2 text-xs">
               {testing ? (
-                <div className="flex items-center gap-1.5 text-amber-600 font-bold">
+                <div className="flex items-center gap-1.5 text-bronze-600 font-bold">
                   <RefreshCw className="w-4 h-4 animate-spin" />
                   <span>Đang kết nối kiểm tra Supabase...</span>
                 </div>
               ) : testResult?.success ? (
-                <div className="flex items-center gap-1.5 text-emerald-700 font-bold">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                <div className="flex items-center gap-1.5 text-forest-700 font-bold">
+                  <CheckCircle2 className="w-4 h-4 text-forest-600" />
                   <span>{testResult.message}</span>
                 </div>
               ) : (
@@ -287,7 +287,7 @@ CREATE INDEX IF NOT EXISTS idx_places_cache_name ON public.places_cache(name);
           <div className="flex items-center justify-between">
             <div>
               <h4 className="font-bold text-sm text-slate-900 flex items-center gap-1.5">
-                <Code2 className="w-4 h-4 text-[#DC2626]" />
+                <Code2 className="w-4 h-4 text-bronze-600" />
                 <span>Mã khởi tạo 6 Bảng Dữ liệu & RLS Security</span>
               </h4>
               <p className="text-xs text-slate-500">
@@ -298,7 +298,7 @@ CREATE INDEX IF NOT EXISTS idx_places_cache_name ON public.places_cache(name);
             <button
               type="button"
               onClick={handleCopySql}
-              className="px-3.5 py-2 rounded-xl bg-[#DC2626] hover:bg-red-700 text-white font-bold text-xs transition-colors flex items-center gap-1.5 shadow-xs cursor-pointer"
+              className="px-3.5 py-2 rounded-xl bg-bronze-600 hover:bg-red-700 text-white font-bold text-xs transition-colors flex items-center gap-1.5 shadow-xs cursor-pointer"
             >
               {copiedSql ? (
                 <>
@@ -322,9 +322,9 @@ CREATE INDEX IF NOT EXISTS idx_places_cache_name ON public.places_cache(name);
         </div>
 
         {/* 3 Step Instructions */}
-        <div className="bg-amber-50/80 p-4 rounded-2xl border border-amber-200/80 space-y-2 text-xs text-amber-900">
-          <h5 className="font-bold flex items-center gap-1 text-amber-950">
-            <Zap className="w-4 h-4 text-amber-600" />
+        <div className="bg-bronze-50/80 p-4 rounded-2xl border border-bronze-200/80 space-y-2 text-xs text-bronze-900">
+          <h5 className="font-bold flex items-center gap-1 text-bronze-950">
+            <Zap className="w-4 h-4 text-bronze-600" />
             <span>3 Bước triển khai đơn giản trên Supabase Dashboard:</span>
           </h5>
           <ol className="list-decimal pl-4 space-y-1 font-medium">
@@ -334,7 +334,7 @@ CREATE INDEX IF NOT EXISTS idx_places_cache_name ON public.places_cache(name);
                 href="https://supabase.com/dashboard"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="underline font-bold text-amber-950 inline-flex items-center gap-0.5"
+                className="underline font-bold text-bronze-950 inline-flex items-center gap-0.5"
               >
                 <span>Supabase Dashboard</span>
                 <ExternalLink className="w-3 h-3" />
@@ -347,15 +347,15 @@ CREATE INDEX IF NOT EXISTS idx_places_cache_name ON public.places_cache(name);
 
         {/* Production Capability Stats */}
         <div className="grid grid-cols-3 gap-2 text-center text-xs pt-2 border-t border-slate-100">
-          <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200">
+          <div className="p-2.5 rounded-xl bg-sand-50 border border-slate-200">
             <div className="font-black text-slate-900 text-sm">1.000+</div>
             <div className="text-[10px] text-slate-500 font-bold">Người dùng song song</div>
           </div>
-          <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200">
-            <div className="font-black text-emerald-600 text-sm">RLS Active</div>
+          <div className="p-2.5 rounded-xl bg-sand-50 border border-slate-200">
+            <div className="font-black text-forest-600 text-sm">RLS Active</div>
             <div className="text-[10px] text-slate-500 font-bold">Bảo mật từng hộ gia đình</div>
           </div>
-          <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200">
+          <div className="p-2.5 rounded-xl bg-sand-50 border border-slate-200">
             <div className="font-black text-indigo-600 text-sm">Realtime</div>
             <div className="text-[10px] text-slate-500 font-bold">Đồng bộ tức thì</div>
           </div>

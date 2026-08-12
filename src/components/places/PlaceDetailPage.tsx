@@ -64,7 +64,7 @@ export const PlaceDetailPage: React.FC<PlaceDetailPageProps> = ({
   );
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-800 pb-20 animate-fadeIn">
+    <div className="min-h-screen bg-sand-50 text-slate-800 pb-20 animate-fadeIn">
       {/* Sticky Sub-Header */}
       <div className="bg-white border-b border-slate-200 sticky top-0 z-20 px-4 sm:px-8 py-3 flex items-center justify-between">
         <button
@@ -83,7 +83,7 @@ export const PlaceDetailPage: React.FC<PlaceDetailPageProps> = ({
             className={`p-2 rounded-xl border cursor-pointer transition-all ${
               place.favorite
                 ? 'bg-rose-50 border-rose-200 text-rose-600'
-                : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'
+                : 'bg-white border-slate-200 text-slate-600 hover:bg-sand-50'
             }`}
             title="Đánh dấu Yêu thích"
           >
@@ -93,7 +93,7 @@ export const PlaceDetailPage: React.FC<PlaceDetailPageProps> = ({
           <button
             type="button"
             onClick={() => setIsShareOpen(true)}
-            className="p-2 rounded-xl bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer"
+            className="p-2 rounded-xl bg-white border border-slate-200 text-slate-600 hover:bg-sand-50 cursor-pointer"
             title="Chia sẻ địa điểm"
           >
             <Share2 className="w-4 h-4" />
@@ -102,7 +102,7 @@ export const PlaceDetailPage: React.FC<PlaceDetailPageProps> = ({
           <button
             type="button"
             onClick={() => onEdit(place)}
-            className="px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 font-bold text-xs flex items-center gap-1.5 cursor-pointer"
+            className="px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-slate-700 hover:bg-sand-50 font-bold text-xs flex items-center gap-1.5 cursor-pointer"
           >
             <Edit className="w-3.5 h-3.5" />
             <span className="hidden sm:inline">Chỉnh sửa</span>
@@ -111,7 +111,7 @@ export const PlaceDetailPage: React.FC<PlaceDetailPageProps> = ({
           <button
             type="button"
             onClick={() => onAddToTrip(place)}
-            className="px-4 py-2 rounded-xl bg-[#DC2626] hover:bg-[#B91C1C] text-white font-extrabold text-xs shadow-sm shadow-[#DC2626]/20 flex items-center gap-1.5 cursor-pointer"
+            className="px-4 py-2 rounded-xl bg-bronze-600 hover:bg-[#B91C1C] text-white font-extrabold text-xs shadow-sm shadow-[#DC2626]/20 flex items-center gap-1.5 cursor-pointer"
           >
             <PlusCircle className="w-4 h-4" />
             <span>Thêm vào chuyến đi</span>
@@ -159,15 +159,15 @@ export const PlaceDetailPage: React.FC<PlaceDetailPageProps> = ({
           {/* Main Content Column */}
           <div className="space-y-6">
             {/* Personal Note Box (Section 19: Vì sao tôi lưu nơi này?) */}
-            <div className="bg-white rounded-[24px] border border-amber-200 p-6 shadow-xs space-y-3 relative overflow-hidden">
-              <div className="absolute top-0 left-0 right-0 h-1 bg-amber-400"></div>
-              <div className="flex items-center gap-2 text-amber-900 font-black text-sm">
-                <Sparkles className="w-4 h-4 text-amber-600" />
+            <div className="bg-white rounded-[24px] border border-bronze-200 p-6 shadow-xs space-y-3 relative overflow-hidden">
+              <div className="absolute top-0 left-0 right-0 h-1 bg-bronze-400"></div>
+              <div className="flex items-center gap-2 text-bronze-900 font-black text-sm">
+                <Sparkles className="w-4 h-4 text-bronze-600" />
                 <h3>Vì sao tôi lưu nơi này? (Ghi chú cá nhân)</h3>
               </div>
 
               {place.personalNote ? (
-                <p className="text-xs sm:text-sm text-slate-700 leading-relaxed font-medium bg-amber-50/50 p-4 rounded-2xl border border-amber-100">
+                <p className="text-xs sm:text-sm text-slate-700 leading-relaxed font-medium bg-bronze-50/50 p-4 rounded-2xl border border-bronze-100">
                   "{place.personalNote}"
                 </p>
               ) : (
@@ -186,7 +186,7 @@ export const PlaceDetailPage: React.FC<PlaceDetailPageProps> = ({
                   {place.suitabilityTags.map((tag, idx) => (
                     <span
                       key={idx}
-                      className="px-3 py-1.5 rounded-xl bg-red-50 text-[#DC2626] border border-sky-200 text-xs font-bold flex items-center gap-1.5"
+                      className="px-3 py-1.5 rounded-xl bg-red-50 text-bronze-600 border border-sky-200 text-xs font-bold flex items-center gap-1.5"
                     >
                       <Check className="w-3.5 h-3.5" />
                       <span>{tag}</span>
@@ -202,7 +202,7 @@ export const PlaceDetailPage: React.FC<PlaceDetailPageProps> = ({
             <div className="bg-white rounded-[24px] border border-slate-200 p-6 shadow-xs space-y-3">
               <div className="flex items-center justify-between">
                 <h3 className="text-sm font-black text-slate-900 flex items-center gap-2">
-                  <Calendar className="w-4 h-4 text-[#DC2626]" />
+                  <Calendar className="w-4 h-4 text-bronze-600" />
                   <span>Lịch sử xuất hiện trong các chuyến đi</span>
                 </h3>
                 <span className="text-xs text-slate-500 font-bold">
@@ -215,7 +215,7 @@ export const PlaceDetailPage: React.FC<PlaceDetailPageProps> = ({
                   {relatedTrips.map((trip) => (
                     <div
                       key={trip.id}
-                      className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-between text-xs font-bold"
+                      className="p-3.5 rounded-2xl bg-sand-50 border border-slate-200 flex items-center justify-between text-xs font-bold"
                     >
                       <div className="space-y-0.5">
                         <p className="text-slate-900 font-extrabold">{trip.title}</p>
@@ -224,14 +224,14 @@ export const PlaceDetailPage: React.FC<PlaceDetailPageProps> = ({
                         </p>
                       </div>
 
-                      <span className="px-2.5 py-1 rounded-lg bg-emerald-100 text-emerald-800 text-[10px] font-black">
+                      <span className="px-2.5 py-1 rounded-lg bg-forest-100 text-forest-800 text-[10px] font-black">
                         Đã lập lịch
                       </span>
                     </div>
                   ))}
                 </div>
               ) : (
-                <p className="text-xs text-slate-400 italic bg-slate-50 p-4 rounded-2xl text-center">
+                <p className="text-xs text-slate-400 italic bg-sand-50 p-4 rounded-2xl text-center">
                   Địa điểm này chưa được thêm vào chuyến đi nào.
                 </p>
               )}
@@ -248,7 +248,7 @@ export const PlaceDetailPage: React.FC<PlaceDetailPageProps> = ({
                 <button
                   type="button"
                   onClick={() => alert('Chức năng tải ảnh kỷ niệm sẽ tải ảnh lên thiết bị.')}
-                  className="text-xs text-[#DC2626] hover:underline font-bold cursor-pointer"
+                  className="text-xs text-bronze-600 hover:underline font-bold cursor-pointer"
                 >
                   + Thêm ảnh
                 </button>
@@ -278,21 +278,21 @@ export const PlaceDetailPage: React.FC<PlaceDetailPageProps> = ({
                   onClick={() => onToggleVisited(place.id)}
                   className={`w-full p-3 rounded-2xl border text-left font-extrabold text-xs flex items-center justify-between cursor-pointer transition-all ${
                     place.visited
-                      ? 'bg-emerald-50 border-emerald-300 text-emerald-900'
-                      : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100'
+                      ? 'bg-forest-50 border-forest-300 text-forest-900'
+                      : 'bg-sand-50 border-slate-200 text-slate-700 hover:bg-slate-100'
                   }`}
                 >
                   <div className="flex items-center gap-2">
-                    <CheckCircle2 className={`w-4 h-4 ${place.visited ? 'text-red-600' : 'text-slate-400'}`} />
+                    <CheckCircle2 className={`w-4 h-4 ${place.visited ? 'text-bronze-600' : 'text-slate-400'}`} />
                     <span>{place.visited ? 'Đã từng ghé địa điểm này' : 'Chưa ghé (Muốn ghé)'}</span>
                   </div>
                 </button>
 
                 {place.visited && place.personalRating && (
-                  <div className="p-3.5 rounded-2xl bg-amber-50 border border-amber-200 flex items-center justify-between">
-                    <span className="text-xs font-bold text-amber-900">Đánh giá cá nhân:</span>
-                    <div className="flex items-center gap-1 text-amber-600 font-black text-sm">
-                      <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
+                  <div className="p-3.5 rounded-2xl bg-bronze-50 border border-bronze-200 flex items-center justify-between">
+                    <span className="text-xs font-bold text-bronze-900">Đánh giá cá nhân:</span>
+                    <div className="flex items-center gap-1 text-bronze-600 font-black text-sm">
+                      <Star className="w-4 h-4 fill-amber-400 text-bronze-400" />
                       <span>{place.personalRating.toFixed(1)} / 5</span>
                     </div>
                   </div>
@@ -339,7 +339,7 @@ export const PlaceDetailPage: React.FC<PlaceDetailPageProps> = ({
 
               <div className="space-y-2 text-xs font-medium text-slate-700">
                 <p className="flex items-start gap-2">
-                  <MapPin className="w-4 h-4 text-[#DC2626] shrink-0 mt-0.5" />
+                  <MapPin className="w-4 h-4 text-bronze-600 shrink-0 mt-0.5" />
                   <span>{place.address || `${place.city || ''}, ${place.province || ''}`}</span>
                 </p>
               </div>
@@ -349,7 +349,7 @@ export const PlaceDetailPage: React.FC<PlaceDetailPageProps> = ({
                 onClick={() =>
                   window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(place.name + ' ' + (place.address || place.city || ''))}`, '_blank')
                 }
-                className="w-full py-2.5 rounded-xl bg-red-50 hover:bg-sky-100 text-[#DC2626] font-extrabold text-xs flex items-center justify-center gap-1.5 cursor-pointer transition-colors"
+                className="w-full py-2.5 rounded-xl bg-red-50 hover:bg-sky-100 text-bronze-600 font-extrabold text-xs flex items-center justify-center gap-1.5 cursor-pointer transition-colors"
               >
                 <ExternalLink className="w-3.5 h-3.5" />
                 <span>Mở Google Maps</span>
@@ -358,9 +358,9 @@ export const PlaceDetailPage: React.FC<PlaceDetailPageProps> = ({
 
             {/* Verification Notice Card (Section 22) */}
             {place.verificationStatus === 'needs_check' && (
-              <div className="bg-amber-50 rounded-[24px] border border-amber-200 p-4 space-y-2 text-xs text-amber-900">
-                <div className="flex items-center gap-2 font-black text-amber-950">
-                  <ShieldAlert className="w-4 h-4 text-amber-600" />
+              <div className="bg-bronze-50 rounded-[24px] border border-bronze-200 p-4 space-y-2 text-xs text-bronze-900">
+                <div className="flex items-center gap-2 font-black text-bronze-950">
+                  <ShieldAlert className="w-4 h-4 text-bronze-600" />
                   <span>Cần kiểm tra trước khi đi</span>
                 </div>
                 <p className="font-medium text-[11px]">

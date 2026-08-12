@@ -19,9 +19,9 @@ export const TransportConnector: React.FC<TransportConnectorProps> = ({ transpor
 
   return (
     <div className="my-3 pl-4 sm:pl-6 border-l-2 border-dashed border-[#DC2626]/40 ml-4 sm:ml-6">
-      <div className="bg-slate-50 border border-slate-200/80 rounded-2xl p-2.5 max-w-md space-y-1">
+      <div className="bg-sand-50 border border-slate-200/80 rounded-2xl p-2.5 max-w-md space-y-1">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2 text-xs font-extrabold text-[#DC2626]">
+          <div className="flex items-center gap-2 text-xs font-extrabold text-bronze-600">
             <Navigation className="w-3.5 h-3.5" />
             <span>
               Di chuyển {transport.durationMinutes} phút · {transport.method}

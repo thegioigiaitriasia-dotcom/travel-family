@@ -45,11 +45,11 @@ interface ActivityEditorDrawerProps {
 
 const activityTypes: { id: TravelActivityType; label: string; icon: React.ReactNode; color: string }[] = [
   { id: 'transport', label: 'Di chuyển', icon: <Plane className="w-4 h-4 text-blue-600" />, color: 'bg-blue-50 border-blue-200 text-blue-900' },
-  { id: 'food', label: 'Ăn uống', icon: <Utensils className="w-4 h-4 text-orange-600" />, color: 'bg-orange-50 border-orange-200 text-orange-900' },
-  { id: 'sightseeing', label: 'Tham quan', icon: <Compass className="w-4 h-4 text-red-600" />, color: 'bg-emerald-50 border-emerald-200 text-emerald-900' },
+  { id: 'food', label: 'Ăn uống', icon: <Utensils className="w-4 h-4 text-bronze-600" />, color: 'bg-bronze-50 border-bronze-200 text-bronze-900' },
+  { id: 'sightseeing', label: 'Tham quan', icon: <Compass className="w-4 h-4 text-bronze-600" />, color: 'bg-forest-50 border-forest-200 text-forest-900' },
   { id: 'rest', label: 'Nghỉ ngơi', icon: <Coffee className="w-4 h-4 text-slate-600" />, color: 'bg-slate-100 border-slate-200 text-slate-900' },
   { id: 'accommodation', label: 'Khách sạn', icon: <BedDouble className="w-4 h-4 text-purple-600" />, color: 'bg-purple-50 border-purple-200 text-purple-900' },
-  { id: 'experience', label: 'Trải nghiệm', icon: <Sparkles className="w-4 h-4 text-amber-600" />, color: 'bg-amber-50 border-amber-200 text-amber-900' },
+  { id: 'experience', label: 'Trải nghiệm', icon: <Sparkles className="w-4 h-4 text-bronze-600" />, color: 'bg-bronze-50 border-bronze-200 text-bronze-900' },
 ];
 
 const availableTags = ['Gia đình', 'Trẻ em', 'Checkin', 'Ẩm thực', 'Biển', 'Văn hóa', 'Mạo hiểm', 'Thư giãn', 'Mùa mưa'];
@@ -261,7 +261,7 @@ export const ActivityEditorDrawer: React.FC<ActivityEditorDrawerProps> = ({
           </div>
 
           {/* Quick Action Pills Menu */}
-          <div className="bg-slate-50 border-b border-slate-100 px-6 py-2.5 flex items-center justify-between gap-2 text-xs font-bold text-slate-700 overflow-x-auto">
+          <div className="bg-sand-50 border-b border-slate-100 px-6 py-2.5 flex items-center justify-between gap-2 text-xs font-bold text-slate-700 overflow-x-auto">
             <div className="flex items-center gap-1.5 shrink-0">
               <button
                 type="button"
@@ -333,7 +333,7 @@ export const ActivityEditorDrawer: React.FC<ActivityEditorDrawerProps> = ({
                       className={`p-2.5 rounded-xl border text-left transition-all flex items-center gap-2 cursor-pointer ${
                         isSelected
                           ? `${cat.color} font-black shadow-xs ring-2 ring-[#DC2626]/20`
-                          : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50'
+                          : 'bg-white border-slate-200 text-slate-700 hover:bg-sand-50'
                       }`}
                     >
                       {cat.icon}
@@ -361,7 +361,7 @@ export const ActivityEditorDrawer: React.FC<ActivityEditorDrawerProps> = ({
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="VD: Ăn sáng Phở Cà phê"
-                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-xs font-bold text-slate-900 focus:outline-none focus:border-[#DC2626]"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-sand-50 border border-slate-300 text-xs font-bold text-slate-900 focus:outline-none focus:border-[#DC2626]"
               />
             </div>
 
@@ -381,7 +381,7 @@ export const ActivityEditorDrawer: React.FC<ActivityEditorDrawerProps> = ({
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="Mô tả ngắn gọn về hoạt động..."
-                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-xs font-bold text-slate-900 focus:outline-none focus:border-[#DC2626]"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-sand-50 border border-slate-300 text-xs font-bold text-slate-900 focus:outline-none focus:border-[#DC2626]"
               />
             </div>
 
@@ -400,7 +400,7 @@ export const ActivityEditorDrawer: React.FC<ActivityEditorDrawerProps> = ({
                       value={startTime}
                       onChange={(e) => setStartTime(e.target.value)}
                       placeholder="08:00"
-                      className="w-full px-3 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-xs font-bold text-slate-900 pl-8"
+                      className="w-full px-3 py-2.5 rounded-xl bg-sand-50 border border-slate-300 text-xs font-bold text-slate-900 pl-8"
                     />
                     <Clock className="w-4 h-4 text-slate-400 absolute left-2.5 top-3" />
                   </div>
@@ -414,7 +414,7 @@ export const ActivityEditorDrawer: React.FC<ActivityEditorDrawerProps> = ({
                       value={endTime}
                       onChange={(e) => setEndTime(e.target.value)}
                       placeholder="09:30"
-                      className="w-full px-3 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-xs font-bold text-slate-900 pl-8"
+                      className="w-full px-3 py-2.5 rounded-xl bg-sand-50 border border-slate-300 text-xs font-bold text-slate-900 pl-8"
                     />
                     <Clock className="w-4 h-4 text-slate-400 absolute left-2.5 top-3" />
                   </div>
@@ -444,7 +444,7 @@ export const ActivityEditorDrawer: React.FC<ActivityEditorDrawerProps> = ({
                   }}
                   onFocus={() => setShowLocationResults(true)}
                   placeholder="Nhập địa điểm..."
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-xs font-bold text-slate-900 pl-9"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-sand-50 border border-slate-300 text-xs font-bold text-slate-900 pl-9"
                 />
                 <Search className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
               </div>
@@ -460,9 +460,9 @@ export const ActivityEditorDrawer: React.FC<ActivityEditorDrawerProps> = ({
                       key={idx}
                       type="button"
                       onClick={() => handleSelectLocation(loc)}
-                      className="w-full text-left p-2 rounded-xl hover:bg-slate-50 flex items-start gap-2 cursor-pointer"
+                      className="w-full text-left p-2 rounded-xl hover:bg-sand-50 flex items-start gap-2 cursor-pointer"
                     >
-                      <MapPin className="w-4 h-4 text-[#DC2626] shrink-0 mt-0.5" />
+                      <MapPin className="w-4 h-4 text-bronze-600 shrink-0 mt-0.5" />
                       <div>
                         <p className="text-xs font-extrabold text-slate-900">{loc.name}</p>
                         <p className="text-[10px] text-slate-500">{loc.address}</p>
@@ -484,7 +484,7 @@ export const ActivityEditorDrawer: React.FC<ActivityEditorDrawerProps> = ({
                 value={placeAddress}
                 onChange={(e) => setPlaceAddress(e.target.value)}
                 placeholder="Địa chỉ cụ thể (Tùy chọn)"
-                className="w-full px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700 mt-2"
+                className="w-full px-3.5 py-2 rounded-xl bg-sand-50 border border-slate-200 text-xs font-medium text-slate-700 mt-2"
               />
             </div>
 
@@ -502,7 +502,7 @@ export const ActivityEditorDrawer: React.FC<ActivityEditorDrawerProps> = ({
                     </button>
                   </div>
                 ) : (
-                  <label className={`w-20 h-20 flex items-center justify-center border-2 border-dashed border-slate-300 rounded-xl bg-slate-50 cursor-pointer hover:bg-slate-100 transition-colors ${isUploading ? 'opacity-50 pointer-events-none' : ''}`}>
+                  <label className={`w-20 h-20 flex items-center justify-center border-2 border-dashed border-slate-300 rounded-xl bg-sand-50 cursor-pointer hover:bg-slate-100 transition-colors ${isUploading ? 'opacity-50 pointer-events-none' : ''}`}>
                     <input type="file" accept="image/*" className="hidden" onChange={handleImageUpload} disabled={isUploading} />
                     <div className="text-center">
                       <span className="text-[10px] text-slate-500 font-bold block">{isUploading ? 'Đang tải...' : '+ Ảnh'}</span>
@@ -526,7 +526,7 @@ export const ActivityEditorDrawer: React.FC<ActivityEditorDrawerProps> = ({
                     type="checkbox"
                     checked={isUnspecifiedCost}
                     onChange={(e) => setIsUnspecifiedCost(e.target.checked)}
-                    className="rounded text-[#DC2626]"
+                    className="rounded text-bronze-600"
                   />
                   <span>Không xác định</span>
                 </label>
@@ -539,7 +539,7 @@ export const ActivityEditorDrawer: React.FC<ActivityEditorDrawerProps> = ({
                     value={cost}
                     onChange={(e) => setCost(e.target.value)}
                     placeholder="250000"
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-xs font-bold text-slate-900 pl-9"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-sand-50 border border-slate-300 text-xs font-bold text-slate-900 pl-9"
                   />
                   <DollarSign className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
                 </div>
@@ -560,8 +560,8 @@ export const ActivityEditorDrawer: React.FC<ActivityEditorDrawerProps> = ({
                       onClick={() => setTransportMethod(method)}
                       className={`px-3 py-1.5 rounded-xl font-bold text-xs transition-all cursor-pointer ${
                         transportMethod === method
-                          ? 'bg-red-600 text-white shadow-xs'
-                          : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-50'
+                          ? 'bg-bronze-600 text-white shadow-xs'
+                          : 'bg-white border border-slate-200 text-slate-700 hover:bg-sand-50'
                       }`}
                     >
                       {method}
@@ -623,7 +623,7 @@ export const ActivityEditorDrawer: React.FC<ActivityEditorDrawerProps> = ({
                 value={familyTips}
                 onChange={(e) => setFamilyTips(e.target.value)}
                 placeholder="VD: Mang theo nước uống, có nhiều bậc thang dốc..."
-                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-xs font-bold text-slate-900 focus:outline-none focus:border-[#DC2626]"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-sand-50 border border-slate-300 text-xs font-bold text-slate-900 focus:outline-none focus:border-[#DC2626]"
               />
             </div>
 
@@ -642,8 +642,8 @@ export const ActivityEditorDrawer: React.FC<ActivityEditorDrawerProps> = ({
                       onClick={() => toggleTag(tag)}
                       className={`px-3 py-1 rounded-full text-[11px] font-bold border transition-all cursor-pointer ${
                         isSelected
-                          ? 'bg-[#DC2626] text-white border-[#DC2626]'
-                          : 'bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100'
+                          ? 'bg-bronze-600 text-white border-[#DC2626]'
+                          : 'bg-sand-50 text-slate-600 border-slate-200 hover:bg-slate-100'
                       }`}
                     >
                       {tag}
@@ -681,7 +681,7 @@ export const ActivityEditorDrawer: React.FC<ActivityEditorDrawerProps> = ({
                 type="submit"
                 form="activity-editor-form"
                 disabled={isTimeInvalid || !title.trim()}
-                className="px-5 py-3 rounded-xl bg-[#DC2626] hover:bg-[#B91C1C] text-white font-extrabold text-xs shadow-md shadow-[#DC2626]/20 flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                className="px-5 py-3 rounded-xl bg-bronze-600 hover:bg-[#B91C1C] text-white font-extrabold text-xs shadow-md shadow-[#DC2626]/20 flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
               >
                 <Check className="w-4 h-4" />
                 <span>Lưu thay đổi</span>
@@ -696,7 +696,7 @@ export const ActivityEditorDrawer: React.FC<ActivityEditorDrawerProps> = ({
         <div className="fixed inset-0 z-60 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
           <div className="bg-white rounded-[24px] p-6 max-w-sm w-full space-y-4 shadow-2xl border border-slate-200 text-left animate-fadeIn">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center shrink-0 border border-amber-200">
+              <div className="w-10 h-10 rounded-2xl bg-bronze-100 text-bronze-700 flex items-center justify-center shrink-0 border border-bronze-200">
                 <AlertTriangle className="w-5 h-5" />
               </div>
               <div>
@@ -717,7 +717,7 @@ export const ActivityEditorDrawer: React.FC<ActivityEditorDrawerProps> = ({
                   const formEl = document.getElementById('activity-editor-form') as HTMLFormElement;
                   if (formEl) formEl.requestSubmit();
                 }}
-                className="w-full py-2.5 rounded-xl bg-[#DC2626] text-white font-extrabold text-xs hover:bg-[#B91C1C]"
+                className="w-full py-2.5 rounded-xl bg-bronze-600 text-white font-extrabold text-xs hover:bg-[#B91C1C]"
               >
                 Lưu ngay
               </button>
@@ -790,7 +790,7 @@ export const ActivityEditorDrawer: React.FC<ActivityEditorDrawerProps> = ({
                     {isCurrent ? (
                       <span className="text-[10px] text-slate-400">Hiên tại</span>
                     ) : (
-                      <ArrowRightLeft className="w-3.5 h-3.5 text-[#DC2626]" />
+                      <ArrowRightLeft className="w-3.5 h-3.5 text-bronze-600" />
                     )}
                   </button>
                 );
@@ -871,7 +871,7 @@ export const ActivityEditorDrawer: React.FC<ActivityEditorDrawerProps> = ({
                       className={`px-3 py-1.5 rounded-xl border font-extrabold text-xs cursor-pointer transition-all ${
                         isSelected
                           ? 'bg-purple-700 text-white border-purple-700 shadow-xs'
-                          : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100'
+                          : 'bg-sand-50 border-slate-200 text-slate-700 hover:bg-slate-100'
                       }`}
                     >
                       {r}

@@ -86,7 +86,7 @@ export const TravelerAndNeedsStep: React.FC<TravelerAndNeedsStepProps> = ({
       </div>
 
       {/* Family Members Count */}
-      <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 sm:p-5 space-y-4">
+      <div className="bg-sand-50 border border-slate-200 rounded-2xl p-4 sm:p-5 space-y-4">
         <h3 className="font-extrabold text-slate-900 text-sm sm:text-base">
           Số lượng thành viên trong đoàn
         </h3>
@@ -180,7 +180,7 @@ export const TravelerAndNeedsStep: React.FC<TravelerAndNeedsStepProps> = ({
               {travelers.children.map((child, idx) => (
                 <div
                   key={idx}
-                  className="flex items-center justify-between p-2.5 rounded-lg bg-slate-50 border border-slate-200"
+                  className="flex items-center justify-between p-2.5 rounded-lg bg-sand-50 border border-slate-200"
                 >
                   <span className="text-xs font-bold text-slate-700">
                     Bé thứ {idx + 1}:
@@ -215,7 +215,7 @@ export const TravelerAndNeedsStep: React.FC<TravelerAndNeedsStepProps> = ({
       </div>
 
       {/* Mobility & Special Needs Checklist */}
-      <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 sm:p-5 space-y-4">
+      <div className="bg-sand-50 border border-slate-200 rounded-2xl p-4 sm:p-5 space-y-4">
         <h3 className="font-extrabold text-slate-900 text-sm sm:text-base flex items-center gap-2">
           <HeartHandshake className="w-5 h-5 text-[#2E8B57]" />
           Nhu cầu đặc biệt về sức khỏe & di chuyển
@@ -248,8 +248,8 @@ export const TravelerAndNeedsStep: React.FC<TravelerAndNeedsStepProps> = ({
 
         {/* Auto Motion Sickness Special Prompt Notice */}
         {isMotionSick && (
-          <div className="bg-amber-50 border border-amber-300 rounded-xl p-3 text-xs text-amber-900 flex items-start gap-2.5">
-            <Sparkles className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+          <div className="bg-bronze-50 border border-bronze-300 rounded-xl p-3 text-xs text-bronze-900 flex items-start gap-2.5">
+            <Sparkles className="w-4 h-4 text-bronze-600 shrink-0 mt-0.5" />
             <div>
               <strong className="block font-bold">Kích hoạt chế độ hỗ trợ say xe:</strong>
               <span>
@@ -278,7 +278,7 @@ export const TravelerAndNeedsStep: React.FC<TravelerAndNeedsStepProps> = ({
         <button
           type="button"
           onClick={onBack}
-          className="px-5 py-2.5 rounded-xl border border-slate-300 text-slate-700 font-bold text-sm hover:bg-slate-50 transition-all"
+          className="px-5 py-2.5 rounded-xl border border-slate-300 text-slate-700 font-bold text-sm hover:bg-sand-50 transition-all"
         >
           Quay lại
         </button>

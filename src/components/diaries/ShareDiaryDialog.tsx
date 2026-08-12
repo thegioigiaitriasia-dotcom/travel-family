@@ -45,7 +45,7 @@ export const ShareDiaryDialog: React.FC<ShareDiaryDialogProps> = ({
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4 overflow-y-auto">
       <div className="bg-white rounded-2xl shadow-xl max-w-lg w-full overflow-hidden border border-slate-100 animate-in fade-in zoom-in-95 duration-200">
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 bg-slate-50">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 bg-sand-50">
           <div className="flex items-center gap-2.5">
             <div className="w-9 h-9 rounded-xl bg-[#E9F0ED] text-[#183B35] flex items-center justify-center font-bold">
               <Globe className="w-5 h-5" />
@@ -117,7 +117,7 @@ export const ShareDiaryDialog: React.FC<ShareDiaryDialogProps> = ({
                     type="text"
                     readOnly
                     value={shareUrl}
-                    className="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-600 font-mono select-all focus:outline-none"
+                    className="flex-1 bg-sand-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-600 font-mono select-all focus:outline-none"
                   />
                   <button
                     onClick={handleCopy}
@@ -136,7 +136,7 @@ export const ShareDiaryDialog: React.FC<ShareDiaryDialogProps> = ({
                   <span>Tuỳ chỉnh dữ liệu hiển thị</span>
                 </label>
                 <div className="space-y-2 text-xs">
-                  <label className="flex items-center justify-between p-3 rounded-xl border border-slate-100 bg-slate-50 hover:bg-slate-100/80 cursor-pointer">
+                  <label className="flex items-center justify-between p-3 rounded-xl border border-slate-100 bg-sand-50 hover:bg-slate-100/80 cursor-pointer">
                     <span className="text-slate-700 font-medium">Hiển thị tên các thành viên</span>
                     <input
                       type="checkbox"
@@ -145,7 +145,7 @@ export const ShareDiaryDialog: React.FC<ShareDiaryDialogProps> = ({
                       className="rounded text-[#183B35] focus:ring-[#183B35]"
                     />
                   </label>
-                  <label className="flex items-center justify-between p-3 rounded-xl border border-slate-100 bg-slate-50 hover:bg-slate-100/80 cursor-pointer">
+                  <label className="flex items-center justify-between p-3 rounded-xl border border-slate-100 bg-sand-50 hover:bg-slate-100/80 cursor-pointer">
                     <span className="text-slate-700 font-medium">Hiển thị chi phí thực tế</span>
                     <input
                       type="checkbox"
@@ -154,7 +154,7 @@ export const ShareDiaryDialog: React.FC<ShareDiaryDialogProps> = ({
                       className="rounded text-[#183B35] focus:ring-[#183B35]"
                     />
                   </label>
-                  <label className="flex items-center justify-between p-3 rounded-xl border border-slate-100 bg-slate-50 hover:bg-slate-100/80 cursor-pointer">
+                  <label className="flex items-center justify-between p-3 rounded-xl border border-slate-100 bg-sand-50 hover:bg-slate-100/80 cursor-pointer">
                     <span className="text-slate-700 font-medium">Hiển thị ghi chú cá nhân</span>
                     <input
                       type="checkbox"
@@ -163,7 +163,7 @@ export const ShareDiaryDialog: React.FC<ShareDiaryDialogProps> = ({
                       className="rounded text-[#183B35] focus:ring-[#183B35]"
                     />
                   </label>
-                  <label className="flex items-center justify-between p-3 rounded-xl border border-slate-100 bg-slate-50 hover:bg-slate-100/80 cursor-pointer">
+                  <label className="flex items-center justify-between p-3 rounded-xl border border-slate-100 bg-sand-50 hover:bg-slate-100/80 cursor-pointer">
                     <span className="text-slate-700 font-medium">Cho phép người xem tải ảnh gốc</span>
                     <input
                       type="checkbox"
@@ -188,7 +188,7 @@ export const ShareDiaryDialog: React.FC<ShareDiaryDialogProps> = ({
               </div>
 
               {showQR && (
-                <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 text-center flex flex-col items-center">
+                <div className="p-4 bg-sand-50 rounded-xl border border-slate-200 text-center flex flex-col items-center">
                   <div className="w-32 h-32 bg-white p-2 rounded-xl border border-slate-200 flex items-center justify-center shadow-sm">
                     <div className="w-full h-full border-2 border-dashed border-slate-400 rounded-lg flex items-center justify-center text-slate-400 font-mono text-[10px]">
                       [ QR CODE ]
@@ -213,7 +213,7 @@ export const ShareDiaryDialog: React.FC<ShareDiaryDialogProps> = ({
         </div>
 
         {/* Footer */}
-        <div className="px-6 py-4 bg-slate-50 border-t border-slate-100 flex justify-end">
+        <div className="px-6 py-4 bg-sand-50 border-t border-slate-100 flex justify-end">
           <button
             onClick={onClose}
             className="px-5 py-2 text-xs font-semibold text-white bg-[#183B35] hover:bg-[#28584E] rounded-xl transition-colors cursor-pointer"

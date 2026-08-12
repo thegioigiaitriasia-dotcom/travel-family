@@ -49,14 +49,14 @@ export const ActivityCard: React.FC<ActivityCardProps> = ({
         );
       case 'food':
         return (
-          <span className="inline-flex items-center gap-1 text-[11px] font-extrabold px-2.5 py-0.5 rounded-full bg-orange-50 text-orange-700 border border-orange-200">
+          <span className="inline-flex items-center gap-1 text-[11px] font-extrabold px-2.5 py-0.5 rounded-full bg-bronze-50 text-bronze-700 border border-bronze-200">
             <Utensils className="w-3 h-3" />
             Ăn uống
           </span>
         );
       case 'sightseeing':
         return (
-          <span className="inline-flex items-center gap-1 text-[11px] font-extrabold px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
+          <span className="inline-flex items-center gap-1 text-[11px] font-extrabold px-2.5 py-0.5 rounded-full bg-forest-50 text-forest-700 border border-forest-200">
             <Compass className="w-3 h-3" />
             Tham quan
           </span>
@@ -88,14 +88,14 @@ export const ActivityCard: React.FC<ActivityCardProps> = ({
     switch (activity.status) {
       case 'completed':
         return (
-          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-100 text-emerald-800 border border-emerald-200">
+          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-forest-100 text-forest-800 border border-forest-200">
             <Check className="w-3 h-3 stroke-[3]" />
             Đã hoàn thành
           </span>
         );
       case 'current':
         return (
-          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-[#183B35] text-white animate-pulse">
+          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-forest-900 text-white animate-pulse">
             Đang diễn ra
           </span>
         );
@@ -107,7 +107,7 @@ export const ActivityCard: React.FC<ActivityCardProps> = ({
         );
       case 'changed':
         return (
-          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-amber-100 text-amber-800 border border-amber-200">
+          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-bronze-100 text-bronze-800 border border-bronze-200">
             Đã thay đổi
           </span>
         );
@@ -126,17 +126,17 @@ export const ActivityCard: React.FC<ActivityCardProps> = ({
     <div
       className={`bg-white rounded-[22px] border p-5 shadow-sm space-y-3.5 transition-all duration-200 ${
         isDone
-          ? 'border-emerald-200 bg-emerald-50/20 opacity-90'
+          ? 'border-forest-200 bg-forest-50/20 opacity-90'
           : activity.status === 'current'
-          ? 'border-[#183B35] ring-2 ring-[#183B35]/20 shadow-md'
-          : 'border-[#E2E3DE] hover:border-[#183B35]/30'
+          ? 'border-forest-900 ring-2 ring-forest-900/20 shadow-md'
+          : 'border-line hover:border-forest-900/30'
       }`}
     >
       {/* Top Header: Time, Badges, Status */}
       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#E2E3DE] pb-3">
         <div className="flex items-center gap-2">
-          <span className="text-xs font-black text-[#1D211F] bg-[#F7F6F0] px-3 py-1 rounded-xl flex items-center gap-1.5 border border-[#E2E3DE]">
-            <Clock className="w-3.5 h-3.5 text-[#183B35]" />
+          <span className="text-xs font-black text-ink-900 bg-sand-50 px-3 py-1 rounded-xl flex items-center gap-1.5 border border-line">
+            <Clock className="w-3.5 h-3.5 text-bronze-600" />
             {activity.startTime} {activity.endTime ? `– ${activity.endTime}` : ''}
           </span>
           {getTypeBadge()}
@@ -151,7 +151,7 @@ export const ActivityCard: React.FC<ActivityCardProps> = ({
             onClick={() => onToggleStatus(activity.id)}
             className={`px-2.5 py-1 rounded-xl text-xs font-extrabold transition-all cursor-pointer flex items-center gap-1 ${
               isDone
-                ? 'bg-red-600 text-white'
+                ? 'bg-bronze-600 text-white'
                 : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
             }`}
             title="Đánh dấu hoàn thành"
@@ -171,11 +171,11 @@ export const ActivityCard: React.FC<ActivityCardProps> = ({
 
           {/* Booking Confirmation Status Badge */}
           {(activity.bookingStatus === 'confirmed' || activity.bookingCode) ? (
-            <div className="inline-flex items-center gap-1.5 bg-emerald-50 text-emerald-800 border border-emerald-200 px-2.5 py-1 rounded-xl text-[11px] font-extrabold shrink-0">
-              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+            <div className="inline-flex items-center gap-1.5 bg-forest-50 text-forest-800 border border-forest-200 px-2.5 py-1 rounded-xl text-[11px] font-extrabold shrink-0">
+              <CheckCircle2 className="w-3.5 h-3.5 text-forest-600" />
               <span>Đã có vé/booking</span>
               {activity.bookingCode && (
-                <span className="bg-white text-slate-900 px-1.5 py-0.2 rounded font-mono text-[10px] border border-emerald-200">
+                <span className="bg-white text-slate-900 px-1.5 py-0.2 rounded font-mono text-[10px] border border-forest-200">
                   {activity.bookingCode}
                 </span>
               )}
@@ -185,7 +185,7 @@ export const ActivityCard: React.FC<ActivityCardProps> = ({
               <button
                 type="button"
                 onClick={() => onOpenBookingVault?.('all')}
-                className="text-[10px] font-extrabold text-slate-500 hover:text-[#DC2626] bg-slate-50 hover:bg-slate-100 px-2 py-0.5 rounded-lg border border-slate-200 transition-colors cursor-pointer"
+                className="text-[10px] font-extrabold text-slate-500 hover:text-bronze-600 bg-sand-50 hover:bg-slate-100 px-2 py-0.5 rounded-lg border border-slate-200 transition-colors cursor-pointer"
               >
                 + Tải lên vé/booking
               </button>
@@ -213,9 +213,9 @@ export const ActivityCard: React.FC<ActivityCardProps> = ({
                     : 'ticket'
                 )
               }
-              className="w-full py-1.5 px-3 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 font-extrabold text-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+              className="w-full py-1.5 px-3 rounded-xl bg-forest-50 hover:bg-forest-100 text-forest-800 border border-forest-200 font-extrabold text-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
             >
-              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+              <CheckCircle2 className="w-3.5 h-3.5 text-forest-600" />
               <span>Mở kho vé xuất trình tại quầy</span>
             </button>
           </div>
@@ -239,7 +239,7 @@ export const ActivityCard: React.FC<ActivityCardProps> = ({
           }
 
           return (
-            <div className="w-full h-32 sm:h-40 rounded-2xl border border-[#183B35]/20 shadow-sm bg-gradient-to-br from-[#183B35] to-[#28584E] relative overflow-hidden flex flex-col items-center justify-center p-4 text-center group cursor-pointer" onClick={() => onEdit(activity)} title="Nhấn để tải ảnh thật lên">
+            <div className="w-full h-32 sm:h-40 rounded-2xl border border-forest-900/20 shadow-sm bg-gradient-to-br from-forest-900 to-forest-700 relative overflow-hidden flex flex-col items-center justify-center p-4 text-center group cursor-pointer" onClick={() => onEdit(activity)} title="Nhấn để tải ảnh thật lên">
               <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white via-transparent to-transparent"></div>
               
               <div className="relative z-10 space-y-1.5 max-w-[90%]">
@@ -267,10 +267,10 @@ export const ActivityCard: React.FC<ActivityCardProps> = ({
 
       {/* Place & Location Info */}
       {activity.place && (
-        <div className="bg-slate-50 p-3 rounded-2xl border border-slate-200 space-y-1.5 text-xs">
+        <div className="bg-sand-50 p-3 rounded-2xl border border-slate-200 space-y-1.5 text-xs">
           <div className="flex items-start justify-between gap-2">
             <div className="flex items-start gap-1.5">
-              <MapPin className="w-4 h-4 text-[#DC2626] shrink-0 mt-0.5" />
+              <MapPin className="w-4 h-4 text-bronze-600 shrink-0 mt-0.5" />
               <div>
                 <p className="font-extrabold text-slate-900">{activity.place.name}</p>
                 {activity.place.address && (
@@ -282,7 +282,7 @@ export const ActivityCard: React.FC<ActivityCardProps> = ({
             <button
               type="button"
               onClick={() => onOpenMap(activity.place?.name || activity.title)}
-              className="text-[11px] font-bold text-[#DC2626] hover:underline shrink-0 flex items-center gap-1 cursor-pointer bg-white px-2 py-1 rounded-lg border border-slate-200"
+              className="text-[11px] font-bold text-bronze-600 hover:underline shrink-0 flex items-center gap-1 cursor-pointer bg-white px-2 py-1 rounded-lg border border-slate-200"
             >
               <span>Bản đồ</span>
               <ExternalLink className="w-3 h-3" />
@@ -300,7 +300,7 @@ export const ActivityCard: React.FC<ActivityCardProps> = ({
               {activity.place.phone && (
                 <a
                   href={`tel:${activity.place.phone}`}
-                  className="font-bold text-slate-700 hover:text-[#DC2626] flex items-center gap-1"
+                  className="font-bold text-slate-700 hover:text-bronze-600 flex items-center gap-1"
                 >
                   <Phone className="w-3 h-3" />
                   <span>{activity.place.phone}</span>
@@ -328,12 +328,12 @@ export const ActivityCard: React.FC<ActivityCardProps> = ({
       {/* Cost Badge */}
       {(activity.estimatedCost !== undefined || activity.actualCost !== undefined) && (
         <div className="flex items-center gap-3 text-xs font-bold text-slate-700">
-          <span className="bg-amber-50 text-amber-900 px-3 py-1 rounded-xl border border-amber-200">
+          <span className="bg-bronze-50 text-bronze-900 px-3 py-1 rounded-xl border border-bronze-200">
             Dự kiến:{' '}
             {new Intl.NumberFormat('vi-VN').format(activity.estimatedCost || 0)} đ
           </span>
           {activity.actualCost !== undefined && (
-            <span className="bg-emerald-50 text-emerald-900 px-3 py-1 rounded-xl border border-emerald-200">
+            <span className="bg-forest-50 text-forest-900 px-3 py-1 rounded-xl border border-forest-200">
               Đã chi: {new Intl.NumberFormat('vi-VN').format(activity.actualCost)} đ
             </span>
           )}
@@ -342,9 +342,9 @@ export const ActivityCard: React.FC<ActivityCardProps> = ({
 
       {/* Family Tips / Notes Yellow Card */}
       {(activity.familyTips?.length || activity.notes) && (
-        <div className="bg-amber-50/80 border border-amber-200 rounded-2xl p-3 text-xs text-amber-950 space-y-1">
-          <div className="flex items-center gap-1.5 font-bold text-amber-900">
-            <AlertCircle className="w-4 h-4 text-amber-600 shrink-0" />
+        <div className="bg-bronze-50/80 border border-bronze-200 rounded-2xl p-3 text-xs text-bronze-950 space-y-1">
+          <div className="flex items-center gap-1.5 font-bold text-bronze-900">
+            <AlertCircle className="w-4 h-4 text-bronze-600 shrink-0" />
             <span>Lưu ý cho gia đình:</span>
           </div>
           {activity.notes && <p className="font-medium">{activity.notes}</p>}

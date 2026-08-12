@@ -40,7 +40,7 @@ export const AccommodationSection: React.FC<AccommodationSectionProps> = ({
         );
       case 'pending':
         return (
-          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-amber-50 text-amber-700 border border-amber-200">
+          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-bronze-50 text-bronze-700 border border-bronze-200">
             <Clock className="w-3.5 h-3.5" />
             Chờ xác nhận
           </span>

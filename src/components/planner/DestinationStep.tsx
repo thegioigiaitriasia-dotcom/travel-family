@@ -126,7 +126,7 @@ export const DestinationStep: React.FC<DestinationStepProps> = ({
   return (
     <div className="bg-white rounded-[24px] p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6 max-w-2xl mx-auto">
       <div>
-        <span className="text-xs font-bold uppercase tracking-wider text-[#DC2626]">Bước 1 / 5</span>
+        <span className="text-xs font-bold uppercase tracking-wider text-bronze-600">Bước 1 / 5</span>
         <h3 className="text-2xl font-extrabold text-slate-900 tracking-tight mt-1">
           Gia đình muốn đi đâu?
         </h3>
@@ -145,24 +145,24 @@ export const DestinationStep: React.FC<DestinationStepProps> = ({
       {/* Selected Route Flow Display */}
       <div className="space-y-3">
         <label className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
-          <MapPin className="w-4 h-4 text-[#DC2626]" />
+          <MapPin className="w-4 h-4 text-bronze-600" />
           Điểm đến của bạn <span className="text-red-500">*</span>
         </label>
 
         {/* Route Flow Card with Arrow Connection Icons */}
-        <div className="p-4 rounded-[20px] bg-slate-50 border border-slate-200 space-y-3">
+        <div className="p-4 rounded-[20px] bg-sand-50 border border-slate-200 space-y-3">
           {data.destinations.length === 0 ? (
             <span className="text-xs text-slate-400 italic">Chưa chọn điểm đến nào...</span>
           ) : (
             <div className="space-y-2">
               <div className="flex items-center gap-2 text-xs font-bold text-slate-500 mb-1">
-                <Route className="w-4 h-4 text-[#DC2626]" />
+                <Route className="w-4 h-4 text-bronze-600" />
                 <span>Lộ trình dự kiến:</span>
               </div>
               <div className="flex flex-wrap items-center gap-2">
                 {data.destinations.map((dest, idx) => (
                   <React.Fragment key={idx}>
-                    <div className="inline-flex items-center gap-1.5 bg-[#DC2626] text-white font-bold text-xs px-3.5 py-2 rounded-xl shadow-sm">
+                    <div className="inline-flex items-center gap-1.5 bg-bronze-600 text-white font-bold text-xs px-3.5 py-2 rounded-xl shadow-sm">
                       <span>{dest.name}</span>
                       <button
                         type="button"
@@ -200,7 +200,7 @@ export const DestinationStep: React.FC<DestinationStepProps> = ({
           <button
             type="button"
             onClick={() => handleAddDestination(destInput)}
-            className="px-5 py-3 rounded-xl bg-[#DC2626] hover:bg-[#B91C1C] text-white font-bold text-xs transition-colors flex items-center gap-1 cursor-pointer shrink-0"
+            className="px-5 py-3 rounded-xl bg-bronze-600 hover:bg-[#B91C1C] text-white font-bold text-xs transition-colors flex items-center gap-1 cursor-pointer shrink-0"
           >
             <Plus className="w-4 h-4" />
             <span>Thêm</span>
@@ -230,8 +230,8 @@ export const DestinationStep: React.FC<DestinationStepProps> = ({
                   }
                   className={`text-xs px-3 py-1.5 rounded-xl border transition-all cursor-pointer font-semibold ${
                     isSelected
-                      ? 'bg-[#DC2626]/10 border-[#DC2626] text-[#DC2626] font-bold'
-                      : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'
+                      ? 'bg-bronze-600/10 border-[#DC2626] text-bronze-600 font-bold'
+                      : 'bg-white border-slate-200 text-slate-600 hover:bg-sand-50'
                   }`}
                 >
                   {isSelected ? `✓ ${city}` : `+ ${city}`}
@@ -260,11 +260,11 @@ export const DestinationStep: React.FC<DestinationStepProps> = ({
       {/* Calendar & Departure / Arrival Time Schedule */}
       <div className="space-y-3 pt-3 border-t border-slate-100">
         <label className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
-          <Calendar className="w-4 h-4 text-[#DC2626]" />
+          <Calendar className="w-4 h-4 text-bronze-600" />
           Thời gian & Giờ khởi hành cụ thể
         </label>
 
-        <div className="bg-slate-50 p-4 rounded-[20px] border border-slate-200 space-y-3">
+        <div className="bg-sand-50 p-4 rounded-[20px] border border-slate-200 space-y-3">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <label className="text-[11px] font-bold text-slate-600 mb-1 block">Ngày đi:</label>
@@ -317,14 +317,14 @@ export const DestinationStep: React.FC<DestinationStepProps> = ({
       {data.destinations.length > 1 && (
         <div className="space-y-3 pt-3 border-t border-slate-100">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-bold uppercase tracking-wider text-[#DC2626] flex items-center gap-1.5">
-              <Route className="w-4 h-4 text-[#DC2626]" />
+            <label className="text-xs font-bold uppercase tracking-wider text-bronze-600 flex items-center gap-1.5">
+              <Route className="w-4 h-4 text-bronze-600" />
               Khảo sát di chuyển liên tỉnh ({data.destinations.length - 1} chặng di chuyển)
             </label>
           </div>
 
-          <div className="bg-amber-50/70 border border-amber-200 rounded-[20px] p-4 space-y-3">
-            <p className="text-[11px] text-amber-900 font-medium leading-relaxed">
+          <div className="bg-bronze-50/70 border border-bronze-200 rounded-[20px] p-4 space-y-3">
+            <p className="text-[11px] text-bronze-900 font-medium leading-relaxed">
               Gia đình đi qua <strong>{data.destinations.map(d => d.name).join(' ➔ ')}</strong>. Vui lòng cho biết chi tiết phương tiện & thời gian di chuyển giữa các tỉnh:
             </p>
 
@@ -339,8 +339,8 @@ export const DestinationStep: React.FC<DestinationStepProps> = ({
               };
 
               return (
-                <div key={idx} className="bg-white rounded-xl p-3.5 border border-amber-200/80 space-y-2.5">
-                  <div className="flex items-center justify-between text-xs font-extrabold text-amber-950">
+                <div key={idx} className="bg-white rounded-xl p-3.5 border border-bronze-200/80 space-y-2.5">
+                  <div className="flex items-center justify-between text-xs font-extrabold text-bronze-950">
                     <span>Chặng {idx + 1}: {fromDest.name} ➔ {toDest.name}</span>
                   </div>
 
@@ -403,7 +403,7 @@ export const DestinationStep: React.FC<DestinationStepProps> = ({
         <button
           type="button"
           onClick={onBack}
-          className="px-5 py-3 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600 font-bold text-xs transition-colors cursor-pointer"
+          className="px-5 py-3 rounded-xl border border-slate-200 hover:bg-sand-50 text-slate-600 font-bold text-xs transition-colors cursor-pointer"
         >
           Quay lại
         </button>
@@ -411,7 +411,7 @@ export const DestinationStep: React.FC<DestinationStepProps> = ({
         <button
           type="button"
           onClick={validateAndNext}
-          className="px-6 py-3 rounded-xl bg-[#DC2626] hover:bg-[#B91C1C] text-white font-bold text-xs transition-colors shadow-md shadow-[#DC2626]/20 flex items-center gap-1.5 cursor-pointer"
+          className="px-6 py-3 rounded-xl bg-bronze-600 hover:bg-[#B91C1C] text-white font-bold text-xs transition-colors shadow-md shadow-[#DC2626]/20 flex items-center gap-1.5 cursor-pointer"
         >
           <span>Tiếp tục</span>
           <ArrowRight className="w-4 h-4" />

@@ -25,7 +25,7 @@ export const PlannerProgress: React.FC<PlannerProgressProps> = ({
     <div className="w-full max-w-2xl mx-auto py-2 px-2">
       {/* Header step text & visual indicator */}
       <div className="flex items-center justify-between mb-2">
-        <span className="text-xs font-bold text-[#DC2626] uppercase tracking-wider">
+        <span className="text-xs font-bold text-bronze-600 uppercase tracking-wider">
           Bước {currentStep} / {totalSteps}
         </span>
         <span className="text-xs font-semibold text-slate-500">
@@ -39,7 +39,7 @@ export const PlannerProgress: React.FC<PlannerProgressProps> = ({
 
         {/* Active Progress Line */}
         <div
-          className="absolute top-1/2 left-0 h-1 bg-[#DC2626] -translate-y-1/2 z-0 transition-all duration-300 rounded-full"
+          className="absolute top-1/2 left-0 h-1 bg-bronze-600 -translate-y-1/2 z-0 transition-all duration-300 rounded-full"
           style={{
             width: `${((currentStep - 1) / (totalSteps - 1)) * 100}%`,
           }}
@@ -62,7 +62,7 @@ export const PlannerProgress: React.FC<PlannerProgressProps> = ({
                   isCompleted
                     ? 'bg-[#2E8B57] text-white shadow-md shadow-[#2E8B57]/20 cursor-pointer hover:bg-[#236c43]'
                     : isActive
-                    ? 'bg-[#DC2626] text-white ring-4 ring-[#DC2626]/20 shadow-lg cursor-default scale-110'
+                    ? 'bg-bronze-600 text-white ring-4 ring-[#DC2626]/20 shadow-lg cursor-default scale-110'
                     : 'bg-white border-2 border-slate-300 text-slate-400 cursor-not-allowed'
                 }`}
                 title={stepLabels[index]}
@@ -71,7 +71,7 @@ export const PlannerProgress: React.FC<PlannerProgressProps> = ({
               </button>
               <span
                 className={`text-[11px] font-semibold mt-1.5 hidden sm:block text-center max-w-[80px] leading-tight ${
-                  isActive ? 'text-[#DC2626] font-extrabold' : isCompleted ? 'text-slate-700' : 'text-slate-400'
+                  isActive ? 'text-bronze-600 font-extrabold' : isCompleted ? 'text-slate-700' : 'text-slate-400'
                 }`}
               >
                 {stepLabels[index]}

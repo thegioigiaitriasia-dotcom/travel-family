@@ -103,7 +103,7 @@ export const PlaceCard: React.FC<PlaceCardProps> = ({
               }}
               className="absolute top-2 left-2 z-10 w-6 h-6 rounded-lg bg-white/90 backdrop-blur-xs flex items-center justify-center border border-slate-200 text-slate-700 cursor-pointer shadow-xs"
             >
-              <input type="checkbox" checked={isSelected} onChange={() => {}} className="rounded text-[#DC2626]" />
+              <input type="checkbox" checked={isSelected} onChange={() => {}} className="rounded text-bronze-600" />
             </button>
           )}
 
@@ -142,8 +142,8 @@ export const PlaceCard: React.FC<PlaceCardProps> = ({
               </div>
 
               {place.visited && (
-                <span className="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-100 text-emerald-800 flex items-center gap-1">
-                  <CheckCircle2 className="w-3 h-3 text-red-600" />
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-forest-100 text-forest-800 flex items-center gap-1">
+                  <CheckCircle2 className="w-3 h-3 text-bronze-600" />
                   <span>Đã ghé</span>
                 </span>
               )}
@@ -151,7 +151,7 @@ export const PlaceCard: React.FC<PlaceCardProps> = ({
 
             <h3
               onClick={() => onOpenDetail(place)}
-              className="text-base font-black text-slate-900 hover:text-[#DC2626] cursor-pointer tracking-tight leading-snug"
+              className="text-base font-black text-slate-900 hover:text-bronze-600 cursor-pointer tracking-tight leading-snug"
             >
               {place.name}
             </h3>
@@ -163,7 +163,7 @@ export const PlaceCard: React.FC<PlaceCardProps> = ({
             )}
 
             {place.personalNote && (
-              <p className="text-xs text-slate-600 line-clamp-2 bg-slate-50 p-2 rounded-xl border border-slate-100 italic">
+              <p className="text-xs text-slate-600 line-clamp-2 bg-sand-50 p-2 rounded-xl border border-slate-100 italic">
                 "{place.personalNote}"
               </p>
             )}
@@ -172,8 +172,8 @@ export const PlaceCard: React.FC<PlaceCardProps> = ({
           <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs gap-2">
             <div className="flex items-center gap-3">
               {place.personalRating && (
-                <div className="flex items-center gap-1 text-amber-600 font-extrabold">
-                  <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                <div className="flex items-center gap-1 text-bronze-600 font-extrabold">
+                  <Star className="w-3.5 h-3.5 fill-amber-400 text-bronze-400" />
                   <span>{place.personalRating.toFixed(1)}/5</span>
                 </div>
               )}
@@ -293,21 +293,21 @@ export const PlaceCard: React.FC<PlaceCardProps> = ({
                   <button
                     type="button"
                     onClick={() => onEdit(place)}
-                    className="w-full text-left px-3 py-2 hover:bg-slate-50 flex items-center gap-2"
+                    className="w-full text-left px-3 py-2 hover:bg-sand-50 flex items-center gap-2"
                   >
                     <span>Chỉnh sửa</span>
                   </button>
                   <button
                     type="button"
                     onClick={() => onToggleVisited(place.id)}
-                    className="w-full text-left px-3 py-2 hover:bg-slate-50 flex items-center gap-2"
+                    className="w-full text-left px-3 py-2 hover:bg-sand-50 flex items-center gap-2"
                   >
                     <span>{place.visited ? 'Đánh dấu chưa ghé' : 'Đánh dấu đã ghé'}</span>
                   </button>
                   <button
                     type="button"
                     onClick={() => onAddToTrip(place)}
-                    className="w-full text-left px-3 py-2 hover:bg-slate-50 flex items-center gap-2 text-[#183B35]"
+                    className="w-full text-left px-3 py-2 hover:bg-sand-50 flex items-center gap-2 text-[#183B35]"
                   >
                     <span>Thêm vào chuyến đi</span>
                   </button>
@@ -348,7 +348,7 @@ export const PlaceCard: React.FC<PlaceCardProps> = ({
 
           {/* Personal Note excerpt */}
           {place.personalNote && (
-            <p className="text-xs text-slate-600 line-clamp-2 bg-slate-50 p-2.5 rounded-xl border border-slate-100 italic font-normal">
+            <p className="text-xs text-slate-600 line-clamp-2 bg-sand-50 p-2.5 rounded-xl border border-slate-100 italic font-normal">
               "{place.personalNote}"
             </p>
           )}

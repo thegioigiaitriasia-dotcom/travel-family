@@ -21,7 +21,7 @@ export const DayFoodSummary: React.FC<DayFoodSummaryProps> = ({ mustTryFoods }) 
         <button
           type="button"
           onClick={() => setShowAllModal(true)}
-          className="text-xs font-bold text-[#DC2626] hover:underline flex items-center gap-0.5 cursor-pointer"
+          className="text-xs font-bold text-bronze-600 hover:underline flex items-center gap-0.5 cursor-pointer"
         >
           <span>Xem tất cả gợi ý</span>
           <ChevronRight className="w-3.5 h-3.5" />
@@ -32,9 +32,9 @@ export const DayFoodSummary: React.FC<DayFoodSummaryProps> = ({ mustTryFoods }) 
         {defaultFoods.map((food, idx) => (
           <div
             key={idx}
-            className="bg-slate-50 p-3 rounded-xl border border-slate-200/80 flex items-center gap-2 text-xs"
+            className="bg-sand-50 p-3 rounded-xl border border-slate-200/80 flex items-center gap-2 text-xs"
           >
-            <span className="w-6 h-6 rounded-lg bg-orange-100 text-orange-700 font-extrabold flex items-center justify-center text-[11px] shrink-0">
+            <span className="w-6 h-6 rounded-lg bg-bronze-100 text-bronze-700 font-extrabold flex items-center justify-center text-[11px] shrink-0">
               {idx + 1}
             </span>
             <span className="font-extrabold text-slate-900 truncate">{food}</span>
@@ -62,13 +62,13 @@ export const DayFoodSummary: React.FC<DayFoodSummaryProps> = ({ mustTryFoods }) 
             <div className="space-y-3 text-xs max-h-[60vh] overflow-y-auto">
               {defaultFoods.length > 0 ? (
                 defaultFoods.map((food, idx) => (
-                  <div key={idx} className="bg-orange-50 p-3 rounded-xl border border-orange-200 flex gap-2 items-center">
-                    <span className="font-extrabold text-orange-900 bg-orange-200 w-6 h-6 flex items-center justify-center rounded-full shrink-0">{idx + 1}</span>
-                    <p className="text-orange-900 font-medium">{food}</p>
+                  <div key={idx} className="bg-bronze-50 p-3 rounded-xl border border-bronze-200 flex gap-2 items-center">
+                    <span className="font-extrabold text-bronze-900 bg-bronze-200 w-6 h-6 flex items-center justify-center rounded-full shrink-0">{idx + 1}</span>
+                    <p className="text-bronze-900 font-medium">{food}</p>
                   </div>
                 ))
               ) : (
-                <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 text-center text-slate-500">
+                <div className="bg-sand-50 p-4 rounded-xl border border-slate-200 text-center text-slate-500">
                   Chưa có gợi ý ẩm thực nào cho ngày hôm nay.
                 </div>
               )}
@@ -77,7 +77,7 @@ export const DayFoodSummary: React.FC<DayFoodSummaryProps> = ({ mustTryFoods }) 
             <button
               type="button"
               onClick={() => setShowAllModal(false)}
-              className="w-full py-2.5 rounded-xl bg-[#DC2626] text-white font-bold text-xs hover:bg-[#B91C1C]"
+              className="w-full py-2.5 rounded-xl bg-bronze-600 text-white font-bold text-xs hover:bg-[#B91C1C]"
             >
               Đóng danh sách
             </button>

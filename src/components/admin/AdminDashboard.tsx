@@ -372,8 +372,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = () => {
             {/* Title & Status */}
             <div className="space-y-1">
               <div className="flex items-center gap-2">
-                <span className="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 font-extrabold text-xs flex items-center gap-1.5">
-                  <ShieldCheck className="w-4 h-4 text-emerald-400" />
+                <span className="px-3 py-1 rounded-full bg-forest-500/10 border border-forest-500/20 text-forest-400 font-extrabold text-xs flex items-center gap-1.5">
+                  <ShieldCheck className="w-4 h-4 text-forest-400" />
                   <span>Admin Console 100% Active</span>
                 </span>
                 <span className="px-2.5 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 font-mono text-[11px] font-bold">
@@ -396,7 +396,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = () => {
               <button
                 type="button"
                 onClick={() => setShowAddUserModal(true)}
-                className="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition-colors flex items-center gap-2 shadow-lg shadow-emerald-900/20 cursor-pointer"
+                className="px-4 py-2.5 rounded-xl bg-forest-600 hover:bg-forest-500 text-white font-bold text-xs transition-colors flex items-center gap-2 shadow-lg shadow-emerald-900/20 cursor-pointer"
               >
                 <UserPlus className="w-4 h-4" />
                 <span>Thêm Tài Khoản Mới</span>
@@ -408,7 +408,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = () => {
                 disabled={testingDb}
                 className="px-3.5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs border border-slate-700 transition-colors flex items-center gap-2 cursor-pointer disabled:opacity-50"
               >
-                <RefreshCw className={`w-4 h-4 text-emerald-400 ${testingDb ? 'animate-spin' : ''}`} />
+                <RefreshCw className={`w-4 h-4 text-forest-400 ${testingDb ? 'animate-spin' : ''}`} />
                 <span>Test DB Supabase</span>
               </button>
             </div>
@@ -432,7 +432,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = () => {
                   onClick={() => setActiveTab(tab.id as any)}
                   className={`px-4 py-2.5 rounded-xl font-bold text-xs flex items-center gap-2 whitespace-nowrap transition-all cursor-pointer ${
                     isActive
-                      ? 'bg-red-600 text-white shadow-md shadow-red-900/30'
+                      ? 'bg-bronze-600 text-white shadow-md shadow-red-900/30'
                       : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
                   }`}
                 >
@@ -473,7 +473,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = () => {
                 </div>
                 <div>
                   <div className="text-2xl sm:text-3xl font-black text-white">{sysStats.totalUsers.toLocaleString()}</div>
-                  <div className="text-xs font-semibold text-emerald-400 flex items-center gap-1 mt-1">
+                  <div className="text-xs font-semibold text-forest-400 flex items-center gap-1 mt-1">
                     <Zap className="w-3.5 h-3.5" />
                     <span>Cập nhật realtime từ Supabase</span>
                   </div>
@@ -511,19 +511,19 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = () => {
                   <span className="text-slate-400 font-bold text-xs uppercase tracking-wider">
                     Địa điểm POI
                   </span>
-                  <div className="p-2.5 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                  <div className="p-2.5 rounded-xl bg-bronze-500/10 text-bronze-400 border border-bronze-500/20">
                     <MapPin className="w-5 h-5" />
                   </div>
                 </div>
                 <div>
                   <div className="text-2xl sm:text-3xl font-black text-white">{sysStats.totalPlaces.toLocaleString()}</div>
-                  <div className="text-xs font-semibold text-amber-400 flex items-center gap-1 mt-1">
+                  <div className="text-xs font-semibold text-bronze-400 flex items-center gap-1 mt-1">
                     <Database className="w-3.5 h-3.5" />
                     <span>Kho địa điểm cộng đồng</span>
                   </div>
                 </div>
                 <div className="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
-                  <div className="bg-amber-500 h-full w-[65%] rounded-full"></div>
+                  <div className="bg-bronze-500 h-full w-[65%] rounded-full"></div>
                 </div>
               </div>
 
@@ -556,7 +556,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = () => {
               <div className="lg:col-span-2 bg-slate-900 rounded-2xl p-6 border border-slate-800 space-y-5">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-800 pb-4 gap-3">
                   <div className="flex items-center gap-3">
-                    <div className="p-3 rounded-2xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                    <div className="p-3 rounded-2xl bg-forest-500/10 text-forest-400 border border-forest-500/20">
                       <Database className="w-6 h-6" />
                     </div>
                     <div>
@@ -573,7 +573,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = () => {
                     <button
                       type="button"
                       onClick={() => setShowSupabaseModal(true)}
-                      className="px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer shadow-sm"
+                      className="px-3 py-2 rounded-xl bg-forest-600 hover:bg-forest-500 text-white font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer shadow-sm"
                     >
                       <Code2 className="w-4 h-4" />
                       <span>SQL Schema DB</span>
@@ -593,14 +593,14 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
                   <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-1">
                     <span className="text-slate-400 font-bold block">Supabase Endpoint URL:</span>
-                    <code className="text-emerald-400 font-mono text-xs break-all block">
+                    <code className="text-forest-400 font-mono text-xs break-all block">
                       {SUPABASE_URL}
                     </code>
                   </div>
 
                   <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-1">
                     <span className="text-slate-400 font-bold block">Chính sách Bảo mật RLS:</span>
-                    <span className="text-emerald-400 font-bold flex items-center gap-1.5">
+                    <span className="text-forest-400 font-bold flex items-center gap-1.5">
                       <ShieldCheck className="w-4 h-4" />
                       <span>Row Level Security được bật trên tất cả các bảng</span>
                     </span>
@@ -612,13 +612,13 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = () => {
                   <div
                     className={`p-4 rounded-xl border text-xs font-bold flex items-center justify-between ${
                       dbStatus.success
-                        ? 'bg-emerald-950/50 border-emerald-800 text-emerald-200'
+                        ? 'bg-forest-950/50 border-forest-800 text-forest-200'
                         : 'bg-rose-950/50 border-rose-800 text-rose-200'
                     }`}
                   >
                     <div className="flex items-center gap-2">
                       {dbStatus.success ? (
-                        <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                        <CheckCircle2 className="w-4 h-4 text-forest-400" />
                       ) : (
                         <AlertCircle className="w-4 h-4 text-rose-400" />
                       )}
@@ -653,7 +653,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = () => {
                         key={tbl.name}
                         className="p-3 rounded-xl bg-slate-950/80 border border-slate-800 hover:border-slate-700 transition-colors"
                       >
-                        <div className="font-mono text-emerald-400 font-bold">{tbl.name}</div>
+                        <div className="font-mono text-forest-400 font-bold">{tbl.name}</div>
                         <div className="text-[11px] text-slate-400 mt-0.5">{tbl.desc}</div>
                       </div>
                     ))}
@@ -728,7 +728,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = () => {
                 <button
                   type="button"
                   onClick={() => setShowAddUserModal(true)}
-                  className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl transition-colors flex items-center gap-1.5 shrink-0 cursor-pointer"
+                  className="px-4 py-2 bg-forest-600 hover:bg-forest-500 text-white font-bold text-xs rounded-xl transition-colors flex items-center gap-1.5 shrink-0 cursor-pointer"
                 >
                   <UserPlus className="w-4 h-4" />
                   <span>Thêm Người Dùng</span>
@@ -764,7 +764,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = () => {
                               <div className="font-bold text-white text-sm flex items-center gap-1.5">
                                 <span>{u.name}</span>
                                 {u.isAdmin && (
-                                  <span className="px-1.5 py-0.5 rounded-md bg-amber-500/20 text-amber-300 border border-amber-500/30 text-[10px] font-extrabold">
+                                  <span className="px-1.5 py-0.5 rounded-md bg-bronze-500/20 text-bronze-300 border border-bronze-500/30 text-[10px] font-extrabold">
                                     ADMIN
                                   </span>
                                 )}
@@ -785,7 +785,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = () => {
                               u.role === 'Super Admin'
                                 ? 'bg-rose-500/20 text-rose-300 border border-rose-500/30'
                                 : u.role === 'Quản trị viên'
-                                ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
+                                ? 'bg-bronze-500/20 text-bronze-300 border border-bronze-500/30'
                                 : u.role === 'Trưởng nhóm'
                                 ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30'
                                 : 'bg-slate-800 text-slate-300'
@@ -797,8 +797,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = () => {
 
                         <td className="p-4">
                           {u.status === 'active' ? (
-                            <span className="px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[11px] font-bold flex items-center gap-1 w-max">
-                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                            <span className="px-2.5 py-1 rounded-full bg-forest-500/10 text-forest-400 border border-forest-500/20 text-[11px] font-bold flex items-center gap-1 w-max">
+                              <span className="w-1.5 h-1.5 rounded-full bg-forest-400"></span>
                               <span>Hoạt động</span>
                             </span>
                           ) : (
@@ -831,7 +831,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = () => {
                               className={`px-2.5 py-1.5 rounded-lg text-xs font-bold transition-colors cursor-pointer ${
                                 u.status === 'active'
                                   ? 'bg-rose-950/60 hover:bg-rose-900 text-rose-300 border border-rose-800'
-                                  : 'bg-emerald-950/60 hover:bg-emerald-900 text-emerald-300 border border-emerald-800'
+                                  : 'bg-forest-950/60 hover:bg-forest-900 text-forest-300 border border-forest-800'
                               }`}
                             >
                               {u.status === 'active' ? (
@@ -861,11 +861,11 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = () => {
         {activeTab === 'trips' && (
           <div className="space-y-6 animate-fadeIn">
             {/* Strict Privacy Notice */}
-            <div className="bg-emerald-950/40 border border-emerald-800/60 rounded-2xl p-4 flex items-center gap-3 text-xs text-emerald-300">
-              <ShieldCheck className="w-5 h-5 text-emerald-400 shrink-0" />
+            <div className="bg-forest-950/40 border border-forest-800/60 rounded-2xl p-4 flex items-center gap-3 text-xs text-forest-300">
+              <ShieldCheck className="w-5 h-5 text-forest-400 shrink-0" />
               <div>
                 <p className="font-bold text-white">Bảo mật & Quyền riêng tư tuyệt đối (Family Privacy Isolation)</p>
-                <p className="text-emerald-300/90 text-[11px] mt-0.5">
+                <p className="text-forest-300/90 text-[11px] mt-0.5">
                   Mọi lịch trình và hình ảnh cá nhân của hộ gia đình đều được cách ly bảo mật 100%. Hệ thống không có nguồn cấp dữ liệu mạng xã hội công khai. Admin chỉ quản trị lưu trữ hạ tầng và thiết lập các lịch trình Mẫu AI gợi ý.
                 </p>
               </div>
@@ -903,14 +903,14 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = () => {
 
                     <div className="flex items-center gap-1.5">
                       {t.isFeatured && (
-                        <span className="px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 text-[10px] font-bold border border-amber-500/30 flex items-center gap-1">
+                        <span className="px-2 py-0.5 rounded-full bg-bronze-500/20 text-bronze-300 text-[10px] font-bold border border-bronze-500/30 flex items-center gap-1">
                           <Star className="w-3 h-3 fill-amber-300" />
                           <span>Mẫu AI</span>
                         </span>
                       )}
 
                       {t.isPublic ? (
-                        <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px] font-bold border border-emerald-500/30">
+                        <span className="px-2 py-0.5 rounded-full bg-forest-500/20 text-forest-300 text-[10px] font-bold border border-forest-500/30">
                           Công khai
                         </span>
                       ) : (
@@ -945,7 +945,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = () => {
                         onClick={() => handleToggleTripFeatured(t.id)}
                         className={`px-2.5 py-1.5 rounded-lg text-xs font-bold transition-colors cursor-pointer ${
                           t.isFeatured
-                            ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
+                            ? 'bg-bronze-500/20 text-bronze-300 border border-bronze-500/30'
                             : 'bg-slate-800 hover:bg-slate-700 text-slate-300'
                         }`}
                       >
@@ -958,7 +958,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = () => {
                         onClick={() => handleToggleTripPublic(t.id)}
                         className={`px-2.5 py-1.5 rounded-lg text-xs font-bold transition-colors cursor-pointer ${
                           t.isPublic
-                            ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
+                            ? 'bg-forest-500/20 text-forest-300 border border-forest-500/30'
                             : 'bg-slate-800 hover:bg-slate-700 text-slate-300'
                         }`}
                       >
@@ -989,7 +989,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = () => {
               <div className="flex items-center justify-between border-b border-slate-800 pb-4">
                 <div>
                   <h3 className="font-bold text-white text-lg flex items-center gap-2">
-                    <Database className="w-5 h-5 text-emerald-400" />
+                    <Database className="w-5 h-5 text-forest-400" />
                     <span>Cấu hình CSDL & Row Level Security (RLS) Supabase</span>
                   </h3>
                   <p className="text-xs text-slate-400 mt-0.5">
@@ -1001,7 +1001,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = () => {
                   type="button"
                   onClick={checkDatabase}
                   disabled={testingDb}
-                  className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl transition-colors flex items-center gap-2 cursor-pointer"
+                  className="px-4 py-2 bg-forest-600 hover:bg-forest-500 text-white font-bold text-xs rounded-xl transition-colors flex items-center gap-2 cursor-pointer"
                 >
                   <RefreshCw className={`w-4 h-4 ${testingDb ? 'animate-spin' : ''}`} />
                   <span>Kiểm tra Kết nối SQL</span>
@@ -1053,14 +1053,14 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = () => {
                     className="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-2"
                   >
                     <div className="flex items-center justify-between">
-                      <span className="font-mono text-emerald-400 font-bold text-xs">
+                      <span className="font-mono text-forest-400 font-bold text-xs">
                         {item.table}
                       </span>
                       <span
                         className={`px-2 py-0.5 rounded-full text-[10px] font-bold border flex items-center gap-1 ${
                           item.isPrivate
                             ? 'bg-rose-500/10 text-rose-300 border-rose-500/30'
-                            : 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
+                            : 'bg-forest-500/10 text-forest-400 border-forest-500/20'
                         }`}
                       >
                         <ShieldCheck className="w-3 h-3" />
@@ -1107,8 +1107,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = () => {
               </form>
 
               {broadcastSent && (
-                <div className="p-3 bg-emerald-950/60 border border-emerald-800 text-emerald-300 text-xs font-bold rounded-xl flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                <div className="p-3 bg-forest-950/60 border border-forest-800 text-forest-300 text-xs font-bold rounded-xl flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-forest-400" />
                   <span>Đã phát thông báo thành công tới tất cả các hộ gia đình!</span>
                 </div>
               )}
@@ -1135,7 +1135,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = () => {
                       <p className="text-slate-200 font-medium">{log.action}</p>
                     </div>
 
-                    <span className="px-2.5 py-1 rounded-md bg-slate-800 text-emerald-400 font-mono text-[11px] font-bold shrink-0">
+                    <span className="px-2.5 py-1 rounded-md bg-slate-800 text-forest-400 font-mono text-[11px] font-bold shrink-0">
                       {log.status}
                     </span>
                   </div>
@@ -1152,7 +1152,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = () => {
           <div className="bg-slate-900 rounded-3xl max-w-md w-full p-6 border border-slate-800 shadow-2xl space-y-5">
             <div className="flex items-center justify-between border-b border-slate-800 pb-3">
               <h3 className="font-black text-white text-base flex items-center gap-2">
-                <UserPlus className="w-5 h-5 text-emerald-400" />
+                <UserPlus className="w-5 h-5 text-forest-400" />
                 <span>Thêm Người dùng / Admin mới</span>
               </h3>
               <button
@@ -1224,7 +1224,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = () => {
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl cursor-pointer"
+                  className="px-4 py-2 bg-forest-600 hover:bg-forest-500 text-white font-bold rounded-xl cursor-pointer"
                 >
                   Khởi tạo Tài khoản
                 </button>

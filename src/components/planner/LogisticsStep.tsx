@@ -100,7 +100,7 @@ export const LogisticsStep: React.FC<LogisticsStepProps> = ({
   return (
     <div className="bg-white rounded-[24px] p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6 max-w-2xl mx-auto">
       <div>
-        <span className="text-xs font-bold uppercase tracking-wider text-[#DC2626]">Bước 4 / 5</span>
+        <span className="text-xs font-bold uppercase tracking-wider text-bronze-600">Bước 4 / 5</span>
         <h3 className="text-2xl font-extrabold text-slate-900 tracking-tight mt-1">
           Ngân sách & Hậu cần
         </h3>
@@ -110,7 +110,7 @@ export const LogisticsStep: React.FC<LogisticsStepProps> = ({
       </div>
 
       {/* 1. Ngân sách - Slider */}
-      <div className="space-y-4 bg-slate-50 p-5 rounded-[20px] border border-slate-200">
+      <div className="space-y-4 bg-sand-50 p-5 rounded-[20px] border border-slate-200">
         <div className="flex items-center justify-between">
           <label className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
             <DollarSign className="w-4 h-4 text-[#2E8B57]" />
@@ -144,7 +144,7 @@ export const LogisticsStep: React.FC<LogisticsStepProps> = ({
       {/* 2. Lưu trú Cards & Check-in / Check-out Times */}
       <div className="space-y-3 pt-2 border-t border-slate-100">
         <label className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
-          <BedDouble className="w-4 h-4 text-[#DC2626]" />
+          <BedDouble className="w-4 h-4 text-bronze-600" />
           Loại hình lưu trú & Khung giờ nhận/trả phòng
         </label>
 
@@ -158,8 +158,8 @@ export const LogisticsStep: React.FC<LogisticsStepProps> = ({
                 onClick={() => toggleAccommodation(acc.id)}
                 className={`p-3.5 rounded-[18px] border text-center transition-all cursor-pointer flex flex-col items-center gap-1.5 ${
                   isSelected
-                    ? 'bg-[#DC2626] text-white border-[#DC2626] shadow-md shadow-[#DC2626]/20 scale-[1.02]'
-                    : 'bg-white border-slate-200 text-slate-800 hover:bg-slate-50'
+                    ? 'bg-bronze-600 text-white border-[#DC2626] shadow-md shadow-[#DC2626]/20 scale-[1.02]'
+                    : 'bg-white border-slate-200 text-slate-800 hover:bg-sand-50'
                 }`}
               >
                 <span className="text-2xl">{acc.icon}</span>
@@ -170,7 +170,7 @@ export const LogisticsStep: React.FC<LogisticsStepProps> = ({
         </div>
 
         {/* Check-in & Check-out Specific Times */}
-        <div className="bg-slate-50 p-4 rounded-[20px] border border-slate-200 grid grid-cols-1 sm:grid-cols-2 gap-3 mt-2">
+        <div className="bg-sand-50 p-4 rounded-[20px] border border-slate-200 grid grid-cols-1 sm:grid-cols-2 gap-3 mt-2">
           <div>
             <label className="text-[11px] font-bold text-slate-700 block mb-1">
               🔑 Giờ Check-in nhận phòng (dự kiến):
@@ -199,7 +199,7 @@ export const LogisticsStep: React.FC<LogisticsStepProps> = ({
       {/* 3. Phương tiện Di chuyển Cards & Return Schedule */}
       <div className="space-y-3 pt-2 border-t border-slate-100">
         <label className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
-          <Plane className="w-4 h-4 text-[#DC2626]" />
+          <Plane className="w-4 h-4 text-bronze-600" />
           Phương tiện di chuyển & Lịch di chuyển khứ hồi lượt về
         </label>
 
@@ -213,8 +213,8 @@ export const LogisticsStep: React.FC<LogisticsStepProps> = ({
                 onClick={() => toggleTransport(trans.id)}
                 className={`p-3.5 rounded-[18px] border text-left transition-all cursor-pointer flex items-center justify-between ${
                   isSelected
-                    ? 'bg-[#DC2626] text-white border-[#DC2626] shadow-md shadow-[#DC2626]/20 scale-[1.02]'
-                    : 'bg-white border-slate-200 text-slate-800 hover:bg-slate-50'
+                    ? 'bg-bronze-600 text-white border-[#DC2626] shadow-md shadow-[#DC2626]/20 scale-[1.02]'
+                    : 'bg-white border-slate-200 text-slate-800 hover:bg-sand-50'
                 }`}
               >
                 <div className="flex items-center gap-2.5">
@@ -228,7 +228,7 @@ export const LogisticsStep: React.FC<LogisticsStepProps> = ({
         </div>
 
         {/* Return Trip Specific Times */}
-        <div className="bg-slate-50 p-4 rounded-[20px] border border-slate-200 grid grid-cols-1 sm:grid-cols-2 gap-3 mt-2">
+        <div className="bg-sand-50 p-4 rounded-[20px] border border-slate-200 grid grid-cols-1 sm:grid-cols-2 gap-3 mt-2">
           <div>
             <label className="text-[11px] font-bold text-slate-700 block mb-1">
               🛫 Giờ khởi hành chặng VỀ (bay/xe):
@@ -259,7 +259,7 @@ export const LogisticsStep: React.FC<LogisticsStepProps> = ({
         <button
           type="button"
           onClick={onBack}
-          className="px-5 py-3 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600 font-bold text-xs transition-colors cursor-pointer"
+          className="px-5 py-3 rounded-xl border border-slate-200 hover:bg-sand-50 text-slate-600 font-bold text-xs transition-colors cursor-pointer"
         >
           Quay lại
         </button>
@@ -267,7 +267,7 @@ export const LogisticsStep: React.FC<LogisticsStepProps> = ({
         <button
           type="button"
           onClick={onNext}
-          className="px-6 py-3 rounded-xl bg-[#DC2626] hover:bg-[#B91C1C] text-white font-bold text-xs transition-colors shadow-md shadow-[#DC2626]/20 flex items-center gap-1.5 cursor-pointer"
+          className="px-6 py-3 rounded-xl bg-bronze-600 hover:bg-[#B91C1C] text-white font-bold text-xs transition-colors shadow-md shadow-[#DC2626]/20 flex items-center gap-1.5 cursor-pointer"
         >
           <span>Tiếp tục</span>
           <ArrowRight className="w-4 h-4" />

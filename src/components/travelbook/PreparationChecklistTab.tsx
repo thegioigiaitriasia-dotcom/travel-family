@@ -125,7 +125,7 @@ export const PreparationChecklistTab: React.FC<PreparationChecklistTabProps> = (
             <button
               type="button"
               onClick={() => setIsAdding(!isAdding)}
-              className="px-4 py-2 rounded-xl bg-[#DC2626] hover:bg-[#B91C1C] text-white text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 shadow-xs"
+              className="px-4 py-2 rounded-xl bg-bronze-600 hover:bg-[#B91C1C] text-white text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 shadow-xs"
             >
               <Plus className="w-4 h-4" />
               <span>Thêm vật dụng</span>
@@ -137,11 +137,11 @@ export const PreparationChecklistTab: React.FC<PreparationChecklistTabProps> = (
         <div className="space-y-1.5 pt-1">
           <div className="flex items-center justify-between text-xs font-semibold text-slate-700">
             <span>Trạng thái hoàn thành: {completedCount}/{totalCount} món</span>
-            <span className="text-[#DC2626] font-bold">{progressPercent}%</span>
+            <span className="text-bronze-600 font-bold">{progressPercent}%</span>
           </div>
           <div className="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden border border-[#E4E4E7]">
             <div
-              className="h-full bg-[#DC2626] transition-all duration-300 rounded-full"
+              className="h-full bg-bronze-600 transition-all duration-300 rounded-full"
               style={{ width: `${progressPercent}%` }}
             />
           </div>
@@ -157,7 +157,7 @@ export const PreparationChecklistTab: React.FC<PreparationChecklistTabProps> = (
             onClick={() => setSelectedCategory('all')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${
               selectedCategory === 'all'
-                ? 'bg-[#DC2626] text-white'
+                ? 'bg-bronze-600 text-white'
                 : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
             }`}
           >
@@ -174,7 +174,7 @@ export const PreparationChecklistTab: React.FC<PreparationChecklistTabProps> = (
                 onClick={() => setSelectedCategory(catKey)}
                 className={`px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${
                   selectedCategory === catKey
-                    ? 'bg-[#DC2626] text-white'
+                    ? 'bg-bronze-600 text-white'
                     : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
                 }`}
               >
@@ -190,7 +190,7 @@ export const PreparationChecklistTab: React.FC<PreparationChecklistTabProps> = (
             type="checkbox"
             checked={showOnlyPending}
             onChange={(e) => setShowOnlyPending(e.target.checked)}
-            className="rounded border-[#E4E4E7] text-[#DC2626] focus:ring-[#DC2626]"
+            className="rounded border-[#E4E4E7] text-bronze-600 focus:ring-[#DC2626]"
           />
           <span>Chỉ hiện mục chưa xong</span>
         </label>
@@ -250,7 +250,7 @@ export const PreparationChecklistTab: React.FC<PreparationChecklistTabProps> = (
             <button
               type="submit"
               disabled={!newTitle.trim()}
-              className="px-4 py-2 bg-[#DC2626] text-white rounded-xl font-bold text-xs hover:bg-[#B91C1C] disabled:opacity-50 cursor-pointer transition-colors"
+              className="px-4 py-2 bg-bronze-600 text-white rounded-xl font-bold text-xs hover:bg-[#B91C1C] disabled:opacity-50 cursor-pointer transition-colors"
             >
               Lưu vật dụng
             </button>
@@ -307,7 +307,7 @@ export const PreparationChecklistTab: React.FC<PreparationChecklistTabProps> = (
                       key={item.id}
                       className={`p-3 rounded-xl border transition-all flex items-start justify-between gap-3 group ${
                         item.checked
-                          ? 'bg-slate-50/70 border-[#E3E6E2] text-slate-500'
+                          ? 'bg-sand-50/70 border-[#E3E6E2] text-slate-500'
                           : 'bg-white border-[#E3E6E2] hover:border-slate-300 text-slate-800'
                       }`}
                     >
@@ -318,9 +318,9 @@ export const PreparationChecklistTab: React.FC<PreparationChecklistTabProps> = (
                       >
                         <div className="mt-0.5 shrink-0">
                           {item.checked ? (
-                            <CheckSquare className="w-4 h-4 text-[#DC2626]" />
+                            <CheckSquare className="w-4 h-4 text-bronze-600" />
                           ) : (
-                            <Square className="w-4 h-4 text-slate-400 group-hover:text-[#DC2626] transition-colors" />
+                            <Square className="w-4 h-4 text-slate-400 group-hover:text-bronze-600 transition-colors" />
                           )}
                         </div>
 
@@ -369,7 +369,7 @@ export const PreparationChecklistTab: React.FC<PreparationChecklistTabProps> = (
       </div>
 
       {/* Synchronized Notice */}
-      <div className="p-3 bg-slate-50 rounded-xl border border-[#E3E6E2] text-center text-xs text-slate-500">
+      <div className="p-3 bg-sand-50 rounded-xl border border-[#E3E6E2] text-center text-xs text-slate-500">
         Danh sách chuẩn bị được tự động lưu và đồng bộ sẵn sàng cho chuyến đi.
       </div>
     </div>

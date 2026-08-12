@@ -80,7 +80,7 @@ export const RecommendedFoodSection: React.FC<RecommendedFoodSectionProps> = ({
                 <span
                   className={`absolute top-2 left-2 px-2.5 py-1 rounded-lg text-[10px] font-black shadow-sm ${
                     item.badge === 'Đặc sản'
-                      ? 'bg-amber-500 text-white'
+                      ? 'bg-bronze-500 text-white'
                       : 'bg-[#183B35] text-white'
                   }`}
                 >
